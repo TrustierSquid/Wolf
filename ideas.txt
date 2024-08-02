@@ -1,0 +1,51 @@
+MAIN FUNCTIONS OF THE SOCIAL MEDIA APP:
+
+- follow people/unfollow people
+
+- you can like their posts
+
+- you can leave a comment 
+
+- you can have your own profile
+
+
+TARGET AUDIENCE:
+
+- Employers/Recruiters
+
+
+Main theme:
+
+light red, dark night color, 
+
+#FF3C3C
+#252525
+
+dark red background:
+#1F1F1F
+
+
+TOPICS SECTION:
+sports
+Cosmetology
+Food
+
+
+
+
+
+Self care
+Goal setting
+Tech
+Movies
+Tv
+Reading
+Filmmaking
+DIY Projects
+Dating
+Makeup Tutorials
+Environmental Issues
+programming
+Life hacks
+Software
+Computers
