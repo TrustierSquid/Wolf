@@ -1,0 +1,23 @@
+{
+   "topics": [
+       { "id": 1, "name": "Sports" },
+       { "id": 2, "name": "Cosmetology" },
+       { "id": 3, "name": "Food" },
+       { "id": 4, "name": "Self care" },
+       { "id": 5, "name": "Goal setting" },
+       { "id": 6, "name": "Tech" },
+       { "id": 7, "name": "Movies" },
+       { "id": 8, "name": "TV" },
+       { "id": 9, "name": "Reading" },
+       { "id": 10, "name": "Filmmaking" },
+       { "id": 11, "name": "DIY Projects" },
+       { "id": 12, "name": "Dating" },
+       { "id": 13, "name": "Makeup Tutorials" },
+       { "id": 14, "name": "Environmental Issues" },
+       { "id": 15, "name": "Programming" },
+       { "id": 16, "name": "Life hacks" },
+       { "id": 17, "name": "Software" },
+       { "id": 18, "name": "Computers" }
+   ]
+}
+
