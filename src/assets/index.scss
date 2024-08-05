@@ -1,0 +1,561 @@
+$background: #1F1F1F;
+$primary: #FF3C3C;
+$darkenPrimary: #532C2C;
+$inputField: #1B1B1B;
+$buttonHover: #7A0B31;
+
+@mixin buttonGradient {
+   background: rgb(255,60,60);
+   background: linear-gradient(208deg, rgba(255,60,60,1) 0%, rgba(153,36,36,1) 100%); 
+   border: none;
+   border-radius: 1rem;
+   cursor: pointer;
+   transition: 150ms;
+   
+   &:hover {
+      // background-color: $buttonHover;
+      transform: translateY(-3px);
+      box-shadow: rgb(255, 119, 107, 0.2) 0px 8px 24px;
+   }
+}
+
+
+
+* {
+   margin: 0;
+   padding: 0;
+   box-sizing: border-box;
+}
+
+body {
+   background-color: $background;
+}
+
+
+/* 
+
+   LOGIN PAGE
+
+ */
+
+#container {
+   height: 100vh;
+   width: 100vw;
+   color: white;
+   display: grid;
+   place-content: center;
+   
+
+   #loginContainer {
+      height: 700px;
+      width: 600px;
+      background-color: #161616;
+      border-radius: 1.5rem;
+      box-shadow: rgb(115, 115, 115, 0.2) 0px 8px 24px;
+      padding: 5rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      align-items: center;
+
+      #title {
+         display: flex;
+         align-items: center;
+         gap: 1rem;
+         font-size: 1.5rem;
+         font-family: "comfortaa";
+      }
+      
+      #inputField {
+         display: flex;
+         flex-direction: column;
+         gap: 2rem;
+         
+         input {
+            height: 60px;
+            width: 400px;
+            border-radius: 10px;
+            background-color: $inputField;
+            color: white;
+            padding: 0.5rem;
+            border: $primary solid 2px;
+            font-size: 1rem;
+            outline: none;
+
+
+         }
+
+         // Forgot password link
+         a {
+            font-family: "comfortaa";
+            color: white;
+         }
+
+      }
+      
+      #loginBtns {
+         display: flex;
+         gap: 1rem;
+         .signUpBtn {
+            @include buttonGradient();
+            height: 3rem;
+            width: 200px;
+            color: white;
+            font-size: 1.3rem;
+         }
+      }
+
+      
+   }
+   
+}
+
+// LOGIN PAGE MEDIA QUERY
+
+@media (max-width: 700px) {
+   #container {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      
+      #loginContainer {
+         padding: 1rem;
+         width: 500px;
+         height: 500px;
+      }
+
+   }
+}
+
+@media (max-width: 550px) {
+   #container {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      
+      #loginContainer {
+         // padding: 1rem;
+         width: 350px;
+         height: 450px;
+         
+         #inputField {
+            input {
+               width: 300px;
+            }
+
+            a {
+               font-size: 0.8rem;
+            }
+         }
+      }
+
+      
+
+   }
+}
+
+/* 
+
+CHOOSING TOPICS COMPONENT
+
+*/
+
+
+#topics {
+   background-color: #131212;
+   height: 700px;
+   width: 70%;
+   margin: 3rem auto;
+   border-radius: 1rem;
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   gap: 2rem;
+   padding: 5rem;
+   color: white;
+   font-family: 'roboto';
+
+   // header
+   h1 {
+      font-weight: lighter;
+      font-family: 'roboto';
+      font-size: 2.5rem;
+      width: 90%;
+      text-align: center;
+      span {
+         font-weight: 900;
+         color: $primary;
+      }
+      
+   }
+   
+   #topicCounter {
+      font-size: 1.5rem;
+      margin-bottom: 3rem;
+      color: grey;
+   }
+
+   #topicSelect {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      
+      button {
+         font-weight: 300;
+         border-radius: 0.5rem;
+         border: none;
+         background: rgba(255, 60, 60, 0.2);
+         color: white;
+         padding: 0.5rem 1rem;
+         transition: 150ms;
+         font-size: 1.4rem;
+         cursor: pointer;
+
+         
+         &:hover {
+            transform: translateY(-5px);
+            box-shadow: rgb(255, 105, 105,0.4) 0px 4px 12px;
+         }
+      }
+
+      // appends to the topic buttons on click
+      .selected {
+         background-color: $primary;
+      }
+
+      .disabled {
+         transition: 150ms;
+         background-color: #303030;
+         pointer-events: none;
+      }
+   }
+
+   #continuteBtn {
+      padding: 1rem;
+      border-radius: 0.5rem;
+      background-color: $primary;
+      border: none;
+      font-size: 1.4rem;
+      color: white;
+      background: rgb(255,60,60);
+      background: linear-gradient(208deg, rgba(255,60,60,1) 0%, rgba(153,36,36,1) 100%); 
+      cursor: pointer;
+      transition: 150ms;
+      
+      &:hover {
+         transform: translateY(-5px);
+         box-shadow: rgb(255, 105, 105,0.4) 0px 4px 12px;
+      }
+   }
+}
+
+/* 
+
+HOME PAGE
+
+ */
+
+
+#nav {
+   border-bottom: 1px solid $primary;
+   display: flex;
+   padding: 1rem;
+   justify-content: space-between;
+
+   #logo  {
+      height: 50px;
+      object-fit: cover;
+      cursor: pointer;
+   }
+
+   #profilePicture {
+      height: 50px;
+      width: 50px;
+      border-radius: 50%;
+      border: none;
+      object-fit: cover;
+      cursor: pointer;
+      background-color: grey;
+   }
+}
+
+
+main {
+   display: flex;
+   padding: 3rem 5rem;
+   gap: 2rem;
+   
+   #sideNav {
+      height: 900px;
+      width: 400px;
+      border-right: #ff3c3c50 1px solid ;
+      color: white;
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 7rem;
+      font-weight: 100;
+
+      
+   
+      #sideNavBtn {
+         display: flex;
+         flex-direction: column;
+         gap: 1rem;
+   
+         button {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem;
+            font-size: 1rem;
+            cursor: pointer;
+            background-color: #181818;
+            color: white;
+            border: none;
+            border-radius: 0.5rem;
+            transition: 150ms;
+            text-align: left;
+            padding-left: 1rem;
+            
+            &:hover {
+               background-color: $primary;
+               transform: translateY(-3px);
+            }
+         }
+   
+      }
+
+      .topicSelectionElement {
+         // font-family: 'roboto';
+         display: flex;
+         flex-direction: column;
+         gap: 1.5rem;
+
+         .subTitle {
+            font-family: roboto;
+            font-weight: 300;
+            font-size: 1.3rem;
+            color: #b9b9b9;
+
+         }
+         
+         button {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background-color: #181818;
+            border: none;
+            padding: 1rem;
+            font-size: 1rem;
+            color: white;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: 150ms;
+
+            &:hover {
+               transform: translateY(-3px);
+               background-color: $primary;
+            }
+         }
+         
+         #selectedTopicsBtns {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+         }
+         
+         
+         // Btn spacing
+         #OtherResourcesBtns {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+         }
+         
+      }
+      
+   }
+
+   #content {
+      height: 1000px;
+      width: 100%;
+      font-family: roboto;
+      padding: 3rem;
+      display: flex;
+      flex-direction: column;
+      gap: 10rem;
+      overflow: scroll;
+      
+      #whatsNew {
+         display: flex;
+         justify-content: space-between;
+         align-items: center;
+
+         h1 {
+            font-size: 4rem;
+            color: white;
+            font-weight: bolder;
+         }
+
+         #newPostBtn {
+            padding: 0.7rem 2rem;
+            font-size: 1rem;
+            background: none;
+            border: none;
+            border: 2px solid $primary;
+            border-radius: 0.5rem;
+            color: $primary;
+            transition: 150ms;
+            cursor: pointer;
+            
+            &:hover {
+               background-color: $primary;
+               color: white;
+               transform: translateY(-5px);
+            }
+         }
+      }
+
+      #userContent {
+         max-height: 1000px;
+         // border: 2px solid green;
+         display: grid;
+         gap: 1rem;
+         grid-template-columns: 1fr 1fr;
+
+         // every section
+         div {
+            color: white;
+            padding: 1rem;
+            
+         }
+         
+         #whoPosted {
+            display: flex;
+            align-items: center;
+            height: 50px;
+            background-color: #181818;;
+            align-self: end;
+            border-radius: 0.5rem;
+            color: #555555;
+            display: flex;
+            gap: 1rem;
+            
+            img {
+               height: 30px;
+            }
+         }
+         
+         #postContent  {
+            grid-column: 1 / 2;
+            height: 300px;
+            border-radius: 0.5rem;
+            display: flex;
+            flex-direction: column;
+            overflow: scroll;
+            gap: 2rem;
+            line-height: 1.5;
+            padding: 1rem;
+            background-color: #242424;
+
+
+            .content-section {
+               // Subject
+               h2 {
+                  color: white;
+               }
+   
+               // post
+               p {
+                  color: rgb(212, 212, 212);
+               }
+   
+               h5 {
+                  color: $primary;
+               }
+
+            }
+         }
+
+         #postAnalytics {
+            // border: 1px solid rgb(0, 255, 42);
+            display: flex;
+            gap: 3rem;
+            border-radius: 0.5rem;
+
+            button {
+               font-size: 1.5rem;
+               cursor: pointer;
+            }
+
+            #likeBtn {
+               border: none;
+               background: none;
+               color: white;
+
+               .fa-heart {
+                  color: white;
+               }
+               
+            }
+         }
+
+         #comments {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            grid-row: 2;
+            background-color: #242424;
+            padding: 2rem;
+            border-radius: 0.5rem;
+            grid-column: 2 / 3;
+
+            // comments header
+            h2 {
+               color: white;
+
+            }
+
+            #postComment {
+               display: flex;
+               justify-content: space-between;
+               gap: 1rem;
+
+               input {
+                  border: none;
+                  border-bottom: $primary solid 2px;
+                  background: none;
+                  width: 80%;
+                  color: white;
+                  &:focus {
+                     outline: none;
+                  }
+               }
+               
+               #postCommentBtn {
+                  color: white;
+                  border: none;
+                  background-color: $primary;
+                  border-radius: 0.5rem;
+                  padding: 0.5rem;
+                  transition: 150ms;
+                  cursor: pointer;
+                  width: 20%;
+                  
+                  &:hover {
+                     background-color: $buttonHover;
+                  }
+               }
+            }
+
+
+            
+         }
+      }
+      
+   }
+
+}

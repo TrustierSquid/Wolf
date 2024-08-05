@@ -1,0 +1,438 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #1F1F1F;
+}
+
+/* 
+
+   LOGIN PAGE
+
+ */
+#container {
+  height: 100vh;
+  width: 100vw;
+  color: white;
+  display: grid;
+  place-content: center;
+}
+#container #loginContainer {
+  height: 700px;
+  width: 600px;
+  background-color: #161616;
+  border-radius: 1.5rem;
+  box-shadow: rgba(115, 115, 115, 0.2) 0px 8px 24px;
+  padding: 5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+#container #loginContainer #title {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-size: 1.5rem;
+  font-family: "comfortaa";
+}
+#container #loginContainer #inputField {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+#container #loginContainer #inputField input {
+  height: 60px;
+  width: 400px;
+  border-radius: 10px;
+  background-color: #1B1B1B;
+  color: white;
+  padding: 0.5rem;
+  border: #FF3C3C solid 2px;
+  font-size: 1rem;
+  outline: none;
+}
+#container #loginContainer #inputField a {
+  font-family: "comfortaa";
+  color: white;
+}
+#container #loginContainer #loginBtns {
+  display: flex;
+  gap: 1rem;
+}
+#container #loginContainer #loginBtns .signUpBtn {
+  background: rgb(255, 60, 60);
+  background: linear-gradient(208deg, rgb(255, 60, 60) 0%, rgb(153, 36, 36) 100%);
+  border: none;
+  border-radius: 1rem;
+  cursor: pointer;
+  transition: 150ms;
+  height: 3rem;
+  width: 200px;
+  color: white;
+  font-size: 1.3rem;
+}
+#container #loginContainer #loginBtns .signUpBtn:hover {
+  transform: translateY(-3px);
+  box-shadow: rgba(255, 119, 107, 0.2) 0px 8px 24px;
+}
+
+@media (max-width: 700px) {
+  #container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  #container #loginContainer {
+    padding: 1rem;
+    width: 500px;
+    height: 500px;
+  }
+}
+@media (max-width: 550px) {
+  #container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  #container #loginContainer {
+    width: 350px;
+    height: 450px;
+  }
+  #container #loginContainer #inputField input {
+    width: 300px;
+  }
+  #container #loginContainer #inputField a {
+    font-size: 0.8rem;
+  }
+}
+/* 
+
+CHOOSING TOPICS COMPONENT
+
+*/
+#topics {
+  background-color: #131212;
+  height: 700px;
+  width: 70%;
+  margin: 3rem auto;
+  border-radius: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  padding: 5rem;
+  color: white;
+  font-family: "roboto";
+}
+#topics h1 {
+  font-weight: lighter;
+  font-family: "roboto";
+  font-size: 2.5rem;
+  width: 90%;
+  text-align: center;
+}
+#topics h1 span {
+  font-weight: 900;
+  color: #FF3C3C;
+}
+#topics #topicCounter {
+  font-size: 1.5rem;
+  margin-bottom: 3rem;
+  color: grey;
+}
+#topics #topicSelect {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+#topics #topicSelect button {
+  font-weight: 300;
+  border-radius: 0.5rem;
+  border: none;
+  background: rgba(255, 60, 60, 0.2);
+  color: white;
+  padding: 0.5rem 1rem;
+  transition: 150ms;
+  font-size: 1.4rem;
+  cursor: pointer;
+}
+#topics #topicSelect button:hover {
+  transform: translateY(-5px);
+  box-shadow: rgba(255, 105, 105, 0.4) 0px 4px 12px;
+}
+#topics #topicSelect .selected {
+  background-color: #FF3C3C;
+}
+#topics #topicSelect .disabled {
+  transition: 150ms;
+  background-color: #303030;
+  pointer-events: none;
+}
+#topics #continuteBtn {
+  padding: 1rem;
+  border-radius: 0.5rem;
+  background-color: #FF3C3C;
+  border: none;
+  font-size: 1.4rem;
+  color: white;
+  background: rgb(255, 60, 60);
+  background: linear-gradient(208deg, rgb(255, 60, 60) 0%, rgb(153, 36, 36) 100%);
+  cursor: pointer;
+  transition: 150ms;
+}
+#topics #continuteBtn:hover {
+  transform: translateY(-5px);
+  box-shadow: rgba(255, 105, 105, 0.4) 0px 4px 12px;
+}
+
+/* 
+
+HOME PAGE
+
+ */
+#nav {
+  border-bottom: 1px solid #FF3C3C;
+  display: flex;
+  padding: 1rem;
+  justify-content: space-between;
+}
+#nav #logo {
+  height: 50px;
+  -o-object-fit: cover;
+     object-fit: cover;
+  cursor: pointer;
+}
+#nav #profilePicture {
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  border: none;
+  -o-object-fit: cover;
+     object-fit: cover;
+  cursor: pointer;
+  background-color: grey;
+}
+
+main {
+  display: flex;
+  padding: 3rem 5rem;
+  gap: 2rem;
+}
+main #sideNav {
+  height: 900px;
+  width: 400px;
+  border-right: rgba(255, 60, 60, 0.3137254902) 1px solid;
+  color: white;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 7rem;
+  font-weight: 100;
+}
+main #sideNav #sideNavBtn {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+main #sideNav #sideNavBtn button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1rem;
+  font-size: 1rem;
+  cursor: pointer;
+  background-color: #181818;
+  color: white;
+  border: none;
+  border-radius: 0.5rem;
+  transition: 150ms;
+  text-align: left;
+  padding-left: 1rem;
+}
+main #sideNav #sideNavBtn button:hover {
+  background-color: #FF3C3C;
+  transform: translateY(-3px);
+}
+main #sideNav .topicSelectionElement {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+main #sideNav .topicSelectionElement .subTitle {
+  font-family: roboto;
+  font-weight: 300;
+  font-size: 1.3rem;
+  color: #b9b9b9;
+}
+main #sideNav .topicSelectionElement button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: #181818;
+  border: none;
+  padding: 1rem;
+  font-size: 1rem;
+  color: white;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: 150ms;
+}
+main #sideNav .topicSelectionElement button:hover {
+  transform: translateY(-3px);
+  background-color: #FF3C3C;
+}
+main #sideNav .topicSelectionElement #selectedTopicsBtns {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+main #sideNav .topicSelectionElement #OtherResourcesBtns {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+main #content {
+  height: 1000px;
+  width: 100%;
+  font-family: roboto;
+  padding: 3rem;
+  display: flex;
+  flex-direction: column;
+  gap: 10rem;
+  overflow: scroll;
+}
+main #content #whatsNew {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+main #content #whatsNew h1 {
+  font-size: 4rem;
+  color: white;
+  font-weight: bolder;
+}
+main #content #whatsNew #newPostBtn {
+  padding: 0.7rem 2rem;
+  font-size: 1rem;
+  background: none;
+  border: none;
+  border: 2px solid #FF3C3C;
+  border-radius: 0.5rem;
+  color: #FF3C3C;
+  transition: 150ms;
+  cursor: pointer;
+}
+main #content #whatsNew #newPostBtn:hover {
+  background-color: #FF3C3C;
+  color: white;
+  transform: translateY(-5px);
+}
+main #content #userContent {
+  max-height: 1000px;
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 1fr 1fr;
+}
+main #content #userContent div {
+  color: white;
+  padding: 1rem;
+}
+main #content #userContent #whoPosted {
+  display: flex;
+  align-items: center;
+  height: 50px;
+  background-color: #181818;
+  align-self: end;
+  border-radius: 0.5rem;
+  color: #555555;
+  display: flex;
+  gap: 1rem;
+}
+main #content #userContent #whoPosted img {
+  height: 30px;
+}
+main #content #userContent #postContent {
+  grid-column: 1/2;
+  height: 300px;
+  border-radius: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  overflow: scroll;
+  gap: 2rem;
+  line-height: 1.5;
+  padding: 1rem;
+  background-color: #242424;
+}
+main #content #userContent #postContent .content-section h2 {
+  color: white;
+}
+main #content #userContent #postContent .content-section p {
+  color: rgb(212, 212, 212);
+}
+main #content #userContent #postContent .content-section h5 {
+  color: #FF3C3C;
+}
+main #content #userContent #postAnalytics {
+  display: flex;
+  gap: 3rem;
+  border-radius: 0.5rem;
+}
+main #content #userContent #postAnalytics button {
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+main #content #userContent #postAnalytics #likeBtn {
+  border: none;
+  background: none;
+  color: white;
+}
+main #content #userContent #postAnalytics #likeBtn .fa-heart {
+  color: white;
+}
+main #content #userContent #comments {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  grid-row: 2;
+  background-color: #242424;
+  padding: 2rem;
+  border-radius: 0.5rem;
+  grid-column: 2/3;
+}
+main #content #userContent #comments h2 {
+  color: white;
+}
+main #content #userContent #comments #postComment {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+}
+main #content #userContent #comments #postComment input {
+  border: none;
+  border-bottom: #FF3C3C solid 2px;
+  background: none;
+  width: 80%;
+  color: white;
+}
+main #content #userContent #comments #postComment input:focus {
+  outline: none;
+}
+main #content #userContent #comments #postComment #postCommentBtn {
+  color: white;
+  border: none;
+  background-color: #FF3C3C;
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+  transition: 150ms;
+  cursor: pointer;
+  width: 20%;
+}
+main #content #userContent #comments #postComment #postCommentBtn:hover {
+  background-color: #7A0B31;
+}/*# sourceMappingURL=index.css.map */

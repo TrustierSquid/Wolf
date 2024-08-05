@@ -1,5 +1,5 @@
 
-import Login from "./components/Login"
+import Login from "/src/components/Login.jsx"
 
 export default function App(){
   return (

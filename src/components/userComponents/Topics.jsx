@@ -26,8 +26,9 @@ export default function Topics(){
 
    // the value is the topic the user selected.
    // refs is an object that keeps track of all the topic buttons on the page
+   let addedTopics = 0
    function recordTopic(topicElementValue, refs) {
-
+      
       // post the data that the user selected
       let stageTopics = async (topic)=> {
          const response = await fetch('/api/topics', {
@@ -37,8 +38,10 @@ export default function Topics(){
             },
             body: JSON.stringify({topic: topic})
          })
-      }
 
+
+      }
+      
       // remove the selected topic from the server
       let removeStagedTopics = async (topic)=> {
          const response = await fetch('/api/topics', {
@@ -48,17 +51,22 @@ export default function Topics(){
             },
             body: JSON.stringify({topic: topic})
          })
+
+         addedTopics--
       }
 
       
-      /* STYLING ON CLICK */
-
+      /* STYLING FOR THE BUTTONS ON CLICK */
+      
+      
       refs.classList.toggle('selected')
       // if the "selected" class in not appended to the element, the innerHTML will remain
       if (!refs.classList.contains('selected')) {
          refs.innerHTML = `${topicElementValue} +`
          removeStagedTopics(topicElementValue)
       }
+
+      
       
       // if the "selected" class is appended to the element, the innerHTML will be a check mark
       if (refs.innerText.includes('+') && refs.classList.contains('selected')) {
@@ -67,9 +75,11 @@ export default function Topics(){
       }
 
       console.log(topicElementValue)
-         
-      
 
+   }
+
+   function reDirectToHome(){
+      window.location.href = 'home.html'
    }
 
    /* async function finalizeTopics(){
@@ -100,7 +110,7 @@ export default function Topics(){
                })}
             </div>
             <br />
-            <button id="continuteBtn">Continute</button>
+            <button id="continuteBtn" onClick={()=> reDirectToHome()}>Continute</button>
          </main>
       </>
    )
