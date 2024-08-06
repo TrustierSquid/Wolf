@@ -1,11 +1,24 @@
-
+// express
 import express from 'express';
+// for hashing passwords and other sensitive information
+import dotenv from 'dotenv'; dotenv.config();
 import bcrypt from 'bcrypt';
+
+// for file redirections
 import path from 'path';
 import { fileURLToPath } from 'url';
+
+// for Database connectivity
 import connectMongo from '../server.js';
+import { ObjectId } from 'mongodb';
+
+// for serving cookies and session data
 import jsonwebtoken from 'jsonwebtoken';
+import session from 'express-session';
+
+// middleware for protecting routes
 import requireAuth from '../middleware/authMiddleware.js';
+
 
 // setting router
 const router = express.Router()
@@ -19,7 +32,6 @@ let database = null
 // middleware
 router.use(express.json())
 
-
 // with this middleware you are shipping each req object with a database prop
 router.use(async (req, res, next) => {
    if (!database) {
@@ -30,6 +42,13 @@ router.use(async (req, res, next) => {
    
    next()
 })
+
+router.use(session({
+   secret: process.env.JWT_SECRET,
+   resave: false,
+   saveUninitialized: true,
+   cookie: {secure: false} 
+}))
 
 
 // calculating the expiration for jwt
@@ -113,7 +132,7 @@ router.post('/add', async (req, res)=> {
             followerCount: 0, 
             followingCount: 0, 
             posts: 0, 
-            topics: {},
+            topics: [],
             lastLogin: new Date(),
             profilePicture: ''
          });
@@ -123,8 +142,14 @@ router.post('/add', async (req, res)=> {
          const token = createToken(newUser._id)
          // alive for 3 days
          res.cookie('jwt', token, {httpOnly: true, maxAge: maxAge * 1000, secure: false})
+         
+         req.session.userId = newUser._id
          res.json({success: true})
+         
          console.log('Successfully added user!')
+         console.log(req.session.userId)
+
+         
          // res.sendFile(path.join(__dirname, 'dist', 'user.html'))
       }
       
@@ -133,6 +158,85 @@ router.post('/add', async (req, res)=> {
    }
    
 })
+
+
+// RECORDING THE TOPICS THE NEWUSER SELECTS
+// when the user selects a topic
+router.post('/topics', async (req, res)=> {
+   const { topic } = req.body
+
+   const database = await connectMongo()
+   const users = await database.collection('Users')
+
+   const documentLookup = await users.findOne({_id: new ObjectId(req.session.userId)})
+   
+   if (documentLookup) {
+      console.log("We are golden Baby!")
+
+      // values to update
+      const  updateValues = {
+         $push: {
+            'topics': topic
+         }
+      }
+
+      const result = await users.updateOne(
+         { _id: new ObjectId(req.session.userId) },
+         updateValues
+      )
+
+      console.log("Updated topics")
+      
+   } else {
+      console.log("Failed to find user")
+   }
+
+
+   
+   
+})
+
+
+// when the user deselects a topic
+router.delete('/topics', async (req, res)=> {
+   const { topic } = req.body
+
+   const database = await connectMongo()
+   const users = database.collection('Users')
+   
+   const documentLookup = await users.findOne({_id: new ObjectId(req.session.userId)})
+   
+   if (documentLookup) {
+      console.log("We are golden Baby!")
+
+      // values to update
+      const  updateValues = {
+         $pull: {
+            'topics': topic
+         }
+      }
+
+      const result = await users.updateOne(
+         { _id: new ObjectId(req.session.userId) },
+         updateValues
+      )
+
+      console.log("Updated topics (delete)", result)
+      
+   } else {
+      console.log("Failed to find user")
+   }
+   
+   
+   
+   /* const index = userTopic.indexOf(topic)
+   if (index > -1) {
+      userTopic.splice(index, 1)
+   }  */     
+})
+
+
+
 
 
 export default router;

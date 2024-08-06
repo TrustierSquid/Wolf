@@ -68,7 +68,6 @@ export default function Login(){
    
          username.current.value = ''
          password.current.value = ''
-         console.log(data)
       }
       
       

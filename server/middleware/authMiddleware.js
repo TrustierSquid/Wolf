@@ -10,7 +10,7 @@ const requireAuth = (req, res, next)=> {
             console.log('Token is not valid')
             res.redirect('/')
          } else {
-            console.log('Token valid', decodedToken)
+            console.log('Token valid')
             next()
          }
       })

@@ -31,7 +31,7 @@ export default function Topics(){
       
       // post the data that the user selected
       let stageTopics = async (topic)=> {
-         const response = await fetch('/api/topics', {
+         const response = await fetch('/users/topics', {
             method: 'POST',
             headers: {
                'Content-Type': 'application/json'
@@ -44,7 +44,7 @@ export default function Topics(){
       
       // remove the selected topic from the server
       let removeStagedTopics = async (topic)=> {
-         const response = await fetch('/api/topics', {
+         const response = await fetch('/users/topics', {
             method: 'DELETE',
             headers: {
                'Content-Type': 'application/json',
@@ -57,7 +57,6 @@ export default function Topics(){
 
       
       /* STYLING FOR THE BUTTONS ON CLICK */
-      
       
       refs.classList.toggle('selected')
       // if the "selected" class in not appended to the element, the innerHTML will remain

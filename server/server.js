@@ -3,12 +3,15 @@ import dotenv from 'dotenv'; dotenv.config()
 import path from 'path';
 import { fileURLToPath } from 'url';
 import cors from 'cors';
+
+// returns newUser identity
 import signinRoutes from './routes/signin.js';
+
 import requireAuth from './middleware/authMiddleware.js';
 import cookieParser from 'cookie-parser';
 
 // mongoDB
-import { MongoClient, ServerApiVersion } from 'mongodb';
+import { MongoClient, ServerApiVersion, ObjectId } from 'mongodb';
 
 // list of topics for the user to choose from
 import topics from './json/topics.json' assert {type: 'json'};
@@ -54,7 +57,7 @@ const client = new MongoClient(uri, {
    }
 })
 
-// connect to mongodb
+// establishing a connection to mongodb
 async function connectMongo(){
    if (database) return database
 
@@ -73,7 +76,7 @@ async function connectMongo(){
 connectMongo()
 
 
-// Send user to login screen
+// on load Send user to login screen
 app.get('/', (req, res)=> {
    res.sendFile(path.join(__dirname, './dist/index.html'))
    console.log("User arrived at login screen")
@@ -83,49 +86,6 @@ app.get('/', (req, res)=> {
 app.get('/api/topics', requireAuth, (req, res)=> {
    res.json(topics)  
 })
-
-
-
-// RECORDING THE TOPICS THE USER SELECTS
-// when the user selects a topic
-app.post('/api/topics', async (req, res)=> {
-   const { topic } = req.body
-
-   const database = await connectMongo()
-   const users = await database.collection('Users')
-
-   // allows the new user to select their topics
-   let user = await users.findOne({user: username})
-   
-   if (user) {
-      const result = await collection.updateOne(
-         {user: username}, //filter
-         {$push: {topics: topic}}
-      )
-
-   }
-   
-})
-
-// when the user deselects a topic
-app.delete('/api/topics', async (req, res)=> {
-   const { topic } = req.body
-
-   const database = await connectMongo()
-   const users = database.collection('Users')
-   
-   await users.deleteOne({topic: topic})
-   console.log("removed topic")
-   
-   
-   /* const index = userTopic.indexOf(topic)
-   if (index > -1) {
-      userTopic.splice(index, 1)
-   }  */     
-})
-
-
-
 
    
 app.listen(port, async ()=> {
