@@ -4,6 +4,16 @@ $darkenPrimary: #532C2C;
 $inputField: #1B1B1B;
 $buttonHover: #7A0B31;
 
+// fonts
+$ff-heading: "Nunito", sans-serif;
+$ff-body: "roboto", sans-serif;
+
+// standard color protocal
+$sc-success: #86DB1E;
+$sc-warning: #FFD507;
+$sc-error: #F96E36;
+$sc-info: #00CAE5;
+
 @mixin buttonGradient {
    background: rgb(255,60,60);
    background: linear-gradient(208deg, rgba(255,60,60,1) 0%, rgba(153,36,36,1) 100%); 
@@ -27,6 +37,10 @@ $buttonHover: #7A0B31;
    box-sizing: border-box;
 }
 
+html {
+   max-height: 100000px;
+}
+
 body {
    background-color: $background;
 }
@@ -38,123 +52,116 @@ body {
 
  */
 
-#container {
-   height: 100vh;
-   width: 100vw;
+#loginContainer {
+   font-family: comfortaa;
+   background: #161616;
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   justify-content: space-around;
+   padding: 2rem;
+   gap: 1rem;
+   max-width: 600px;
+   min-height: 700px;
+   margin: 4rem auto ;
+   border-radius: 2rem;
    color: white;
-   display: grid;
-   place-content: center;
-   
 
-   #loginContainer {
-      height: 700px;
-      width: 600px;
-      background-color: #161616;
-      border-radius: 1.5rem;
-      box-shadow: rgb(115, 115, 115, 0.2) 0px 8px 24px;
-      padding: 5rem;
+
+   // title with logo
+   #title {
       display: flex;
-      flex-direction: column;
-      justify-content: space-around;
       align-items: center;
-
-      #title {
-         display: flex;
-         align-items: center;
-         gap: 1rem;
-         font-size: 1.5rem;
-         font-family: "comfortaa";
-      }
+      gap: 1rem;
+   }
+   
+   // input fields
+   #inputField {
+      // width: max(350px, 200px);
+      width: 100%;
+      padding: 1rem;
       
-      #inputField {
+      
+      
+      div {
          display: flex;
          flex-direction: column;
-         gap: 2rem;
+         flex-wrap: wrap;
+         padding: 1rem;
+
+         h5 {
+            font-family: $ff-heading;
+            font-weight: 900;
+            color: white;
+            margin-bottom: 1.5rem;
+         }
          
          input {
-            height: 60px;
-            width: 400px;
-            border-radius: 10px;
-            background-color: $inputField;
+            background: none;
+            width: 100%;
+            height: 40px;
+            font-size: clamp(1rem, 1.3rem, 3rem);
+            border: none;
+            border-bottom: 1px solid $primary;
             color: white;
-            padding: 0.5rem;
-            border: $primary solid 2px;
-            font-size: 1rem;
-            outline: none;
-
-
-         }
-
-         // Forgot password link
-         a {
-            font-family: "comfortaa";
-            color: white;
-         }
-
-      }
-      
-      #loginBtns {
-         display: flex;
-         gap: 1rem;
-         .signUpBtn {
-            @include buttonGradient();
-            height: 3rem;
-            width: 200px;
-            color: white;
-            font-size: 1.3rem;
+            
+            &:focus {
+               outline: none;
+            }
          }
       }
+   }
 
-      
+   // forgot password w/ recuriter user and pass
+   #extraInfo {
+      display: flex;
+      gap: 2rem;
+      a {
+         color: $primary;
+         font-family: $ff-body;
+      }
+
+      p {
+         font-family: $ff-body;
+      }
+
+      span {
+         display: none;
+      }
+   }
+
+   // buttons for login and signup
+   #loginBtns {
+      display: flex;
+      gap: 2rem;
+
+      button {
+         background-color: $primary;
+         border: none;
+         padding: 1rem;
+         border-radius: 0.5rem;
+         color: white;
+         cursor: pointer;
+         font-size: min(1rem, 2.5rem);
+         transition: 150ms;
+         font-family: $ff-heading;
+         font-weight: 900;
+         
+         &:hover {
+            background-color: $buttonHover;
+            transform: translateY(-5px);
+            box-shadow: rgb(255, 105, 105, 0.4) 0px 4px 12px;
+         }
+      }
    }
    
 }
+ 
+ 
 
 // LOGIN PAGE MEDIA QUERY
 
-@media (max-width: 700px) {
-   #container {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      
-      #loginContainer {
-         padding: 1rem;
-         width: 500px;
-         height: 500px;
-      }
 
-   }
-}
-
-@media (max-width: 550px) {
-   #container {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      
-      #loginContainer {
-         // padding: 1rem;
-         width: 350px;
-         height: 450px;
-         
-         #inputField {
-            input {
-               width: 300px;
-            }
-
-            a {
-               font-size: 0.8rem;
-            }
-         }
-      }
-
-      
-
-   }
-}
 
 /* 
 
@@ -165,57 +172,60 @@ CHOOSING TOPICS COMPONENT
 
 #topics {
    background-color: #131212;
-   height: 700px;
-   width: 70%;
-   margin: 3rem auto;
-   border-radius: 1rem;
+   min-height: 600px;
+   max-width: 1000px;
+   // margin: 5rem auto;
+   margin: 4rem auto;
+   border-radius: 2rem;
    display: flex;
    flex-direction: column;
+   justify-content: space-around;
    align-items: center;
    gap: 2rem;
-   padding: 5rem;
+   padding: 2rem;
    color: white;
-   font-family: 'roboto';
+   
 
    // header
    h1 {
-      font-weight: lighter;
-      font-family: 'roboto';
-      font-size: 2.5rem;
+      // font-weight: lighter;
+      font-family: $ff-heading;
+      font-size: min(2rem, 4rem);
       width: 90%;
       text-align: center;
+      color: white;
+   
       span {
-         font-weight: 900;
          color: $primary;
       }
       
    }
-   
-   #topicCounter {
-      font-size: 1.5rem;
-      margin-bottom: 3rem;
-      color: grey;
-   }
+
 
    #topicSelect {
-      display: flex;
-      flex-wrap: wrap;
+      // display: flex;
+      // flex-wrap: wrap;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      width: 80%;
+      // grid-template-columns: 1fr 1fr 1fr;
+      // border: 2px solid red;
       gap: 1rem;
       
       button {
-         font-weight: 300;
+         font-weight: 500;
          border-radius: 0.5rem;
          border: none;
          background: rgba(255, 60, 60, 0.2);
          color: white;
          padding: 0.5rem 1rem;
          transition: 150ms;
-         font-size: 1.4rem;
+         font-size: clamp(0.6rem, 1rem, 1.8rem);
          cursor: pointer;
 
          
          &:hover {
-            transform: translateY(-5px);
+            transform: translateY(-2px);
             box-shadow: rgb(255, 105, 105,0.4) 0px 4px 12px;
          }
       }
@@ -233,22 +243,39 @@ CHOOSING TOPICS COMPONENT
    }
 
    #continuteBtn {
+      font-family: $ff-heading;
+      font-weight: 900;
       padding: 1rem;
       border-radius: 0.5rem;
       background-color: $primary;
       border: none;
-      font-size: 1.4rem;
       color: white;
       background: rgb(255,60,60);
-      background: linear-gradient(208deg, rgba(255,60,60,1) 0%, rgba(153,36,36,1) 100%); 
       cursor: pointer;
       transition: 150ms;
       
       &:hover {
          transform: translateY(-5px);
-         box-shadow: rgb(255, 105, 105,0.4) 0px 4px 12px;
+         box-shadow: rgb(255, 105, 105,0.4) 0px 4px 15px;
+         background-color: $buttonHover;
       }
    }
+}
+
+@media (max-width: 1000px) {   
+   body {
+      background-color: #161616;
+   }
+   
+   #topics {
+      margin: 1rem;
+   }
+
+   #loginContainer {
+      margin: 1;
+   }
+
+   
 }
 
 /* 

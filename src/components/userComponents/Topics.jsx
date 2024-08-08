@@ -13,6 +13,7 @@ export default function Topics(){
          // grabbing topics to display on the topic select screen
          const response = await fetch('/api/topics', {
             method: 'GET',
+            credentials: "include",
             headers: {
                'Content-Type': 'application/json',
             }
@@ -33,6 +34,7 @@ export default function Topics(){
       let stageTopics = async (topic)=> {
          const response = await fetch('/users/topics', {
             method: 'POST',
+            credentials: "include",
             headers: {
                'Content-Type': 'application/json'
             },
@@ -46,6 +48,7 @@ export default function Topics(){
       let removeStagedTopics = async (topic)=> {
          const response = await fetch('/users/topics', {
             method: 'DELETE',
+            credentials: "include",
             headers: {
                'Content-Type': 'application/json',
             },
@@ -77,39 +80,29 @@ export default function Topics(){
 
    }
 
-   function reDirectToHome(){
-      window.location.href = 'home.html'
+   // go to home page for user
+   async function reDirectToHome(){
+      window.location.href = 'http://localhost:5173/home'
    }
 
-   /* async function finalizeTopics(){
-      const response = await fetch('/api/topics/finalize', {
-         method: 'POST',
-         headers: {
-            'Content-Type': 'application/json'
-         },
-         body: JSON.stringify({})
-      })
-   } */
    
    return (
       <>
          <main id="topics">
             <h1>Select what <span>topics</span> interest you.</h1>
-            <p id="topicCounter">0/4</p>
             <div id="topicSelect">
                {topic.map(topic => {
                   return (
                      <>
                         <button 
                            key={topic.id} ref={element => topicRefs.current[topic.id] = element} 
-                           onClick={()=> recordTopic(topic.name, topicRefs.current[topic.id])}>{topic.name} +  
-                            </button>
+                           onClick={()=> recordTopic(topic.name, topicRefs.current[topic.id])}>{topic.name} +</button>
                      </>
                   )
                })}
             </div>
             <br />
-            <button id="continuteBtn" onClick={()=> reDirectToHome()}>Continute</button>
+            <button id="continuteBtn" onClick={()=> reDirectToHome()}>Next  <i className="fa-solid fa-right-long"></i></button>
          </main>
       </>
    )

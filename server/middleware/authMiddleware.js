@@ -1,25 +1,37 @@
 import jsonwebtoken from 'jsonwebtoken';
+import connectMongo from '../server.js';
+import { ObjectId } from "mongodb";
+import express from 'express'
 
-const requireAuth = (req, res, next)=> {
+
+// GLOBAL MIDDLEWARE
+// this middleware is used to check if the user is authenticated before allowing them to access certain routes
+const requireAuth =  async (req, res, next)=> {
    const token = req.cookies.jwt
 
    // check if token exist
    if (token) {
+      // jwt validation
       jsonwebtoken.verify(token, process.env.JWT_SECRET, (err, decodedToken)=> {
+
+         // If the token doesnt match the signature
          if (err) {
             console.log('Token is not valid')
             res.redirect('/')
          } else {
             console.log('Token valid')
+            req.currentUser = decodedToken.userId
             next()
          }
       })
+
    } else {
-      // ISSUE: if no token, redirect to login page
-      console.log('No token, redirecting to login')
+      // if no token, redirect to login page
+      console.log('No token found, redirecting to login')
       res.redirect('/')
    }
    
 }
+
 
 export default requireAuth;

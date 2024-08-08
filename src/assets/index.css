@@ -4,6 +4,10 @@
   box-sizing: border-box;
 }
 
+html {
+  max-height: 100000px;
+}
+
 body {
   background-color: #1F1F1F;
 }
@@ -13,104 +17,90 @@ body {
    LOGIN PAGE
 
  */
-#container {
-  height: 100vh;
-  width: 100vw;
-  color: white;
-  display: grid;
-  place-content: center;
-}
-#container #loginContainer {
-  height: 700px;
-  width: 600px;
-  background-color: #161616;
-  border-radius: 1.5rem;
-  box-shadow: rgba(115, 115, 115, 0.2) 0px 8px 24px;
-  padding: 5rem;
+#loginContainer {
+  font-family: comfortaa;
+  background: #161616;
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
   align-items: center;
+  justify-content: space-around;
+  padding: 2rem;
+  gap: 1rem;
+  max-width: 600px;
+  min-height: 700px;
+  margin: 4rem auto;
+  border-radius: 2rem;
+  color: white;
 }
-#container #loginContainer #title {
+#loginContainer #title {
   display: flex;
   align-items: center;
   gap: 1rem;
-  font-size: 1.5rem;
-  font-family: "comfortaa";
 }
-#container #loginContainer #inputField {
+#loginContainer #inputField {
+  width: 100%;
+  padding: 1rem;
+}
+#loginContainer #inputField div {
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  flex-wrap: wrap;
+  padding: 1rem;
 }
-#container #loginContainer #inputField input {
-  height: 60px;
-  width: 400px;
-  border-radius: 10px;
-  background-color: #1B1B1B;
+#loginContainer #inputField div h5 {
+  font-family: "Nunito", sans-serif;
+  font-weight: 900;
   color: white;
-  padding: 0.5rem;
-  border: #FF3C3C solid 2px;
-  font-size: 1rem;
+  margin-bottom: 1.5rem;
+}
+#loginContainer #inputField div input {
+  background: none;
+  width: 100%;
+  height: 40px;
+  font-size: 1.3rem;
+  border: none;
+  border-bottom: 1px solid #FF3C3C;
+  color: white;
+}
+#loginContainer #inputField div input:focus {
   outline: none;
 }
-#container #loginContainer #inputField a {
-  font-family: "comfortaa";
-  color: white;
-}
-#container #loginContainer #loginBtns {
+#loginContainer #extraInfo {
   display: flex;
-  gap: 1rem;
+  gap: 2rem;
 }
-#container #loginContainer #loginBtns .signUpBtn {
-  background: rgb(255, 60, 60);
-  background: linear-gradient(208deg, rgb(255, 60, 60) 0%, rgb(153, 36, 36) 100%);
+#loginContainer #extraInfo a {
+  color: #FF3C3C;
+  font-family: "roboto", sans-serif;
+}
+#loginContainer #extraInfo p {
+  font-family: "roboto", sans-serif;
+}
+#loginContainer #extraInfo span {
+  display: none;
+}
+#loginContainer #loginBtns {
+  display: flex;
+  gap: 2rem;
+}
+#loginContainer #loginBtns button {
+  background-color: #FF3C3C;
   border: none;
-  border-radius: 1rem;
-  cursor: pointer;
-  transition: 150ms;
-  height: 3rem;
-  width: 200px;
+  padding: 1rem;
+  border-radius: 0.5rem;
   color: white;
-  font-size: 1.3rem;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: 150ms;
+  font-family: "Nunito", sans-serif;
+  font-weight: 900;
 }
-#container #loginContainer #loginBtns .signUpBtn:hover {
-  transform: translateY(-3px);
-  box-shadow: rgba(255, 119, 107, 0.2) 0px 8px 24px;
+#loginContainer #loginBtns button:hover {
+  background-color: #7A0B31;
+  transform: translateY(-5px);
+  box-shadow: rgba(255, 105, 105, 0.4) 0px 4px 12px;
 }
 
-@media (max-width: 700px) {
-  #container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  }
-  #container #loginContainer {
-    padding: 1rem;
-    width: 500px;
-    height: 500px;
-  }
-}
-@media (max-width: 550px) {
-  #container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  }
-  #container #loginContainer {
-    width: 350px;
-    height: 450px;
-  }
-  #container #loginContainer #inputField input {
-    width: 300px;
-  }
-  #container #loginContainer #inputField a {
-    font-size: 0.8rem;
-  }
-}
 /* 
 
 CHOOSING TOPICS COMPONENT
@@ -118,52 +108,47 @@ CHOOSING TOPICS COMPONENT
 */
 #topics {
   background-color: #131212;
-  height: 700px;
-  width: 70%;
-  margin: 3rem auto;
-  border-radius: 1rem;
+  min-height: 600px;
+  max-width: 1000px;
+  margin: 4rem auto;
+  border-radius: 2rem;
   display: flex;
   flex-direction: column;
+  justify-content: space-around;
   align-items: center;
   gap: 2rem;
-  padding: 5rem;
+  padding: 2rem;
   color: white;
-  font-family: "roboto";
 }
 #topics h1 {
-  font-weight: lighter;
-  font-family: "roboto";
-  font-size: 2.5rem;
+  font-family: "Nunito", sans-serif;
+  font-size: 2rem;
   width: 90%;
   text-align: center;
+  color: white;
 }
 #topics h1 span {
-  font-weight: 900;
   color: #FF3C3C;
 }
-#topics #topicCounter {
-  font-size: 1.5rem;
-  margin-bottom: 3rem;
-  color: grey;
-}
 #topics #topicSelect {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  width: 80%;
   gap: 1rem;
 }
 #topics #topicSelect button {
-  font-weight: 300;
+  font-weight: 500;
   border-radius: 0.5rem;
   border: none;
   background: rgba(255, 60, 60, 0.2);
   color: white;
   padding: 0.5rem 1rem;
   transition: 150ms;
-  font-size: 1.4rem;
+  font-size: 1rem;
   cursor: pointer;
 }
 #topics #topicSelect button:hover {
-  transform: translateY(-5px);
+  transform: translateY(-2px);
   box-shadow: rgba(255, 105, 105, 0.4) 0px 4px 12px;
 }
 #topics #topicSelect .selected {
@@ -175,22 +160,34 @@ CHOOSING TOPICS COMPONENT
   pointer-events: none;
 }
 #topics #continuteBtn {
+  font-family: "Nunito", sans-serif;
+  font-weight: 900;
   padding: 1rem;
   border-radius: 0.5rem;
   background-color: #FF3C3C;
   border: none;
-  font-size: 1.4rem;
   color: white;
   background: rgb(255, 60, 60);
-  background: linear-gradient(208deg, rgb(255, 60, 60) 0%, rgb(153, 36, 36) 100%);
   cursor: pointer;
   transition: 150ms;
 }
 #topics #continuteBtn:hover {
   transform: translateY(-5px);
-  box-shadow: rgba(255, 105, 105, 0.4) 0px 4px 12px;
+  box-shadow: rgba(255, 105, 105, 0.4) 0px 4px 15px;
+  background-color: #7A0B31;
 }
 
+@media (max-width: 1000px) {
+  body {
+    background-color: #161616;
+  }
+  #topics {
+    margin: 1rem;
+  }
+  #loginContainer {
+    margin: 1;
+  }
+}
 /* 
 
 HOME PAGE
