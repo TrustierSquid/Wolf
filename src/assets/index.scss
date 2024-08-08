@@ -1,4 +1,9 @@
+// ligher BG
 $background: #1F1F1F;
+
+// darker BG
+$subBackground: #121010;
+
 $primary: #FF3C3C;
 $darkenPrimary: #532C2C;
 $inputField: #1B1B1B;
@@ -42,7 +47,7 @@ html {
 }
 
 body {
-   background-color: $background;
+   background-color: $subBackground;
 }
 
 
@@ -222,6 +227,7 @@ CHOOSING TOPICS COMPONENT
          transition: 150ms;
          font-size: clamp(0.6rem, 1rem, 1.8rem);
          cursor: pointer;
+         
 
          
          &:hover {
@@ -263,9 +269,6 @@ CHOOSING TOPICS COMPONENT
 }
 
 @media (max-width: 1000px) {   
-   body {
-      background-color: #161616;
-   }
    
    #topics {
       margin: 1rem;
@@ -284,12 +287,43 @@ HOME PAGE
 
  */
 
+.profilePicture {
+   height: 50px;
+   width: 50px;
+   border-radius: 50%;
+   border: none;
+   object-fit: cover;
+   cursor: pointer;
+   background-color: grey;
+}
 
 #nav {
-   border-bottom: 1px solid $primary;
+   // border-bottom: 1px solid $primary;
    display: flex;
    padding: 1rem;
-   justify-content: space-between;
+   justify-content:space-between;
+   margin-inline: 8rem;
+
+   #logoContainer {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      h1 {
+         font-family: comfortaa;
+         color: white;
+      }
+   }
+   
+   #profileContainer {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      h2 {
+         font-family: comfortaa;
+         color: white;
+         
+      }
+   }
 
    #logo  {
       height: 50px;
@@ -297,15 +331,6 @@ HOME PAGE
       cursor: pointer;
    }
 
-   #profilePicture {
-      height: 50px;
-      width: 50px;
-      border-radius: 50%;
-      border: none;
-      object-fit: cover;
-      cursor: pointer;
-      background-color: grey;
-   }
 }
 
 
@@ -317,17 +342,16 @@ main {
    #sideNav {
       height: 900px;
       width: 400px;
-      border-right: #ff3c3c50 1px solid ;
       color: white;
       padding: 1.5rem;
       display: flex;
       flex-direction: column;
       gap: 7rem;
-      font-weight: 100;
+      font-family: $ff-body;
 
       
    
-      #sideNavBtn {
+      #sideNavBtns {
          display: flex;
          flex-direction: column;
          gap: 1rem;
@@ -339,17 +363,31 @@ main {
             padding: 1rem;
             font-size: 1rem;
             cursor: pointer;
-            background-color: #181818;
+            background-color: $background;
             color: white;
             border: none;
             border-radius: 0.5rem;
             transition: 150ms;
             text-align: left;
             padding-left: 1rem;
-            
+            display: flex;
+            justify-content: space-between;
+
+
             &:hover {
                background-color: $primary;
                transform: translateY(-3px);
+            }
+            
+         }
+
+         #newPostBtn {
+            display: flex;
+            justify-content: center;
+            background-color: crimson;
+            
+            &:hover {
+               background-color: red;
             }
          }
    
@@ -362,18 +400,18 @@ main {
          gap: 1.5rem;
 
          .subTitle {
-            font-family: roboto;
-            font-weight: 300;
+            font-family: $ff-heading;
+            font-weight: 800;
             font-size: 1.3rem;
-            color: #b9b9b9;
-
+            color: #f1f1f1;
+            
          }
          
          button {
             display: flex;
             align-items: center;
             gap: 0.5rem;
-            background-color: #181818;
+            background-color: $background;
             border: none;
             padding: 1rem;
             font-size: 1rem;
@@ -381,6 +419,9 @@ main {
             border-radius: 0.5rem;
             cursor: pointer;
             transition: 150ms;
+            display: flex;
+            justify-content: space-between;
+            font-family: $ff-body;
 
             &:hover {
                transform: translateY(-3px);
@@ -407,7 +448,7 @@ main {
    }
 
    #content {
-      height: 1000px;
+      max-height: 1000px;
       width: 100%;
       font-family: roboto;
       padding: 3rem;
@@ -420,167 +461,72 @@ main {
          display: flex;
          justify-content: space-between;
          align-items: center;
+         letter-spacing: 1px;
 
          h1 {
             font-size: 4rem;
-            color: white;
+            background: #FF7979;
+            background: linear-gradient(to bottom right, #FF7979 18%, #FFAAAA 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-family: $ff-heading;
             font-weight: bolder;
          }
 
-         #newPostBtn {
-            padding: 0.7rem 2rem;
-            font-size: 1rem;
-            background: none;
-            border: none;
-            border: 2px solid $primary;
-            border-radius: 0.5rem;
-            color: $primary;
-            transition: 150ms;
-            cursor: pointer;
-            
-            &:hover {
-               background-color: $primary;
-               color: white;
-               transform: translateY(-5px);
-            }
-         }
       }
 
       #userContent {
          max-height: 1000px;
          // border: 2px solid green;
          display: grid;
+         grid-template-columns: repeat(auto-fit, minmax(600px, 1fr));
          gap: 1rem;
-         grid-template-columns: 1fr 1fr;
+         padding: 1rem;
 
-         // every section
-         div {
+         h1 {
             color: white;
-            padding: 1rem;
-            
-         }
-         
-         #whoPosted {
-            display: flex;
-            align-items: center;
-            height: 50px;
-            background-color: #181818;;
-            align-self: end;
-            border-radius: 0.5rem;
-            color: #555555;
-            display: flex;
-            gap: 1rem;
-            
-            img {
-               height: 30px;
-            }
-         }
-         
-         #postContent  {
-            grid-column: 1 / 2;
-            height: 300px;
-            border-radius: 0.5rem;
-            display: flex;
-            flex-direction: column;
-            overflow: scroll;
-            gap: 2rem;
-            line-height: 1.5;
-            padding: 1rem;
-            background-color: #242424;
-
-
-            .content-section {
-               // Subject
-               h2 {
-                  color: white;
-               }
-   
-               // post
-               p {
-                  color: rgb(212, 212, 212);
-               }
-   
-               h5 {
-                  color: $primary;
-               }
-
-            }
          }
 
-         #postAnalytics {
-            // border: 1px solid rgb(0, 255, 42);
-            display: flex;
-            gap: 3rem;
-            border-radius: 0.5rem;
 
-            button {
-               font-size: 1.5rem;
-               cursor: pointer;
-            }
-
-            #likeBtn {
-               border: none;
-               background: none;
-               color: white;
-
-               .fa-heart {
-                  color: white;
-               }
-               
-            }
-         }
-
-         #comments {
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            grid-row: 2;
-            background-color: #242424;
-            padding: 2rem;
-            border-radius: 0.5rem;
-            grid-column: 2 / 3;
-
-            // comments header
-            h2 {
-               color: white;
-
-            }
-
-            #postComment {
+         .userPost {
+            h1 {
                display: flex;
-               justify-content: space-between;
+               align-items: center;
                gap: 1rem;
-
-               input {
-                  border: none;
-                  border-bottom: $primary solid 2px;
-                  background: none;
-                  width: 80%;
-                  color: white;
-                  &:focus {
-                     outline: none;
-                  }
-               }
-               
-               #postCommentBtn {
-                  color: white;
-                  border: none;
-                  background-color: $primary;
-                  border-radius: 0.5rem;
-                  padding: 0.5rem;
-                  transition: 150ms;
-                  cursor: pointer;
-                  width: 20%;
-                  
-                  &:hover {
-                     background-color: $buttonHover;
-                  }
-               }
+               font-family: $ff-heading;
             }
 
+            .mainPost {
+               display: flex;
+               flex-direction: column;
+               background-color: $background;
+               min-height: 200px;
+               max-height: 500px;
+               border-radius: 0.5rem;
+               color: #555555;
+               gap: 1rem;
+               padding: 2rem;
 
+               #postCaption {
+                  font-size: 1rem;
+                  font-family: $ff-heading;
+                  background: linear-gradient(to bottom right, #FF7979 18%, #FFAAAA 100%);
+                  -webkit-background-clip: text;
+                  -webkit-text-fill-color: transparent;
+               }
+
+               #postBody {
+                  font-size: 1.4rem;
+                  font-family: $ff-body;
+                  font-weight: 100;
+                  color: white;
+               }
+               
             
+            }
          }
+         
+         
       }
       
    }

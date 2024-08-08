@@ -2,10 +2,12 @@ import { useState, useEffect, useRef } from "react"
 import logo from '/src/assets/wolfLogo.png'
 
 
+
 export default function Home(){
    const profilePictureElement = useRef(null)
    const [userData, setUserData] = useState([])
    const topicBtn = useRef(null)
+   const [username, setUsername] = useState(null)
 
 
    useEffect(()=> {
@@ -23,8 +25,9 @@ export default function Home(){
          }
    
          const homeData = await response.json()
-         console.log(homeData)
-         setUserData(homeData)
+         console.table(homeData)
+         setUserData(homeData.topicArr)
+         setUsername(homeData.userName)
       }
 
       getUserData()
@@ -36,7 +39,7 @@ export default function Home(){
    function iconAppender(topic){
       switch(topic){
          case "Sports":
-            return topic.innerHTML = `<i className="fa-solid fa-baseball"></i> ${topic}`
+            topicBtn.innerHTML = `<i className="fa-solid fa-baseball"></i> ${topic}`
          case "Cosmetology":
             topicBtn.innerHTML = `<i className="fa-solid fa-baseball"></i> Sports`
          default:
@@ -51,17 +54,25 @@ export default function Home(){
       <>
       {/* NAVBAR */}
          <nav id="nav">
-            <img id="logo" src={logo} alt="" />
-            <img id="profilePicture" ref={profilePictureElement} src="" alt="" />
+            <div id="logoContainer">
+               <img id="logo" src={logo} alt="" />
+               <h1>WOLF</h1>
+            </div>
+            <div id="profileContainer">
+               <img className="profilePicture" ref={profilePictureElement} src="" alt="" />
+               <h2>{username}</h2>
+            </div>
          </nav>
 
       {/* MAIN CONTENT */}
 
          <main>
             <nav id="sideNav">
-               <div id="sideNavBtn">
-                  <button id="homeBtn"><i class="fa-solid fa-house"></i> Home</button>
-                  <button id="popularBtn"><i class="fa-solid fa-fire"></i> Popular</button>
+               <div id="sideNavBtns">
+                  <button id="homeBtn">Home <i class="fa-solid fa-house"></i></button>
+                  <button id="popularBtn">Popular <i class="fa-solid fa-fire"></i></button>
+                  <button id="newPostBtn">New Post</button>
+
                </div>
 
                <section className="topicSelectionElement">
@@ -74,7 +85,7 @@ export default function Home(){
                         // 
                         return (
                            <>
-                              <button ref={topicBtn}>{topic}</button>
+                              <button ref={topicBtn}>{topic} <i class="fa-solid fa-person-walking-arrow-right"></i></button>
                            </>
                         )
                      })}
@@ -85,8 +96,8 @@ export default function Home(){
                   <h3 className="subTitle">Other Resources</h3>
                   {/* mapping out the selected topics that the user selected */}
                   <div id="OtherResourcesBtns">
-                     <button><i className="fa-solid fa-book"></i> About</button>
-                     <button><i className="fa-solid fa-magnifying-glass-plus"></i> More Topics</button>
+                     <button>About <i className="fa-solid fa-book"></i></button>
+                     <button>More Topics<i className="fa-solid fa-magnifying-glass-plus"></i></button>
                   </div>
                </section>
 
@@ -94,44 +105,19 @@ export default function Home(){
             <section id="content">
                <div id="whatsNew">
                   <h1>Whats New</h1>
-                  <button id="newPostBtn">New Post +</button>
                </div>
 
                {/* what shows up based on what topics the user selected */}
                <article id="userContent">
 
-                  {/* Who posted */}
-                  <div id="whoPosted">
-                     <img src={logo} alt="" />
-                     <h3>Wolf Bot just posted x ago</h3>
-                  </div>
+                  <div className="userPost">
+                     <h1><img className="profilePicture" src={logo} alt="" />{"Wolf Bot"} posted</h1>
+                     <br />
+                     <main class="mainPost">
+                        <h2 id="postCaption">Hello there!</h2>
+                        <h2 id="postBody">I almost forgot to say, Hello World!</h2>
 
-                  {/* Subject and Content of the post */}
-                  <div id="postContent">
-                     <div className="content-section">
-                        <h5>SUBJECT</h5>
-                        <h2 >Greetings! I am Wolf Bot!</h2>
-                     </div>
-                     <div className="content-section">
-                        <h5>BODY</h5>
-                        <p>I almost forgot to say Hello World!</p>
-                     </div>
-                  </div>
-
-                  {/* Likes and comments btns */}
-                  <div id="postAnalytics">
-                     <button id="likeBtn"><i className="fa-regular fa-heart"></i></button>
-                     <button id="likeBtn"><i className="fa-regular fa-comment"></i></button>
-                  </div>
-
-                  {/* Listing comments from other users */}
-                  <div id="comments">
-                     <h2>Comments</h2>
-                     
-                     <div id="postComment">
-                        <input type="text" placeholder="Add a Comment.."/>
-                        <button id="postCommentBtn">Post</button>
-                     </div>
+                     </main>
                   </div>
                </article>
             </section>

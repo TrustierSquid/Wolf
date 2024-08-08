@@ -30,6 +30,8 @@ export default function Login() {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
 
+      window.location.href = "http://localhost:5173/home"
+
       // waiting on success message from server
       // const successMessage = await response.json();
       // if (successMessage.success == true) window.location.href = "home.html";

@@ -9,7 +9,7 @@ html {
 }
 
 body {
-  background-color: #1F1F1F;
+  background-color: #121010;
 }
 
 /* 
@@ -178,9 +178,6 @@ CHOOSING TOPICS COMPONENT
 }
 
 @media (max-width: 1000px) {
-  body {
-    background-color: #161616;
-  }
   #topics {
     margin: 1rem;
   }
@@ -193,19 +190,7 @@ CHOOSING TOPICS COMPONENT
 HOME PAGE
 
  */
-#nav {
-  border-bottom: 1px solid #FF3C3C;
-  display: flex;
-  padding: 1rem;
-  justify-content: space-between;
-}
-#nav #logo {
-  height: 50px;
-  -o-object-fit: cover;
-     object-fit: cover;
-  cursor: pointer;
-}
-#nav #profilePicture {
+.profilePicture {
   height: 50px;
   width: 50px;
   border-radius: 50%;
@@ -216,6 +201,37 @@ HOME PAGE
   background-color: grey;
 }
 
+#nav {
+  display: flex;
+  padding: 1rem;
+  justify-content: space-between;
+  margin-inline: 8rem;
+}
+#nav #logoContainer {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+#nav #logoContainer h1 {
+  font-family: comfortaa;
+  color: white;
+}
+#nav #profileContainer {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+#nav #profileContainer h2 {
+  font-family: comfortaa;
+  color: white;
+}
+#nav #logo {
+  height: 50px;
+  -o-object-fit: cover;
+     object-fit: cover;
+  cursor: pointer;
+}
+
 main {
   display: flex;
   padding: 3rem 5rem;
@@ -224,37 +240,46 @@ main {
 main #sideNav {
   height: 900px;
   width: 400px;
-  border-right: rgba(255, 60, 60, 0.3137254902) 1px solid;
   color: white;
   padding: 1.5rem;
   display: flex;
   flex-direction: column;
   gap: 7rem;
-  font-weight: 100;
+  font-family: "roboto", sans-serif;
 }
-main #sideNav #sideNavBtn {
+main #sideNav #sideNavBtns {
   display: flex;
   flex-direction: column;
   gap: 1rem;
 }
-main #sideNav #sideNavBtn button {
+main #sideNav #sideNavBtns button {
   display: flex;
   align-items: center;
   gap: 0.5rem;
   padding: 1rem;
   font-size: 1rem;
   cursor: pointer;
-  background-color: #181818;
+  background-color: #1F1F1F;
   color: white;
   border: none;
   border-radius: 0.5rem;
   transition: 150ms;
   text-align: left;
   padding-left: 1rem;
+  display: flex;
+  justify-content: space-between;
 }
-main #sideNav #sideNavBtn button:hover {
+main #sideNav #sideNavBtns button:hover {
   background-color: #FF3C3C;
   transform: translateY(-3px);
+}
+main #sideNav #sideNavBtns #newPostBtn {
+  display: flex;
+  justify-content: center;
+  background-color: crimson;
+}
+main #sideNav #sideNavBtns #newPostBtn:hover {
+  background-color: red;
 }
 main #sideNav .topicSelectionElement {
   display: flex;
@@ -262,16 +287,16 @@ main #sideNav .topicSelectionElement {
   gap: 1.5rem;
 }
 main #sideNav .topicSelectionElement .subTitle {
-  font-family: roboto;
-  font-weight: 300;
+  font-family: "Nunito", sans-serif;
+  font-weight: 800;
   font-size: 1.3rem;
-  color: #b9b9b9;
+  color: #f1f1f1;
 }
 main #sideNav .topicSelectionElement button {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  background-color: #181818;
+  background-color: #1F1F1F;
   border: none;
   padding: 1rem;
   font-size: 1rem;
@@ -279,6 +304,9 @@ main #sideNav .topicSelectionElement button {
   border-radius: 0.5rem;
   cursor: pointer;
   transition: 150ms;
+  display: flex;
+  justify-content: space-between;
+  font-family: "roboto", sans-serif;
 }
 main #sideNav .topicSelectionElement button:hover {
   transform: translateY(-3px);
@@ -295,7 +323,7 @@ main #sideNav .topicSelectionElement #OtherResourcesBtns {
   gap: 1rem;
 }
 main #content {
-  height: 1000px;
+  max-height: 1000px;
   width: 100%;
   font-family: roboto;
   padding: 3rem;
@@ -308,128 +336,54 @@ main #content #whatsNew {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  letter-spacing: 1px;
 }
 main #content #whatsNew h1 {
   font-size: 4rem;
-  color: white;
+  background: #FF7979;
+  background: linear-gradient(to bottom right, #FF7979 18%, #FFAAAA 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-family: "Nunito", sans-serif;
   font-weight: bolder;
-}
-main #content #whatsNew #newPostBtn {
-  padding: 0.7rem 2rem;
-  font-size: 1rem;
-  background: none;
-  border: none;
-  border: 2px solid #FF3C3C;
-  border-radius: 0.5rem;
-  color: #FF3C3C;
-  transition: 150ms;
-  cursor: pointer;
-}
-main #content #whatsNew #newPostBtn:hover {
-  background-color: #FF3C3C;
-  color: white;
-  transform: translateY(-5px);
 }
 main #content #userContent {
   max-height: 1000px;
   display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(600px, 1fr));
   gap: 1rem;
-  grid-template-columns: 1fr 1fr;
-}
-main #content #userContent div {
-  color: white;
   padding: 1rem;
 }
-main #content #userContent #whoPosted {
+main #content #userContent h1 {
+  color: white;
+}
+main #content #userContent .userPost h1 {
   display: flex;
   align-items: center;
-  height: 50px;
-  background-color: #181818;
-  align-self: end;
+  gap: 1rem;
+  font-family: "Nunito", sans-serif;
+}
+main #content #userContent .userPost .mainPost {
+  display: flex;
+  flex-direction: column;
+  background-color: #1F1F1F;
+  min-height: 200px;
+  max-height: 500px;
   border-radius: 0.5rem;
   color: #555555;
-  display: flex;
   gap: 1rem;
-}
-main #content #userContent #whoPosted img {
-  height: 30px;
-}
-main #content #userContent #postContent {
-  grid-column: 1/2;
-  height: 300px;
-  border-radius: 0.5rem;
-  display: flex;
-  flex-direction: column;
-  overflow: scroll;
-  gap: 2rem;
-  line-height: 1.5;
-  padding: 1rem;
-  background-color: #242424;
-}
-main #content #userContent #postContent .content-section h2 {
-  color: white;
-}
-main #content #userContent #postContent .content-section p {
-  color: rgb(212, 212, 212);
-}
-main #content #userContent #postContent .content-section h5 {
-  color: #FF3C3C;
-}
-main #content #userContent #postAnalytics {
-  display: flex;
-  gap: 3rem;
-  border-radius: 0.5rem;
-}
-main #content #userContent #postAnalytics button {
-  font-size: 1.5rem;
-  cursor: pointer;
-}
-main #content #userContent #postAnalytics #likeBtn {
-  border: none;
-  background: none;
-  color: white;
-}
-main #content #userContent #postAnalytics #likeBtn .fa-heart {
-  color: white;
-}
-main #content #userContent #comments {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  grid-row: 2;
-  background-color: #242424;
   padding: 2rem;
-  border-radius: 0.5rem;
-  grid-column: 2/3;
 }
-main #content #userContent #comments h2 {
+main #content #userContent .userPost .mainPost #postCaption {
+  font-size: 1rem;
+  font-family: "Nunito", sans-serif;
+  background: linear-gradient(to bottom right, #FF7979 18%, #FFAAAA 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+main #content #userContent .userPost .mainPost #postBody {
+  font-size: 1.4rem;
+  font-family: "roboto", sans-serif;
+  font-weight: 100;
   color: white;
-}
-main #content #userContent #comments #postComment {
-  display: flex;
-  justify-content: space-between;
-  gap: 1rem;
-}
-main #content #userContent #comments #postComment input {
-  border: none;
-  border-bottom: #FF3C3C solid 2px;
-  background: none;
-  width: 80%;
-  color: white;
-}
-main #content #userContent #comments #postComment input:focus {
-  outline: none;
-}
-main #content #userContent #comments #postComment #postCommentBtn {
-  color: white;
-  border: none;
-  background-color: #FF3C3C;
-  border-radius: 0.5rem;
-  padding: 0.5rem;
-  transition: 150ms;
-  cursor: pointer;
-  width: 20%;
-}
-main #content #userContent #comments #postComment #postCommentBtn:hover {
-  background-color: #7A0B31;
 }/*# sourceMappingURL=index.css.map */

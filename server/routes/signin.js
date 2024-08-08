@@ -262,19 +262,17 @@ HOME FEED PAGE
  */
 
 router.get('/home', requireAuth, async (req, res)=> {
-   const database = await connectMongo()
-   const users = database.collection('Users')
+  const database = await connectMongo()
+  const users = database.collection('Users')
 
-   // the logged in user
-   let loggedInUser = await users.findOne({_id: new ObjectId(req.currentUser)})
-   let userSelectedTopics = loggedInUser.topics
+  // the logged in user
+  let loggedInUser = await users.findOne({_id: new ObjectId(req.currentUser)})
+  let userSelectedTopics = loggedInUser.topics
+  
 
-
-   res.json(userSelectedTopics)
-   console.log(`Sent topics ${ userSelectedTopics} `)
+  res.json({topicArr: userSelectedTopics, userName: loggedInUser.user})
+  console.log(`Sent topics ${loggedInUser.topics} `)
    
-   
-
    
 
 })
