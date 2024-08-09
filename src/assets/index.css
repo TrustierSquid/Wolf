@@ -203,7 +203,7 @@ HOME PAGE
 
 #nav {
   display: flex;
-  padding: 1rem;
+  padding: 0.5rem;
   justify-content: space-around;
   gap: 15rem;
   position: sticky;
@@ -231,9 +231,24 @@ HOME PAGE
   align-items: center;
   gap: 1rem;
 }
+#nav #profileContainer i {
+  font-size: 1rem;
+  border: white 2px solid;
+  border-radius: 50%;
+  padding: 0.5rem;
+  color: white;
+  cursor: pointer;
+  transition: 350ms;
+}
+#nav #profileContainer i:hover {
+  color: black;
+  border: black 2px solid;
+}
 #nav #profileContainer h2 {
   font-family: comfortaa;
   color: white;
+  cursor: pointer;
+  transition: 350ms;
 }
 #nav #mobileNavBtn {
   display: none;
@@ -363,11 +378,46 @@ main #content #userContent {
 main #content #userContent h1 {
   color: white;
 }
-main #content #userContent .userPost h1 {
+main #content #userContent .userPost {
+  transition: 150ms;
+}
+main #content #userContent .userPost #postAnalytics {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+main #content #userContent .userPost #postAnalytics h1 {
   display: flex;
   align-items: center;
   gap: 1rem;
   font-family: "Nunito", sans-serif;
+}
+main #content #userContent .userPost #postAnalytics #userTraction {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+}
+main #content #userContent .userPost #postAnalytics #userTraction button {
+  padding: 0.5rem;
+  width: 100px;
+  border: none;
+  color: white;
+  border-radius: 2rem;
+  cursor: pointer;
+  transition: 150ms;
+  background: none;
+}
+main #content #userContent .userPost #postAnalytics #userTraction #followBtn {
+  border: 2px solid #FF3C3C;
+}
+main #content #userContent .userPost #postAnalytics #userTraction #followBtn:hover {
+  background-color: #FF3C3C;
+}
+main #content #userContent .userPost #postAnalytics #userTraction #likeBtn {
+  border: 2px solid #F96E36;
+}
+main #content #userContent .userPost #postAnalytics #userTraction #likeBtn:hover {
+  background-color: #F96E36;
 }
 main #content #userContent .userPost .mainPost {
   display: flex;
@@ -404,15 +454,12 @@ HOME COMPONENT MEDIA QUERIES
     justify-content: space-between;
     margin-inline: 0;
   }
-  #nav #profileContainer h2 {
-    display: none;
-  }
-  #nav #profileContainer img {
+  #nav #profileContainer {
     display: none;
   }
   #nav #mobileNavBtn {
     display: block;
-    color: #FF3C3C;
+    color: #00CAE5;
     background: none;
     font-size: 2.5rem;
     border: none;
@@ -447,5 +494,9 @@ HOME COMPONENT MEDIA QUERIES
   }
   main #content #whatsNew h1 {
     font-size: 12vw;
+  }
+  main #content #userContent .userPost #postAnalytics {
+    flex-direction: column;
+    gap: 2rem;
   }
 }/*# sourceMappingURL=index.css.map */

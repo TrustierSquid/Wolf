@@ -1,0 +1,110 @@
+{
+  "Sports": [
+    {
+      "fact1": "Soccer is the most popular sport in the world, with over 4 billion fans.",
+      "fact2": "The Olympic Games are held every four years, with both summer and winter events."
+    }
+  ],
+  "Cosmetology": [
+    {
+      "fact1": "Cosmetology includes various beauty treatments such as hair styling, skin care, and makeup application.",
+      "fact2": "The first modern cosmetology school was founded in 1905 in Chicago by a man named Charles Revson."
+    }
+  ],
+  "Food": [
+    {
+      "fact1": "The average American consumes around 3,600 calories per day, which is about 1,000 calories more than the recommended amount.",
+      "fact2": "Sushi originated in Japan and was initially a method of preserving fish in fermented rice."
+    }
+  ],
+  "Self_Care": [
+    {
+      "fact1": "Self-care is crucial for maintaining mental health and can include activities like meditation, exercise, and proper sleep.",
+      "fact2": "The concept of self-care gained significant popularity in the early 21st century as a response to increased stress and burnout."
+    }
+  ],
+  "Goal_settings": [
+    {
+      "fact1": "Setting SMART goals (Specific, Measurable, Achievable, Relevant, Time-bound) helps in creating clear and attainable objectives.",
+      "fact2": "Writing down goals increases the likelihood of achieving them, according to studies on goal-setting."
+    }
+  ],
+  "Tech": [
+    {
+      "fact1": "The term 'technology' comes from the Greek words 'techne' (skill) and 'logos' (study), meaning the study of skill or craftsmanship.",
+      "fact2": "Advancements in technology are often driven by innovations in computer science and engineering."
+    }
+  ],
+  "Movies": [
+    {
+      "fact1": "The first full-length feature film was 'The Story of the Kelly Gang,' released in 1906.",
+      "fact2": "The Academy Awards, also known as the Oscars, were first presented in 1929."
+    }
+  ],
+  "TV": [
+    {
+      "fact1": "The first television broadcast was made in the late 1920s by John Logie Baird, a Scottish inventor.",
+      "fact2": "The longest-running American TV show is 'The Simpsons,' which debuted in 1989."
+    }
+  ],
+  "Reading": [
+    {
+      "fact1": "Reading regularly improves vocabulary and comprehension skills.",
+      "fact2": "The oldest known book is 'The Epic of Gilgamesh,' which dates back to around 2100 BCE."
+    }
+  ],
+  "Filmmaking": [
+    {
+      "fact1": "Filmmaking involves various stages including scriptwriting, shooting, and post-production.",
+      "fact2": "The Lumière brothers are credited with inventing the Cinématographe, an early motion picture camera and projector, in 1895."
+    }
+  ],
+  "DIY_projects": [
+    {
+      "fact1": "DIY stands for 'Do It Yourself,' a term popularized in the mid-20th century to describe projects and repairs done independently.",
+      "fact2": "Common DIY projects include home improvement tasks, crafting, and upcycling old items."
+    }
+  ],
+  "Dating": [
+    {
+      "fact1": "Dating practices vary significantly across different cultures and historical periods.",
+      "fact2": "Online dating platforms have become increasingly popular, with millions of users worldwide."
+    }
+  ],
+  "Makeup_Tutorials": [
+    {
+      "fact1": "Makeup tutorials are often shared on platforms like YouTube and Instagram, offering step-by-step guides to various makeup techniques.",
+      "fact2": "The popularity of makeup tutorials has led to the rise of beauty influencers and content creators."
+    }
+  ],
+  "Environmental_Issues": [
+    {
+      "fact1": "Climate change is a major environmental issue caused by human activities such as burning fossil fuels and deforestation.",
+      "fact2": "Plastic pollution is a significant concern, with millions of tons of plastic waste ending up in oceans each year."
+    }
+  ],
+  "Programming": [
+    {
+      "fact1": "Programming involves writing code in languages such as Python, JavaScript, and C++ to create software applications.",
+      "fact2": "The first programming language, Ada Lovelace's algorithm for Charles Babbage's Analytical Engine, was developed in the 19th century."
+    }
+  ],
+  "Life_Hacks": [
+    {
+      "fact1": "Life hacks are clever tips or tricks designed to make everyday tasks easier and more efficient.",
+      "fact2": "The term 'life hack' was popularized by computer scientist Danny O'Brien in the early 2000s."
+    }
+  ],
+  "Software": [
+    {
+      "fact1": "Software includes a wide range of programs and operating systems that control and manage computer hardware.",
+      "fact2": "The first software was developed in the 1940s for early computers, such as the ENIAC."
+    }
+  ],
+  "Computers": [
+    {
+      "fact1": "The first electronic computer, ENIAC, was built in 1945 and occupied a room the size of a large classroom.",
+      "fact2": "Modern computers use binary code (0s and 1s) to process and store data."
+    }
+  ]
+}

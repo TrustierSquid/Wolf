@@ -33,7 +33,6 @@ let database = null;
 
 // middleware
 router.use(express.json());
-
 router.use(cookieParser());
 
 // with this middleware you are shipping each req object with a database prop
@@ -272,7 +271,6 @@ router.get('/home', requireAuth, async (req, res)=> {
   
 
   res.json({topicArr: userSelectedTopics, userName: loggedInUser.user})
-  console.log(`Sent topics ${loggedInUser.topics} `)
    
    
 

@@ -25,6 +25,13 @@ export default defineConfig({
         secure: false,
         ws: true,
       },
+      '/wolfTopics': {
+        target: 'http://localhost:3000/',
+        changeOrigin: true,
+        secure: false,
+        ws: true,
+      },
+
     }
   },
   base: 'http://localhost:3000/',

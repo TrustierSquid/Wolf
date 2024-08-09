@@ -5,6 +5,8 @@ import path from "path";
 import { fileURLToPath } from "url";
 import cors from "cors";
 
+// IMPORTING ROUTES
+
 // returns newUser identity
 import signinRoutes from "./routes/signin.js";
 
@@ -16,6 +18,7 @@ import { MongoClient, ServerApiVersion, ObjectId } from "mongodb";
 
 // list of topics for the user to choose from
 import topics from "./json/topics.json" assert { type: "json" };
+import topicFacts from "./json/facts.json" assert {type: 'json'}
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -30,18 +33,19 @@ const uri = process.env.DB_URI;
 // MIDDLEWARE
 app.use(express.static(path.join(__dirname, 'dist')));
 
-// IMPORTED ROUTES
-app.use("/users", signinRoutes);
+
 app.use(cors())
 app.use(cookieParser());
 app.use(express.json());
 
+// IMPORTED ROUTES
+app.use("/users", signinRoutes);
 
 app.use((req, res, next) => {
    // res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
 
   if (req.url.endsWith(".jsx")) {
-    res.setHeader("Content-Type", "application/javasccript");
+    res.setHeader("Content-Type", "application/javascript");
   }
   next();
 });
@@ -96,7 +100,7 @@ app.get("/api/topics", (req, res) => {
   res.json(topics);
 });
 
-// to get to the topics page
+// to get to the topics page!
 app.get("/user", requireAuth, (req, res) => {   
   // for dev
   res.sendFile(path.join(__dirname, '../', 'user.html'))
@@ -124,7 +128,9 @@ app.get('/home', requireAuth, (req, res)=> {
   console.log("User arrived at user page");
 })
 
-
+app.get('/wolfTopics', (req, res)=> {
+  res.json(topicFacts)
+})
 
 
 app.listen(port, async () => {

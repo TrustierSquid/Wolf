@@ -300,7 +300,7 @@ HOME PAGE
 #nav {
    // border-bottom: 1px solid $primary;
    display: flex;
-   padding: 1rem;
+   padding: 0.5rem;
    justify-content: space-around;
    gap: 15rem;
    position: sticky;
@@ -328,10 +328,27 @@ HOME PAGE
       display: flex;
       align-items: center;
       gap: 1rem;
+
+      i {
+         font-size: 1rem;
+         border: white 2px solid;
+         border-radius: 50%;
+         padding: 0.5rem;
+         color: white;
+         cursor:pointer;
+         transition: 350ms;
+         
+         &:hover {
+            color: black;
+            border: black 2px solid;
+         }
+      }
+      
       h2 {
          font-family: comfortaa;
          color: white;
-         
+         cursor:pointer;
+         transition: 350ms;
       }
    }
 
@@ -496,11 +513,52 @@ main {
 
 
          .userPost {
-            h1 {
+            transition: 150ms;
+            
+            #postAnalytics {
                display: flex;
+               justify-content: space-between;
                align-items: center;
-               gap: 1rem;
-               font-family: $ff-heading;
+               
+               h1 {
+                  display: flex;
+                  align-items: center;
+                  gap: 1rem;
+                  font-family: $ff-heading;
+               }
+               
+               #userTraction {
+                  display: flex;
+                  justify-content: space-between;
+                  gap: 1rem;
+
+                  button {
+                     padding: 0.5rem;
+                     width: 100px;
+                     border: none;
+                     color: white;
+                     border-radius: 2rem;
+                     cursor: pointer;
+                     transition: 150ms;
+                     background: none;
+                  }
+                  
+                  #followBtn {
+                     border: 2px solid $primary;
+                     &:hover {
+                        background-color: $primary;
+                     }
+                  }
+                  
+                  #likeBtn {
+                     border: 2px solid $sc-error;
+                     &:hover {
+                        background-color: $sc-error;
+                     }
+
+                  }
+               }
+
             }
 
             .mainPost {
@@ -556,21 +614,14 @@ HOME COMPONENT MEDIA QUERIES
 
       }
 
+      // username in the nav bar along with the icon
       #profileContainer {
-         h2 {
-            display: none;
-         }
-
-         // User profile picture
-         img {
-            display: none;
-         }
-         
+         display: none;
       }
       
       #mobileNavBtn  {
          display: block;
-         color: $primary;
+         color: $sc-info;
          background: none;
          font-size: 2.5rem;
          border: none;
@@ -618,7 +669,11 @@ HOME COMPONENT MEDIA QUERIES
 
             // each post
             .userPost {
-               
+
+               #postAnalytics {
+                  flex-direction: column;
+                  gap: 2rem;
+               }
                // message
                .mainPost {
 
