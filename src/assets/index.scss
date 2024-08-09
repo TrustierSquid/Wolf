@@ -499,7 +499,7 @@ main {
 
       }
 
-      #userContent {
+      .userContent {
          max-height: 1000px;
          // border: 2px solid green;
          display: flex;
@@ -515,7 +515,7 @@ main {
          .userPost {
             transition: 150ms;
             
-            #postAnalytics {
+            .postAnalytics {
                display: flex;
                justify-content: space-between;
                align-items: center;
@@ -527,7 +527,7 @@ main {
                   font-family: $ff-heading;
                }
                
-               #userTraction {
+               .userTraction {
                   display: flex;
                   justify-content: space-between;
                   gap: 1rem;
@@ -543,19 +543,35 @@ main {
                      background: none;
                   }
                   
-                  #followBtn {
+                  .followBtn {
+                     text-wrap: nowrap;
                      border: 2px solid $primary;
+                     
                      &:hover {
                         background-color: $primary;
                      }
+
                   }
                   
-                  #likeBtn {
+                  .likeBtn {
                      border: 2px solid $sc-error;
                      &:hover {
                         background-color: $sc-error;
                      }
 
+                  }
+
+                  .playAnimation {
+
+                  }
+
+                  @keyframes postBtnAnimation {
+                     0% {
+                        transform: translateY(0px);
+                     }
+                     50% {
+                        transform: translateY(10px)
+                     }
                   }
                }
 
@@ -665,12 +681,12 @@ HOME COMPONENT MEDIA QUERIES
          }
 
          // Container for posting content
-         #userContent {
+         .userContent {
 
             // each post
             .userPost {
 
-               #postAnalytics {
+               .postAnalytics {
                   flex-direction: column;
                   gap: 2rem;
                }

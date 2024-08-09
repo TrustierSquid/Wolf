@@ -368,36 +368,36 @@ main #content #whatsNew h1 {
   font-family: "Nunito", sans-serif;
   font-weight: bolder;
 }
-main #content #userContent {
+main #content .userContent {
   max-height: 1000px;
   display: flex;
   flex-direction: column;
   gap: 5rem;
   padding: 1rem;
 }
-main #content #userContent h1 {
+main #content .userContent h1 {
   color: white;
 }
-main #content #userContent .userPost {
+main #content .userContent .userPost {
   transition: 150ms;
 }
-main #content #userContent .userPost #postAnalytics {
+main #content .userContent .userPost .postAnalytics {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
-main #content #userContent .userPost #postAnalytics h1 {
+main #content .userContent .userPost .postAnalytics h1 {
   display: flex;
   align-items: center;
   gap: 1rem;
   font-family: "Nunito", sans-serif;
 }
-main #content #userContent .userPost #postAnalytics #userTraction {
+main #content .userContent .userPost .postAnalytics .userTraction {
   display: flex;
   justify-content: space-between;
   gap: 1rem;
 }
-main #content #userContent .userPost #postAnalytics #userTraction button {
+main #content .userContent .userPost .postAnalytics .userTraction button {
   padding: 0.5rem;
   width: 100px;
   border: none;
@@ -407,19 +407,28 @@ main #content #userContent .userPost #postAnalytics #userTraction button {
   transition: 150ms;
   background: none;
 }
-main #content #userContent .userPost #postAnalytics #userTraction #followBtn {
+main #content .userContent .userPost .postAnalytics .userTraction .followBtn {
+  text-wrap: nowrap;
   border: 2px solid #FF3C3C;
 }
-main #content #userContent .userPost #postAnalytics #userTraction #followBtn:hover {
+main #content .userContent .userPost .postAnalytics .userTraction .followBtn:hover {
   background-color: #FF3C3C;
 }
-main #content #userContent .userPost #postAnalytics #userTraction #likeBtn {
+main #content .userContent .userPost .postAnalytics .userTraction .likeBtn {
   border: 2px solid #F96E36;
 }
-main #content #userContent .userPost #postAnalytics #userTraction #likeBtn:hover {
+main #content .userContent .userPost .postAnalytics .userTraction .likeBtn:hover {
   background-color: #F96E36;
 }
-main #content #userContent .userPost .mainPost {
+@keyframes postBtnAnimation {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(10px);
+  }
+}
+main #content .userContent .userPost .mainPost {
   display: flex;
   flex-direction: column;
   background-color: #1F1F1F;
@@ -430,14 +439,14 @@ main #content #userContent .userPost .mainPost {
   gap: 1rem;
   padding: 2rem;
 }
-main #content #userContent .userPost .mainPost #postCaption {
+main #content .userContent .userPost .mainPost #postCaption {
   font-size: 1rem;
   font-family: "Nunito", sans-serif;
   background: linear-gradient(to bottom right, #FF7979 18%, #FFAAAA 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
-main #content #userContent .userPost .mainPost #postBody {
+main #content .userContent .userPost .mainPost #postBody {
   font-size: 1.4rem;
   font-family: "roboto", sans-serif;
   font-weight: 100;
@@ -495,7 +504,7 @@ HOME COMPONENT MEDIA QUERIES
   main #content #whatsNew h1 {
     font-size: 12vw;
   }
-  main #content #userContent .userPost #postAnalytics {
+  main #content .userContent .userPost .postAnalytics {
     flex-direction: column;
     gap: 2rem;
   }

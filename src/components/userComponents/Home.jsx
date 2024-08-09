@@ -27,7 +27,14 @@ export default function Home(){
    // Used for wolf bot
    const [topicFact, setTopicFact] = useState([])
 
+   // Whatever topic was selected in the topics list on a users home page, will be processed wolf bot will send info on it
    const [selectedFact, setSelectedFact] = useState(null)
+
+   const likeBtnElement = useRef(null)
+   const [likeBtnClicked, setLikeBtnClicked] = useState(true)
+
+   const followBtnElement = useRef(null)
+   const [followBtnClicked, setFollowBtnClicked] = useState(true)
 
    // Getting user information and displaying on the home page
    useEffect(()=> {
@@ -83,17 +90,17 @@ export default function Home(){
       console.log(topic)
       setSelectedFact(topic)
    }
-      
    
-   function Post(props) {
+   // Wolf bot will post information about a topic you select
+   function WolfBotPost(props) {
       return (
          <>
             <div className="userPost">
-               <div id="postAnalytics">
+               <div className="postAnalytics">
                   <h1><img className="profilePicture" src={logo} alt="" />{"Wolf Bot"} posted</h1>
-                  <div id="userTraction">
-                     <button id="followBtn">Follow <i className="fa-solid fa-user-plus"></i></button>
-                     <button id="likeBtn">Like <i className="fa-solid fa-thumbs-up"></i></button>
+                  <div className="userTraction">
+                     <button className="followBtn" ref={followBtnElement} onClick={()=> {recordFollow(), setFollowBtnClicked(prevState => !prevState)}}>Follow <i className="fa-solid fa-user-plus"></i></button>
+                     <button className="likeBtn" ref={likeBtnElement} onClick={()=> {recordLike(), setLikeBtnClicked(prevState => !prevState)}}>Like <i className="fa-solid fa-thumbs-up"></i></button>
                   </div>
                </div>
                <br />
@@ -108,56 +115,92 @@ export default function Home(){
    
    
    
+   // gets the selected topic, based on what the user chose in the beginning
    function displayTopicInfo(){
-      // gets the selected topic, based on what the user chose in the beginning
       
       switch (selectedFact) {
          case "Sports":
-            return <Post topic={selectedFact} fact={topicFact.Sports[0].fact1} icon={<i className="fa-solid fa-baseball"></i>}/>
+            return <WolfBotPost topic={selectedFact} fact={topicFact.Sports[0].fact1} icon={<i className="fa-solid fa-baseball"></i>}/>
          case "Cosmetology":
-            return <Post topic={selectedFact} fact={topicFact.Cosmetology[0].fact1} icon={<i className="fa-solid fa-face-smile-beam"></i>}/>
+            return <WolfBotPost topic={selectedFact} fact={topicFact.Cosmetology[0].fact1} icon={<i className="fa-solid fa-face-smile-beam"></i>}/>
          case "Food":
-            return <Post topic={selectedFact} fact={topicFact.Food[0].fact1} icon={<i className="fa-solid fa-utensils"></i>}/>
+            return <WolfBotPost topic={selectedFact} fact={topicFact.Food[0].fact1} icon={<i className="fa-solid fa-utensils"></i>}/>
          case "Self care":
-            return <Post topic={selectedFact} fact={topicFact.Self_Care[0].fact1} icon={<i className="fa-solid fa-person-rays"></i>}/>
+            return <WolfBotPost topic={selectedFact} fact={topicFact.Self_Care[0].fact1} icon={<i className="fa-solid fa-person-rays"></i>}/>
          case "Goal Settings":
-            return <Post topic={selectedFact} fact={topicFact.Goal_Settings[0].fact1} icon={<i className="fa-regular fa-clipboard"></i>}/>
+            return <WolfBotPost topic={selectedFact} fact={topicFact.Goal_Settings[0].fact1} icon={<i className="fa-regular fa-clipboard"></i>}/>
          case "Tech": 
-            return <Post topic={selectedFact} fact={topicFact.Tech[0].fact1} icon={<i className="fa-solid fa-microchip"></i>}/>
+            return <WolfBotPost topic={selectedFact} fact={topicFact.Tech[0].fact1} icon={<i className="fa-solid fa-microchip"></i>}/>
          case "Movies":
-            return <Post topic={selectedFact} fact={topicFact.Movies[0].fact1} icon={<i className="fa-solid fa-film"></i>}/>
+            return <WolfBotPost topic={selectedFact} fact={topicFact.Movies[0].fact1} icon={<i className="fa-solid fa-film"></i>}/>
          case "TV":
-            return <Post topic={selectedFact} fact={topicFact.TV[0].fact1} icon={<i className="fa-solid fa-tv"></i>}/>
+            return <WolfBotPost topic={selectedFact} fact={topicFact.TV[0].fact1} icon={<i className="fa-solid fa-tv"></i>}/>
          case "Reading":
-            return <Post topic={selectedFact} fact={topicFact.Reading[0].fact1} icon={<i className="fa-solid fa-book-open-reader"></i>}/>
+            return <WolfBotPost topic={selectedFact} fact={topicFact.Reading[0].fact1} icon={<i className="fa-solid fa-book-open-reader"></i>}/>
          case "Filmmaking":
-            return <Post topic={selectedFact} fact={topicFact.Filmmaking[0].fact1} icon={<i className="fa-solid fa-video"></i>}/>
+            return <WolfBotPost topic={selectedFact} fact={topicFact.Filmmaking[0].fact1} icon={<i className="fa-solid fa-video"></i>}/>
          case "DIY projects":
-            return <Post topic={selectedFact} fact={topicFact.DIY_projects[0].fact1} icon={<i className="fa-solid fa-paint-roller"></i>}/>
+            return <WolfBotPost topic={selectedFact} fact={topicFact.DIY_projects[0].fact1} icon={<i className="fa-solid fa-paint-roller"></i>}/>
          case "Dating":
-            return <Post topic={selectedFact} fact={topicFact.Dating[0].fact1} icon={<i className="fa-solid fa-heart"></i>}/>
+            return <WolfBotPost topic={selectedFact} fact={topicFact.Dating[0].fact1} icon={<i className="fa-solid fa-heart"></i>}/>
          case "Makeup Tutorials":
-            return <Post topic={selectedFact} fact={topicFact.Makeup_Tutorials[0].fact1} icon={<i className="fa-solid fa-paintbrush"></i>}/>
+            return <WolfBotPost topic={selectedFact} fact={topicFact.Makeup_Tutorials[0].fact1} icon={<i className="fa-solid fa-paintbrush"></i>}/>
          case "Environmental Issues":
-            return <Post topic={selectedFact} fact={topicFact.Environmental_Issues[0].fact1} icon={<i className="fa-solid fa-earth-americas"></i>}/>
+            return <WolfBotPost topic={selectedFact} fact={topicFact.Environmental_Issues[0].fact1} icon={<i className="fa-solid fa-earth-americas"></i>}/>
          case "Programming":
-            return <Post topic={selectedFact} fact={topicFact.Programming[0].fact1} icon={<i className="fa-solid fa-code"></i>}/>
+            return <WolfBotPost topic={selectedFact} fact={topicFact.Programming[0].fact1} icon={<i className="fa-solid fa-code"></i>}/>
          case "Life Hacks":
-            return <Post topic={selectedFact} fact={topicFact.Life_Hacks[0].fact1} icon={<i className="fa-solid fa-life-ring"></i>}/>
+            return <WolfBotPost topic={selectedFact} fact={topicFact.Life_Hacks[0].fact1} icon={<i className="fa-solid fa-life-ring"></i>}/>
          case "Software":
-            return <Post topic={selectedFact} fact={topicFact.Software[0].fact1} icon={<i className="fa-brands fa-uncharted"></i>}/>
+            return <WolfBotPost topic={selectedFact} fact={topicFact.Software[0].fact1} icon={<i className="fa-brands fa-uncharted"></i>}/>
          case "Computers":
-            return <Post topic={selectedFact} fact={topicFact.Computers[0].fact1} icon={<i className="fa-solid fa-computer"></i>}/>
+            return <WolfBotPost topic={selectedFact} fact={topicFact.Computers[0].fact1} icon={<i className="fa-solid fa-computer"></i>}/>
          default:
-            console.log("Couldnt find the fact")
+            return
       }
 
    }
    
+   // envokes if a user follows another user
+   async function recordFollow(){
+      // primary color
+      // setFollowBtnClicked(prevState => !prevState)
+      
+      //  checking which state it is in 
+      console.log(followBtnClicked)
+      if (followBtnClicked) {
+         followBtnElement.current.style.backgroundColor = '#ff3c3c'
+         followBtnElement.current.innerHTML = 'Following <i class="fa-solid fa-user-check"></i>'
+         followBtnElement.current.classList.toggle('.followBtn')
+         
+      } else {
+         followBtnElement.current.style.background = 'none'
+         followBtnElement.current.innerHTML = 'Follow <i class="fa-solid fa-user-plus"></i>'
+         followBtnElement.current.classList.toggle('.followBtn')
+         
+      }      
+      
+   }
+   
+   // envokes if a user likes something
+   async function recordLike(){
+      // followBtnElement.current.style.backgroundColor = '$sc-error'
+      
+      console.log(likeBtnClicked)
+      if (likeBtnClicked) {
+         likeBtnElement.current.style.backgroundColor = '#F96E36'
+         likeBtnElement.current.innerHTML = 'Liked <i class="fa-solid fa-thumbs-up"></i>'
+         likeBtnElement.current.classList.toggle('.likeBtn')
+         
+      } else {
+         likeBtnElement.current.style.background = 'none'
+         likeBtnElement.current.innerHTML = 'Like <i class="fa-solid fa-thumbs-up"></i>'
+         likeBtnElement.current.classList.toggle('.likeBtn')
+         
+      }
+      
 
-
-
-
+   }
 
 
 
@@ -224,14 +267,14 @@ export default function Home(){
                </div>
 
                {/* what shows up based on what topics the user selected */}
-               <article id="userContent">
-
+               <article className="userContent">
+                  {displayTopicInfo()}
                   <div className="userPost">
-                     <div id="postAnalytics">
+                     <div className="postAnalytics">
                         <h1><img className="profilePicture" src={logo} alt="" />{"Wolf Bot"} posted</h1>
-                        <div id="userTraction">
-                           <button id="followBtn">Follow <i className="fa-solid fa-user-plus"></i></button>
-                           <button id="likeBtn">Like <i className="fa-solid fa-thumbs-up"></i></button>
+                        <div className="userTraction">
+                           <button className="followBtn" ref={followBtnElement} onClick={()=> {setFollowBtnClicked(prevState => !prevState), recordFollow()}}>Follow <i className="fa-solid fa-user-plus"></i></button>
+                           <button className="likeBtn" ref={likeBtnElement} onClick={()=> {setLikeBtnClicked(prevState => !prevState), recordLike()}}>Like <i className="fa-solid fa-thumbs-up"></i></button>
                         </div>
                      </div>
                      <br />
@@ -240,7 +283,7 @@ export default function Home(){
                         <h2 id="postBody">I almost forgot to say, Hello World!</h2>
                      </main>
                   </div>
-                  {displayTopicInfo()}
+                  
                   
                </article>
             </section>

@@ -13,24 +13,36 @@ export default defineConfig({
   },
   server: {
     proxy: {
+      // for api calls
       '/api': {
         target: 'http://localhost:3000/',
         changeOrigin: true,
         secure: false,
         ws: true,
       },
+      // for handling and setting up users 
       '/users': {
         target: 'http://localhost:3000/',
         changeOrigin: true,
         secure: false,
         ws: true,
       },
+      // for handling topics that the user has already picked out
       '/wolfTopics': {
         target: 'http://localhost:3000/',
         changeOrigin: true,
         secure: false,
         ws: true,
       },
+
+      // for handling user analytics
+      '/like': {
+        target: 'http://localhost:3000/',
+        changeOrigin: true,
+        secure: false,
+        ws: true,
+      },
+
 
     }
   },
