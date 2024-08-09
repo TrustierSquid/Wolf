@@ -5,8 +5,10 @@ import logo from '/src/assets/wolfLogo.png'
 
 export default function Home(){
    const profilePictureElement = useRef(null)
-   const [userData, setUserData] = useState([])
    const topicBtn = useRef(null)
+   const mobileNavBtn = useRef(null)
+   const sideNav = useRef(null)
+   const [userData, setUserData] = useState([])
    const [username, setUsername] = useState(null)
 
 
@@ -35,19 +37,10 @@ export default function Home(){
    
    
 
-   // When the topics are called in, each topic will have their own icon
-   function iconAppender(topic){
-      switch(topic){
-         case "Sports":
-            topicBtn.innerHTML = `<i className="fa-solid fa-baseball"></i> ${topic}`
-         case "Cosmetology":
-            topicBtn.innerHTML = `<i className="fa-solid fa-baseball"></i> Sports`
-         default:
-            console.log("No topic specified")   
-            return null
-      }
-   }
 
+   function mobileNavFunction() {
+      sideNav.current.classList.toggle('toggleNav')
+   }
    
    
    return (
@@ -62,15 +55,18 @@ export default function Home(){
                <img className="profilePicture" ref={profilePictureElement} src="" alt="" />
                <h2>{username}</h2>
             </div>
+            <button ref={mobileNavBtn} id="mobileNavBtn" onClick={()=> mobileNavFunction()}><i className="fa-solid fa-bars"></i></button>
          </nav>
 
       {/* MAIN CONTENT */}
 
          <main>
-            <nav id="sideNav">
+
+
+            <nav className="sideNav" ref={sideNav}>
                <div id="sideNavBtns">
-                  <button id="homeBtn">Home <i class="fa-solid fa-house"></i></button>
-                  <button id="popularBtn">Popular <i class="fa-solid fa-fire"></i></button>
+                  <button id="homeBtn">Home <i className="fa-solid fa-house"></i></button>
+                  <button id="popularBtn">Popular <i className="fa-solid fa-fire"></i></button>
                   <button id="newPostBtn">New Post</button>
 
                </div>
@@ -85,7 +81,7 @@ export default function Home(){
                         // 
                         return (
                            <>
-                              <button ref={topicBtn}>{topic} <i class="fa-solid fa-person-walking-arrow-right"></i></button>
+                              <button ref={topicBtn}>{topic} <i className="fa-solid fa-person-walking-arrow-right"></i></button>
                            </>
                         )
                      })}
@@ -100,8 +96,9 @@ export default function Home(){
                      <button>More Topics<i className="fa-solid fa-magnifying-glass-plus"></i></button>
                   </div>
                </section>
-
             </nav>
+
+
             <section id="content">
                <div id="whatsNew">
                   <h1>Whats New</h1>
@@ -113,12 +110,21 @@ export default function Home(){
                   <div className="userPost">
                      <h1><img className="profilePicture" src={logo} alt="" />{"Wolf Bot"} posted</h1>
                      <br />
-                     <main class="mainPost">
+                     <main className="mainPost">
                         <h2 id="postCaption">Hello there!</h2>
                         <h2 id="postBody">I almost forgot to say, Hello World!</h2>
 
                      </main>
                   </div>
+                  {/* <div className="userPost">
+                     <h1><img className="profilePicture" src={logo} alt="" />{"Wolf Bot"} posted</h1>
+                     <br />
+                     <main className="mainPost">
+                        <h2 id="postCaption">Greetings!</h2>
+                        <h2 id="postBody">Wonderful day!</h2>
+
+                     </main>
+                  </div> */}
                </article>
             </section>
          </main>

@@ -15,7 +15,6 @@ import { ObjectId } from "mongodb";
 
 // for serving cookies and session data
 import jsonwebtoken from "jsonwebtoken";
-import session from "express-session";
 
 // middleware for protecting routes
 import requireAuth from "../middleware/authMiddleware.js";
@@ -83,7 +82,6 @@ router.post("/login", async (req, res) => {
 
     if (user != null) {
       // if it finds the matching user
-      // redirects user to home.html
 
       // grabs entered password, hashes it and compares it to the hashed password in the database
       const auth = await bcrypt.compare(password, user.password);
@@ -96,9 +94,12 @@ router.post("/login", async (req, res) => {
           secure: false,
         });
         
-      //   DEV TESTING
-      //   res.json({ success: true });
-      res.sendFile(path.join(__dirname, "./dist/home.html"));
+        // DEV TESTING
+        res.json({ success: true });
+
+      
+      /* for prod */
+      // res.sendFile(path.join(__dirname, "./dist/home.html"));
 
         console.log(`${username} is now logged in. Welcome!`);
       } else {

@@ -16,7 +16,6 @@ import { MongoClient, ServerApiVersion, ObjectId } from "mongodb";
 
 // list of topics for the user to choose from
 import topics from "./json/topics.json" assert { type: "json" };
-import { METHODS } from "http";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -33,7 +32,7 @@ app.use(express.static(path.join(__dirname, 'dist')));
 
 // IMPORTED ROUTES
 app.use("/users", signinRoutes);
-
+app.use(cors())
 app.use(cookieParser());
 app.use(express.json());
 
@@ -122,7 +121,7 @@ app.get('/home', requireAuth, (req, res)=> {
   
   // for prod
   // res.sendFile(path.join(__dirname, 'dist', 'home.html'))
-
+  console.log("User arrived at user page");
 })
 
 

@@ -301,8 +301,12 @@ HOME PAGE
    // border-bottom: 1px solid $primary;
    display: flex;
    padding: 1rem;
-   justify-content:space-between;
-   margin-inline: 8rem;
+   justify-content: space-around;
+   gap: 15rem;
+   position: sticky;
+   top: 0;
+   background: rgb(31,31,31);
+   background: linear-gradient(36deg, rgba(31,31,31,1) 60%, rgba(255,60,60,1) 60%, rgba(103,0,0,1) 100%); 
 
    #logoContainer {
       display: flex;
@@ -311,6 +315,12 @@ HOME PAGE
       h1 {
          font-family: comfortaa;
          color: white;
+      }
+
+      #logo  {
+         height: 50px;
+         object-fit: cover;
+         cursor: pointer;
       }
    }
    
@@ -325,10 +335,8 @@ HOME PAGE
       }
    }
 
-   #logo  {
-      height: 50px;
-      object-fit: cover;
-      cursor: pointer;
+   #mobileNavBtn {
+      display: none;
    }
 
 }
@@ -339,7 +347,7 @@ main {
    padding: 3rem 5rem;
    gap: 2rem;
    
-   #sideNav {
+   .sideNav {
       height: 900px;
       width: 400px;
       color: white;
@@ -455,7 +463,6 @@ main {
       display: flex;
       flex-direction: column;
       gap: 10rem;
-      overflow: scroll;
       
       #whatsNew {
          display: flex;
@@ -464,7 +471,7 @@ main {
          letter-spacing: 1px;
 
          h1 {
-            font-size: 4rem;
+            font-size: 6vw;
             background: #FF7979;
             background: linear-gradient(to bottom right, #FF7979 18%, #FFAAAA 100%);
             -webkit-background-clip: text;
@@ -478,9 +485,9 @@ main {
       #userContent {
          max-height: 1000px;
          // border: 2px solid green;
-         display: grid;
-         grid-template-columns: repeat(auto-fit, minmax(600px, 1fr));
-         gap: 1rem;
+         display: flex;
+         flex-direction: column;
+         gap: 5rem;
          padding: 1rem;
 
          h1 {
@@ -500,7 +507,7 @@ main {
                display: flex;
                flex-direction: column;
                background-color: $background;
-               min-height: 200px;
+               min-height: 300px;
                max-height: 500px;
                border-radius: 0.5rem;
                color: #555555;
@@ -531,4 +538,93 @@ main {
       
    }
 
+}
+
+/* 
+
+HOME COMPONENT MEDIA QUERIES
+
+*/
+
+@media (max-width: 850px) {
+   
+   #nav {
+      justify-content: space-between;
+      margin-inline: 0;
+      
+      #logoContainer {
+
+      }
+
+      #profileContainer {
+         h2 {
+            display: none;
+         }
+
+         // User profile picture
+         img {
+            display: none;
+         }
+         
+      }
+      
+      #mobileNavBtn  {
+         display: block;
+         color: $primary;
+         background: none;
+         font-size: 2.5rem;
+         border: none;
+         cursor: pointer;
+         transition: 150ms;
+         
+         &:hover {
+            color: $darkenPrimary;
+         }
+      }
+   }
+
+   
+   main {
+      padding: 3rem 2rem;
+      
+      .sideNav {
+         position: absolute;
+         height: auto;
+         background-color: $background;
+         left: -400px;
+         transition: 350ms;
+         width: 300px;
+         border-radius: 0.5rem;
+         box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+      }
+      
+      .toggleNav {
+         left: 0px;
+      }
+      
+      #content {
+         padding: 1rem;
+
+         #whatsNew {
+            display: flex;
+            justify-content: center;
+            h1 {
+               font-size: 12vw;
+            }
+         }
+
+         // Container for posting content
+         #userContent {
+
+            // each post
+            .userPost {
+               
+               // message
+               .mainPost {
+
+               }
+            }
+         }
+      }
+   }
 }

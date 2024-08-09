@@ -70,7 +70,12 @@ export default function Login() {
       // const successMessage = await response.json();
       const json = await response.json()
       console.log(json)
-      window.location.href = "http://localhost:5173/user"
+
+      if (json.successMessage == true ) {
+        window.location.href = "http://localhost:5173/user"
+      }
+      
+      console.log("someone is already here with that username")
       
       username.current.value = "";
       password.current.value = "";
