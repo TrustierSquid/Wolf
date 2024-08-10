@@ -133,6 +133,40 @@ app.get('/wolfTopics', (req, res)=> {
 })
 
 
+/* 
+
+  HOME PAGE USER ANALYTICS
+
+ */
+
+app.post('/like', requireAuth, async (req, res)=> {
+  // info gathered based on the individual post that was liked
+  const {likeCheck, whoLiked, poster} = req.body
+  const database = await connectMongo()
+  const users = database.collection('Users')
+
+  // poster
+  const filter = {user: poster}
+  const updateDoc = {
+    $inc: {
+      totalLikes: 1
+    }
+  }
+  
+  const updatePosterTotalLikes = await users.updateOne(filter, updateDoc)
+  const findPoster = await users.findOne({user: poster})
+
+  if(updatePosterTotalLikes) {
+    console.log(`${whoLiked} liked ${findPoster.user}'s post! ${findPoster.user} has ${findPoster.totalLikes} likes`)    
+    res.json({totalLikes: findPoster.totalLikes})
+  } else {
+    console.log(`couldnt find the poster in the database`)
+  }
+  
+  
+})
+
+
 app.listen(port, async () => {
   console.clear();
   console.log(`Server is running on port ${port}`);

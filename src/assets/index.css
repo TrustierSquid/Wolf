@@ -440,11 +440,13 @@ main #content .userContent .userPost .mainPost {
   padding: 2rem;
 }
 main #content .userContent .userPost .mainPost #postCaption {
-  font-size: 1rem;
+  font-size: 1.5rem;
   font-family: "Nunito", sans-serif;
   background: linear-gradient(to bottom right, #FF7979 18%, #FFAAAA 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  display: flex;
+  justify-content: space-between;
 }
 main #content .userContent .userPost .mainPost #postBody {
   font-size: 1.4rem;

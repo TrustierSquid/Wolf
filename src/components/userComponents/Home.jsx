@@ -21,6 +21,7 @@ export default function Home(){
    const [userData, setUserData] = useState([])
 
    // Displaying the username of the user in the nav bar
+   // and checking user action based off of username
    const [username, setUsername] = useState(null)
 
    // The topics and 2 facts for each of them
@@ -36,6 +37,13 @@ export default function Home(){
    const followBtnElement = useRef(null)
    const [followBtnClicked, setFollowBtnClicked] = useState(true)
 
+   // grabbing poster data for recording likes and follows
+   const posterElement = useRef(null)
+   const [poster, setPoster] = useState(null)
+
+   const likeCounterElement = useRef(null)
+   const [posterTotalLikes, setPosterTotalLikes] = useState(null)
+   
    // Getting user information and displaying on the home page
    useEffect(()=> {
       async function getUserData(){
@@ -84,37 +92,17 @@ export default function Home(){
    function mobileNavFunction() {
       sideNav.current.classList.toggle('toggleNav')
    }
-   
-   
+
+
+   // Helper function to identify the topic you selected
    const handleClick = (topic) => {
       console.log(topic)
+
+      // setting the state for the selected topic
       setSelectedFact(topic)
    }
    
-   // Wolf bot will post information about a topic you select
-   function WolfBotPost(props) {
-      return (
-         <>
-            <div className="userPost">
-               <div className="postAnalytics">
-                  <h1><img className="profilePicture" src={logo} alt="" />{"Wolf Bot"} posted</h1>
-                  <div className="userTraction">
-                     <button className="followBtn" ref={followBtnElement} onClick={()=> {recordFollow(), setFollowBtnClicked(prevState => !prevState)}}>Follow <i className="fa-solid fa-user-plus"></i></button>
-                     <button className="likeBtn" ref={likeBtnElement} onClick={()=> {recordLike(), setLikeBtnClicked(prevState => !prevState)}}>Like <i className="fa-solid fa-thumbs-up"></i></button>
-                  </div>
-               </div>
-               <br />
-               <main className="mainPost">
-                  <h2 id="postCaption">{props.topic} {props.icon}</h2>
-                  <h2 id="postBody">{`${props.fact}`}</h2>
-               </main>
-            </div>
-         </>
-      )
-   }
-   
-   
-   
+
    // gets the selected topic, based on what the user chose in the beginning
    function displayTopicInfo(){
       
@@ -160,48 +148,89 @@ export default function Home(){
       }
 
    }
-   
-   // envokes if a user follows another user
-   async function recordFollow(){
-      // primary color
-      // setFollowBtnClicked(prevState => !prevState)
-      
-      //  checking which state it is in 
+
+   // toggle Animation for follow button and sending to the server that the user followed a user
+   const toggleFollow = async ()=> {
+      setFollowBtnClicked(prevState => !prevState)
       console.log(followBtnClicked)
       if (followBtnClicked) {
+         console.log("its true")
          followBtnElement.current.style.backgroundColor = '#ff3c3c'
          followBtnElement.current.innerHTML = 'Following <i class="fa-solid fa-user-check"></i>'
          followBtnElement.current.classList.toggle('.followBtn')
-         
       } else {
          followBtnElement.current.style.background = 'none'
          followBtnElement.current.innerHTML = 'Follow <i class="fa-solid fa-user-plus"></i>'
          followBtnElement.current.classList.toggle('.followBtn')
-         
-      }      
-      
+      }
    }
-   
-   // envokes if a user likes something
-   async function recordLike(){
-      // followBtnElement.current.style.backgroundColor = '$sc-error'
-      
+
+   // toggle Animation for like button and sending to the server that the user liked a post
+   const toggleLike = async ()=> {
+      setLikeBtnClicked(prevState => !prevState)
+      console.log(`Here is the poster ${posterElement.current.innerText}`)
       console.log(likeBtnClicked)
+      const poster = posterElement.current.innerText
+      
       if (likeBtnClicked) {
          likeBtnElement.current.style.backgroundColor = '#F96E36'
          likeBtnElement.current.innerHTML = 'Liked <i class="fa-solid fa-thumbs-up"></i>'
          likeBtnElement.current.classList.toggle('.likeBtn')
+
+         try {
+            // Sending to the server that the user liked a post
+            
+            const response = await fetch('/like', {
+               method: 'POST',
+               headers: {
+                  'Content-Type': 'application/json'
+               },
+               // if likeBtnClicked is true, it will record it to the database
+               body: JSON.stringify({likeCheck: true, whoLiked: username, poster: poster}) 
+            })
+            
+            if (!response.ok) {
+               throw new Error(`Response was not okay ${response.status}`)
+            }
+            
+            const data = await response.json()
+            console.log(data)
+            setPosterTotalLikes(data.totalLikes)
+
+         } catch (err) {
+            console.log(err)
+         }
          
       } else {
          likeBtnElement.current.style.background = 'none'
          likeBtnElement.current.innerHTML = 'Like <i class="fa-solid fa-thumbs-up"></i>'
          likeBtnElement.current.classList.toggle('.likeBtn')
          
-      }
-      
 
+         
+         
+         
+      }
    }
 
+
+   // This is a component that Wolf bot will post information about a topic you select
+   function WolfBotPost(props) {
+      return (
+         <>
+            <div className="userPost">
+               <div className="postAnalytics">
+                  <h1><img className="profilePicture" src={logo} alt="" />{"Wolf Bot"} posted</h1>
+               </div>
+               <br />
+               <main className="mainPost">
+                  <h2 id="postCaption">{props.topic} {props.icon}</h2>
+                  <h2 id="postBody">{`${props.fact}`}</h2>
+               </main>
+            </div>
+         </>
+      )
+   }
 
 
    
@@ -271,15 +300,15 @@ export default function Home(){
                   {displayTopicInfo()}
                   <div className="userPost">
                      <div className="postAnalytics">
-                        <h1><img className="profilePicture" src={logo} alt="" />{"Wolf Bot"} posted</h1>
+                        <h1 id="poster" ref={posterElement}><img className="profilePicture" src={logo} alt="" />Wolf Bot</h1>
                         <div className="userTraction">
-                           <button className="followBtn" ref={followBtnElement} onClick={()=> {setFollowBtnClicked(prevState => !prevState), recordFollow()}}>Follow <i className="fa-solid fa-user-plus"></i></button>
-                           <button className="likeBtn" ref={likeBtnElement} onClick={()=> {setLikeBtnClicked(prevState => !prevState), recordLike()}}>Like <i className="fa-solid fa-thumbs-up"></i></button>
+                           {/* <button className="followBtn" ref={followBtnElement} onClick={()=> {toggleFollow()}}>Follow <i className="fa-solid fa-user-plus"></i></button> */}
+                           <button className="likeBtn" ref={likeBtnElement} onClick={()=> {toggleLike()}}>Like <i className="fa-solid fa-thumbs-up"></i></button>
                         </div>
                      </div>
                      <br />
                      <main className="mainPost">
-                        <h2 id="postCaption">Hello there!</h2>
+                        <h2 id="postCaption">Hello there! <p id="likeCounter" ref={likeCounterElement}> <i class="fa-solid fa-heart"></i> {posterTotalLikes}</p></h2>
                         <h2 id="postBody">I almost forgot to say, Hello World!</h2>
                      </main>
                   </div>
