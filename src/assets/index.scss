@@ -452,6 +452,10 @@ main {
                transform: translateY(-3px);
                background-color: $primary;
             }
+
+            &:focus {
+               background-color: $primary;
+            }
          }
          
          #selectedTopicsBtns {

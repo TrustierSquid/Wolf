@@ -232,6 +232,20 @@ export default function Home(){
       )
    }
 
+   function AboutPost(){
+      return (
+         <>
+            <div className="userPost">
+               <br />
+               <main className="mainPost">
+                  <h2 id="postCaption">About <i className="fa-solid fa-book"></i></h2>
+                  <h2 id="postBody">App Version: alpha</h2>
+               </main>
+            </div>
+         </>
+      )
+   }
+
 
    
    return (
@@ -292,7 +306,7 @@ export default function Home(){
 
             <section id="content">
                <div id="whatsNew">
-                  <h1>Whats New</h1>
+                  <h1>What's New</h1>
                </div>
 
                {/* what shows up based on what topics the user selected */}

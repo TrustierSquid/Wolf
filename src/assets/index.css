@@ -334,6 +334,9 @@ main .sideNav .topicSelectionElement button:hover {
   transform: translateY(-3px);
   background-color: #FF3C3C;
 }
+main .sideNav .topicSelectionElement button:focus {
+  background-color: #FF3C3C;
+}
 main .sideNav .topicSelectionElement #selectedTopicsBtns {
   display: flex;
   flex-direction: column;
