@@ -132,10 +132,6 @@ app.get('/wolfTopics', (req, res)=> {
   res.json(topicFacts)
 })
 
-app.get('/profileView', requireAuth, (req, res)=> {
-  // res.send("Hi")
-  res.sendFile(path.join(__dirname, '../', 'profile.html'))
-})
 
 /* 
 
@@ -173,13 +169,29 @@ app.post('/like', requireAuth, async (req, res)=> {
 })
 
 
+
+
+
+
 // route executes when the user looks at their profile page
 app.post('/profile',  (req, res)=> {
   const {username} = req.body
 
   console.log(`${username} wants to look at his profile!`)
-  res.redirect('/profileView')
+  
+
 })
+
+
+
+
+
+
+
+
+
+
+
 
 
 app.listen(port, async () => {

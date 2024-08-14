@@ -251,6 +251,54 @@ HOME PAGE
   display: none;
 }
 
+#profileDropdown {
+  position: fixed;
+  border-radius: 1rem;
+  padding: 1rem;
+  right: 15%;
+  background-color: #1F1F1F;
+  height: 200px;
+  color: white;
+  display: flex;
+  gap: 4rem;
+}
+#profileDropdown .profileSection {
+  padding: 1rem;
+}
+#profileDropdown .profileSection:nth-of-type(1) #userAnalyticsContainer {
+  display: flex;
+  gap: 3rem;
+}
+#profileDropdown .profileSection:nth-of-type(1) #userAnalyticsContainer #dataPoint {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+#profileDropdown .profileSection:nth-of-type(1) #userAnalyticsContainer #dataPoint p {
+  font-family: "Nunito", sans-serif;
+}
+#profileDropdown .profileSection:nth-of-type(2) {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+#profileDropdown .profileSection:nth-of-type(2) h3 {
+  font-family: "Nunito", sans-serif;
+}
+#profileDropdown .profileSection:nth-of-type(2) button {
+  background-color: crimson;
+  border: none;
+  border-radius: 1rem;
+  color: white;
+  padding: 0.5rem;
+  cursor: pointer;
+  transition: 150ms;
+}
+#profileDropdown .profileSection:nth-of-type(2) button:hover {
+  background-color: #FF3C3C;
+}
+
 main {
   display: flex;
   padding: 3rem 2rem;

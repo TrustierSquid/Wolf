@@ -270,7 +270,12 @@ router.get('/home', requireAuth, async (req, res)=> {
   let userSelectedTopics = loggedInUser.topics
   
 
-  res.json({topicArr: userSelectedTopics, userName: loggedInUser.user})
+  res.json({
+    topicArr: userSelectedTopics, 
+    userName: loggedInUser.user,
+    followerCount: loggedInUser.followerCount,
+    followingCount: loggedInUser.followingCount
+  })
    
    
 

@@ -36,7 +36,11 @@ export default function Home(){
 
    const followBtnElement = useRef(null)
    const [followBtnClicked, setFollowBtnClicked] = useState(true)
+   
+   const [followerCount, setFollowerCount] = useState(null)
+   const [followingCount, setFollowingCount] = useState(null) 
 
+   
    // grabbing poster data for recording likes and follows
    const posterElement = useRef(null)
    const [poster, setPoster] = useState(null)
@@ -44,6 +48,7 @@ export default function Home(){
    const likeCounterElement = useRef(null)
    const [posterTotalLikes, setPosterTotalLikes] = useState(null)
 
+   
    const appVersion = 'alpha'
    
    // Getting user information and displaying on the home page
@@ -66,6 +71,9 @@ export default function Home(){
 
          setUserData(homeData.topicArr)
          setUsername(homeData.userName)
+         setFollowerCount(homeData.followerCount)
+         setFollowingCount(homeData.followingCount)
+         
       }
 
       getUserData()
@@ -203,7 +211,7 @@ export default function Home(){
    }
 
 
-   async function redirectToProfilePage(){
+   async function showProfile(){
       const response = await fetch('/profile', {
          method: 'POST',
          headers: {
@@ -264,10 +272,30 @@ export default function Home(){
                <h1>WOLF</h1>
             </div>
             <div id="profileContainer">
-               <h4 onClick={()=> redirectToProfilePage()}><i className="fa-solid fa-user"></i> {username}</h4>
+               <h4 onClick={()=> showProfile()}><i className="fa-solid fa-user"></i> {username}</h4>
             </div>
             <button ref={mobileNavBtn} id="mobileNavBtn" onClick={()=> mobileNavFunction()}><i className="fa-solid fa-bars"></i></button>
          </nav>
+
+         <section id="profileDropdown">
+            <div className="profileSection">
+               <span id="userAnalyticsContainer">
+                  <div id="dataPoint">
+                     <h1>{followerCount}</h1>
+                     <p>Followers</p>
+                  </div>
+                  <div id="dataPoint">
+                     <h1>{followingCount}</h1>
+                     <p>Following</p>
+                  </div>
+               </span>
+            </div>
+
+            <div className="profileSection">
+               <h3>Hello, {username}!</h3>
+               <button>Log out</button>
+            </div>
+         </section>
 
       {/* MAIN CONTENT */}
 
