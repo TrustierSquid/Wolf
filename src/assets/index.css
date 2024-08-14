@@ -208,8 +208,7 @@ HOME PAGE
   gap: 15rem;
   position: sticky;
   top: 0;
-  background: rgb(31, 31, 31);
-  background: linear-gradient(36deg, rgb(31, 31, 31) 60%, rgb(255, 60, 60) 60%, rgb(103, 0, 0) 100%);
+  background: rgb(81, 9, 23);
 }
 #nav #logoContainer {
   display: flex;
@@ -256,7 +255,7 @@ HOME PAGE
 
 main {
   display: flex;
-  padding: 3rem 5rem;
+  padding: 3rem 2rem;
   gap: 2rem;
 }
 main .sideNav {
@@ -268,6 +267,7 @@ main .sideNav {
   flex-direction: column;
   gap: 7rem;
   font-family: "roboto", sans-serif;
+  border-right: 2px solid grey;
 }
 main .sideNav #sideNavBtns {
   display: flex;
@@ -281,7 +281,7 @@ main .sideNav #sideNavBtns button {
   padding: 1rem;
   font-size: 1rem;
   cursor: pointer;
-  background-color: #1F1F1F;
+  background: none;
   color: white;
   border: none;
   border-radius: 0.5rem;
@@ -298,10 +298,11 @@ main .sideNav #sideNavBtns button:hover {
 main .sideNav #sideNavBtns #newPostBtn {
   display: flex;
   justify-content: center;
-  background-color: crimson;
+  border: 2px solid rgba(220, 20, 60, 0.441);
 }
 main .sideNav #sideNavBtns #newPostBtn:hover {
-  background-color: red;
+  background-color: #FF3C3C;
+  background-color: rgba(220, 20, 60, 0.441);
 }
 main .sideNav .topicSelectionElement {
   display: flex;
@@ -318,7 +319,7 @@ main .sideNav .topicSelectionElement button {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  background-color: #1F1F1F;
+  background: none;
   border: none;
   padding: 1rem;
   font-size: 1rem;
@@ -359,17 +360,23 @@ main #content {
 main #content #whatsNew {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  flex-direction: column;
+  align-items: start;
+  gap: 1rem;
   letter-spacing: 1px;
 }
 main #content #whatsNew h1 {
   font-size: 6vw;
-  background: #FF7979;
-  background: linear-gradient(to bottom right, #FF7979 18%, #FFAAAA 100%);
+  background: rgb(255, 60, 60);
+  background: linear-gradient(101deg, rgb(255, 60, 60) 6%, rgb(220, 20, 60) 49%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   font-family: "Nunito", sans-serif;
   font-weight: bolder;
+}
+main #content #whatsNew h2 {
+  color: white;
+  margin-left: 1rem;
 }
 main #content .userContent {
   max-height: 1000px;

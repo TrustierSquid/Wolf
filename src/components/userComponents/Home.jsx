@@ -43,6 +43,8 @@ export default function Home(){
 
    const likeCounterElement = useRef(null)
    const [posterTotalLikes, setPosterTotalLikes] = useState(null)
+
+   const appVersion = 'alpha'
    
    // Getting user information and displaying on the home page
    useEffect(()=> {
@@ -149,20 +151,11 @@ export default function Home(){
 
    }
 
-   // toggle Animation for follow button and sending to the server that the user followed a user
-   const toggleFollow = async ()=> {
-      setFollowBtnClicked(prevState => !prevState)
-      console.log(followBtnClicked)
-      if (followBtnClicked) {
-         console.log("its true")
-         followBtnElement.current.style.backgroundColor = '#ff3c3c'
-         followBtnElement.current.innerHTML = 'Following <i class="fa-solid fa-user-check"></i>'
-         followBtnElement.current.classList.toggle('.followBtn')
-      } else {
-         followBtnElement.current.style.background = 'none'
-         followBtnElement.current.innerHTML = 'Follow <i class="fa-solid fa-user-plus"></i>'
-         followBtnElement.current.classList.toggle('.followBtn')
-      }
+
+   function displayAbout(){
+      return (
+         <AboutPost/>
+      )
    }
 
    // toggle Animation for like button and sending to the server that the user liked a post
@@ -206,10 +199,6 @@ export default function Home(){
          likeBtnElement.current.innerHTML = 'Like <i class="fa-solid fa-thumbs-up"></i>'
          likeBtnElement.current.classList.toggle('.likeBtn')
          
-
-         
-         
-         
       }
    }
 
@@ -239,7 +228,7 @@ export default function Home(){
                <br />
                <main className="mainPost">
                   <h2 id="postCaption">About <i className="fa-solid fa-book"></i></h2>
-                  <h2 id="postBody">App Version: alpha</h2>
+                  <h2 id="postBody">App Version: {appVersion}</h2>
                </main>
             </div>
          </>
@@ -271,12 +260,13 @@ export default function Home(){
             <nav className="sideNav" ref={sideNav}>
                <div id="sideNavBtns">
                   <button id="homeBtn">Home <i className="fa-solid fa-house"></i></button>
-                  <button id="popularBtn">Popular <i className="fa-solid fa-fire"></i></button>
-                  <button id="newPostBtn">New Post</button>
+                  <button id="popularBtn">What's Popular<i className="fa-solid fa-fire"></i></button>
+                  <button id="newPostBtn">New Post <i class="fa-solid fa-plus"></i></button>
 
                </div>
 
                <section className="topicSelectionElement">
+                  <hr />
                   <h3 className="subTitle">Your Topics</h3>
                   {/* mapping out the selected topics that the user selected */}
                   <div id="selectedTopicsBtns">
@@ -294,10 +284,11 @@ export default function Home(){
                </section>
 
                <section className="topicSelectionElement">
+                  <hr />
                   <h3 className="subTitle">Other Resources</h3>
                   {/* mapping out the selected topics that the user selected */}
                   <div id="OtherResourcesBtns">
-                     <button>About <i className="fa-solid fa-book"></i></button>
+                     <button onClick={()=> displayAbout()}>About <i className="fa-solid fa-book"></i></button>
                      <button>More Topics<i className="fa-solid fa-magnifying-glass-plus"></i></button>
                   </div>
                </section>
@@ -307,10 +298,12 @@ export default function Home(){
             <section id="content">
                <div id="whatsNew">
                   <h1>What's New</h1>
+                  <h2>See What's Hot</h2>
                </div>
 
                {/* what shows up based on what topics the user selected */}
                <article className="userContent">
+                  {/* {AboutPost()} */}
                   {displayTopicInfo()}
                   <div className="userPost">
                      <div className="postAnalytics">
