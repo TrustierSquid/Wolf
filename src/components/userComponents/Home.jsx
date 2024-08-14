@@ -167,7 +167,7 @@ export default function Home(){
       
       if (likeBtnClicked) {
          likeBtnElement.current.style.backgroundColor = '#F96E36'
-         likeBtnElement.current.innerHTML = 'Liked <i class="fa-solid fa-thumbs-up"></i>'
+         likeBtnElement.current.innerHTML = 'Liked <i className="fa-solid fa-thumbs-up"></i>'
          likeBtnElement.current.classList.toggle('.likeBtn')
 
          try {
@@ -196,10 +196,28 @@ export default function Home(){
          
       } else {
          likeBtnElement.current.style.background = 'none'
-         likeBtnElement.current.innerHTML = 'Like <i class="fa-solid fa-thumbs-up"></i>'
+         likeBtnElement.current.innerHTML = 'Like <i className="fa-solid fa-thumbs-up"></i>'
          likeBtnElement.current.classList.toggle('.likeBtn')
          
       }
+   }
+
+
+   async function redirectToProfilePage(){
+      const response = await fetch('/profile', {
+         method: 'POST',
+         headers: {
+            'Content-Type': 'application/json'
+         },
+         body: JSON.stringify({username})
+      })
+
+      if(!response.ok) {
+         throw new Error(`Response was not okay! ${response.status}`)
+      }
+
+      /* const data = await response.json()
+      console.log(data) */
    }
 
 
@@ -246,8 +264,7 @@ export default function Home(){
                <h1>WOLF</h1>
             </div>
             <div id="profileContainer">
-               <i className="fa-solid fa-user"></i>
-               <h2>{username}</h2>
+               <h4 onClick={()=> redirectToProfilePage()}><i className="fa-solid fa-user"></i> {username}</h4>
             </div>
             <button ref={mobileNavBtn} id="mobileNavBtn" onClick={()=> mobileNavFunction()}><i className="fa-solid fa-bars"></i></button>
          </nav>
@@ -261,12 +278,11 @@ export default function Home(){
                <div id="sideNavBtns">
                   <button id="homeBtn">Home <i className="fa-solid fa-house"></i></button>
                   <button id="popularBtn">What's Popular<i className="fa-solid fa-fire"></i></button>
-                  <button id="newPostBtn">New Post <i class="fa-solid fa-plus"></i></button>
+                  <button id="newPostBtn">New Post <i className="fa-solid fa-plus"></i></button>
 
                </div>
 
                <section className="topicSelectionElement">
-                  <hr />
                   <h3 className="subTitle">Your Topics</h3>
                   {/* mapping out the selected topics that the user selected */}
                   <div id="selectedTopicsBtns">
@@ -284,7 +300,6 @@ export default function Home(){
                </section>
 
                <section className="topicSelectionElement">
-                  <hr />
                   <h3 className="subTitle">Other Resources</h3>
                   {/* mapping out the selected topics that the user selected */}
                   <div id="OtherResourcesBtns">
@@ -305,6 +320,10 @@ export default function Home(){
                <article className="userContent">
                   {/* {AboutPost()} */}
                   {displayTopicInfo()}
+
+
+                  
+                  
                   <div className="userPost">
                      <div className="postAnalytics">
                         <h1 id="poster" ref={posterElement}><img className="profilePicture" src={logo} alt="" />Wolf Bot</h1>
@@ -315,7 +334,7 @@ export default function Home(){
                      </div>
                      <br />
                      <main className="mainPost">
-                        <h2 id="postCaption">Hello there! <p id="likeCounter" ref={likeCounterElement}> <i class="fa-solid fa-heart"></i> {posterTotalLikes}</p></h2>
+                        <h2 id="postCaption">Hello there! <p id="likeCounter" ref={likeCounterElement}> <i className="fa-solid fa-heart"></i> {posterTotalLikes}</p></h2>
                         <h2 id="postBody">I almost forgot to say, Hello World!</h2>
                      </main>
                   </div>

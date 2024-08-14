@@ -132,6 +132,10 @@ app.get('/wolfTopics', (req, res)=> {
   res.json(topicFacts)
 })
 
+app.get('/profileView', requireAuth, (req, res)=> {
+  // res.send("Hi")
+  res.sendFile(path.join(__dirname, '../', 'profile.html'))
+})
 
 /* 
 
@@ -139,6 +143,8 @@ app.get('/wolfTopics', (req, res)=> {
 
  */
 
+
+// Route executes when a user likes a post
 app.post('/like', requireAuth, async (req, res)=> {
   // info gathered based on the individual post that was liked
   const {likeCheck, whoLiked, poster} = req.body
@@ -164,6 +170,15 @@ app.post('/like', requireAuth, async (req, res)=> {
   }
   
   
+})
+
+
+// route executes when the user looks at their profile page
+app.post('/profile',  (req, res)=> {
+  const {username} = req.body
+
+  console.log(`${username} wants to look at his profile!`)
+  res.redirect('/profileView')
 })
 
 

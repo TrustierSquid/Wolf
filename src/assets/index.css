@@ -230,24 +230,22 @@ HOME PAGE
   align-items: center;
   gap: 1rem;
 }
-#nav #profileContainer i {
-  font-size: 1rem;
-  border: white 2px solid;
+#nav #profileContainer h4 {
+  font-family: comfortaa;
+  color: white;
+  cursor: pointer;
+  transition: 350ms;
+}
+#nav #profileContainer h4 i {
+  font-size: 1.5rem;
   border-radius: 50%;
   padding: 0.5rem;
   color: white;
   cursor: pointer;
   transition: 350ms;
 }
-#nav #profileContainer i:hover {
-  color: black;
-  border: black 2px solid;
-}
-#nav #profileContainer h2 {
-  font-family: comfortaa;
-  color: white;
-  cursor: pointer;
-  transition: 350ms;
+#nav #profileContainer h4:hover {
+  text-decoration: underline;
 }
 #nav #mobileNavBtn {
   display: none;

@@ -5,12 +5,9 @@ import Inspect from 'vite-plugin-inspect'
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
-    react(),
-    Inspect()
+    react()
+    // Inspect()
   ],
-  optimizeDeps: {
-    // exclude: ['crypto', 'util']
-  },
   server: {
     proxy: {
       // for api calls
@@ -48,6 +45,20 @@ export default defineConfig({
         secure: false,
         ws: true,
       },
+      // for the user viewing their own profiles
+      '/profile': {
+        target: 'http://localhost:3000/',
+        changeOrigin: true,
+        secure: false,
+        ws: true,
+      },
+
+      '/profileView': {
+        target: 'http://localhost:3000/',
+        changeOrigin: true,
+        secure: false,
+        ws: true,
+      },
 
 
     }
@@ -59,6 +70,7 @@ export default defineConfig({
         main: 'index.html',
         user: 'user.html',
         home: 'home.html',
+        profile: 'profile.html'
       }
     }
   },

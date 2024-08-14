@@ -328,26 +328,26 @@ HOME PAGE
       align-items: center;
       gap: 1rem;
 
-      i {
-         font-size: 1rem;
-         border: white 2px solid;
-         border-radius: 50%;
-         padding: 0.5rem;
-         color: white;
-         cursor:pointer;
-         transition: 350ms;
-         
-         &:hover {
-            color: black;
-            border: black 2px solid;
-         }
-      }
       
-      h2 {
+      h4 {
          font-family: comfortaa;
          color: white;
          cursor:pointer;
          transition: 350ms;
+
+         i {
+            font-size: 1.5rem;
+            border-radius: 50%;
+            padding: 0.5rem;
+            color: white;
+            cursor:pointer;
+            transition: 350ms;
+            
+         }
+         
+         &:hover {
+            text-decoration: underline;
+         }
       }
    }
 
