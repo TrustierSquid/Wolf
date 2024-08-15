@@ -238,23 +238,7 @@ export default function Home(){
       }
    }
 
-
-   async function showProfile(){
-      const response = await fetch('/profile', {
-         method: 'POST',
-         headers: {
-            'Content-Type': 'application/json'
-         },
-         body: JSON.stringify({username})
-      })
-
-      if(!response.ok) {
-         throw new Error(`Response was not okay! ${response.status}`)
-      }
-
-      /* const data = await response.json()
-      console.log(data) */
-   }
+   
 
 
    
@@ -298,13 +282,15 @@ export default function Home(){
             </div>
          </section>
 
+        
       {/* MAIN CONTENT */}
 
          <main>
 
-
             <nav className="sideNav" ref={sideNav}>
+               
                <div id="sideNavBtns">
+                  <h3 className="subTitle">DashBoard</h3>
                   <button id="homeBtn">Home <i className="fa-solid fa-house"></i></button>
                   <button id="popularBtn">What's Popular<i className="fa-solid fa-fire"></i></button>
                   <button id="newPostBtn">New Post <i className="fa-solid fa-plus"></i></button>
@@ -336,8 +322,8 @@ export default function Home(){
                      <button>More Topics<i className="fa-solid fa-magnifying-glass-plus"></i></button>
                   </div>
                </section>
-            </nav>
 
+            </nav>
 
             <section id="content">
                <div id="whatsNew">

@@ -207,7 +207,7 @@ HOME PAGE
   gap: 15rem;
   position: sticky;
   top: 0;
-  background: rgb(81, 9, 23);
+  background: #510917;
 }
 #nav #logoContainer {
   display: flex;
@@ -306,15 +306,22 @@ main {
   gap: 2rem;
 }
 main .sideNav {
-  height: 900px;
   width: 400px;
   color: white;
+  background-color: #510917;
   padding: 1.5rem;
   display: flex;
   flex-direction: column;
   gap: 7rem;
   font-family: "roboto", sans-serif;
-  border-right: 2px solid grey;
+  overflow: scroll;
+  border-radius: 0.5rem;
+}
+main .sideNav .subTitle {
+  font-family: "Nunito", sans-serif;
+  font-weight: 800;
+  font-size: 1.3rem;
+  color: #f1f1f1;
 }
 main .sideNav #sideNavBtns {
   display: flex;
@@ -355,12 +362,6 @@ main .sideNav .topicSelectionElement {
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
-}
-main .sideNav .topicSelectionElement .subTitle {
-  font-family: "Nunito", sans-serif;
-  font-weight: 800;
-  font-size: 1.3rem;
-  color: #f1f1f1;
 }
 main .sideNav .topicSelectionElement button {
   display: flex;
@@ -517,10 +518,11 @@ main #content .userContent .userPost .mainPost #postBody {
 HOME COMPONENT MEDIA QUERIES
 
 */
-@media (max-width: 850px) {
+@media (max-width: 1050px) {
   #nav {
     justify-content: space-between;
     margin-inline: 0;
+    padding-inline: 2rem;
   }
   #nav #profileContainer {
     display: none;

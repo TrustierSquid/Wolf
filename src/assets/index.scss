@@ -4,6 +4,9 @@ $background: #1F1F1F;
 // darker BG
 $subBackground: #121010;
 
+// navbarBG
+$navBG: #510917;
+
 $primary: #FF3C3C;
 $darkenPrimary: #532C2C;
 $inputField: #1B1B1B;
@@ -305,7 +308,7 @@ HOME PAGE
    gap: 15rem;
    position: sticky;
    top: 0;
-   background: rgb(81, 9, 23);
+   background: $navBG;
 
    #logoContainer {
       display: flex;
@@ -428,22 +431,32 @@ HOME PAGE
 
 
 
+
 main {
    display: flex;
    padding: 3rem 2rem;
-   gap: 2rem;
    
+   gap: 2rem;
+
    .sideNav {
-      height: 900px;
+      // height: 900px;
       width: 400px;
       color: white;
+      background-color: $navBG;
       padding: 1.5rem;
       display: flex;
       flex-direction: column;
       gap: 7rem;
       font-family: $ff-body;
-      border-right: 2px solid grey;
-
+      overflow: scroll;
+      border-radius: 0.5rem;
+   
+      .subTitle {
+         font-family: $ff-heading;
+         font-weight: 800;
+         font-size: 1.3rem;
+         color: #f1f1f1;   
+      }
       
    
       #sideNavBtns {
@@ -467,14 +480,14 @@ main {
             padding-left: 1rem;
             display: flex;
             justify-content: space-between;
-
+   
             &:hover {
                background-color: $primary;
                transform: translateY(-3px);
             }
             
          }
-
+   
          #newPostBtn {
             display: flex;
             justify-content: center;
@@ -487,20 +500,14 @@ main {
          }
    
       }
-
+   
       .topicSelectionElement {
          // font-family: 'roboto';
          display: flex;
          flex-direction: column;
          gap: 1.5rem;
-
-         .subTitle {
-            font-family: $ff-heading;
-            font-weight: 800;
-            font-size: 1.3rem;
-            color: #f1f1f1;
-            
-         }
+   
+         
          
          button {
             display: flex;
@@ -517,12 +524,12 @@ main {
             display: flex;
             justify-content: space-between;
             font-family: $ff-body;
-
+   
             &:hover {
                transform: translateY(-3px);
                background-color: $primary;
             }
-
+   
             &:focus {
                background-color: $primary;
             }
@@ -707,15 +714,18 @@ HOME COMPONENT MEDIA QUERIES
 
 */
 
-@media (max-width: 850px) {
+@media (max-width: 1050px) {
    
    #nav {
       justify-content: space-between;
       margin-inline: 0;
+      padding-inline: 2rem;
       
       #logoContainer {
 
       }
+      
+      // MOBILE NAV BTN APPEARS AND SIDE NAV DISSAPPEARS
 
       // username in the nav bar along with the icon
       #profileContainer {
