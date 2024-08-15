@@ -320,7 +320,6 @@ main .sideNav {
 main .sideNav .subTitle {
   font-family: "Nunito", sans-serif;
   font-weight: 800;
-  font-size: 1.3rem;
   color: #f1f1f1;
 }
 main .sideNav #sideNavBtns {
@@ -332,7 +331,7 @@ main .sideNav #sideNavBtns button {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  padding: 1rem;
+  padding: 0.5rem;
   font-size: 1rem;
   cursor: pointer;
   background: none;
@@ -356,7 +355,7 @@ main .sideNav #sideNavBtns #newPostBtn {
 }
 main .sideNav #sideNavBtns #newPostBtn:hover {
   background-color: #FF3C3C;
-  background-color: rgba(220, 20, 60, 0.441);
+  background-color: rgb(220, 20, 60);
 }
 main .sideNav .topicSelectionElement {
   display: flex;
@@ -450,32 +449,42 @@ main #content .userContent .userPost .postAnalytics h1 {
   gap: 1rem;
   font-family: "Nunito", sans-serif;
 }
-main #content .userContent .userPost .postAnalytics .userTraction {
+main #content .userContent .userPost .mainPost {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  border-top: 2px solid grey;
+  border-bottom: 2px solid grey;
+  max-height: 500px;
+  color: #555555;
+  gap: 1rem;
+  padding: 2rem;
+}
+main #content .userContent .userPost .mainPost .userTraction {
+  display: flex;
+  justify-content: right;
   gap: 1rem;
 }
-main #content .userContent .userPost .postAnalytics .userTraction button {
+main #content .userContent .userPost .mainPost .userTraction button {
   padding: 0.5rem;
-  width: 100px;
+  width: 75px;
   border: none;
   color: white;
-  border-radius: 2rem;
+  border-radius: 0.5rem;
   cursor: pointer;
   transition: 150ms;
   background: none;
 }
-main #content .userContent .userPost .postAnalytics .userTraction .followBtn {
+main #content .userContent .userPost .mainPost .userTraction .followBtn {
   text-wrap: nowrap;
   border: 2px solid #FF3C3C;
 }
-main #content .userContent .userPost .postAnalytics .userTraction .followBtn:hover {
+main #content .userContent .userPost .mainPost .userTraction .followBtn:hover {
   background-color: #FF3C3C;
 }
-main #content .userContent .userPost .postAnalytics .userTraction .likeBtn {
+main #content .userContent .userPost .mainPost .userTraction .likeBtn {
   border: 2px solid #F96E36;
 }
-main #content .userContent .userPost .postAnalytics .userTraction .likeBtn:hover {
+main #content .userContent .userPost .mainPost .userTraction .likeBtn:hover {
   background-color: #F96E36;
 }
 @keyframes postBtnAnimation {
@@ -485,17 +494,6 @@ main #content .userContent .userPost .postAnalytics .userTraction .likeBtn:hover
   50% {
     transform: translateY(10px);
   }
-}
-main #content .userContent .userPost .mainPost {
-  display: flex;
-  flex-direction: column;
-  background-color: #1F1F1F;
-  min-height: 300px;
-  max-height: 500px;
-  border-radius: 0.5rem;
-  color: #555555;
-  gap: 1rem;
-  padding: 2rem;
 }
 main #content .userContent .userPost .mainPost #postCaption {
   font-size: 1.5rem;

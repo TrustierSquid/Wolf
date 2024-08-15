@@ -454,7 +454,7 @@ main {
       .subTitle {
          font-family: $ff-heading;
          font-weight: 800;
-         font-size: 1.3rem;
+         // font-size: 1.3rem;
          color: #f1f1f1;   
       }
       
@@ -468,7 +468,7 @@ main {
             display: flex;
             align-items: center;
             gap: 0.5rem;
-            padding: 1rem;
+            padding: 0.5rem;
             font-size: 1rem;
             cursor: pointer;
             background: none;
@@ -495,7 +495,7 @@ main {
             
             &:hover {
                background-color: $primary;
-               background-color: rgba(220, 20, 60, 0.441);
+               background-color: rgb(220, 20, 60);
             }
          }
    
@@ -615,17 +615,33 @@ main {
                   font-family: $ff-heading;
                }
                
+               
+
+            }
+
+            .mainPost {
+               display: flex;
+               flex-direction: column;
+               border-top: 2px solid grey;
+               border-bottom: 2px solid grey;
+               // min-height: 300px;
+               max-height: 500px;
+               color: #555555;
+               gap: 1rem;
+               padding: 2rem;
+
                .userTraction {
                   display: flex;
-                  justify-content: space-between;
+                  justify-content: right;
+
                   gap: 1rem;
 
                   button {
                      padding: 0.5rem;
-                     width: 100px;
+                     width: 75px;
                      border: none;
                      color: white;
-                     border-radius: 2rem;
+                     border-radius: 0.5rem;
                      cursor: pointer;
                      transition: 150ms;
                      background: none;
@@ -662,19 +678,6 @@ main {
                      }
                   }
                }
-
-            }
-
-            .mainPost {
-               display: flex;
-               flex-direction: column;
-               background-color: $background;
-               min-height: 300px;
-               max-height: 500px;
-               border-radius: 0.5rem;
-               color: #555555;
-               gap: 1rem;
-               padding: 2rem;
 
                #postCaption {
                   font-size: 1.5rem;

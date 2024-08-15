@@ -290,7 +290,7 @@ export default function Home(){
             <nav className="sideNav" ref={sideNav}>
                
                <div id="sideNavBtns">
-                  <h3 className="subTitle">DashBoard</h3>
+                  <h2 className="subTitle">DashBoard</h2>
                   <button id="homeBtn">Home <i className="fa-solid fa-house"></i></button>
                   <button id="popularBtn">What's Popular<i className="fa-solid fa-fire"></i></button>
                   <button id="newPostBtn">New Post <i className="fa-solid fa-plus"></i></button>
@@ -298,7 +298,7 @@ export default function Home(){
                </div>
 
                <section className="topicSelectionElement">
-                  <h3 className="subTitle">Your Topics</h3>
+                  <h2 className="subTitle">Your Topics</h2>
                   {/* mapping out the selected topics that the user selected */}
                   <div id="selectedTopicsBtns">
                      {/* <button><i className="fa-solid fa-baseball"></i> Sports</button>
@@ -315,7 +315,7 @@ export default function Home(){
                </section>
 
                <section className="topicSelectionElement">
-                  <h3 className="subTitle">Other Resources</h3>
+                  <h2 className="subTitle">Other Resources</h2>
                   {/* mapping out the selected topics that the user selected */}
                   <div id="OtherResourcesBtns">
                      <button onClick={()=> displayAbout()}>About <i className="fa-solid fa-book"></i></button>
@@ -342,15 +342,15 @@ export default function Home(){
                   <div className="userPost">
                      <div className="postAnalytics">
                         <h1 id="poster" ref={posterElement}><img className="profilePicture" src={logo} alt="" />Wolf Bot</h1>
+                     </div>
+                     <br />
+                     <main className="mainPost">
+                        <h2 id="postCaption">Hello there! {/* <p id="likeCounter" ref={likeCounterElement}> <i className="fa-solid fa-heart"></i> {posterTotalLikes}</p> */}</h2>
+                        <h2 id="postBody">I almost forgot to say, Hello World!</h2>
                         <div className="userTraction">
                            {/* <button className="followBtn" ref={followBtnElement} onClick={()=> {toggleFollow()}}>Follow <i className="fa-solid fa-user-plus"></i></button> */}
                            <button className="likeBtn" ref={likeBtnElement} onClick={()=> {toggleLike()}}>Like <i className="fa-solid fa-thumbs-up"></i></button>
                         </div>
-                     </div>
-                     <br />
-                     <main className="mainPost">
-                        <h2 id="postCaption">Hello there! <p id="likeCounter" ref={likeCounterElement}> <i className="fa-solid fa-heart"></i> {posterTotalLikes}</p></h2>
-                        <h2 id="postBody">I almost forgot to say, Hello World!</h2>
                      </main>
                   </div>
                   
