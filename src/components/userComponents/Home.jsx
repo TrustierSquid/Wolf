@@ -194,6 +194,7 @@ export default function Home(){
       )
    }
 
+   
    // toggle Animation for like button and sending to the server that the user liked a post
    const toggleLike = async ()=> {
       setLikeBtnClicked(prevState => !prevState)
@@ -297,6 +298,7 @@ export default function Home(){
 
                </div>
 
+
                <section className="topicSelectionElement">
                   <h2 className="subTitle">Your Topics</h2>
                   {/* mapping out the selected topics that the user selected */}
@@ -328,7 +330,7 @@ export default function Home(){
             <section id="content">
                <div id="whatsNew">
                   <h1>What's New</h1>
-                  <h2>See What's Hot</h2>
+                  <h2>See What's up</h2>
                </div>
 
                {/* what shows up based on what topics the user selected */}
@@ -340,11 +342,11 @@ export default function Home(){
                   
                   
                   <div className="userPost">
-                     <div className="postAnalytics">
-                        <h1 id="poster" ref={posterElement}><img className="profilePicture" src={logo} alt="" />Wolf Bot</h1>
-                     </div>
                      <br />
                      <main className="mainPost">
+                        <div className="postAnalytics">
+                           <h4 id="poster" ref={posterElement}><img className="profilePicture" src={logo} alt="" />Wolf Bot</h4>
+                        </div>
                         <h2 id="postCaption">Hello there! {/* <p id="likeCounter" ref={likeCounterElement}> <i className="fa-solid fa-heart"></i> {posterTotalLikes}</p> */}</h2>
                         <h2 id="postBody">I almost forgot to say, Hello World!</h2>
                         <div className="userTraction">

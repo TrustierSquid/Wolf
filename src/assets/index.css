@@ -208,6 +208,7 @@ HOME PAGE
   position: sticky;
   top: 0;
   background: #510917;
+  z-index: 4;
 }
 #nav #logoContainer {
   display: flex;
@@ -308,8 +309,8 @@ main {
 main .sideNav {
   width: 400px;
   color: white;
-  background-color: #510917;
-  padding: 1.5rem;
+  background-color: #1B1B1B;
+  padding: 2rem;
   display: flex;
   flex-direction: column;
   gap: 7rem;
@@ -414,15 +415,17 @@ main #content #whatsNew {
 }
 main #content #whatsNew h1 {
   font-size: 6vw;
-  background: rgb(255, 60, 60);
-  background: linear-gradient(101deg, rgb(255, 60, 60) 6%, rgb(220, 20, 60) 49%);
+  background-color: #FF3C3C;
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
   font-family: "Nunito", sans-serif;
   font-weight: bolder;
+  transition: 250ms;
+  animation: shadows 1.2s ease-in infinite;
 }
 main #content #whatsNew h2 {
-  color: white;
+  color: rgb(156, 156, 156);
   margin-left: 1rem;
 }
 main #content .userContent {
@@ -438,26 +441,33 @@ main #content .userContent h1 {
 main #content .userContent .userPost {
   transition: 150ms;
 }
-main #content .userContent .userPost .postAnalytics {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-main #content .userContent .userPost .postAnalytics h1 {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  font-family: "Nunito", sans-serif;
-}
 main #content .userContent .userPost .mainPost {
-  display: flex;
   flex-direction: column;
-  border-top: 2px solid grey;
-  border-bottom: 2px solid grey;
+  border: 2px solid grey;
   max-height: 500px;
   color: #555555;
   gap: 1rem;
   padding: 2rem;
+  border-radius: 2rem;
+  background: rgb(18, 16, 16);
+  background: linear-gradient(94deg, rgb(18, 16, 16) 0%, rgb(14, 0, 0) 100%);
+}
+main #content .userContent .userPost .mainPost .postAnalytics {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+main #content .userContent .userPost .mainPost .postAnalytics #poster {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-family: "Nunito", sans-serif;
+  color: white;
+}
+main #content .userContent .userPost .mainPost .postAnalytics #poster img {
+  height: 25px;
+  width: 25px;
 }
 main #content .userContent .userPost .mainPost .userTraction {
   display: flex;
@@ -482,10 +492,10 @@ main #content .userContent .userPost .mainPost .userTraction .followBtn:hover {
   background-color: #FF3C3C;
 }
 main #content .userContent .userPost .mainPost .userTraction .likeBtn {
-  border: 2px solid #F96E36;
+  border: 2px solid #FF3C3C;
 }
 main #content .userContent .userPost .mainPost .userTraction .likeBtn:hover {
-  background-color: #F96E36;
+  background-color: #FF3C3C;
 }
 @keyframes postBtnAnimation {
   0% {
@@ -521,13 +531,18 @@ HOME COMPONENT MEDIA QUERIES
     justify-content: space-between;
     margin-inline: 0;
     padding-inline: 2rem;
+    z-index: 3;
+    background-color: #1F1F1F;
+  }
+  #nav #logoContainer h1 {
+    display: none;
   }
   #nav #profileContainer {
     display: none;
   }
   #nav #mobileNavBtn {
     display: block;
-    color: #00CAE5;
+    color: #FF3C3C;
     background: none;
     font-size: 2.5rem;
     border: none;
@@ -538,7 +553,7 @@ HOME COMPONENT MEDIA QUERIES
     color: #532C2C;
   }
   main {
-    padding: 3rem 2rem;
+    padding: 3rem 0rem;
   }
   main .sideNav {
     position: absolute;
@@ -549,6 +564,7 @@ HOME COMPONENT MEDIA QUERIES
     width: 300px;
     border-radius: 0.5rem;
     box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+    z-index: 0;
   }
   main .toggleNav {
     left: 0px;
@@ -558,13 +574,20 @@ HOME COMPONENT MEDIA QUERIES
   }
   main #content #whatsNew {
     display: flex;
-    justify-content: center;
+    align-items: center;
   }
   main #content #whatsNew h1 {
     font-size: 12vw;
+    text-wrap: nowrap;
+  }
+  main #content #whatsNew h2 {
+    align-self: center;
   }
   main #content .userContent .userPost .postAnalytics {
-    flex-direction: column;
+    display: flex;
+    gap: 2rem;
+  }
+  main #content .userContent .userPost .mainPost {
     gap: 2rem;
   }
 }/*# sourceMappingURL=index.css.map */

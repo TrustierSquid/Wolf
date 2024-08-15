@@ -309,6 +309,7 @@ HOME PAGE
    position: sticky;
    top: 0;
    background: $navBG;
+   z-index: 4;
 
    #logoContainer {
       display: flex;
@@ -442,8 +443,8 @@ main {
       // height: 900px;
       width: 400px;
       color: white;
-      background-color: $navBG;
-      padding: 1.5rem;
+      background-color: $inputField;
+      padding: 2rem;
       display: flex;
       flex-direction: column;
       gap: 7rem;
@@ -572,16 +573,21 @@ main {
 
          h1 {
             font-size: 6vw;
-            background: rgb(255,60,60);
-            background: linear-gradient(101deg, rgba(255,60,60,1) 6%, rgba(220,20,60,1) 49%); 
+            background-color: $primary;
             -webkit-background-clip: text;
+            background-clip: text;
             -webkit-text-fill-color: transparent;
             font-family: $ff-heading;
             font-weight: bolder;
+            transition: 250ms;
+            animation: shadows 1.2s ease-in infinite;
          }
 
+         
+
+
          h2 {
-            color: white;
+            color: rgb(156, 156, 156);
             margin-left: 1rem;
          }
 
@@ -589,7 +595,6 @@ main {
 
       .userContent {
          max-height: 1000px;
-         // border: 2px solid green;
          display: flex;
          flex-direction: column;
          gap: 5rem;
@@ -603,32 +608,42 @@ main {
          .userPost {
             transition: 150ms;
             
-            .postAnalytics {
-               display: flex;
-               justify-content: space-between;
-               align-items: center;
-               
-               h1 {
-                  display: flex;
-                  align-items: center;
-                  gap: 1rem;
-                  font-family: $ff-heading;
-               }
-               
-               
-
-            }
-
+            
             .mainPost {
-               display: flex;
                flex-direction: column;
-               border-top: 2px solid grey;
-               border-bottom: 2px solid grey;
+               border: 2px solid grey;
                // min-height: 300px;
                max-height: 500px;
                color: #555555;
                gap: 1rem;
                padding: 2rem;
+               border-radius: 2rem;
+               background: rgb(18,16,16);
+               background: linear-gradient(94deg, rgba(18,16,16,1) 0%, rgba(14,0,0,1) 100%);  
+
+               
+               .postAnalytics {
+                  display: flex;
+                  justify-content: space-between;
+                  align-items: center;
+                  margin-bottom: 2rem;
+                  
+                  #poster {
+                     display: flex;
+                     align-items: center;
+                     gap: 1rem;
+                     font-family: $ff-heading;
+                     color: white;
+                     
+                     img {
+                        height: 25px;
+                        width: 25px;
+                     }
+                  }
+                  
+                  
+   
+               }
 
                .userTraction {
                   display: flex;
@@ -658,9 +673,9 @@ main {
                   }
                   
                   .likeBtn {
-                     border: 2px solid $sc-error;
+                     border: 2px solid $primary;
                      &:hover {
-                        background-color: $sc-error;
+                        background-color: $primary;
                      }
 
                   }
@@ -723,9 +738,14 @@ HOME COMPONENT MEDIA QUERIES
       justify-content: space-between;
       margin-inline: 0;
       padding-inline: 2rem;
+      z-index: 3;
+      background-color: $background;
       
       #logoContainer {
 
+         h1 {
+            display: none;
+         }
       }
       
       // MOBILE NAV BTN APPEARS AND SIDE NAV DISSAPPEARS
@@ -737,7 +757,7 @@ HOME COMPONENT MEDIA QUERIES
       
       #mobileNavBtn  {
          display: block;
-         color: $sc-info;
+         color: $primary;
          background: none;
          font-size: 2.5rem;
          border: none;
@@ -752,7 +772,7 @@ HOME COMPONENT MEDIA QUERIES
 
    
    main {
-      padding: 3rem 2rem;
+      padding: 3rem 0rem;
       
       .sideNav {
          position: absolute;
@@ -763,6 +783,7 @@ HOME COMPONENT MEDIA QUERIES
          width: 300px;
          border-radius: 0.5rem;
          box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+         z-index: 0;
       }
       
       .toggleNav {
@@ -774,9 +795,15 @@ HOME COMPONENT MEDIA QUERIES
 
          #whatsNew {
             display: flex;
-            justify-content: center;
+            align-items: center;
+
             h1 {
                font-size: 12vw;
+               text-wrap: nowrap;
+            }
+
+            h2 {
+               align-self: center;
             }
          }
 
@@ -787,12 +814,12 @@ HOME COMPONENT MEDIA QUERIES
             .userPost {
 
                .postAnalytics {
-                  flex-direction: column;
+                  display: flex;
                   gap: 2rem;
                }
                // message
                .mainPost {
-
+                  gap: 2rem;
                }
             }
          }
