@@ -327,14 +327,13 @@ HOME PAGE
       display: flex;
       align-items: center;
       gap: 1rem;
-
       
+      // Where the username will be shown
       h4 {
          font-family: comfortaa;
          color: white;
          cursor:pointer;
          transition: 350ms;
-         
 
          i {
             font-size: 1.5rem;
@@ -371,6 +370,12 @@ HOME PAGE
    color: white;
    display: flex;
    gap: 4rem;
+   transition: 250ms;
+
+
+   // initial state for the animation
+   opacity: 0;
+   pointer-events: none;
 
    .profileSection {
       padding: 1rem;
@@ -421,11 +426,6 @@ HOME PAGE
    
 }
 
-
-// toggling class for dropdown
-.dropdown {
-      
-}
 
 
 main {

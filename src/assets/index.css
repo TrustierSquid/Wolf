@@ -195,8 +195,7 @@ HOME PAGE
   width: 50px;
   border-radius: 50%;
   border: none;
-  -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
   cursor: pointer;
   background-color: grey;
 }
@@ -221,8 +220,7 @@ HOME PAGE
 }
 #nav #logoContainer #logo {
   height: 50px;
-  -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
   cursor: pointer;
 }
 #nav #profileContainer {
@@ -261,6 +259,9 @@ HOME PAGE
   color: white;
   display: flex;
   gap: 4rem;
+  transition: 250ms;
+  opacity: 0;
+  pointer-events: none;
 }
 #profileDropdown .profileSection {
   padding: 1rem;

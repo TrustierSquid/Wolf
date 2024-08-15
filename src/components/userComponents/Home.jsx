@@ -17,6 +17,10 @@ export default function Home(){
    // The side navigation element
    const sideNav = useRef(null)
 
+   /* DROPDOWN FUNCTIONALITY */
+   const profileDropdown = useRef(null)
+   const [toggleDropdown, setToggleDropdown] = useState(true)
+
    // the an array of the topics that the user selected
    const [userData, setUserData] = useState([])
 
@@ -101,6 +105,24 @@ export default function Home(){
    // Mobile nav bar functionality
    function mobileNavFunction() {
       sideNav.current.classList.toggle('toggleNav')
+   }
+
+   // Dropdown functionality
+   function dropdownFunction() {
+      setToggleDropdown(prevState => !prevState)
+      
+      if (toggleDropdown == true) {
+         profileDropdown.current.style.opacity = '1';
+         profileDropdown.current.style.pointerEvents = 'all';
+         profileDropdown.current.style.transform = 'translateY(10px)';
+      } else {
+         profileDropdown.current.style.opacity = '0';
+         profileDropdown.current.style.pointerEvents = 'none';
+         profileDropdown.current.style.transform = 'translateY(0px)';
+
+      }
+      
+      
    }
 
 
@@ -271,13 +293,14 @@ export default function Home(){
                <img id="logo" src={logo} alt="" />
                <h1>WOLF</h1>
             </div>
-            <div id="profileContainer">
-               <h4 onClick={()=> showProfile()}><i className="fa-solid fa-user"></i> {username}</h4>
+            <div id="profileContainer" onClick={()=> dropdownFunction()}>
+               <h4 onClick={()=> showProfile()}>
+                  <i className="fa-solid fa-user"></i> {username} <i class="fa-solid fa-angle-down"></i></h4>
             </div>
             <button ref={mobileNavBtn} id="mobileNavBtn" onClick={()=> mobileNavFunction()}><i className="fa-solid fa-bars"></i></button>
          </nav>
 
-         <section id="profileDropdown">
+         <section ref={profileDropdown} id="profileDropdown">
             <div className="profileSection">
                <span id="userAnalyticsContainer">
                   <div id="dataPoint">
