@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react"
 import logo from '/src/assets/wolfLogo.png'
+import AboutPost from "../postComponents/AboutPost"
 import Topics from "./Topics"
 
 
@@ -52,10 +53,9 @@ export default function Home(){
    const likeCounterElement = useRef(null)
    const [posterTotalLikes, setPosterTotalLikes] = useState(null)
 
+   const currentVersion = 'alpha'
    
-   const appVersion = 'alpha'
-   
-   // Getting user information and displaying on the home page
+   // GETTING USER INFORMATION AND DISPLYING IT ON THE HOME PAGE SPECIFIC TO THE USER LOGGED IN
    useEffect(()=> {
       async function getUserData(){
          const response = await fetch('/users/home', {
@@ -73,6 +73,7 @@ export default function Home(){
    
          const homeData = await response.json()
 
+         // setting the user info needed as glob vars
          setUserData(homeData.topicArr)
          setUsername(homeData.userName)
          setFollowerCount(homeData.followerCount)
@@ -84,6 +85,7 @@ export default function Home(){
 
    }, [])
    
+   // RETRIEVING THE DESCRIPTION THAT COMES WITH EACH TOPIC
    useEffect(()=> {
       async function fetchTopicData(){
          const response = await fetch('/wolfTopics', {
@@ -95,6 +97,8 @@ export default function Home(){
 
          
          const data = await response.json()
+
+         // setting the topic description a glob var 
          setTopicFact(data)
       }
 
@@ -135,7 +139,8 @@ export default function Home(){
    }
    
 
-   // gets the selected topic, based on what the user chose in the beginning
+   // CHECKS TO SEE WHAT TOPICS WERE SELECTED ON THE TOPICS PAGE
+   // ACCORDING TO WHAT WAS SELECTED, EACH TOPIC WILL RETURN A FACT ABOUT THE RESPECTIVE TOPIC
    function displayTopicInfo(){
       
       switch (selectedFact) {
@@ -181,10 +186,10 @@ export default function Home(){
 
    }
 
-
+   // Returns the a new post about the app details
    function displayAbout(){
       return (
-         <AboutPost/>
+         <AboutPost appVersion={currentVersion}/>
       )
    }
 
@@ -251,7 +256,7 @@ export default function Home(){
    }
 
 
-   // This is a component that Wolf bot will post information about a topic you select
+   // This is a component that Wolf bot will post information about a topic you select.
    function WolfBotPost(props) {
       return (
          <>
@@ -269,19 +274,7 @@ export default function Home(){
       )
    }
 
-   function AboutPost(){
-      return (
-         <>
-            <div className="userPost">
-               <br />
-               <main className="mainPost">
-                  <h2 id="postCaption">About <i className="fa-solid fa-book"></i></h2>
-                  <h2 id="postBody">App Version: {appVersion}</h2>
-               </main>
-            </div>
-         </>
-      )
-   }
+   
 
 
    
@@ -295,7 +288,7 @@ export default function Home(){
             </div>
             <div id="profileContainer" onClick={()=> dropdownFunction()}>
                <h4 onClick={()=> showProfile()}>
-                  <i className="fa-solid fa-user"></i> {username} <i class="fa-solid fa-angle-down"></i></h4>
+                  <i className="fa-solid fa-user"></i> {username} <i className="fa-solid fa-angle-down"></i></h4>
             </div>
             <button ref={mobileNavBtn} id="mobileNavBtn" onClick={()=> mobileNavFunction()}><i className="fa-solid fa-bars"></i></button>
          </nav>
@@ -369,7 +362,7 @@ export default function Home(){
 
                {/* what shows up based on what topics the user selected */}
                <article className="userContent">
-                  {/* {AboutPost()} */}
+                  {/* {displayAbout()} */}
                   {displayTopicInfo()}
 
 

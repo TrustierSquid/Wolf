@@ -20,6 +20,7 @@ import { MongoClient, ServerApiVersion, ObjectId } from "mongodb";
 import topics from "./json/topics.json" assert { type: "json" };
 import topicFacts from "./json/facts.json" assert {type: 'json'}
 
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const port = process.env.PORT;
@@ -60,7 +61,12 @@ const client = new MongoClient(uri, {
   },
 });
 
-// establishing a connection to mongodb
+/* 
+
+  ESTABLISHING CONNECTION TO MONGODB
+
+ */
+
 async function connectMongo() {
   if (database) return database;
 
@@ -95,7 +101,8 @@ app.get("/", (req, res) => {
 
  */
 
-// Getting the list of topic that the user can choose from
+
+// Retrieving the list of topics that the user can choose from
 app.get("/api/topics", (req, res) => {
   res.json(topics);
 });
