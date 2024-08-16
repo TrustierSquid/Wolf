@@ -557,11 +557,10 @@ main {
    #content {
       max-height: 1000px;
       width: 100%;
-      font-family: roboto;
       padding: 3rem;
       display: flex;
       flex-direction: column;
-      gap: 10rem;
+      gap: 5rem;
       
       #whatsNew {
          display: flex;
@@ -573,22 +572,25 @@ main {
 
          h1 {
             font-size: 6vw;
-            background-color: $primary;
+            background: rgb(131,58,180);
+            background: linear-gradient(90deg, rgba(131,58,180,1) 0%, rgba(253,29,29,1) 50%, rgba(252,176,69,1) 100%); 
             -webkit-background-clip: text;
             background-clip: text;
             -webkit-text-fill-color: transparent;
             font-family: $ff-heading;
             font-weight: bolder;
             transition: 250ms;
-            animation: shadows 1.2s ease-in infinite;
          }
-
-         
-
 
          h2 {
             color: rgb(156, 156, 156);
             margin-left: 1rem;
+            font-family: $ff-body;
+         }
+
+
+         #createPostElement {
+            color: white;
          }
 
       }
@@ -597,12 +599,8 @@ main {
          max-height: 1000px;
          display: flex;
          flex-direction: column;
-         gap: 5rem;
+         gap: 2rem;
          padding: 1rem;
-
-         h1 {
-            color: white;
-         }
 
 
          .userPost {
@@ -615,34 +613,54 @@ main {
                // min-height: 300px;
                max-height: 500px;
                color: #555555;
-               gap: 1rem;
+               gap: 2rem;
                padding: 2rem;
                border-radius: 2rem;
                background: rgb(18,16,16);
                background: linear-gradient(94deg, rgba(18,16,16,1) 0%, rgba(14,0,0,1) 100%);  
+               color: white;
 
                
                .postAnalytics {
                   display: flex;
-                  justify-content: space-between;
+                  justify-content: left;
+                  gap: 1rem;
                   align-items: center;
-                  margin-bottom: 2rem;
+                  margin-bottom: 1rem;
                   
-                  #poster {
+                  .poster {
+                     font-family: $ff-heading;
                      display: flex;
                      align-items: center;
                      gap: 1rem;
-                     font-family: $ff-heading;
-                     color: white;
                      
                      img {
                         height: 25px;
                         width: 25px;
                      }
                   }
-                  
-                  
-   
+
+                  .postCaption {
+                     font-size: 1.5rem;
+                     font-family: $ff-heading;
+                     /* background: linear-gradient(to bottom right, #FF7979 18%, #FFAAAA 100%);
+                     -webkit-background-clip: text;
+                     background-clip: text;
+                     -webkit-text-fill-color: transparent; */
+                     color: white;
+                     display: flex;
+                     justify-content: space-between;
+                     
+                  }
+                    
+               }
+               
+
+               .postBody {
+                  font-size: 1.4rem;
+                  font-family: $ff-body;
+                  font-weight: 100;
+                  color: white;
                }
 
                .userTraction {
@@ -680,9 +698,6 @@ main {
 
                   }
 
-                  .playAnimation {
-
-                  }
 
                   @keyframes postBtnAnimation {
                      0% {
@@ -694,26 +709,7 @@ main {
                   }
                }
 
-               #postCaption {
-                  font-size: 1.5rem;
-                  font-family: $ff-heading;
-                  background: linear-gradient(to bottom right, #FF7979 18%, #FFAAAA 100%);
-                  -webkit-background-clip: text;
-                  -webkit-text-fill-color: transparent;
-                  display: flex;
-                  justify-content: space-between;
-                  
-                  #likeCounter {
-
-                  }
-               }
-
-               #postBody {
-                  font-size: 1.4rem;
-                  font-family: $ff-body;
-                  font-weight: 100;
-                  color: white;
-               }
+               
                
             
             }

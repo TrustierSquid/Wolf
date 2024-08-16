@@ -176,22 +176,64 @@ app.post('/like', requireAuth, async (req, res)=> {
 })
 
 
-
-
-
-
-// route executes when the user looks at their profile page
+// ROUTE EXECUTES WHEN THE USER WANTS TO LOOK AT THEIR OWN PROFILE
 app.post('/profile',  (req, res)=> {
   const {username} = req.body
-
   console.log(`${username} wants to look at his profile!`)
   
-
 })
 
 
+// ROUTE EXECUTES WHEN THE USER CREATES A NEW POST
+app.post('/newPost', async (req, res)=> {
+  // retrieving the username, and post details (subject, body)
+  const {whoPosted, postSubject, postBody} = req.body;
+
+  console.log(`${whoPosted} just posted! \n ${postSubject} \n ${postBody}`)
+
+  // Updating the poster's post count
+  let database = await connectMongo()
+  const users = database.collection('Users')
+  const posts = database.collection('Posts')
+  
+  // poster
+  const filter = {user: whoPosted}
+  const updateDoc = {
+    $inc: {
+      posts: 1
+    }
+  }
+
+  const updatePosts = await users.updateOne(filter, updateDoc)
+  
+  // adding the post to the DB
+  const newPost = posts.insertOne({
+    poster: whoPosted,
+    subject: postSubject,
+    body: postBody
+  })
+  
+
+  res.json({message: 'Posted Successfully'})
+})
 
 
+app.get('/update', async (req, res)=> {
+
+  const database = await connectMongo()
+  const posts = database.collection('Posts')
+
+  const documents = await posts.find({}).toArray();
+
+  const allPosts = documents.map(document => {
+    return {
+      ...document,
+    }
+  })
+
+  res.json({allPosts})
+  
+})
 
 
 

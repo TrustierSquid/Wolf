@@ -51,6 +51,21 @@ export default defineConfig({
         changeOrigin: true,
         secure: false,
         ws: true,
+      },
+      // for users creating a new post
+      '/newPost': {
+        target: 'http://localhost:3000/',
+        changeOrigin: true,
+        secure: false,
+        ws: true,
+      },
+      
+      // for updating the user feed
+      '/update': {
+        target: 'http://localhost:3000/',
+        changeOrigin: true,
+        secure: false,
+        ws: true,
       }
 
     }

@@ -2,6 +2,8 @@ import { useState, useEffect, useRef } from "react"
 import logo from '/src/assets/wolfLogo.png'
 import AboutPost from "../postComponents/AboutPost"
 import WolfBotPost from "../postComponents/WolfBotPost"
+// import UserNewPost from "../NewPost"
+import UpdateFeed from "../UpdateFeed"
 import Topics from "./Topics"
 
 
@@ -239,8 +241,40 @@ export default function Home(){
       }
    }
 
-   
 
+   // WHEN THE USER CREATES A NEW POST
+   const subjectPostElement = useRef(null)
+   const bodyPostElement = useRef(null)
+   const [newPost, setNewPost] = useState(null)
+   
+   async function createNewPost(){
+      let subject = subjectPostElement.current.value
+      let body = bodyPostElement.current.value
+
+      
+      const response = await fetch('/newPost', {
+         method: 'POST',
+         headers: {
+            'Content-Type': 'application/json',
+         },
+         body: JSON.stringify({whoPosted: username, postSubject: subject, postBody: body})
+      })
+
+      if (!response.ok) {
+         throw new Error(`Error posting.. ${response.status}`)
+      } 
+
+      const returnedComponent = await response.json()
+      console.log(returnedComponent)
+      /* setNewPost(
+         <UserNewPost 
+            whoPosted={username} 
+            postSubject={subject} 
+            postBody={body}
+         />
+      ) */
+      
+   }
 
    
 
@@ -294,7 +328,7 @@ export default function Home(){
                   <h2 className="subTitle">DashBoard</h2>
                   <button id="homeBtn">Home <i className="fa-solid fa-house"></i></button>
                   <button id="popularBtn">What's Popular<i className="fa-solid fa-fire"></i></button>
-                  <button id="newPostBtn">New Post <i className="fa-solid fa-plus"></i></button>
+                  <button id="newPostBtn" onClick={()=> createNewPost()}>New Post <i className="fa-solid fa-plus"></i></button>
 
                </div>
 
@@ -331,11 +365,20 @@ export default function Home(){
                <div id="whatsNew">
                   <h1>What's New</h1>
                   <h2>See What's up</h2>
+                  <form id="createPostElement">
+                     <label>Subject</label><br />
+                     <input required ref={subjectPostElement} type="text" /><br />
+                     <label>Body</label><br />
+                     <input required ref={bodyPostElement}type="text" />
+                     <button onClick={()=> createNewPost()}>Post</button>
+                  </form>   
                </div>
 
                {/* what shows up based on what topics the user selected */}
                <article className="userContent">
                   {/* {displayAbout()} */}
+                  <UpdateFeed/>
+                  {newPost}
                   {displayTopicInfo()}
 
 
@@ -345,10 +388,15 @@ export default function Home(){
                      <br />
                      <main className="mainPost">
                         <div className="postAnalytics">
-                           <h4 id="poster" ref={posterElement}><img className="profilePicture" src={logo} alt="" />Wolf Bot</h4>
+                           <img className="profilePicture" src={logo} alt="" />
+                           <h4 className="poster" ref={posterElement}>
+                              <i class="fa-solid fa-robot"></i> Wolf Bot 
+                           </h4>
+                           <i class="fa-solid fa-ellipsis"></i>
+                           <h2 className="postCaption">Hello there!</h2>
                         </div>
-                        <h2 id="postCaption">Hello there! {/* <p id="likeCounter" ref={likeCounterElement}> <i className="fa-solid fa-heart"></i> {posterTotalLikes}</p> */}</h2>
-                        <h2 id="postBody">I almost forgot to say, Hello World!</h2>
+                        
+                        <h2 className="postBody">I almost forgot to say, Hello World!</h2>
                         <div className="userTraction">
                            {/* <button className="followBtn" ref={followBtnElement} onClick={()=> {toggleFollow()}}>Follow <i className="fa-solid fa-user-plus"></i></button> */}
                            <button className="likeBtn" ref={likeBtnElement} onClick={()=> {toggleLike()}}>Like <i className="fa-solid fa-thumbs-up"></i></button>
