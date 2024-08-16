@@ -349,15 +349,6 @@ main .sideNav #sideNavBtns button:hover {
   background-color: #FF3C3C;
   transform: translateY(-3px);
 }
-main .sideNav #sideNavBtns #newPostBtn {
-  display: flex;
-  justify-content: center;
-  border: 2px solid rgba(220, 20, 60, 0.441);
-}
-main .sideNav #sideNavBtns #newPostBtn:hover {
-  background-color: #FF3C3C;
-  background-color: rgb(220, 20, 60);
-}
 main .sideNav .topicSelectionElement {
   display: flex;
   flex-direction: column;
@@ -414,22 +405,123 @@ main #content #whatsNew {
 }
 main #content #whatsNew h1 {
   font-size: 6vw;
-  background: rgb(131, 58, 180);
-  background: linear-gradient(90deg, rgb(131, 58, 180) 0%, rgb(253, 29, 29) 50%, rgb(252, 176, 69) 100%);
+  background: rgb(251, 63, 63);
+  background: linear-gradient(90deg, rgb(251, 63, 63) 0%, rgb(255, 85, 120) 100%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
+  text-shadow: rgba(255, 63, 63, 0.3) 0px 0px 39px;
   font-family: "Nunito", sans-serif;
   font-weight: bolder;
   transition: 250ms;
 }
 main #content #whatsNew h2 {
-  color: rgb(156, 156, 156);
+  color: rgb(251, 63, 63);
   margin-left: 1rem;
   font-family: "roboto", sans-serif;
 }
+main #content #whatsNew #darkBG {
+  background-color: rgba(0, 0, 0, 0.6431372549);
+  position: absolute;
+  top: 0;
+  left: 0;
+  min-height: 100%;
+  width: 100%;
+  z-index: 5;
+  pointer-events: none;
+  opacity: 0;
+}
+main #content #whatsNew #newPostBtn {
+  display: flex;
+  justify-content: center;
+  border: 2px solid rgba(220, 20, 60, 0.441);
+  background-color: #FF3C3C;
+  color: white;
+  padding: 1rem;
+  font-size: 1rem;
+  font-family: "roboto", sans-serif;
+  border-radius: 0.5rem;
+  transition: 250ms;
+  cursor: pointer;
+  align-self: end;
+  margin: 0.5rem;
+  width: 200px;
+  display: flex;
+  gap: 0.5rem;
+}
+main #content #whatsNew #newPostBtn:hover {
+  background-color: #7A0B31;
+}
 main #content #whatsNew #createPostElement {
   color: white;
+  gap: 1.5rem;
+  width: 50%;
+  margin-left: 1rem;
+  position: fixed;
+  background-color: #121010;
+  padding: 3rem;
+  top: 50%;
+  right: 50%;
+  transform: translate(50%, -40%);
+  border-radius: 1rem;
+  z-index: 5;
+  opacity: 0;
+  pointer-events: none;
+  transition: 250ms;
+  display: flex;
+  flex-direction: column;
+}
+main #content #whatsNew #createPostElement #createNewPostHeader {
+  background: rgb(251, 63, 63);
+  background: linear-gradient(90deg, rgb(251, 63, 63) 0%, rgb(255, 85, 120) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: bold;
+  align-self: center;
+  font-size: 2rem;
+}
+main #content #whatsNew #createPostElement #formSubject, main #content #whatsNew #createPostElement #formBody {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+main #content #whatsNew #createPostElement #formSubject label, main #content #whatsNew #createPostElement #formBody label {
+  font-family: "Nunito", sans-serif;
+}
+main #content #whatsNew #createPostElement #formSubject input, main #content #whatsNew #createPostElement #formBody input {
+  width: 100%;
+  max-width: 100%;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  background-color: #1F1F1F;
+  border: none;
+  color: white;
+}
+main #content #whatsNew #createPostElement #formSubject input:focus, main #content #whatsNew #createPostElement #formBody input:focus {
+  outline: none;
+}
+main #content #whatsNew #createPostElement button {
+  padding: 0.5rem;
+  color: white;
+  background-color: #FF3C3C;
+  border: none;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  width: 300px;
+  max-width: 100%;
+  align-self: center;
+  cursor: pointer;
+  transition: 150ms;
+}
+main #content #whatsNew #createPostElement button:hover {
+  background-color: #510917;
+}
+main #content #whatsNew #createPostElement #feedbackMessage {
+  color: #FF3C3C;
+  font-family: "roboto", sans-serif;
+  align-self: center;
 }
 main #content .userContent {
   max-height: 1000px;
@@ -443,14 +535,12 @@ main #content .userContent .userPost {
 }
 main #content .userContent .userPost .mainPost {
   flex-direction: column;
-  border: 2px solid grey;
   max-height: 500px;
   color: #555555;
   gap: 2rem;
   padding: 2rem;
-  border-radius: 2rem;
-  background: rgb(18, 16, 16);
-  background: linear-gradient(94deg, rgb(18, 16, 16) 0%, rgb(14, 0, 0) 100%);
+  border-radius: 1rem;
+  background: rgb(14, 0, 0);
   color: white;
 }
 main #content .userContent .userPost .mainPost .postAnalytics {
@@ -461,7 +551,7 @@ main #content .userContent .userPost .mainPost .postAnalytics {
   margin-bottom: 1rem;
 }
 main #content .userContent .userPost .mainPost .postAnalytics .poster {
-  font-family: "Nunito", sans-serif;
+  font-family: "roboto", sans-serif;
   display: flex;
   align-items: center;
   gap: 1rem;
@@ -578,6 +668,11 @@ HOME COMPONENT MEDIA QUERIES
   main #content #whatsNew {
     display: flex;
     align-items: center;
+  }
+  main #content #whatsNew #newPostBtn {
+    align-self: center;
+    width: 300px;
+    margin: 1rem;
   }
   main #content #whatsNew h1 {
     font-size: 12vw;

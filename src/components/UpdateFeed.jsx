@@ -19,10 +19,27 @@ export default function UpdateFeed() {
       const allPosts = await response.json();
       setAllPosts(allPosts.allPosts);
       console.table(allPosts);
-    }
 
+      
+    }
+    
     update();
-  }, []);
+
+   }, []);
+    // checks to see if the user that posted is an admin   
+    function checkAdmin (poster) {
+        if(poster === 'samuel') {
+            return (
+                <>
+                    <h4 className="poster" style={{color: 'red'}}>
+                    <i className="fa-solid fa-user" style={{color: 'white'}}></i> {poster} (Developer)
+                    </h4>
+                </>
+            )
+        } else {
+
+        }
+    }
 
   return (
     <>
@@ -33,17 +50,15 @@ export default function UpdateFeed() {
               <br />
               <main className="mainPost">
                 <div className="postAnalytics">
-                  <h4 className="poster">
-                    <i className="fa-solid fa-user"></i> {post.poster}
-                  </h4>
+                  {checkAdmin(post.poster)}
                   <i class="fa-solid fa-ellipsis"></i>
                   <h2 className="postCaption">{post.subject}</h2>
                 </div>
                 <h2 className="postBody">{post.body}</h2>
                 <div className="userTraction">
-                  <button className="likeBtn">
+                  {/* <button className="likeBtn">
                     Like <i className="fa-solid fa-thumbs-up"></i>
-                  </button>
+                  </button> */}
                 </div>
               </main>
             </div>

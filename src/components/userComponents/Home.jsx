@@ -246,11 +246,22 @@ export default function Home(){
    const subjectPostElement = useRef(null)
    const bodyPostElement = useRef(null)
    const [newPost, setNewPost] = useState(null)
+   const [errorMessage, setErrorMessage] = useState('')
+   const errorMessageElement = useRef(null)
    
    async function createNewPost(){
       let subject = subjectPostElement.current.value
       let body = bodyPostElement.current.value
 
+
+      // checking to see if either input field is empty
+      if (!subject || !body) {
+         setErrorMessage('Please Enter a subject and body')
+         return 
+      } 
+
+      setErrorMessage('Posting..')
+            
       
       const response = await fetch('/newPost', {
          method: 'POST',
@@ -264,8 +275,16 @@ export default function Home(){
          throw new Error(`Error posting.. ${response.status}`)
       } 
 
+      setTimeout(()=> {
+         errorMessageElement.current.style.color = 'lime'
+         bodyPostElement.current.value = ''
+         subjectPostElement.current.value = ''
+         setErrorMessage('Posted!')
+      }, 900)
+
       const returnedComponent = await response.json()
       console.log(returnedComponent)
+      
       /* setNewPost(
          <UserNewPost 
             whoPosted={username} 
@@ -277,6 +296,32 @@ export default function Home(){
    }
 
    
+
+   const createPostElement = useRef(null)
+   const darkBG = useRef(null)
+
+   // FOR THE APPEARING AND DISAPPEARING POST CREATING SCREEN
+   function appearEffect() {
+      // toggling wether it appears or not
+      if(createPostElement) {         
+         darkBG.current.style.opacity = '1'
+         darkBG.current.style.pointerEvents = 'all'
+         createPostElement.current.style.opacity = '1'
+         createPostElement.current.style.pointerEvents = 'all'
+         bodyPostElement.current.value = ''
+         subjectPostElement.current.value = ''
+      }
+      
+   }
+
+   function dissappearEffect(){
+      darkBG.current.style.opacity = '0'
+      darkBG.current.style.pointerEvents = 'none'
+      createPostElement.current.style.opacity = '0'
+      createPostElement.current.style.pointerEvents = 'none'
+      bodyPostElement.current.value = ''
+      subjectPostElement.current.value = ''
+   }
 
    
 
@@ -328,8 +373,7 @@ export default function Home(){
                   <h2 className="subTitle">DashBoard</h2>
                   <button id="homeBtn">Home <i className="fa-solid fa-house"></i></button>
                   <button id="popularBtn">What's Popular<i className="fa-solid fa-fire"></i></button>
-                  <button id="newPostBtn" onClick={()=> createNewPost()}>New Post <i className="fa-solid fa-plus"></i></button>
-
+                  
                </div>
 
 
@@ -361,16 +405,28 @@ export default function Home(){
 
             </nav>
 
+            
+
             <section id="content">
                <div id="whatsNew">
                   <h1>What's New</h1>
                   <h2>See What's up</h2>
-                  <form id="createPostElement">
-                     <label>Subject</label><br />
-                     <input required ref={subjectPostElement} type="text" /><br />
-                     <label>Body</label><br />
-                     <input required ref={bodyPostElement}type="text" />
-                     <button onClick={()=> createNewPost()}>Post</button>
+                  <button id="newPostBtn" onClick={()=> appearEffect()}>New Post  <i className="fa-solid fa-plus"></i></button>
+                  <span ref={darkBG} onClick={()=> dissappearEffect()} id="darkBG"></span>
+                  <form ref={createPostElement} id="createPostElement" >
+                     <h2 id="createNewPostHeader">Create a new Post</h2>
+                     <div id="formSubject">
+                        <label>Subject</label><br />
+                        <input required onsubmit="return false" ref={subjectPostElement} type="text" /><br />
+                     </div>
+                     <br />
+                     <div id="formBody">
+                        <label>Body</label><br />
+                        <input required onsubmit="return false" ref={bodyPostElement}type="text" />
+                     </div>
+                     <br />
+                     <button type='button' onClick={()=> createNewPost()}>Post</button>
+                     <h4 id="feedbackMessage" ref={errorMessageElement}>{errorMessage}</h4>
                   </form>   
                </div>
 
@@ -398,8 +454,7 @@ export default function Home(){
                         
                         <h2 className="postBody">I almost forgot to say, Hello World!</h2>
                         <div className="userTraction">
-                           {/* <button className="followBtn" ref={followBtnElement} onClick={()=> {toggleFollow()}}>Follow <i className="fa-solid fa-user-plus"></i></button> */}
-                           <button className="likeBtn" ref={likeBtnElement} onClick={()=> {toggleLike()}}>Like <i className="fa-solid fa-thumbs-up"></i></button>
+                           {/* <button className="likeBtn" ref={likeBtnElement} onClick={()=> {toggleLike()}}>Like <i className="fa-solid fa-thumbs-up"></i></button> */}
                         </div>
                      </main>
                   </div>

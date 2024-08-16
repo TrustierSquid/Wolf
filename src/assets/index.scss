@@ -489,16 +489,7 @@ main {
             
          }
    
-         #newPostBtn {
-            display: flex;
-            justify-content: center;
-            border: 2px solid rgba(220, 20, 60, 0.441);
-            
-            &:hover {
-               background-color: $primary;
-               background-color: rgb(220, 20, 60);
-            }
-         }
+         
    
       }
    
@@ -572,25 +563,149 @@ main {
 
          h1 {
             font-size: 6vw;
-            background: rgb(131,58,180);
-            background: linear-gradient(90deg, rgba(131,58,180,1) 0%, rgba(253,29,29,1) 50%, rgba(252,176,69,1) 100%); 
+            background: rgb(251, 63, 63);
+            background: linear-gradient(90deg, rgba(251,63,63,1) 0%, rgba(255,85,120,1) 100%); 
             -webkit-background-clip: text;
             background-clip: text;
             -webkit-text-fill-color: transparent;
+            text-shadow: rgba(255,63,63,0.3) 0px 0px 39px;
             font-family: $ff-heading;
             font-weight: bolder;
             transition: 250ms;
          }
 
          h2 {
-            color: rgb(156, 156, 156);
+            color: rgb(251, 63, 63);
             margin-left: 1rem;
             font-family: $ff-body;
          }
 
+         #darkBG {
+            background-color: #000000a4;
+            position: absolute;
+            top: 0;
+            left: 0;
+            min-height: 100%;
+            width: 100%;
+            z-index: 5;
+            pointer-events: none;
+            opacity: 0;
+         }
+
+         #newPostBtn {
+            display: flex;
+            justify-content: center;
+            border: 2px solid rgba(220, 20, 60, 0.441);
+            background-color: $primary;
+            color: white;
+            padding: 1rem;
+            font-size: 1rem;
+            font-family: $ff-body;
+            border-radius: 0.5rem;
+            transition: 250ms;
+            cursor: pointer;
+            align-self: end;
+            margin: 0.5rem;
+            width: 200px;
+            display: flex;
+            gap: 0.5rem;
+            
+            &:hover {
+               background-color: $buttonHover;
+            }
+         }
 
          #createPostElement {
             color: white;
+            gap: 1.5rem;
+            width: 50%;
+            margin-left: 1rem;
+            position: fixed;
+            background-color: $subBackground;
+            padding: 3rem;
+            top: 50%;
+            right: 50%;
+            transform: translate(50%,-40%);
+            border-radius: 1rem;
+            z-index: 5;
+            opacity: 0;
+            pointer-events: none;
+            transition: 250ms;
+            display: flex;
+            flex-direction: column;
+
+            #createNewPostHeader {
+               background: rgb(251, 63, 63);
+               background: linear-gradient(90deg, rgba(251,63,63,1) 0%, rgba(255,85,120,1) 100%); 
+               -webkit-background-clip: text;
+               background-clip: text;
+               -webkit-text-fill-color: transparent;
+               font-weight: bold;
+               align-self: center;
+               font-size: 2rem;
+               
+            }
+
+            
+
+            
+            #formSubject, #formBody {
+               display: flex;
+               flex-direction: column;
+               gap: 0.2rem;
+               
+               label {
+                  font-family: $ff-heading;
+               }
+
+               input {
+                 width: 100%; 
+                 max-width: 100%;
+                 padding: 0.5rem;
+                 border-radius: 0.5rem;
+                 font-size: 1rem;
+                 background-color: $background;
+                 border: none;
+                 color: white;
+                 
+                 &:focus {
+                  outline: none;
+                 }
+               }
+            }
+
+            #formSubject {
+               
+            }
+
+            #formBody {
+            }
+
+            button {
+               padding: 0.5rem;
+               color: white;
+               background-color: $primary;
+               border: none;
+               border-radius: 0.5rem;
+               font-size: 1rem;
+               width: 300px;
+               max-width: 100%;
+               align-self: center;
+               cursor: pointer;
+               transition: 150ms;
+               
+               &:hover {
+                  background-color: #510917;
+               }
+            }
+
+            // Error Message
+            #feedbackMessage {
+               color: $primary;
+               font-family: $ff-body;
+               align-self: center;
+            }
+            
          }
 
       }
@@ -609,15 +724,13 @@ main {
             
             .mainPost {
                flex-direction: column;
-               border: 2px solid grey;
                // min-height: 300px;
                max-height: 500px;
                color: #555555;
                gap: 2rem;
                padding: 2rem;
-               border-radius: 2rem;
-               background: rgb(18,16,16);
-               background: linear-gradient(94deg, rgba(18,16,16,1) 0%, rgba(14,0,0,1) 100%);  
+               border-radius: 1rem;
+               background: rgba(14,0,0,1);
                color: white;
 
                
@@ -629,7 +742,7 @@ main {
                   margin-bottom: 1rem;
                   
                   .poster {
-                     font-family: $ff-heading;
+                     font-family: $ff-body;
                      display: flex;
                      align-items: center;
                      gap: 1rem;
@@ -792,6 +905,12 @@ HOME COMPONENT MEDIA QUERIES
          #whatsNew {
             display: flex;
             align-items: center;
+
+            #newPostBtn {
+               align-self: center;
+               width: 300px;
+               margin: 1rem;
+            }
 
             h1 {
                font-size: 12vw;
