@@ -148,7 +148,7 @@ app.get('/wolfTopics', (req, res)=> {
 
 
 // Route executes when a user likes a post
-app.post('/like', requireAuth, async (req, res)=> {
+/* app.post('/like', requireAuth, async (req, res)=> {
   // info gathered based on the individual post that was liked
   const {likeCheck, whoLiked, poster} = req.body
   const database = await connectMongo()
@@ -173,7 +173,7 @@ app.post('/like', requireAuth, async (req, res)=> {
   }
   
   
-})
+}) */
 
 
 // ROUTE EXECUTES WHEN THE USER WANTS TO LOOK AT THEIR OWN PROFILE
