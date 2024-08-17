@@ -17,7 +17,7 @@ export default function UpdateFeed() {
       }
 
       const allPosts = await response.json();
-      setAllPosts(allPosts.allPosts);
+      setAllPosts(allPosts.reversedPosts);
       console.table(allPosts);
 
       

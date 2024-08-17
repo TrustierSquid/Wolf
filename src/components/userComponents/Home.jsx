@@ -323,7 +323,9 @@ export default function Home(){
       subjectPostElement.current.value = ''
    }
 
-   
+   function seeLatestPost() {
+      window.location.href = '#oldpostmarker'
+   }
 
 
    
@@ -411,7 +413,12 @@ export default function Home(){
                <div id="whatsNew">
                   <h1>What's New</h1>
                   <h2>See What's up</h2>
-                  <button id="newPostBtn" onClick={()=> appearEffect()}>New Post  <i className="fa-solid fa-plus"></i></button>
+                  
+                  <div id="postInitBtns">
+                     <button id="newPostBtn" onClick={()=> appearEffect()}>New Post  <i className="fa-solid fa-plus"></i></button>
+                     <button id="seePostBtn" onClick={()=> seeLatestPost()}>See Oldest Post  <i class="fa-solid fa-angle-down"></i></button>
+                  </div>
+                  
                   <span ref={darkBG} onClick={()=> dissappearEffect()} id="darkBG"></span>
                   <form ref={createPostElement} id="createPostElement" >
                      <h2 id="createNewPostHeader">Create a new Post</h2>
@@ -437,9 +444,7 @@ export default function Home(){
                   {newPost}
                   {displayTopicInfo()}
 
-
-                  
-                  
+                      
                   <div className="userPost">
                      <br />
                      <main className="mainPost">
@@ -458,7 +463,8 @@ export default function Home(){
                      </main>
                   </div>
                   
-                  
+                  {/* when 'see oldest post' btn is clicked, it will scroll to this id */}
+                  <span id="oldpostmarker"></span> 
                </article>
             </section>
          </main>

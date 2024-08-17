@@ -6,6 +6,7 @@
 
 html {
   max-height: 100000px;
+  scroll-behavior: smooth;
 }
 
 body {
@@ -435,11 +436,13 @@ main #content #whatsNew #darkBG {
   pointer-events: none;
   opacity: 0;
 }
-main #content #whatsNew #newPostBtn {
+main #content #whatsNew #postInitBtns {
+  display: flex;
+}
+main #content #whatsNew #postInitBtns #newPostBtn, main #content #whatsNew #postInitBtns #seePostBtn {
   display: flex;
   justify-content: center;
-  border: 2px solid rgba(220, 20, 60, 0.441);
-  background-color: #FF3C3C;
+  border: none;
   color: white;
   padding: 1rem;
   font-size: 1rem;
@@ -452,8 +455,17 @@ main #content #whatsNew #newPostBtn {
   display: flex;
   gap: 0.5rem;
 }
-main #content #whatsNew #newPostBtn:hover {
+main #content #whatsNew #postInitBtns #newPostBtn {
+  background-color: #FF3C3C;
+}
+main #content #whatsNew #postInitBtns #newPostBtn:hover {
   background-color: #7A0B31;
+}
+main #content #whatsNew #postInitBtns #seePostBtn {
+  background-color: #3f44fb;
+}
+main #content #whatsNew #postInitBtns #seePostBtn:hover {
+  background-color: #292c9c;
 }
 main #content #whatsNew #createPostElement {
   color: white;

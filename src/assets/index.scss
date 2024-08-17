@@ -47,6 +47,7 @@ $sc-info: #00CAE5;
 
 html {
    max-height: 100000px;
+   scroll-behavior: smooth;
 }
 
 body {
@@ -595,27 +596,43 @@ main {
             opacity: 0;
          }
 
-         #newPostBtn {
+         #postInitBtns {
             display: flex;
-            justify-content: center;
-            border: 2px solid rgba(220, 20, 60, 0.441);
-            background-color: $primary;
-            color: white;
-            padding: 1rem;
-            font-size: 1rem;
-            font-family: $ff-body;
-            border-radius: 0.5rem;
-            transition: 250ms;
-            cursor: pointer;
-            margin: 1.5rem 0.5rem;
-            width: 200px;
-            display: flex;
-            gap: 0.5rem;
             
-            &:hover {
-               background-color: $buttonHover;
+            #newPostBtn, #seePostBtn {
+               display: flex;
+               justify-content: center;
+               border: none;
+               color: white;
+               padding: 1rem;
+               font-size: 1rem;
+               font-family: $ff-body;
+               border-radius: 0.5rem;
+               transition: 250ms;
+               cursor: pointer;
+               margin: 1.5rem 0.5rem;
+               width: 200px;
+               display: flex;
+               gap: 0.5rem;
+               
             }
+            
+            #newPostBtn {
+               background-color: $primary;
+               &:hover {
+                  background-color: $buttonHover;
+               }
+            }
+
+            #seePostBtn {
+               background-color: #3f44fb;
+               &:hover {
+                  background-color: #292c9c;
+               }
+            }
+
          }
+
 
          #createPostElement {
             color: white;
