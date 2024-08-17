@@ -26,19 +26,40 @@ export default function UpdateFeed() {
     update();
 
    }, []);
+
+  //  setting the background if the post is made by a developer
+   const developerStyle = {
+    background: 'linear-gradient(90deg, rgba(63,68,251,1) 0%, rgba(146,85,255,1) 100%)'
+  }
+
     // checks to see if the user that posted is an admin   
     function checkAdmin (poster) {
-        if(poster === 'samuel') {
-            return (
-                <>
-                    <h4 className="poster" style={{color: 'red'}}>
-                    <i className="fa-solid fa-user" style={{color: 'white'}}></i> {poster} (Developer)
-                    </h4>
-                </>
-            )
-        } else {
-
-        }
+      switch (poster) {
+        case 'samuel':
+          return (
+            <>
+                <h4 className="poster" style={{color: 'red'}}>
+                <i className="fa-solid fa-user" style={{color: 'white'}}></i> {poster} (Developer)
+                </h4>
+            </>
+          )
+        case 'DemoUser':
+          return (
+            <>
+                <h4 className="poster" style={{color: '#73ff00'}}>
+                <i className="fa-solid fa-user" style={{color: 'white'}}></i> {poster} (Recruiter)
+                </h4>
+            </>
+          )
+        case poster:
+          return (
+            <>
+                <h4 className="poster" style={{color: 'orange'}}>
+                <i className="fa-solid fa-user" style={{color: 'white'}}></i> {poster} (User)
+                </h4>
+            </>
+          )
+      }
     }
 
   return (

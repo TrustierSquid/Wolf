@@ -444,8 +444,7 @@ export default function Home(){
                      <br />
                      <main className="mainPost">
                         <div className="postAnalytics">
-                           <img className="profilePicture" src={logo} alt="" />
-                           <h4 className="poster" ref={posterElement}>
+                           <h4 className="poster" ref={posterElement} style={{color: 'magenta'}}>
                               <i class="fa-solid fa-robot"></i> Wolf Bot 
                            </h4>
                            <i class="fa-solid fa-ellipsis"></i>

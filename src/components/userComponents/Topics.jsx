@@ -1,7 +1,5 @@
 
 import { useState, useEffect, useRef } from "react"
-import dotenv from "dotenv";
-dotenv.config();
 
 export default function Topics(){
    const [topicCounter, setTopicCounter] = useState(null)
@@ -86,10 +84,8 @@ export default function Topics(){
    }
 
    // go to home page for user
-   async function reDirectToHome(){
-      const baseUrl = process.env.BASE_URL
-      
-      window.location.href = `${baseUrl}/home`
+   async function reDirectToHome(){      
+      window.location.href = `/home`
    }
 
    
