@@ -139,6 +139,7 @@ export default function Home(){
 
       // setting the state for the selected topic
       setSelectedFact(topic)
+      seeLatestPost()
    }
    
 
