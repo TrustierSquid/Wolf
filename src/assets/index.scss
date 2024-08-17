@@ -50,6 +50,18 @@ html {
    scroll-behavior: smooth;
 }
 
+#darkBG {
+   background-color: #000000a4;
+   position: absolute;
+   top: 0;
+   left: 0;
+   min-height: 165%;
+   width: 100%;
+   z-index: 5;
+   pointer-events: none;
+   opacity: 0;
+}
+
 body {
    background-color: $subBackground;
 }
@@ -584,17 +596,7 @@ main {
             font-family: $ff-body;
          }
 
-         #darkBG {
-            background-color: #000000a4;
-            position: absolute;
-            top: 0;
-            left: 0;
-            min-height: 100%;
-            width: 100%;
-            z-index: 5;
-            pointer-events: none;
-            opacity: 0;
-         }
+        
 
          #postInitBtns {
             display: flex;
@@ -619,8 +621,29 @@ main {
             
             #newPostBtn {
                background-color: $primary;
+               transition: 150ms;
+
+               i {
+                  animation: levitate 500ms infinite alternate;
+
+               }
+               
                &:hover {
                   background-color: $buttonHover;
+                  transform: translateY(-5px);
+               }
+            }
+
+            // animation for new postbtn
+            @keyframes levitate {
+               0% {
+                  transform: translateY(2px);
+               }
+
+               
+               100% {
+                  
+                  transform: translateY(-2px);
                }
             }
 
@@ -628,8 +651,11 @@ main {
                background-color: #3f44fb;
                &:hover {
                   background-color: #292c9c;
+                  transform: translateY(-5px);
                }
             }
+
+            // animation for see old post btn
 
          }
 
@@ -751,7 +777,11 @@ main {
                border-radius: 1rem;
                background: rgba(14,0,0,1);
                color: white;
-
+               transition: 250ms;
+               
+               &:hover {
+                  transform: translateY(-10px);
+               }
                
                .postAnalytics {
                   display: flex;

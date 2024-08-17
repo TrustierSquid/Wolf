@@ -310,6 +310,7 @@ export default function Home(){
          createPostElement.current.style.pointerEvents = 'all'
          bodyPostElement.current.value = ''
          subjectPostElement.current.value = ''
+         document.body.style.overflow = 'hidden';
       }
       
    }
@@ -321,6 +322,7 @@ export default function Home(){
       createPostElement.current.style.pointerEvents = 'none'
       bodyPostElement.current.value = ''
       subjectPostElement.current.value = ''
+      document.body.style.overflow = 'auto';
    }
 
    function seeLatestPost() {
@@ -331,6 +333,7 @@ export default function Home(){
    
    return (
       <>
+      
       {/* NAVBAR */}
          <nav id="nav">
             <div id="logoContainer">
@@ -368,6 +371,7 @@ export default function Home(){
       {/* MAIN CONTENT */}
 
          <main>
+            <span ref={darkBG} onClick={()=> dissappearEffect()} id="darkBG"></span>
 
             <nav className="sideNav" ref={sideNav}>
                
@@ -419,7 +423,7 @@ export default function Home(){
                      <button id="seePostBtn" onClick={()=> seeLatestPost()}>See Oldest Post  <i class="fa-solid fa-angle-down"></i></button>
                   </div>
                   
-                  <span ref={darkBG} onClick={()=> dissappearEffect()} id="darkBG"></span>
+                  {/* <span ref={darkBG} onClick={()=> dissappearEffect()} id="darkBG"></span> */}
                   <form ref={createPostElement} id="createPostElement" >
                      <h2 id="createNewPostHeader">Create a new Post</h2>
                      <div id="formSubject">
