@@ -77,7 +77,6 @@ export default defineConfig({
         main: 'index.html',
         user: 'user.html',
         home: 'home.html',
-        profile: 'profile.html'
       }
     }
   },

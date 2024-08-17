@@ -30,10 +30,13 @@ export default function Login() {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
 
-      window.location.href = "http://localhost:5173/home"
-
-      // waiting on success message from server
-      // const successMessage = await response.json();
+      if (response.redirected) {
+        window.location.href = response.url;
+        // window.location.href = 'home.html';
+      } else {
+        return response.json()
+      }
+     // waiting on success message from server
       // if (successMessage.success == true) window.location.href = "home.html";
     }
   }
@@ -65,20 +68,19 @@ export default function Login() {
         throw new Error(`HTTP error! status: ${response.status}`);
         loginErrorMessage.current.innerText = data.taken;
       }
-
-      // waiting on success message from server
-      // const successMessage = await response.json();
-      const json = await response.json()
-      console.log(json)
-
-      if (json.successMessage == true ) {
-        window.location.href = "http://localhost:5173/user"
-      }
+      
+      password.current.value = "";
+      username.current.value = "";
       
       console.log("someone is already here with that username")
       
-      username.current.value = "";
-      password.current.value = "";
+      if (response.redirected) {
+        window.location.href = response.url;
+        // window.location.href = 'user.html';
+
+      } else {
+        return response.json()
+      }
     }
 
   }

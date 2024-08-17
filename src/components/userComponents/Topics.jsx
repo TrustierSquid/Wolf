@@ -1,5 +1,7 @@
 
 import { useState, useEffect, useRef } from "react"
+import dotenv from "dotenv";
+dotenv.config();
 
 export default function Topics(){
    const [topicCounter, setTopicCounter] = useState(null)
@@ -19,6 +21,9 @@ export default function Topics(){
             }
          })
          const data = await response.json()
+
+
+         // retrieving all topics and throwing them in a state var
          setTopic(data.topics)
       }
 
@@ -82,7 +87,9 @@ export default function Topics(){
 
    // go to home page for user
    async function reDirectToHome(){
-      window.location.href = 'http://localhost:5173/home'
+      const baseUrl = process.env.BASE_URL
+      
+      window.location.href = `${baseUrl}/home`
    }
 
    
@@ -95,6 +102,8 @@ export default function Topics(){
                   return (
                      <>
                         <button 
+                           // going by the object id, ref={} will cache each button
+                           // we extract the name of each button mapped out.
                            key={topic.id} ref={element => topicRefs.current[topic.id] = element} 
                            onClick={()=> recordTopic(topic.name, topicRefs.current[topic.id])}>{topic.name} +</button>
                      </>

@@ -22,6 +22,7 @@ import requireAuth from "../middleware/authMiddleware.js";
 // cookie parser
 import cookieParser from "cookie-parser";
 
+
 // setting router
 const router = express.Router();
 
@@ -29,6 +30,9 @@ const router = express.Router();
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+
+
+// init db connection
 let database = null;
 
 // middleware
@@ -61,13 +65,12 @@ const createToken = (userId) => {
 /* 
 
 
-
 LOGIN PAGE
 
 
  */
 
-
+const baseUrl = process.env.BASE_URL;
 
 // SIGNING IN
 router.post("/login", async (req, res) => {
@@ -90,17 +93,19 @@ router.post("/login", async (req, res) => {
         res.cookie("jwt", token, {
           httpOnly: true,
           maxAge: maxAge * 1000,
+          sameSite: 'none',
           secure: false,
         });
         
-        // DEV TESTING
-        res.json({ success: true });
-
-      
-      /* for prod */
-      // res.sendFile(path.join(__dirname, "./dist/home.html"));
-
+        
         console.log(`${username} is now logged in. Welcome!`);
+
+        try {
+          res.redirect(`/home`)
+        } catch {
+          console.log(`Failed to redirect to users page`)
+        }
+
       } else {
         res.json({ err: "Password is incorrect" });
         console.log("Password is incorrect");
@@ -117,8 +122,9 @@ router.post("/login", async (req, res) => {
 
 
 
-// ADDING A NEW USER
 
+
+// ADDING A NEW USER
 router.post("/add", async (req, res) => {
   const { username, password } = req.body;
   
@@ -161,8 +167,13 @@ router.post("/add", async (req, res) => {
       // req.session.userId = newUser._id;
 
       // DEV TESTING
-      res.json({ successMessage: true });
       console.log("Successfully added user!");
+
+      try {
+        res.redirect(`/user`)
+      } catch {
+        console.log(`Failed to redirect to topic page`)
+      }
 
     }
   } catch (err) {
@@ -261,6 +272,7 @@ HOME FEED PAGE
 
  */
 
+// when the user accesses their home page
 router.get('/home', requireAuth, async (req, res)=> {
   const database = await connectMongo()
   const users = database.collection('Users')
