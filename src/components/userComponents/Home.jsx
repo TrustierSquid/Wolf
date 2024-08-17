@@ -330,6 +330,10 @@ export default function Home(){
       window.location.href = '#oldpostmarker'
    }
 
+   function logOut(){
+      window.location.href = '/'
+   }
+
 
    
    return (
@@ -364,7 +368,7 @@ export default function Home(){
 
             <div className="profileSection">
                <h3>Hello, {username}!</h3>
-               <button>Log out</button>
+               <button onClick={()=> logOut()}>Log out</button>
             </div>
          </section>
 

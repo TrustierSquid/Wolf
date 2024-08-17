@@ -107,8 +107,9 @@ export default function Login() {
         <form id="inputField">
           {/* for people demoing the app */}
           <p>
-            For recruiters demoing Wolf, Log in with: <br></br>USER: DemoUser <br></br> PASS: lovetocode
+            For recruiters demoing Wolf, log in with: <br></br><br></br>USER: DemoUser <br></br><br></br> PASS: lovetocode
           </p>
+          <br></br>
           <div>
             <h5>USERNAME</h5>
             <input ref={username} type="text" placeholder="Enter your username"/>

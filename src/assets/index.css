@@ -56,7 +56,9 @@ body {
 }
 #loginContainer #inputField p {
   margin: 0 auto;
-  width: 150px;
+  width: 350px;
+  max-width: 100%;
+  text-wrap: wrap;
 }
 #loginContainer #inputField div {
   display: flex;
@@ -455,6 +457,7 @@ main #content #whatsNew #postInitBtns #newPostBtn, main #content #whatsNew #post
   width: 200px;
   display: flex;
   gap: 0.5rem;
+  z-index: -1;
 }
 main #content #whatsNew #postInitBtns #newPostBtn {
   background-color: #FF3C3C;
@@ -573,9 +576,6 @@ main #content .userContent .userPost .mainPost {
   background: rgb(14, 0, 0);
   color: white;
   transition: 250ms;
-}
-main #content .userContent .userPost .mainPost:hover {
-  transform: translateY(-10px);
 }
 main #content .userContent .userPost .mainPost .postAnalytics {
   display: flex;

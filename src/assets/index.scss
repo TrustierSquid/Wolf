@@ -104,7 +104,9 @@ body {
       
       p {
          margin: 0 auto;
-         width: 150px;
+         width: 350px;
+         max-width: 100%;
+         text-wrap: wrap;
       }
       
       div {
@@ -616,6 +618,7 @@ main {
                width: 200px;
                display: flex;
                gap: 0.5rem;
+               z-index: -1;
                
             }
             
@@ -779,9 +782,7 @@ main {
                color: white;
                transition: 250ms;
                
-               &:hover {
-                  transform: translateY(-10px);
-               }
+               
                
                .postAnalytics {
                   display: flex;
