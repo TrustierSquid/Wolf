@@ -107,7 +107,7 @@ export default function Login() {
         <form id="inputField">
           {/* for people demoing the app */}
           <p>
-            For recruiters demoing Wolf, log in with: <br></br><br></br>USER: DemoUser <br></br><br></br> PASS: lovetocode
+            For recruiters demoing Wolf, sign up with: <br></br><br></br>USER: DemoUser <br></br><br></br> PASS: lovetocode
           </p>
           <br></br>
           <div>

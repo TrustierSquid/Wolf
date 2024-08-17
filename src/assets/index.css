@@ -457,7 +457,6 @@ main #content #whatsNew #postInitBtns #newPostBtn, main #content #whatsNew #post
   width: 200px;
   display: flex;
   gap: 0.5rem;
-  z-index: -1;
 }
 main #content #whatsNew #postInitBtns #newPostBtn {
   background-color: #FF3C3C;

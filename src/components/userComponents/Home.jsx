@@ -433,12 +433,12 @@ export default function Home(){
                      <h2 id="createNewPostHeader">Create a new Post</h2>
                      <div id="formSubject">
                         <label>Subject</label><br />
-                        <input required onsubmit="return false" ref={subjectPostElement} type="text" /><br />
+                        <input required placeholder='Enter a Post Subject' onsubmit="return false" ref={subjectPostElement} type="text" /><br />
                      </div>
                      <br />
                      <div id="formBody">
                         <label>Body</label><br />
-                        <input required onsubmit="return false" ref={bodyPostElement}type="text" />
+                        <input required placeholder='Enter a Post Body' onsubmit="return false" ref={bodyPostElement}type="text" />
                      </div>
                      <br />
                      <button type='button' onClick={()=> createNewPost()}>Post</button>
