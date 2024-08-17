@@ -141,7 +141,7 @@ app.get("/api/topics", (req, res) => {
 
 
 // to get to the topics page!
-app.get("/user", requireAuth, (req, res) => {
+app.get("/user", (req, res) => {
   res.sendFile(path.join(__dirname, 'dist', 'user.html'));
 });
 

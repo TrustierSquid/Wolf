@@ -90,6 +90,7 @@ router.post("/login", async (req, res) => {
 
       if (auth) {
         const token = createToken(user._id);
+
         res.cookie("jwt", token, {
           httpOnly: true,
           maxAge: maxAge * 1000,
@@ -103,11 +104,14 @@ router.post("/login", async (req, res) => {
         try {
           res.redirect(`/home`)
         } catch {
-          console.log(`Failed to redirect to users page`)
+          console.log(`Failed to redirect to home page`)
         }
 
       } else {
-        res.json({ err: "Password is incorrect" });
+
+        // sending error message that is to be displayed on login page
+        // res.json({ err: "Password is incorrect" });
+
         console.log("Password is incorrect");
       }
     } else {
@@ -142,39 +146,46 @@ router.post("/add", async (req, res) => {
       
       const hash = await bcrypt.hash(password, 11);
 
-      await users.insertOne({
-        user: username,
-        password: hash,
-        isLoggedIn: true,
-        followerCount: 0,
-        followingCount: 0,
-        posts: 0,
-        topics: [],
-        lastLogin: new Date(),
-        profilePicture: "",
-      });
+      
+      try {
+        await users.insertOne({
+          user: username,
+          password: hash,
+          isLoggedIn: true,
+          followerCount: 0,
+          followingCount: 0,
+          posts: 0,
+          topics: [],
+          lastLogin: new Date(),
+          profilePicture: "",
+        });
+  
+        const newUser = await users.findOne({ user: username });
+  
+        const token = createToken(newUser._id);
+        
+        // alive for 3 days
+        res.cookie("jwt", token, {
+          httpOnly: true,
+          maxAge: maxAge * 1000,
+          secure: false,
+        });
+        
+        console.log("Successfully added user!");
 
-      const newUser = await users.findOne({ user: username });
+        setTimeout(()=> {
+          res.redirect(`/user`)
 
-      const token = createToken(newUser._id);
-      // alive for 3 days
-      res.cookie("jwt", token, {
-        httpOnly: true,
-        maxAge: maxAge * 1000,
-        secure: true,
-      });
+        }, 500)
+
+      } catch {
+        console.log("failed to give cookie")
+        console.log(`Failed to redirect to topic page`)
+      }
 
       // req.session.userId = newUser._id;
 
       // DEV TESTING
-      console.log("Successfully added user!");
-
-      try {
-        res.redirect(`/user`)
-      } catch {
-        console.log(`Failed to redirect to topic page`)
-      }
-
     }
   } catch (err) {
     res.json({ error: "Unable to add user" });
