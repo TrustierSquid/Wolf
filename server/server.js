@@ -255,7 +255,10 @@ app.get("/update", async (req, res) => {
     };
   });
 
-  res.json({ allPosts });
+  // sends post from newest first
+  const reversedPosts = allPosts.reverse()
+
+  res.json({ reversedPosts });
 });
 
 
