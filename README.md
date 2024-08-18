@@ -1,5 +1,4 @@
 # Wolf (1.0.0-beta):
-<hr>
 
 #### CRUD social media app with JWT authentication functionality
 
@@ -16,7 +15,6 @@
 - Following other users based on what topics they like.
 - Send likes to other users posts.
 
-<hr>
 
 ## 1.0.0-beta
 - You can only post to the social media feed.
