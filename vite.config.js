@@ -12,49 +12,35 @@ export default defineConfig({
     proxy: {
       // for api calls
       '/api': {
-        target: 'http://localhost:3000/',
+        target: 'http://localhost:3000',
         changeOrigin: true,
         secure: false,
         ws: true,
       },
       // for handling and setting up users 
       '/users': {
-        target: 'http://localhost:3000/',
+        target: 'http://localhost:3000',
         changeOrigin: true,
         secure: false,
         ws: true,
       },
       // for handling topics that the user has already picked out
       '/wolfTopics': {
-        target: 'http://localhost:3000/',
-        changeOrigin: true,
-        secure: false,
-        ws: true,
-      },
-
-      // for handling user analytics
-      '/like': {
-        target: 'http://localhost:3000/',
-        changeOrigin: true,
-        secure: false,
-        ws: true,
-      },
-      '/follow': {
-        target: 'http://localhost:3000/',
+        target: 'http://localhost:3000',
         changeOrigin: true,
         secure: false,
         ws: true,
       },
       // for the user viewing their own profiles
       '/profile': {
-        target: 'http://localhost:3000/',
+        target: 'http://localhost:3000',
         changeOrigin: true,
         secure: false,
         ws: true,
       },
       // for users creating a new post
       '/newPost': {
-        target: 'http://localhost:3000/',
+        target: 'http://localhost:3000',
         changeOrigin: true,
         secure: false,
         ws: true,
@@ -62,7 +48,7 @@ export default defineConfig({
       
       // for updating the user feed
       '/update': {
-        target: 'http://localhost:3000/',
+        target: 'http://localhost:3000',
         changeOrigin: true,
         secure: false,
         ws: true,
@@ -70,7 +56,6 @@ export default defineConfig({
 
     }
   },
-  base: 'http://localhost:3000/',
   build: {
     rollupOptions: {
       input: {
