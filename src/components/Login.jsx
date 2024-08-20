@@ -6,11 +6,12 @@ export default function Login() {
   const password = useRef(null);
   const [loginErrorMessage, setLoginErrorMessage] = useState('')
 
+
   async function signIn() {
     if (username.current.value === "" || password.current.value === "") {
       setLoginErrorMessage("A username and password are needed to login or signup")
     } else {
-      const response = await fetch("/users/login", {
+      const response = await fetch(`/users/login`, {
         method: "POST",
         credentials: "include",
         headers: {
@@ -57,7 +58,7 @@ export default function Login() {
     } else {
       
       // sending form data over to backend
-      const response = await fetch("/users/add", {
+      const response = await fetch(`/users/add`, {
         method: "POST",
         credentials: "include",
         headers: {

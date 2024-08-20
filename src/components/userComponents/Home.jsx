@@ -4,14 +4,9 @@ import AboutPost from "../postComponents/AboutPost"
 import WolfBotPost from "../postComponents/WolfBotPost"
 // import UserNewPost from "../NewPost"
 import UpdateFeed from "../UpdateFeed"
-import Topics from "./Topics"
-
 
 
 export default function Home(){
-   //  for profile picture
-   const profilePictureElement = useRef(null)
-
    // Each topic that the user selected displayed in the sideNav as individual elements
    const topicBtn = useRef(null)
 
@@ -20,6 +15,9 @@ export default function Home(){
 
    // The side navigation element
    const sideNav = useRef(null)
+
+   // grabbing poster data for recording likes and follows
+   const posterElement = useRef(null)
 
    /* DROPDOWN FUNCTIONALITY */
    const profileDropdown = useRef(null)
@@ -41,27 +39,20 @@ export default function Home(){
 
    const likeBtnElement = useRef(null)
    const [likeBtnClicked, setLikeBtnClicked] = useState(true)
-
-   const followBtnElement = useRef(null)
-   const [followBtnClicked, setFollowBtnClicked] = useState(true)
    
    const [followerCount, setFollowerCount] = useState(null)
    const [followingCount, setFollowingCount] = useState(null) 
 
    
-   // grabbing poster data for recording likes and follows
-   const posterElement = useRef(null)
-   const [poster, setPoster] = useState(null)
-
-   const likeCounterElement = useRef(null)
-   const [posterTotalLikes, setPosterTotalLikes] = useState(null)
+   
 
    const currentVersion = 'alpha'
+
    
    // GETTING USER INFORMATION AND DISPLYING IT ON THE HOME PAGE SPECIFIC TO THE USER LOGGED IN
    useEffect(()=> {
       async function getUserData(){
-         const response = await fetch('/users/home', {
+         const response = await fetch(`/users/home`, {
             method: 'GET',
             credentials: "include",
             headers: {
@@ -91,7 +82,7 @@ export default function Home(){
    // RETRIEVING THE DESCRIPTION THAT COMES WITH EACH TOPIC
    useEffect(()=> {
       async function fetchTopicData(){
-         const response = await fetch('/wolfTopics', {
+         const response = await fetch(`/wolfTopics`, {
             method: 'GET',
             headers: {
                'Content-Type': 'application/json',
@@ -213,7 +204,7 @@ export default function Home(){
          try {
             // Sending to the server that the user liked a post
             
-            const response = await fetch('/like', {
+            const response = await fetch(`/like`, {
                method: 'POST',
                headers: {
                   'Content-Type': 'application/json'
@@ -264,7 +255,7 @@ export default function Home(){
       setErrorMessage('Posting..')
             
       
-      const response = await fetch('/newPost', {
+      const response = await fetch(`/newPost`, {
          method: 'POST',
          headers: {
             'Content-Type': 'application/json',

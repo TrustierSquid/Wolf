@@ -1,6 +1,7 @@
 
 import { useState, useEffect, useRef } from "react"
 
+
 export default function Topics(){
    const [topicCounter, setTopicCounter] = useState(null)
    const [topic, setTopic] = useState([])
@@ -8,10 +9,11 @@ export default function Topics(){
    const plusIcon = useRef(null)
    const checkIcon = useRef(null)
 
+
    useEffect(()=> {
       async function getTopic(){
          // grabbing topics to display on the topic select screen
-         const response = await fetch('/api/topics', {
+         const response = await fetch(`/api/topics`, {
             method: 'GET',
             credentials: "include",
             headers: {
@@ -35,7 +37,7 @@ export default function Topics(){
       
       // post the data that the user selected
       let stageTopics = async (topic)=> {
-         const response = await fetch('/users/topics', {
+         const response = await fetch(`/users/topics`, {
             method: 'POST',
             credentials: "include",
             headers: {
@@ -49,7 +51,7 @@ export default function Topics(){
       
       // remove the selected topic from the server
       let removeStagedTopics = async (topic)=> {
-         const response = await fetch('/users/topics', {
+         const response = await fetch(`/users/topics`, {
             method: 'DELETE',
             credentials: "include",
             headers: {

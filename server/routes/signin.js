@@ -22,15 +22,12 @@ import requireAuth from "../middleware/authMiddleware.js";
 // cookie parser
 import cookieParser from "cookie-parser";
 
-
 // setting router
 const router = express.Router();
 
 // pathfinding to static files
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-
-
 
 // init db connection
 let database = null;
@@ -50,17 +47,15 @@ router.use(async (req, res, next) => {
   next();
 });
 
-
 // calculating the expiration for jwt
 const maxAge = 3 * 24 * 60 * 60;
 // creating JWT
 const createToken = (userId) => {
-   // payload is the userID and the signature is the secret key
+  // payload is the userID and the signature is the secret key
   return jsonwebtoken.sign({ userId }, process.env.JWT_SECRET, {
     expiresIn: maxAge,
   });
 };
-
 
 /* 
 
@@ -94,21 +89,18 @@ router.post("/login", async (req, res) => {
         res.cookie("jwt", token, {
           httpOnly: true,
           maxAge: maxAge * 1000,
-          sameSite: 'none',
+          sameSite: "none",
           secure: false,
         });
-        
-        
+
         console.log(`${username} is now logged in. Welcome!`);
 
         try {
-          res.redirect(`/home`)
+          res.redirect(`/home`);
         } catch {
-          console.log(`Failed to redirect to home page`)
+          console.log(`Failed to redirect to home page`);
         }
-
       } else {
-
         // sending error message that is to be displayed on login page
         // res.json({ err: "Password is incorrect" });
 
@@ -124,14 +116,9 @@ router.post("/login", async (req, res) => {
   }
 });
 
-
-
-
-
 // ADDING A NEW USER
 router.post("/add", async (req, res) => {
   const { username, password } = req.body;
-  
 
   try {
     const users = await req.db.collection("Users");
@@ -142,11 +129,8 @@ router.post("/add", async (req, res) => {
     if (document != null) {
       res.json({ taken: "Username already Taken" });
     } else {
-      
-      
       const hash = await bcrypt.hash(password, 11);
 
-      
       try {
         await users.insertOne({
           user: username,
@@ -159,28 +143,26 @@ router.post("/add", async (req, res) => {
           lastLogin: new Date(),
           profilePicture: "",
         });
-  
+
         const newUser = await users.findOne({ user: username });
-  
+
         const token = createToken(newUser._id);
-        
+
         // alive for 3 days
         res.cookie("jwt", token, {
           httpOnly: true,
           maxAge: maxAge * 1000,
           secure: false,
         });
-        
+
         console.log("Successfully added user!");
 
-        setTimeout(()=> {
-          res.redirect(`/user`)
-
-        }, 500)
-
+        setTimeout(() => {
+          res.redirect(`/user`);
+        }, 500);
       } catch {
-        console.log("failed to give cookie")
-        console.log(`Failed to redirect to topic page`)
+        console.log("failed to give cookie");
+        console.log(`Failed to redirect to topic page`);
       }
 
       // req.session.userId = newUser._id;
@@ -192,7 +174,6 @@ router.post("/add", async (req, res) => {
   }
 });
 
-
 /* 
 
 
@@ -200,7 +181,6 @@ TOPICS PAGE
 
 
 */
-
 
 // RECORDING THE TOPICS THE NEWUSER SELECTS
 // when the user selects a topic it pushes to the db
@@ -225,7 +205,7 @@ router.post("/topics", requireAuth, async (req, res) => {
     };
 
     const result = await users.updateOne(
-      { _id: new ObjectId(req.currentUser)},
+      { _id: new ObjectId(req.currentUser) },
       updateValues
     );
 
@@ -234,8 +214,6 @@ router.post("/topics", requireAuth, async (req, res) => {
     console.log("Failed to find user");
   }
 });
-
-
 
 // when the user deselects a topic
 router.delete("/topics", requireAuth, async (req, res) => {
@@ -267,13 +245,7 @@ router.delete("/topics", requireAuth, async (req, res) => {
   } else {
     console.log("Failed to find user");
   }
-
-  /* const index = userTopic.indexOf(topic)
-   if (index > -1) {
-      userTopic.splice(index, 1)
-   }  */
 });
-
 
 /* 
 
@@ -284,26 +256,22 @@ HOME FEED PAGE
  */
 
 // when the user accesses their home page
-router.get('/home', requireAuth, async (req, res)=> {
-  const database = await connectMongo()
-  const users = database.collection('Users')
+router.get("/home", requireAuth, async (req, res) => {
+  const database = await connectMongo();
+  const users = database.collection("Users");
 
   // the logged in user
-  let loggedInUser = await users.findOne({_id: new ObjectId(req.currentUser)})
-  let userSelectedTopics = loggedInUser.topics
-  
+  let loggedInUser = await users.findOne({
+    _id: new ObjectId(req.currentUser),
+  });
+  let userSelectedTopics = loggedInUser.topics;
 
   res.json({
-    topicArr: userSelectedTopics, 
+    topicArr: userSelectedTopics,
     userName: loggedInUser.user,
     followerCount: loggedInUser.followerCount,
-    followingCount: loggedInUser.followingCount
-  })
-   
-   
-
-})
-
-
+    followingCount: loggedInUser.followingCount,
+  });
+});
 
 export default router;

@@ -6,9 +6,7 @@ export default function WolfBotPost(props) {
       background: 'linear-gradient(90deg, rgba(251,63,63,1) 0%, rgba(255,85,120,1) 100%)'
    }
 
-   
-   
-   
+
     return (
        <>
           <div className="userPost">
