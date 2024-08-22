@@ -214,7 +214,8 @@ HOME PAGE
   width: 50px;
   border-radius: 50%;
   border: none;
-  object-fit: cover;
+  -o-object-fit: cover;
+     object-fit: cover;
   cursor: pointer;
   background-color: grey;
 }
@@ -226,7 +227,8 @@ HOME PAGE
   gap: 15rem;
   position: sticky;
   top: 0;
-  background: #510917;
+  background-color: #2b2b2b;
+  border: 3px solid #2E2E2E;
   z-index: 4;
 }
 #nav #logoContainer {
@@ -240,7 +242,8 @@ HOME PAGE
 }
 #nav #logoContainer #logo {
   height: 50px;
-  object-fit: cover;
+  -o-object-fit: cover;
+     object-fit: cover;
   cursor: pointer;
 }
 #nav #profileContainer {
@@ -274,7 +277,7 @@ HOME PAGE
   border-radius: 1rem;
   padding: 1rem;
   right: 15%;
-  background-color: #1F1F1F;
+  background-color: rgba(43, 43, 43, 0.3058823529);
   height: 200px;
   color: white;
   display: flex;
@@ -322,20 +325,21 @@ HOME PAGE
 
 main {
   display: flex;
-  padding: 3rem 2rem;
-  gap: 2rem;
+  background-color: 151515;
 }
 main .sideNav {
   width: 400px;
   color: white;
-  background-color: #1B1B1B;
+  background-color: rgba(43, 43, 43, 0.3058823529);
+  border: 3px solid #2E2E2E;
   padding: 2rem;
   display: flex;
   flex-direction: column;
   gap: 7rem;
   font-family: "roboto", sans-serif;
   overflow: scroll;
-  border-radius: 0.5rem;
+  margin: 2rem;
+  border-radius: 1rem;
 }
 main .sideNav .subTitle {
   font-family: "Nunito", sans-serif;
@@ -351,7 +355,7 @@ main .sideNav #sideNavBtns button {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  padding: 0.5rem;
+  padding: 1rem;
   font-size: 1rem;
   cursor: pointer;
   background: none;
@@ -419,7 +423,6 @@ main #content #whatsNew {
   justify-content: space-between;
   flex-direction: column;
   align-items: start;
-  gap: 1rem;
   letter-spacing: 1px;
 }
 main #content #whatsNew h1 {
@@ -433,11 +436,6 @@ main #content #whatsNew h1 {
   font-family: "Nunito", sans-serif;
   font-weight: bolder;
   transition: 250ms;
-}
-main #content #whatsNew h2 {
-  color: rgb(251, 63, 63);
-  margin-left: 1rem;
-  font-family: "roboto", sans-serif;
 }
 main #content #whatsNew #postInitBtns {
   display: flex;
@@ -527,7 +525,7 @@ main #content #whatsNew #createPostElement #formSubject input, main #content #wh
   padding: 0.5rem;
   border-radius: 0.5rem;
   font-size: 1rem;
-  background-color: #1F1F1F;
+  background-color: rgba(43, 43, 43, 0.3058823529);
   border: none;
   color: white;
 }
@@ -559,7 +557,7 @@ main #content .userContent {
   max-height: 1000px;
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 0.5rem;
   padding: 1rem;
 }
 main #content .userContent .userPost {
@@ -567,40 +565,43 @@ main #content .userContent .userPost {
 }
 main #content .userContent .userPost .mainPost {
   flex-direction: column;
-  max-height: 500px;
+  max-height: 100%;
   color: #555555;
-  gap: 2rem;
+  gap: 1rem;
   padding: 2rem;
   border-radius: 1rem;
-  background: rgb(14, 0, 0);
+  background: rgba(43, 43, 43, 0.3058823529);
+  border: #2E2E2E 3px solid;
   color: white;
   transition: 250ms;
 }
 main #content .userContent .userPost .mainPost .postAnalytics {
   display: flex;
-  justify-content: left;
-  gap: 1rem;
-  align-items: center;
-  margin-bottom: 1rem;
+  flex-direction: column;
+  align-items: left;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
 }
 main #content .userContent .userPost .mainPost .postAnalytics .poster {
-  font-family: "roboto", sans-serif;
+  font-family: "Nunito", sans-serif;
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 0.4rem;
+  font-weight: bolder;
 }
 main #content .userContent .userPost .mainPost .postAnalytics .poster img {
   height: 25px;
   width: 25px;
 }
 main #content .userContent .userPost .mainPost .postAnalytics .postCaption {
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   font-family: "roboto", sans-serif;
+  font-weight: lighter;
   /* background: linear-gradient(to bottom right, #FF7979 18%, #FFAAAA 100%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent; */
-  color: white;
+  color: #737373;
   display: flex;
   justify-content: space-between;
 }
@@ -611,7 +612,7 @@ main #content .userContent .userPost .mainPost .postBody {
   font-size: 1.4rem;
   font-family: "roboto", sans-serif;
   font-weight: 100;
-  color: white;
+  color: rgba(255, 255, 255, 0.723);
 }
 main #content .userContent .userPost .mainPost .userTraction {
   display: flex;
@@ -661,7 +662,7 @@ HOME COMPONENT MEDIA QUERIES
     margin-inline: 0;
     padding-inline: 2rem;
     z-index: 3;
-    background-color: #1F1F1F;
+    background-color: rgba(43, 43, 43, 0.3058823529);
   }
   #nav #logoContainer h1 {
     display: none;
@@ -687,7 +688,7 @@ HOME COMPONENT MEDIA QUERIES
   main .sideNav {
     position: absolute;
     height: auto;
-    background-color: #1F1F1F;
+    background-color: #2b2b2b;
     left: -400px;
     transition: 350ms;
     width: 300px;

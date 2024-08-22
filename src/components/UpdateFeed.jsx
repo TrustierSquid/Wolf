@@ -35,28 +35,29 @@ export default function UpdateFeed() {
     // checks to see if the user that posted is an admin   
     function checkAdmin (poster) {
       switch (poster) {
-        case 'samuel':
+        case 'Samuel':
           return (
             <>
-                <h4 className="poster" style={{color: 'red'}}>
-                <i className="fa-solid fa-user" style={{color: 'white'}}></i> {poster} (Developer)
-                </h4>
+                <h2 className="poster">
+                  {poster}<span style={{color: 'red'}}>(Developer)</span>
+                </h2>
+                
             </>
           )
         case 'DemoUser':
           return (
             <>
-                <h4 className="poster" style={{color: '#73ff00'}}>
+                <h2 className="poster" style={{color: '#73ff00'}}>
                 <i className="fa-solid fa-user" style={{color: 'white'}}></i> {poster} (Recruiter)
-                </h4>
+                </h2>
             </>
           )
         case poster:
           return (
             <>
-                <h4 className="poster" style={{color: 'orange'}}>
+                <h2 className="poster" style={{color: 'orange'}}>
                 <i className="fa-solid fa-user" style={{color: 'white'}}></i> {poster} (User)
-                </h4>
+                </h2>
             </>
           )
       }
@@ -72,15 +73,9 @@ export default function UpdateFeed() {
               <main className="mainPost">
                 <div className="postAnalytics">
                   {checkAdmin(post.poster)}
-                  <i class="fa-solid fa-ellipsis"></i>
-                  <h2 className="postCaption">{post.subject}</h2>
+                  <p className="postCaption">{post.subject}</p>
                 </div>
                 <h2 className="postBody">{post.body}</h2>
-                <div className="userTraction">
-                  {/* <button className="likeBtn">
-                    Like <i className="fa-solid fa-thumbs-up"></i>
-                  </button> */}
-                </div>
               </main>
             </div>
           </>

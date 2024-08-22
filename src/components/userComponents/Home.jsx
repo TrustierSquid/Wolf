@@ -372,7 +372,6 @@ export default function Home(){
             <nav className="sideNav" ref={sideNav}>
                
                <div id="sideNavBtns">
-                  <h2 className="subTitle">DashBoard</h2>
                   <button id="homeBtn">Home <i className="fa-solid fa-house"></i></button>
                   <button id="popularBtn">What's Popular<i className="fa-solid fa-fire"></i></button>
                   
@@ -412,7 +411,6 @@ export default function Home(){
             <section id="content">
                <div id="whatsNew">
                   <h1>What's New</h1>
-                  <h2>See What's up</h2>
                   
                   <div id="postInitBtns">
                      <button id="newPostBtn" onClick={()=> appearEffect()}>New Post  <i className="fa-solid fa-plus"></i></button>
