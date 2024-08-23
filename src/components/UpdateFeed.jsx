@@ -55,8 +55,8 @@ export default function UpdateFeed() {
         case poster:
           return (
             <>
-                <h2 className="poster" style={{color: 'orange'}}>
-                <i className="fa-solid fa-user" style={{color: 'white'}}></i> {poster} (User)
+                <h2 className="poster" >
+                  {poster} <span style={{color: 'orange'}}>(User)</span>
                 </h2>
             </>
           )

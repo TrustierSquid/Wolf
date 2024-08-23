@@ -37,7 +37,7 @@ app.use(cors());
 // MIDDLEWARE
 app.use(cookieParser());
 app.use(express.json());
-app.use(express.static(path.join(__dirname, "dist")));
+app.use(express.static(path.join(__dirname,  "../dist")));
 app.use("/users", signinRoutes);
 
 // if the user enters any file extension they will be redirected to login again

@@ -317,9 +317,6 @@ export default function Home(){
       document.body.style.overflow = 'auto';
    }
 
-   function seeLatestPost() {
-      window.location.href = '#oldpostmarker'
-   }
 
    function logOut(){
       window.location.href = '/'
@@ -363,58 +360,56 @@ export default function Home(){
             </div>
          </section>
 
+         <nav className="sideNav" ref={sideNav}>
+            
+            <div id="sideNavBtns">
+               <button id="homeBtn">Home <i className="fa-solid fa-house"></i></button>
+               <button id="popularBtn">What's Popular<i className="fa-solid fa-fire"></i></button>
+               
+            </div>
+
+
+            <section className="topicSelectionElement">
+               <h2 className="subTitle">Your Topics</h2>
+               {/* mapping out the selected topics that the user selected */}
+               <div id="selectedTopicsBtns">
+                  {/* <button><i className="fa-solid fa-baseball"></i> Sports</button>
+                  <button><i className="fa-solid fa-baseball"></i> Skateboarding</button> */}
+                  {userData.map(topic => {
+                     // 
+                     return (
+                        <>
+                           <button ref={topicBtn} onClick={()=> handleClick(topic)}>{topic}<i className="fa-solid fa-person-walking-arrow-right"></i></button>
+                        </>
+                     )
+                  })}
+               </div>
+            </section>
+
+            <section className="topicSelectionElement">
+               <h2 className="subTitle">Other Resources</h2>
+               {/* mapping out the selected topics that the user selected */}
+               <div id="OtherResourcesBtns">
+                  <button onClick={()=> displayAbout()}>About <i className="fa-solid fa-book"></i></button>
+                  <button>More Topics<i className="fa-solid fa-magnifying-glass-plus"></i></button>
+               </div>
+            </section>
+
+         </nav>
         
       {/* MAIN CONTENT */}
 
          <main>
             <span ref={darkBG} onClick={()=> dissappearEffect()} id="darkBG"></span>
 
-            <nav className="sideNav" ref={sideNav}>
-               
-               <div id="sideNavBtns">
-                  <button id="homeBtn">Home <i className="fa-solid fa-house"></i></button>
-                  <button id="popularBtn">What's Popular<i className="fa-solid fa-fire"></i></button>
-                  
-               </div>
 
-
-               <section className="topicSelectionElement">
-                  <h2 className="subTitle">Your Topics</h2>
-                  {/* mapping out the selected topics that the user selected */}
-                  <div id="selectedTopicsBtns">
-                     {/* <button><i className="fa-solid fa-baseball"></i> Sports</button>
-                     <button><i className="fa-solid fa-baseball"></i> Skateboarding</button> */}
-                     {userData.map(topic => {
-                        // 
-                        return (
-                           <>
-                              <button ref={topicBtn} onClick={()=> handleClick(topic)}>{topic}<i className="fa-solid fa-person-walking-arrow-right"></i></button>
-                           </>
-                        )
-                     })}
-                  </div>
-               </section>
-
-               <section className="topicSelectionElement">
-                  <h2 className="subTitle">Other Resources</h2>
-                  {/* mapping out the selected topics that the user selected */}
-                  <div id="OtherResourcesBtns">
-                     <button onClick={()=> displayAbout()}>About <i className="fa-solid fa-book"></i></button>
-                     <button>More Topics<i className="fa-solid fa-magnifying-glass-plus"></i></button>
-                  </div>
-               </section>
-
-            </nav>
-
-            
-
+         
             <section id="content">
                <div id="whatsNew">
                   <h1>What's New</h1>
                   
                   <div id="postInitBtns">
                      <button id="newPostBtn" onClick={()=> appearEffect()}>New Post  <i className="fa-solid fa-plus"></i></button>
-                     <button id="seePostBtn" onClick={()=> seeLatestPost()}>See Oldest Post  <i class="fa-solid fa-angle-down"></i></button>
                   </div>
                   
                   {/* <span ref={darkBG} onClick={()=> dissappearEffect()} id="darkBG"></span> */}
