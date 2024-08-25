@@ -52,6 +52,34 @@ export default defineConfig({
         changeOrigin: true,
         secure: false,
         ws: true,
+      },
+
+      '/followUser': {
+        target: 'http://localhost:3000',
+        changeOrigin: true,
+        secure: false,
+        ws: true,
+      },
+      
+      '/unFollowUser': {
+        target: 'http://localhost:3000',
+        changeOrigin: true,
+        secure: false,
+        ws: true,
+      },
+
+      '/checkUser': {
+        target: 'http://localhost:3000',
+        changeOrigin: true,
+        secure: false,
+        ws: true,
+      },
+
+      '/pullUser': {
+        target: 'http://localhost:3000',
+        changeOrigin: true,
+        secure: false,
+        ws: true,
       }
 
     }

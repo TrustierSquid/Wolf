@@ -136,8 +136,12 @@ router.post("/add", async (req, res) => {
           user: username,
           password: hash,
           isLoggedIn: true,
-          followerCount: 0,
-          followingCount: 0,
+          
+          // shows followers
+          followers: [],
+
+          // shows following
+          following: [],
           posts: 0,
           topics: [],
           lastLogin: new Date(),

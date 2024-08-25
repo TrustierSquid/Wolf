@@ -145,10 +145,14 @@ app.post("/newPost", async (req, res) => {
     body: postBody,
   });
 
+  // Adding the post to the database will lead to a call to action on the frontend
+  // The frontend will load this collection in the database to show the user feed
+  
+
   res.json({ message: "Posted Successfully" });
 });
 
-// Updating the users feed
+// This route gets executed when the page reloads
 app.get("/update", async (req, res) => {
   const database = await connectMongo();
   const posts = database.collection("Posts");
@@ -167,10 +171,133 @@ app.get("/update", async (req, res) => {
   res.json({ reversedPosts });
 });
 
-// Dummy Route
-app.get("/tester", (req, res) => {
-  res.send("<h1>Made it!</h1>");
-});
+
+
+
+
+
+
+// checking who the logged in user is following
+app.get('/checkUser/following', requireAuth,  async (req, res)=> {
+  const loggedInUserId = req.currentUser
+  
+  // connecting to the db
+  const database = await connectMongo()
+  const users = database.collection("Users");
+
+  try {
+    // finding and checking to see if the user exists
+    const user = await users.findOne({_id: new ObjectId(loggedInUserId)})
+    if (!user) return res.status(404).json({message: "Could not find user!"})
+
+    res.json(user.following)
+    
+  } catch {
+    console.log("Operation failed")
+  }
+  
+})
+
+
+// Handling user following
+
+app.post('/checkUser', async (req, res)=> {
+  const {followee, loggedInUser} = req.body
+  
+  // connecting to the db
+  const database = await connectMongo()
+  const users = database.collection("Users");
+
+  // checks to see if a user is already a follower of a user
+  const duplicateUserFollowing = await users.findOne(
+    {
+      user: loggedInUser,
+      following: {$in: [followee]}
+    }
+  )
+  const duplicateUserFollower = await users.findOne(
+    {
+      user: followee,
+      following: {$in: [loggedInUser]}
+    }
+  )
+
+  if(duplicateUserFollowing || duplicateUserFollower) {
+    console.log("User already follows this person")
+    res.json({listOfFollowers: duplicateUserFollower})
+  } else {
+    try {
+  
+      // updating current users following list
+      await users.updateOne(
+        {user: loggedInUser},
+        {$addToSet: {following: followee}}
+      )
+  
+  
+      // updating followee list
+      await users.updateOne(
+        {user: followee},
+        {$addToSet: {followers: loggedInUser}}
+      )
+  
+      console.log(`${loggedInUser} is now following ${followee}`)
+      
+    } catch {
+      console.log("Unable to complete the follow transaction")
+    }
+  }
+
+
+
+})
+
+app.post('/pullUser', async (req, res)=> {
+  const {followee, loggedInUser} = req.body
+
+  // connecting to the db
+  const database = await connectMongo()
+  const users = database.collection("Users");
+
+  try {
+    // updating current users following list
+    await users.updateOne(
+      {user: loggedInUser},
+      {$pull: {following: followee}}
+    )
+
+
+    // updating followee list
+    await users.updateOne(
+      {user: followee},
+      {$pull: {followers: loggedInUser}}
+    )
+
+    console.log(`${loggedInUser} unfollowed ${followee}`)
+    
+  } catch {
+    console.log("Unable to complete the unfollow transaction")
+  }
+  
+
+})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 app.listen(port, () => {
   console.clear();

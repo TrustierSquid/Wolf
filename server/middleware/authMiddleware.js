@@ -21,7 +21,6 @@ const requireAuth =  async (req, res, next)=> {
             console.log('Token is not valid')
             res.redirect('/')
          } else {
-            console.log('Token valid')
             req.currentUser = decodedToken.userId
             next()
          }

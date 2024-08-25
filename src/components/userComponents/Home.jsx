@@ -26,7 +26,7 @@ export default function Home(){
    // the an array of the topics that the user selected
    const [userData, setUserData] = useState([])
 
-   // Displaying the username of the user in the nav bar
+   // The current user interacting with the app
    // and checking user action based off of username
    const [username, setUsername] = useState(null)
 
@@ -68,9 +68,17 @@ export default function Home(){
          const homeData = await response.json()
 
          // setting the user info needed as glob vars
+
+         // the topics the current user selected
          setUserData(homeData.topicArr)
+
+         // the current user logged in
          setUsername(homeData.userName)
+
+         // the current users follower count
          setFollowerCount(homeData.followerCount)
+
+         //  the current users following count
          setFollowingCount(homeData.followingCount)
          
       }
@@ -188,59 +196,15 @@ export default function Home(){
       )
    }
 
-   
-   // toggle Animation for like button and sending to the server that the user liked a post
-   const toggleLike = async ()=> {
-      setLikeBtnClicked(prevState => !prevState)
-      console.log(`Here is the poster ${posterElement.current.innerText}`)
-      console.log(likeBtnClicked)
-      const poster = posterElement.current.innerText
-      
-      if (likeBtnClicked) {
-         likeBtnElement.current.style.backgroundColor = '#F96E36'
-         likeBtnElement.current.innerHTML = 'Liked <i className="fa-solid fa-thumbs-up"></i>'
-         likeBtnElement.current.classList.toggle('.likeBtn')
-
-         try {
-            // Sending to the server that the user liked a post
-            
-            const response = await fetch(`/like`, {
-               method: 'POST',
-               headers: {
-                  'Content-Type': 'application/json'
-               },
-               // if likeBtnClicked is true, it will record it to the database
-               body: JSON.stringify({likeCheck: true, whoLiked: username, poster: poster}) 
-            })
-            
-            if (!response.ok) {
-               throw new Error(`Response was not okay ${response.status}`)
-            }
-            
-            const data = await response.json()
-            console.log(data)
-            setPosterTotalLikes(data.totalLikes)
-
-         } catch (err) {
-            console.log(err)
-         }
-         
-      } else {
-         likeBtnElement.current.style.background = 'none'
-         likeBtnElement.current.innerHTML = 'Like <i className="fa-solid fa-thumbs-up"></i>'
-         likeBtnElement.current.classList.toggle('.likeBtn')
-         
-      }
-   }
 
 
    // WHEN THE USER CREATES A NEW POST
    const subjectPostElement = useRef(null)
    const bodyPostElement = useRef(null)
-   const [newPost, setNewPost] = useState(null)
    const [errorMessage, setErrorMessage] = useState('')
    const errorMessageElement = useRef(null)
    
+   //  Creating a new post and sending it to the db so it can be displayed
    async function createNewPost(){
       let subject = subjectPostElement.current.value
       let body = bodyPostElement.current.value
@@ -254,7 +218,7 @@ export default function Home(){
 
       setErrorMessage('Posting..')
             
-      
+      // Sending post to db...
       const response = await fetch(`/newPost`, {
          method: 'POST',
          headers: {
@@ -274,16 +238,6 @@ export default function Home(){
          setErrorMessage('Posted!')
       }, 900)
 
-      const returnedComponent = await response.json()
-      console.log(returnedComponent)
-      
-      /* setNewPost(
-         <UserNewPost 
-            whoPosted={username} 
-            postSubject={subject} 
-            postBody={body}
-         />
-      ) */
       
    }
 
@@ -406,22 +360,20 @@ export default function Home(){
          
             <section id="content">
                <div id="whatsNew">
-                  <h1>What's New</h1>
+                  <h1>Home Feed</h1>
                   
-                  <div id="postInitBtns">
-                     <button id="newPostBtn" onClick={()=> appearEffect()}>New Post  <i className="fa-solid fa-plus"></i></button>
-                  </div>
+                  <button id="newPostBtn" onClick={()=> appearEffect()}>New Post +</button>
                   
-                  {/* <span ref={darkBG} onClick={()=> dissappearEffect()} id="darkBG"></span> */}
+                  
                   <form ref={createPostElement} id="createPostElement" >
                      <h2 id="createNewPostHeader">Create a new Post</h2>
                      <div id="formSubject">
-                        <label>Subject</label><br />
+                        <label>Post Subject</label><br />
                         <input required placeholder='Enter a Post Subject' onsubmit="return false" ref={subjectPostElement} type="text" /><br />
                      </div>
                      <br />
                      <div id="formBody">
-                        <label>Body</label><br />
+                        <label>Post Body</label><br />
                         <input required placeholder='Enter a Post Body' onsubmit="return false" ref={bodyPostElement}type="text" />
                      </div>
                      <br />
@@ -432,29 +384,12 @@ export default function Home(){
 
                {/* what shows up based on what topics the user selected */}
                <article className="userContent">
-                  {/* {displayAbout()} */}
-                  <UpdateFeed/>
-                  {newPost}
-                  {displayTopicInfo()}
 
-                      
-                  <div className="userPost">
-                     <br />
-                     <main className="mainPost">
-                        <div className="postAnalytics">
-                           <h4 className="poster" ref={posterElement} style={{color: 'magenta'}}>
-                              <i class="fa-solid fa-robot"></i> Wolf Bot 
-                           </h4>
-                           <i class="fa-solid fa-ellipsis"></i>
-                           <h2 className="postCaption">Hello there!</h2>
-                        </div>
-                        
-                        <h2 className="postBody">I almost forgot to say, Hello World!</h2>
-                        <div className="userTraction">
-                           {/* <button className="likeBtn" ref={likeBtnElement} onClick={()=> {toggleLike()}}>Like <i className="fa-solid fa-thumbs-up"></i></button> */}
-                        </div>
-                     </main>
-                  </div>
+                  {/* <UpdateFeed currentActiveUser={username}/>    Updating the feed with the newest posts */}
+                  {displayTopicInfo()} {/*  adding wolf bots message about the respective topic the user selects   */}
+
+                  <UpdateFeed currentActiveUser={username}/>   {/*  Updating the feed with the newest posts*/}
+
                   
                   {/* when 'see oldest post' btn is clicked, it will scroll to this id */}
                   <span id="oldpostmarker"></span> 
