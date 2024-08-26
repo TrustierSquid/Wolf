@@ -2,7 +2,6 @@ import { useState, useEffect, useRef } from "react"
 import logo from '/src/assets/wolfLogo.png'
 import AboutPost from "../postComponents/AboutPost"
 import WolfBotPost from "../postComponents/WolfBotPost"
-// import UserNewPost from "../NewPost"
 import UpdateFeed from "../UpdateFeed"
 
 
@@ -37,18 +36,13 @@ export default function Home(){
    // Whatever topic was selected in the topics list on a users home page, will be processed wolf bot will send info on it
    const [selectedFact, setSelectedFact] = useState(null)
 
-   const likeBtnElement = useRef(null)
-   const [likeBtnClicked, setLikeBtnClicked] = useState(true)
-   
-   const [followerCount, setFollowerCount] = useState(null)
-   const [followingCount, setFollowingCount] = useState(null) 
-
-   
-   
 
    const currentVersion = 'alpha'
 
-   
+   const [followerCount, setFollowerCount] = useState([])
+   const [followingCount, setFollowingCount] = useState([])
+
+
    // GETTING USER INFORMATION AND DISPLYING IT ON THE HOME PAGE SPECIFIC TO THE USER LOGGED IN
    useEffect(()=> {
       async function getUserData(){
@@ -66,26 +60,30 @@ export default function Home(){
          }
    
          const homeData = await response.json()
-
+         // console.log(homeData.followingCount.length)
          // setting the user info needed as glob vars
-
+         
          // the topics the current user selected
          setUserData(homeData.topicArr)
-
+         
          // the current user logged in
          setUsername(homeData.userName)
-
+         
          // the current users follower count
-         setFollowerCount(homeData.followerCount)
+         // setFollowerCount(homeData.followerCount.length)
 
+         
          //  the current users following count
-         setFollowingCount(homeData.followingCount)
+         setFollowingCount(homeData.followingCount.length)
+
+         setFollowerCount(homeData.followerCount.length)
+
          
       }
-
+      
       getUserData()
-
-   }, [])
+      
+   }, [])   
    
    // RETRIEVING THE DESCRIPTION THAT COMES WITH EACH TOPIC
    useEffect(()=> {
@@ -288,7 +286,7 @@ export default function Home(){
                <h1>WOLF</h1>
             </div>
             <div id="profileContainer" onClick={()=> dropdownFunction()}>
-               <h4 onClick={()=> showProfile()}>
+               <h4>
                   <i className="fa-solid fa-user"></i> {username} <i className="fa-solid fa-angle-down"></i></h4>
             </div>
             <button ref={mobileNavBtn} id="mobileNavBtn" onClick={()=> mobileNavFunction()}><i className="fa-solid fa-bars"></i></button>
@@ -384,15 +382,9 @@ export default function Home(){
 
                {/* what shows up based on what topics the user selected */}
                <article className="userContent">
-
-                  {/* <UpdateFeed currentActiveUser={username}/>    Updating the feed with the newest posts */}
                   {displayTopicInfo()} {/*  adding wolf bots message about the respective topic the user selects   */}
-
                   <UpdateFeed currentActiveUser={username}/>   {/*  Updating the feed with the newest posts*/}
-
                   
-                  {/* when 'see oldest post' btn is clicked, it will scroll to this id */}
-                  <span id="oldpostmarker"></span> 
                </article>
             </section>
          </main>

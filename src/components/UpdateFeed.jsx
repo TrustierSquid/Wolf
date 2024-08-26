@@ -35,7 +35,7 @@ export default function UpdateFeed(props) {
         return (
           <>
               <h2 className="poster">
-                {poster}<span style={{color: 'red'}}>(Developer)</span>
+                {poster} | <span style={{color: '#00b3ff'}}> Developer</span>
               </h2>
           </>
         )
@@ -43,8 +43,7 @@ export default function UpdateFeed(props) {
         return (
           <>
               <h2 className="poster" style={{color: '#73ff00'}}>
-              <i className="fa-solid fa-user" style={{color: 'white'}}></i> {poster} (Recruiter)
-              
+                <i className="fa-solid fa-user" style={{color: 'white'}}></i> {poster} (Recruiter)
               </h2>
           </>
         )
@@ -52,7 +51,7 @@ export default function UpdateFeed(props) {
         return (
           <>
               <h2 className="poster" >
-                {poster} <span style={{color: 'orange'}}>(User)</span>
+                {poster} | <span style={{color: 'orange'}}> User</span>
               </h2>
           </>
         )

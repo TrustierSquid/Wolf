@@ -13,12 +13,13 @@ export default function WolfBotPost(props) {
              <br />
              <main className="mainPost" >
                <div className="postAnalytics">
-                  <h4 className="poster" style={{color: 'magenta'}}>
-                     <i className="fa-solid fa-robot"></i> Wolf Bot 
-                  </h4>
-                  <i class="fa-solid fa-ellipsis"></i>
-                <h2 className="postCaption">{props.topic} <span style={{color: 'magenta'}}>{props.icon}</span></h2>
-                {/* <h2 className="postCaption">{`${props.topic} ${props.icon}`}</h2> */}
+                  <section className="userAction">
+                     <h2 className="poster" style={{color: 'magenta'}}>
+                        <i className="fa-solid fa-robot"></i> Wolf Bot
+                        <span>{props.icon}</span>
+                     </h2>
+                  </section>
+                <h2 className="postCaption">{props.topic}</h2>
                </div>
                 <h2 className="postBody">{`${props.fact}`}</h2>
              </main>

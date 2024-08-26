@@ -418,9 +418,13 @@ HOME PAGE
             flex-direction: column;
             justify-content: center;
             align-items: center;
+            font-family: $ff-heading;
+
+            h1 {
+               
+            }
 
             p {
-               font-family: $ff-heading;
             }
          }
       }
@@ -764,20 +768,20 @@ main {
                   display: flex;
                   flex-direction: column;
                   align-items: left;
-                  gap: 0.5rem;
                   margin-bottom: 0.5rem;
 
                   .userAction {
                      display: flex;
                      flex-wrap: wrap;
-                     justify-content: space-between;
+                     justify-content: start;
                      gap: 1rem;
+                     padding: 0.1rem;
 
                      .followBtn {
                         background: none;
                         color: white;
                         padding: 0.5rem;
-                        border: 1px solid $primary;
+                        border: 1px solid $buttonHover;
                         border-radius: 0.5rem;
                         cursor: pointer;
                         transition: 150ms;
