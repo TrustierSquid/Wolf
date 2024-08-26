@@ -126,7 +126,8 @@ CHOOSING TOPICS COMPONENT
 
 */
 #topics {
-  background-color: #131212;
+  background: rgb(126, 31, 31);
+  background: radial-gradient(circle, rgb(126, 31, 31) 0%, rgb(18, 16, 16) 40%);
   min-height: 600px;
   max-width: 1000px;
   margin: 4rem auto;
@@ -150,9 +151,11 @@ CHOOSING TOPICS COMPONENT
   color: #FF3C3C;
 }
 #topics #topicSelect {
+  border-top: 1px solid rgb(62, 62, 62);
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   width: 80%;
+  padding: 2rem;
   gap: 1rem;
 }
 #topics #topicSelect button {
@@ -253,7 +256,7 @@ HOME PAGE
   gap: 1rem;
 }
 #nav #profileContainer h4 {
-  font-family: comfortaa;
+  font-family: "Nunito", sans-serif;
   color: white;
   cursor: pointer;
   transition: 350ms;
@@ -284,6 +287,9 @@ HOME PAGE
   display: flex;
   gap: 4rem;
   transition: 250ms;
+  background: rgb(255, 60, 60);
+  background: linear-gradient(101deg, rgb(255, 60, 60) 6%, rgb(220, 20, 60) 49%);
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
   opacity: 0;
   pointer-events: none;
 }
@@ -415,6 +421,8 @@ main #content {
   padding: 3rem;
   display: flex;
   flex-direction: column;
+  background: rgb(54, 14, 14);
+  background: radial-gradient(circle, rgb(54, 14, 14) 0%, rgb(18, 16, 16) 81%);
   margin-left: 30rem;
 }
 main #content #whatsNew {
@@ -616,7 +624,7 @@ main #content .userContent .userPost .mainPost .postBody {
   font-size: 1.4rem;
   font-family: "roboto", sans-serif;
   font-weight: 100;
-  color: rgba(255, 255, 255, 0.723);
+  color: rgba(255, 255, 255, 0.859);
 }
 main #content .userContent .userPost .mainPost .userTraction {
   display: flex;
@@ -722,7 +730,6 @@ HOME COMPONENT MEDIA QUERIES
   }
   main #content .userContent .userPost .postAnalytics {
     display: flex;
-    gap: 2rem;
   }
   main #content .userContent .userPost .postAnalytics .userAction {
     font-size: 0.9rem;

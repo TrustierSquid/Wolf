@@ -200,7 +200,8 @@ CHOOSING TOPICS COMPONENT
 
 
 #topics {
-   background-color: #131212;
+   background: rgb(126,31,31);
+   background: radial-gradient(circle, rgba(126,31,31,1) 0%, rgba(18,16,16,1) 40%); 
    min-height: 600px;
    max-width: 1000px;
    // margin: 5rem auto;
@@ -213,6 +214,7 @@ CHOOSING TOPICS COMPONENT
    gap: 2rem;
    padding: 2rem;
    color: white;
+   
    
 
    // header
@@ -232,11 +234,13 @@ CHOOSING TOPICS COMPONENT
 
 
    #topicSelect {
+      border-top: 1px solid rgb(62, 62, 62);
       // display: flex;
       // flex-wrap: wrap;
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
       width: 80%;
+      padding: 2rem;
       // grid-template-columns: 1fr 1fr 1fr;
       // border: 2px solid red;
       gap: 1rem;
@@ -357,7 +361,7 @@ HOME PAGE
       
       // Where the username will be shown
       h4 {
-         font-family: comfortaa;
+         font-family: $ff-heading;
          color: white;
          cursor:pointer;
          transition: 350ms;
@@ -398,6 +402,9 @@ HOME PAGE
    display: flex;
    gap: 4rem;
    transition: 250ms;
+   background: rgb(255,60,60);
+   background: linear-gradient(101deg, rgba(255,60,60,1) 6%, rgba(220,20,60,1) 49%); 
+   box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
 
 
    // initial state for the animation
@@ -579,6 +586,8 @@ main {
       padding: 3rem;
       display: flex;
       flex-direction: column;
+      background: rgb(54,14,14);
+      background: radial-gradient(circle, rgba(54,14,14,1) 0%, rgba(18,16,16,1) 81%); 
       // gap: 5rem;
       margin-left: 30rem;
       
@@ -708,6 +717,7 @@ main {
             }
 
             #formBody {
+               
             }
 
             button {
@@ -836,7 +846,7 @@ main {
                   font-size: 1.4rem;
                   font-family: $ff-body;
                   font-weight: 100;
-                  color: rgba(255, 255, 255, 0.723);
+                  color: rgba(255, 255, 255, 0.859);
                }
 
                .userTraction {
@@ -1031,7 +1041,6 @@ HOME COMPONENT MEDIA QUERIES
 
                .postAnalytics {
                   display: flex;
-                  gap: 2rem;
 
                   .userAction {
                      font-size: 0.9rem;

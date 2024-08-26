@@ -275,6 +275,7 @@ export default function Home(){
    }
 
 
+
    
    return (
       <>
@@ -287,7 +288,7 @@ export default function Home(){
             </div>
             <div id="profileContainer" onClick={()=> dropdownFunction()}>
                <h4>
-                  <i className="fa-solid fa-user"></i> {username} <i className="fa-solid fa-angle-down"></i></h4>
+               <i class="fa-solid fa-user-gear"></i> {username} <i className="fa-solid fa-angle-down"></i></h4>
             </div>
             <button ref={mobileNavBtn} id="mobileNavBtn" onClick={()=> mobileNavFunction()}><i className="fa-solid fa-bars"></i></button>
          </nav>
