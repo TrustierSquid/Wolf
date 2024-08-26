@@ -218,7 +218,7 @@ app.post('/checkUser', async (req, res)=> {
   const duplicateUserFollower = await users.findOne(
     {
       user: followee,
-      following: {$in: [loggedInUser]}
+      followers: {$in: [loggedInUser]}
     }
   )
 
