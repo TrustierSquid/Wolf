@@ -1,7 +1,6 @@
 import { useState, useEffect, useRef } from "react"
 import logo from '/src/assets/wolfLogo.png'
 import AboutPost from "../componentDependencies/AboutPost"
-import WolfBotPost from "../componentDependencies/WolfBotPost"
 import UpdateFeed from "../componentDependencies/UpdateFeed"
 import Navbar from "../componentDependencies/NavBar"
 import SideNavBar from "../componentDependencies/SideNavbar"
