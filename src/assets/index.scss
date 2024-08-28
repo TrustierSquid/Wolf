@@ -447,7 +447,7 @@ HOME PAGE
       }
 
       button {
-         background-color: crimson;
+         background-color: $primary;
          border: none;
          border-radius: 1rem;
          color: white;
@@ -578,16 +578,16 @@ HOME PAGE
 main {
    display: flex;
    // padding: 3rem 2rem;
-   background-color: 151515;
-   
+   // background: radial-gradient(circle, rgb(91, 11, 11) 0%, rgba(18,16,16,1) 71%); 
+   // background: linear-gradient(238deg, rgba(43,43,43,1) 14%, #121010 100%);
+   background: linear-gradient(180deg, rgba(40,0,0,1) 0%, rgba(18,16,16,1) 38%); 
 
    #content {
       width: 50%;
       padding: 3rem;
       display: flex;
       flex-direction: column;
-      background: rgb(54,14,14);
-      background: radial-gradient(circle, rgba(54,14,14,1) 0%, rgba(18,16,16,1) 81%); 
+      
       // gap: 5rem;
       margin-left: 30rem;
       
@@ -622,7 +622,7 @@ main {
             border-radius: 0.5rem;
             transition: 250ms;
             cursor: pointer;
-            width: 200px;
+            width: 150px;
             display: flex;
             gap: 0.5rem;
             background-color: $primary;

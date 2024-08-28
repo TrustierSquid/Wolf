@@ -3,6 +3,7 @@ import logo from '/src/assets/wolfLogo.png'
 import AboutPost from "../postComponents/AboutPost"
 import WolfBotPost from "../postComponents/WolfBotPost"
 import UpdateFeed from "../UpdateFeed"
+import Navbar from "../postComponents/NavBar"
 
 
 export default function Home(){
@@ -115,16 +116,19 @@ export default function Home(){
    function dropdownFunction() {
       setToggleDropdown(prevState => !prevState)
       
-      if (toggleDropdown == true) {
-         profileDropdown.current.style.opacity = '1';
-         profileDropdown.current.style.pointerEvents = 'all';
-         profileDropdown.current.style.transform = 'translateY(10px)';
-      } else {
-         profileDropdown.current.style.opacity = '0';
-         profileDropdown.current.style.pointerEvents = 'none';
-         profileDropdown.current.style.transform = 'translateY(0px)';
-
+      if (profileDropdown.current) {
+         if (toggleDropdown == true) {
+            profileDropdown.current.style.opacity = '1';
+            profileDropdown.current.style.pointerEvents = 'all';
+            profileDropdown.current.style.transform = 'translateY(10px)';
+         } else {
+            profileDropdown.current.style.opacity = '0';
+            profileDropdown.current.style.pointerEvents = 'none';
+            profileDropdown.current.style.transform = 'translateY(0px)';
+   
+         }
       }
+      
       
       
    }
@@ -274,14 +278,32 @@ export default function Home(){
       window.location.href = '/'
    }
 
+   function viewProfile() {
+      console.log("Viewing profile")
+      window.location.href = '/viewProf'
+   }
 
+   const props = {
+      logo: logo,
+      username: username,
+      followerCount: followerCount,
+      followingCount: followingCount,
 
+      dropdownFunction: ()=> dropdownFunction(),
+      viewProfileFunction: ()=> viewProfile(),
+      logOutFunction: ()=> logOut()
+   }
+
+   const refs = {mobileNavBtn, profileDropdown}
    
    return (
       <>
       
       {/* NAVBAR */}
-         <nav id="nav">
+      <Navbar {...props} ref={refs}/>
+
+
+         {/* <nav id="nav">
             <div id="logoContainer">
                <img id="logo" src={logo} alt="" />
                <h1>WOLF</h1>
@@ -309,9 +331,10 @@ export default function Home(){
 
             <div className="profileSection">
                <h3>Hello, {username}!</h3>
+               <button onClick={()=> viewProfile()}>View profile</button>
                <button onClick={()=> logOut()}>Log out</button>
             </div>
-         </section>
+         </section> */}
 
          <nav className="sideNav" ref={sideNav}>
             

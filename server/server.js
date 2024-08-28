@@ -38,20 +38,28 @@ app.use(cors());
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.static(path.join(__dirname,  "../dist")));
+
 app.use("/users", signinRoutes);
 
 // if the user enters any file extension they will be redirected to login again
+// for prod
 app.get("/home.html", (req, res) => {
   res.redirect("/");
+  console.log("Cant do that, going back to home")
 });
 
 app.get("/user.html", (req, res) => {
   res.redirect("/");
+  console.log("Cant do that, going back to home")
 });
 
 app.get("/index.html", (req, res) => {
   res.redirect("/");
+  console.log("Cant do that, going back to home")
 });
+
+
+
 
 // database configuration
 let database = null;
@@ -95,7 +103,7 @@ app.get("/api/topics", (req, res) => {
 });
 
 // to get to the topics page!
-app.get("/user", (req, res) => {
+app.get("/user", (req , res) => {
   res.sendFile(path.join(__dirname, "user.html"));
 });
 
@@ -110,11 +118,13 @@ app.get("/wolfTopics", (req, res) => {
   res.json(topicFacts);
 });
 
+
 // ROUTE EXECUTES WHEN THE USER WANTS TO LOOK AT THEIR OWN PROFILE
 app.post("/profile", (req, res) => {
   const { username } = req.body;
   console.log(`${username} wants to look at his profile!`);
 });
+
 
 // ROUTE EXECUTES WHEN THE USER CREATES A NEW POST
 app.post("/newPost", async (req, res) => {
@@ -281,22 +291,6 @@ app.post('/pullUser', async (req, res)=> {
   
 
 })
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 app.listen(port, () => {
