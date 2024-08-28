@@ -37,7 +37,7 @@ app.use(cors());
 // MIDDLEWARE
 app.use(cookieParser());
 app.use(express.json());
-app.use(express.static(path.join(__dirname,  "../dist")));
+// app.use(express.static(path.join(__dirname,  "../dist")));
 
 app.use("/users", signinRoutes);
 
@@ -92,7 +92,7 @@ app.get("/", (req, res) => {
   // for dev
   console.log("User connected to login page");
   // res.send('<h1>Login page</h1>')
-  res.sendFile(path.join(__dirname, "index.html"));
+  res.sendFile(path.join(__dirname, "login.html"));
 });
 
 /* TOPICS PAGE*/
@@ -104,7 +104,7 @@ app.get("/api/topics", (req, res) => {
 
 // to get to the topics page!
 app.get("/user", (req , res) => {
-  res.sendFile(path.join(__dirname, "user.html"));
+  res.sendFile(path.join(__dirname, "topics.html"));
 });
 
 /* HOME FEED PAGE */

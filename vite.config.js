@@ -20,6 +20,13 @@ export default defineConfig({
         secure: false,
         ws: true,
       },
+      // for handling and setting up users 
+      '/login': {
+        target: 'http://localhost:3000',
+        changeOrigin: true,
+        secure: false,
+        ws: true,
+      },
       // for handling topics that the user has already picked out
       '/wolfTopics': {
         target: 'http://localhost:3000',
@@ -100,7 +107,7 @@ export default defineConfig({
     rollupOptions: {
       input: {
         main: 'index.html',
-        user: 'user.html',
+        user: 'topics.html',
         home: 'home.html',
       }
     }

@@ -1,9 +1,10 @@
 import { useState, useEffect, useRef } from "react"
 import logo from '/src/assets/wolfLogo.png'
-import AboutPost from "../postComponents/AboutPost"
-import WolfBotPost from "../postComponents/WolfBotPost"
-import UpdateFeed from "../UpdateFeed"
-import Navbar from "../postComponents/NavBar"
+import AboutPost from "../componentDependencies/AboutPost"
+import WolfBotPost from "../componentDependencies/WolfBotPost"
+import UpdateFeed from "../componentDependencies/UpdateFeed"
+import Navbar from "../componentDependencies/NavBar"
+import SideNavBar from "../componentDependencies/SideNavbar"
 
 
 export default function Home(){
@@ -33,10 +34,6 @@ export default function Home(){
    // The topics and 2 facts for each of them
    // Used for wolf bot
    const [topicFact, setTopicFact] = useState([])
-
-   // Whatever topic was selected in the topics list on a users home page, will be processed wolf bot will send info on it
-   const [selectedFact, setSelectedFact] = useState(null)
-
 
    const currentVersion = 'alpha'
 
@@ -136,60 +133,19 @@ export default function Home(){
 
    // Helper function to identify the topic you selected
    const handleClick = (topic) => {
-      console.log(topic)
 
       // setting the state for the selected topic
-      setSelectedFact(topic)
-      seeLatestPost()
+      // setSelectedFact(topic)
+      displayTopicInfo(topic)
    }
    
 
-   // CHECKS TO SEE WHAT TOPICS WERE SELECTED ON THE TOPICS PAGE
-   // ACCORDING TO WHAT WAS SELECTED, EACH TOPIC WILL RETURN A FACT ABOUT THE RESPECTIVE TOPIC
-   function displayTopicInfo(){
-      
-      switch (selectedFact) {
-         case "Sports":
-            return <WolfBotPost topic={selectedFact} fact={topicFact.Sports[0].fact1} icon={<i className="fa-solid fa-baseball"></i>}/>
-         case "Cosmetology":
-            return <WolfBotPost topic={selectedFact} fact={topicFact.Cosmetology[0].fact1} icon={<i className="fa-solid fa-face-smile-beam"></i>}/>
-         case "Food":
-            return <WolfBotPost topic={selectedFact} fact={topicFact.Food[0].fact1} icon={<i className="fa-solid fa-utensils"></i>}/>
-         case "Self care":
-            return <WolfBotPost topic={selectedFact} fact={topicFact.Self_Care[0].fact1} icon={<i className="fa-solid fa-person-rays"></i>}/>
-         case "Goal Settings":
-            return <WolfBotPost topic={selectedFact} fact={topicFact.Goal_Settings[0].fact1} icon={<i className="fa-regular fa-clipboard"></i>}/>
-         case "Tech": 
-            return <WolfBotPost topic={selectedFact} fact={topicFact.Tech[0].fact1} icon={<i className="fa-solid fa-microchip"></i>}/>
-         case "Movies":
-            return <WolfBotPost topic={selectedFact} fact={topicFact.Movies[0].fact1} icon={<i className="fa-solid fa-film"></i>}/>
-         case "TV":
-            return <WolfBotPost topic={selectedFact} fact={topicFact.TV[0].fact1} icon={<i className="fa-solid fa-tv"></i>}/>
-         case "Reading":
-            return <WolfBotPost topic={selectedFact} fact={topicFact.Reading[0].fact1} icon={<i className="fa-solid fa-book-open-reader"></i>}/>
-         case "Filmmaking":
-            return <WolfBotPost topic={selectedFact} fact={topicFact.Filmmaking[0].fact1} icon={<i className="fa-solid fa-video"></i>}/>
-         case "DIY projects":
-            return <WolfBotPost topic={selectedFact} fact={topicFact.DIY_projects[0].fact1} icon={<i className="fa-solid fa-paint-roller"></i>}/>
-         case "Dating":
-            return <WolfBotPost topic={selectedFact} fact={topicFact.Dating[0].fact1} icon={<i className="fa-solid fa-heart"></i>}/>
-         case "Makeup Tutorials":
-            return <WolfBotPost topic={selectedFact} fact={topicFact.Makeup_Tutorials[0].fact1} icon={<i className="fa-solid fa-paintbrush"></i>}/>
-         case "Environmental Issues":
-            return <WolfBotPost topic={selectedFact} fact={topicFact.Environmental_Issues[0].fact1} icon={<i className="fa-solid fa-earth-americas"></i>}/>
-         case "Programming":
-            return <WolfBotPost topic={selectedFact} fact={topicFact.Programming[0].fact1} icon={<i className="fa-solid fa-code"></i>}/>
-         case "Life Hacks":
-            return <WolfBotPost topic={selectedFact} fact={topicFact.Life_Hacks[0].fact1} icon={<i className="fa-solid fa-life-ring"></i>}/>
-         case "Software":
-            return <WolfBotPost topic={selectedFact} fact={topicFact.Software[0].fact1} icon={<i className="fa-brands fa-uncharted"></i>}/>
-         case "Computers":
-            return <WolfBotPost topic={selectedFact} fact={topicFact.Computers[0].fact1} icon={<i className="fa-solid fa-computer"></i>}/>
-         default:
-            return
-      }
 
-   }
+   
+   
+   
+   
+   
 
    // Returns the a new post about the app details
    function displayAbout(){
@@ -280,99 +236,42 @@ export default function Home(){
 
    function viewProfile() {
       console.log("Viewing profile")
-      window.location.href = '/viewProf'
+      // window.location.href = '/viewProf'
    }
 
-   const props = {
+   const navbarRefs = {mobileNavBtn, profileDropdown}
+   const sidebarRefs =  {sideNav, topicBtn}
+
+   const navbarProps = {
       logo: logo,
       username: username,
       followerCount: followerCount,
       followingCount: followingCount,
 
+      // Navbar functionality
       dropdownFunction: ()=> dropdownFunction(),
       viewProfileFunction: ()=> viewProfile(),
       logOutFunction: ()=> logOut()
    }
 
-   const refs = {mobileNavBtn, profileDropdown}
+   
+   const sidebarProps = {
+      userData: userData,
+
+      // sidebar functionality
+      handleClick: handleClick, // params being passed through this function 
+      displayAbout: ()=> displayAbout()
+   }
+
+   
    
    return (
       <>
       
       {/* NAVBAR */}
-      <Navbar {...props} ref={refs}/>
+      <Navbar {...navbarProps} ref={navbarRefs}/>
+      <SideNavBar {...sidebarProps} ref={sidebarRefs}/>
 
-
-         {/* <nav id="nav">
-            <div id="logoContainer">
-               <img id="logo" src={logo} alt="" />
-               <h1>WOLF</h1>
-            </div>
-            <div id="profileContainer" onClick={()=> dropdownFunction()}>
-               <h4>
-               <i class="fa-solid fa-user-gear"></i> {username} <i className="fa-solid fa-angle-down"></i></h4>
-            </div>
-            <button ref={mobileNavBtn} id="mobileNavBtn" onClick={()=> mobileNavFunction()}><i className="fa-solid fa-bars"></i></button>
-         </nav>
-
-         <section ref={profileDropdown} id="profileDropdown">
-            <div className="profileSection">
-               <span id="userAnalyticsContainer">
-                  <div id="dataPoint">
-                     <h1>{followerCount}</h1>
-                     <p>Followers</p>
-                  </div>
-                  <div id="dataPoint">
-                     <h1>{followingCount}</h1>
-                     <p>Following</p>
-                  </div>
-               </span>
-            </div>
-
-            <div className="profileSection">
-               <h3>Hello, {username}!</h3>
-               <button onClick={()=> viewProfile()}>View profile</button>
-               <button onClick={()=> logOut()}>Log out</button>
-            </div>
-         </section> */}
-
-         <nav className="sideNav" ref={sideNav}>
-            
-            <div id="sideNavBtns">
-               <button id="homeBtn">Home <i className="fa-solid fa-house"></i></button>
-               <button id="popularBtn">What's Popular<i className="fa-solid fa-fire"></i></button>
-               
-            </div>
-
-
-            <section className="topicSelectionElement">
-               <h2 className="subTitle">Your Topics</h2>
-               {/* mapping out the selected topics that the user selected */}
-               <div id="selectedTopicsBtns">
-                  {/* <button><i className="fa-solid fa-baseball"></i> Sports</button>
-                  <button><i className="fa-solid fa-baseball"></i> Skateboarding</button> */}
-                  {userData.map(topic => {
-                     // 
-                     return (
-                        <>
-                           <button ref={topicBtn} onClick={()=> handleClick(topic)}>{topic}<i className="fa-solid fa-person-walking-arrow-right"></i></button>
-                        </>
-                     )
-                  })}
-               </div>
-            </section>
-
-            <section className="topicSelectionElement">
-               <h2 className="subTitle">Other Resources</h2>
-               {/* mapping out the selected topics that the user selected */}
-               <div id="OtherResourcesBtns">
-                  <button onClick={()=> displayAbout()}>About <i className="fa-solid fa-book"></i></button>
-                  <button>More Topics<i className="fa-solid fa-magnifying-glass-plus"></i></button>
-               </div>
-            </section>
-
-         </nav>
-        
       {/* MAIN CONTENT */}
 
          <main>
@@ -385,7 +284,6 @@ export default function Home(){
                   <h1>Home Feed</h1>
                   
                   <button id="newPostBtn" onClick={()=> appearEffect()}>New Post +</button>
-                  
                   
                   <form ref={createPostElement} id="createPostElement" >
                      <h2 id="createNewPostHeader">Create a new Post</h2>
@@ -406,7 +304,6 @@ export default function Home(){
 
                {/* what shows up based on what topics the user selected */}
                <article className="userContent">
-                  {displayTopicInfo()} {/*  adding wolf bots message about the respective topic the user selects   */}
                   <UpdateFeed currentActiveUser={username}/>   {/*  Updating the feed with the newest posts*/}
                   
                </article>
