@@ -1,6 +1,6 @@
 import { forwardRef, useRef } from "react"
 
-const SideNavBar = (({
+const SideNavBar = forwardRef(({
    userData,
    handleClick,
    displayAbout

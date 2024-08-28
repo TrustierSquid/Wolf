@@ -6,7 +6,6 @@ const Navbar = forwardRef(({
    followerCount, 
    followingCount, 
    dropdownFunction, 
-   viewProfileFunction, 
    logOutFunction
 }, ref) => {
 
@@ -42,7 +41,6 @@ const Navbar = forwardRef(({
 
                <div className="profileSection">
                   <h3>Hello, {username}!</h3>
-                  <button onClick={()=> viewProfileFunction()}>View profile</button>
                   <button onClick={()=> logOutFunction()}>Log out</button>
                </div>
             </section>

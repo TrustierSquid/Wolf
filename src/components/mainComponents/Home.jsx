@@ -4,6 +4,7 @@ import AboutPost from "../componentDependencies/AboutPost"
 import UpdateFeed from "../componentDependencies/UpdateFeed"
 import Navbar from "../componentDependencies/NavBar"
 import SideNavBar from "../componentDependencies/SideNavbar"
+import FourTopics from "../componentDependencies/FourTopics"
 
 
 export default function Home(){
@@ -21,20 +22,22 @@ export default function Home(){
 
    /* DROPDOWN FUNCTIONALITY */
    const profileDropdown = useRef(null)
-   const [toggleDropdown, setToggleDropdown] = useState(true)
 
-   // the an array of the topics that the user selected
-   const [userData, setUserData] = useState([])
+   const currentVersion = 'alpha'
+   
+   const [toggleDropdown, setToggleDropdown] = useState(true)
 
    // The current user interacting with the app
    // and checking user action based off of username
    const [username, setUsername] = useState(null)
 
+
+   // the an array of the topics that the user selected
+   const [userData, setUserData] = useState([])
+
    // The topics and 2 facts for each of them
    // Used for wolf bot
    const [topicFact, setTopicFact] = useState([])
-
-   const currentVersion = 'alpha'
 
    const [followerCount, setFollowerCount] = useState([])
    const [followingCount, setFollowingCount] = useState([])
@@ -66,13 +69,10 @@ export default function Home(){
          // the current user logged in
          setUsername(homeData.userName)
          
-         // the current users follower count
-         // setFollowerCount(homeData.followerCount.length)
-
-         
          //  the current users following count
          setFollowingCount(homeData.followingCount.length)
-
+         
+         // the current users follower count
          setFollowerCount(homeData.followerCount.length)
 
          
@@ -109,24 +109,28 @@ export default function Home(){
    }
 
    // Dropdown functionality
-   function dropdownFunction() {
+   function dropdownFunction(element) {
       setToggleDropdown(prevState => !prevState)
+
+      if (element) {
+         profileDropdown.current.style.opacity = '0';
+         profileDropdown.current.style.pointerEvents = 'none';
+         profileDropdown.current.style.transform = 'translateY(0px)';
+      } else {
+
+         if (profileDropdown.current) {
+            if (toggleDropdown == true) {
+               profileDropdown.current.style.opacity = '1';
+               profileDropdown.current.style.pointerEvents = 'all';
+               profileDropdown.current.style.transform = 'translateY(10px)';     
+            } else {
+               profileDropdown.current.style.opacity = '0';
+               profileDropdown.current.style.pointerEvents = 'none';
+               profileDropdown.current.style.transform = 'translateY(0px)';
       
-      if (profileDropdown.current) {
-         if (toggleDropdown == true) {
-            profileDropdown.current.style.opacity = '1';
-            profileDropdown.current.style.pointerEvents = 'all';
-            profileDropdown.current.style.transform = 'translateY(10px)';
-         } else {
-            profileDropdown.current.style.opacity = '0';
-            profileDropdown.current.style.pointerEvents = 'none';
-            profileDropdown.current.style.transform = 'translateY(0px)';
-   
+            }
          }
-      }
-      
-      
-      
+      } 
    }
 
 
@@ -140,9 +144,7 @@ export default function Home(){
    
 
 
-   
-   
-   
+
    
    
 
@@ -233,10 +235,6 @@ export default function Home(){
       window.location.href = '/'
    }
 
-   function viewProfile() {
-      console.log("Viewing profile")
-      // window.location.href = '/viewProf'
-   }
 
    const navbarRefs = {mobileNavBtn, profileDropdown}
    const sidebarRefs =  {sideNav, topicBtn}
@@ -248,8 +246,7 @@ export default function Home(){
       followingCount: followingCount,
 
       // Navbar functionality
-      dropdownFunction: ()=> dropdownFunction(),
-      viewProfileFunction: ()=> viewProfile(),
+      dropdownFunction: dropdownFunction,
       logOutFunction: ()=> logOut()
    }
 
@@ -273,17 +270,16 @@ export default function Home(){
 
       {/* MAIN CONTENT */}
 
-         <main>
+         <main onClick={(element)=> dropdownFunction(element)}>
             <span ref={darkBG} onClick={()=> dissappearEffect()} id="darkBG"></span>
-
-
-         
             <section id="content">
+               <FourTopics selectedTopics={userData}/>
                <div id="whatsNew">
                   <h1>Home Feed</h1>
                   
                   <button id="newPostBtn" onClick={()=> appearEffect()}>New Post +</button>
                   
+                  {/* Floating prompt for creating a new post */}
                   <form ref={createPostElement} id="createPostElement" >
                      <h2 id="createNewPostHeader">Create a new Post</h2>
                      <div id="formSubject">

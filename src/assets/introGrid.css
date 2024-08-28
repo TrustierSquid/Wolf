@@ -738,4 +738,27 @@ HOME COMPONENT MEDIA QUERIES
   main #content .userContent .userPost .mainPost {
     gap: 2rem;
   }
-}/*# sourceMappingURL=index.css.map */
+}
+#introGrid {
+  color: white;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+#introGrid .gridItem {
+  padding: 2rem;
+  border: 2px solid white;
+  border-radius: 0.5rem;
+}
+#introGrid .gridItem:nth-of-type(1) {
+  grid-column: 1/span 2;
+}
+#introGrid .gridItem:nth-of-type(2) {
+  grid-row: span 2;
+}
+@media (max-width: 1050px) {
+  #inroGrid {
+    grid-template-columns: 1fr;
+  }
+}/*# sourceMappingURL=introGrid.css.map */
