@@ -1,9 +1,10 @@
-import { useEffect, useState} from "react"
+import { useEffect, useState, useRef} from "react"
 
 
 export default function FourTopics(props) {
    const userTopics = props.selectedTopics
    const [allTopics, setAllTopics] = useState([])
+   const gridItem = useRef(null)
 
    useEffect(()=> {
       async function compareTopics() {
@@ -16,44 +17,72 @@ export default function FourTopics(props) {
    
          const data = await response.json()
          setAllTopics(data.topics)
+         console.log(allTopics)
    
-         console.log(data)
       }
 
+      
       compareTopics()
    }, [])
 
 
    function topicSort() {
       // contains the first 4 topics
-      const gridTopics = []
-      
-      for(let i = 0; i < 4; i++) {
-         // pushes the first four of user selected topics
-         gridTopics.push(userTopics)
-         allTopics.map((topic)=> {
-            if(gridTopics.includes(topic.name)) {
-             console.log(gridTopics)  
-            }
-         })
-         
-      }
+      const gridTopics = userTopics.slice(0, 4)
+
+      // Create a list of central topics with their names and images
+      const centralTopics = allTopics.map((topic)=> ({
+         topicName: topic.name,
+         topicImg: topic.img1,
+         topicFact: topic.fact1
+      }))
+
+      // Find the topics that are both in gridTopics and centralTopics
+      const commonValues = centralTopics.filter(topic => gridTopics.includes(topic.topicName))
+      return commonValues
    }
 
-
-
-   console.log(topicSort())
 
    return (
       <>
          <div id="introGrid">
-            {/* {topicSort().map((selectedTopics, index) => {
-               return (
-                  <div key={index} className="gridItem">
+            {topicSort().map((topic, key)=> {
+               const itemStyle = {
+                  position: 'relative',
+                  backgroundImage: `url(${topic.topicImg})`,
+                  backgroundSize: 'cover', // Ensure the background image covers the entire item
+                  backgroundPosition: 'center', // Center the image within the item
+                  backgroundRepeat: 'no-repeat', // Prevent repeating of the image
+                  overflow: 'hidden'
+               }
 
+               const overlayStyle = {
+                  position: 'absolute',
+                  top: '0',
+                  left: '0',
+                  right: '0',
+                  bottom: '0',
+                  background: 'rgb(33, 32, 32, 0.8)',
+                  zindex: '1'
+               }
+
+
+               const contentStyle = {
+                  position: 'relative',
+               }
+               
+
+               return(
+                  <div className="gridItem" style={itemStyle}>
+                     <div style={overlayStyle}></div>
+                     <div style={contentStyle}>
+                        <h3>{topic.topicName}</h3>
+                        <br />
+                        <p>{topic.topicFact}</p>
+                     </div>
                   </div>
                )
-            })} */}
+            })}
          </div>
       </>
    )

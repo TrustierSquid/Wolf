@@ -405,7 +405,7 @@ HOME PAGE
    background: rgb(255,60,60);
    background: linear-gradient(101deg, rgba(255,60,60,1) 6%, rgba(220,20,60,1) 49%); 
    box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
-
+   z-index: 4;
 
    // initial state for the animation
    opacity: 0;
@@ -766,11 +766,11 @@ main {
                // min-height: 300px;
                max-height: 100%;
                color: #555555;
-               gap: 2.5rem;
-               padding: 2rem;
+               gap: 1rem;
+               padding: 1.5rem;
                border-radius: 1rem;
                background: $cardBG;
-               border: $cardBorder 3px solid;
+               border: $cardBorder 1px solid;
                color: white;
                transition: 250ms;
                
@@ -783,7 +783,7 @@ main {
                   .userAction {
                      display: flex;
                      flex-wrap: wrap;
-                     justify-content: start;
+                     justify-content: space-between;
                      gap: 1rem;
                      padding: 0.1rem;
 
@@ -809,6 +809,7 @@ main {
                         display: flex;
                         align-items: center;
                         gap: 0.4rem;
+                        font-size: 1rem;
 
                         p {
                            font-size: 1rem;
@@ -820,7 +821,7 @@ main {
                   
 
                   .postCaption {
-                     font-size: 1.3rem;
+                     font-size: 1rem;
                      font-family: $ff-body;
                      font-weight: lighter;
                      /* background: linear-gradient(to bottom right, #FF7979 18%, #FFAAAA 100%);
@@ -843,9 +844,8 @@ main {
                
 
                .postBody {
-                  font-size: 1.4rem;
+                  font-size: 1.3rem;
                   font-family: $ff-body;
-                  font-weight: 100;
                   color: rgba(255, 255, 255, 0.859);
                }
 
@@ -900,6 +900,61 @@ main {
 
 }
 
+
+#introGrid {
+  color: white;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  // grid-template-rows: 1fr 1fr;
+  // grid-template-columns: repeat(auto-fit, minmax(min(100%, 33%), 1fr));
+  gap: 1rem;
+  margin-bottom: 2rem;
+  min-height: 400px;
+  font-family: $ff-body;
+
+  
+  .gridItem {
+    padding: 1.5rem;
+    border: px solid $subBackground;
+    border-radius: 0.5rem;
+    // height: 100px;
+    cursor: pointer;
+    transition: 150ms;
+
+    h3 {
+      font-family: $ff-heading;
+    }
+
+    p {
+      line-height: 1.5;
+    }
+
+    &:hover {
+      opacity: 0.8;
+      transform: translateY(-5px);
+      border: 1px solid $primary;
+    }
+  }
+
+  .gridItem:nth-of-type(1) {
+    grid-column: 1 / span 2;
+  }
+  .gridItem:nth-of-type(2) {
+    grid-row: span 2;
+  }
+  /* .gridItem:nth-of-type(3) {
+
+   }
+   .gridItem:nth-of-type(4) {
+
+   } */
+}
+
+@media (max-width: 1050px) {
+  #introGrid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
 
 
 /* 
