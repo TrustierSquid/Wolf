@@ -4,7 +4,7 @@ import { useEffect, useState, useRef} from "react"
 export default function FourTopics(props) {
    const userTopics = props.selectedTopics
    const [allTopics, setAllTopics] = useState([])
-   const gridItem = useRef(null)
+   const gridItem = useRef([])
 
    useEffect(()=> {
       async function compareTopics() {
@@ -17,7 +17,6 @@ export default function FourTopics(props) {
    
          const data = await response.json()
          setAllTopics(data.topics)
-         console.log(allTopics)
    
       }
 
@@ -41,11 +40,12 @@ export default function FourTopics(props) {
       const commonValues = centralTopics.filter(topic => gridTopics.includes(topic.topicName))
       return commonValues
    }
-
+   
 
    return (
       <>
          <div id="introGrid">
+            <h1>Topic Favorites</h1>
             {topicSort().map((topic, key)=> {
                const itemStyle = {
                   position: 'relative',
@@ -73,7 +73,14 @@ export default function FourTopics(props) {
                
 
                return(
-                  <div className="gridItem" style={itemStyle}>
+                  <div className="gridItem" 
+                  // callback ref
+                     ref={(el) => (gridItem.current[key] = el)}
+                     onClick={()=> {props.changeTopic(gridItem.current[key], topic.topicName)}} 
+                     style={itemStyle}
+                     key={key}
+                     >
+
                      <div style={overlayStyle}></div>
                      <div style={contentStyle}>
                         <h3>{topic.topicName}</h3>

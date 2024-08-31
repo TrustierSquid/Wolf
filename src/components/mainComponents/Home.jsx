@@ -24,7 +24,7 @@ export default function Home(){
    const profileDropdown = useRef(null)
 
    const currentVersion = 'alpha'
-   
+
    const [toggleDropdown, setToggleDropdown] = useState(true)
 
    // The current user interacting with the app
@@ -53,35 +53,35 @@ export default function Home(){
                'Content-Type': 'application/json',
             }
          })
-   
+
          if (!response.ok) {
             console.log("Couldn't get user data")
             throw new Error(`HTTP error! status: ${response.status}`);
          }
-   
+
          const homeData = await response.json()
          // console.log(homeData.followingCount.length)
          // setting the user info needed as glob vars
-         
+
          // the topics the current user selected
          setUserData(homeData.topicArr)
-         
+
          // the current user logged in
          setUsername(homeData.userName)
-         
+
          //  the current users following count
          setFollowingCount(homeData.followingCount.length)
-         
+
          // the current users follower count
          setFollowerCount(homeData.followerCount.length)
 
-         
+
       }
-      
+
       getUserData()
-      
-   }, [])   
-   
+
+   }, [])
+
    // RETRIEVING THE DESCRIPTION THAT COMES WITH EACH TOPIC
    useEffect(()=> {
       async function fetchTopicData(){
@@ -92,68 +92,15 @@ export default function Home(){
             }
          })
 
-         
+
          const data = await response.json()
 
-         // setting the topic description a glob var 
+         // setting the topic description a glob var
          setTopicFact(data)
       }
 
       fetchTopicData()
    }, [])
-   
-   
-   // Mobile nav bar functionality
-   function mobileNavFunction() {
-      sideNav.current.classList.toggle('toggleNav')
-   }
-
-   // Dropdown functionality
-   function dropdownFunction(element) {
-      setToggleDropdown(prevState => !prevState)
-
-      if (element) {
-         profileDropdown.current.style.opacity = '0';
-         profileDropdown.current.style.pointerEvents = 'none';
-         profileDropdown.current.style.transform = 'translateY(0px)';
-      } else {
-
-         if (profileDropdown.current) {
-            if (toggleDropdown == true) {
-               profileDropdown.current.style.opacity = '1';
-               profileDropdown.current.style.pointerEvents = 'all';
-               profileDropdown.current.style.transform = 'translateY(10px)';     
-            } else {
-               profileDropdown.current.style.opacity = '0';
-               profileDropdown.current.style.pointerEvents = 'none';
-               profileDropdown.current.style.transform = 'translateY(0px)';
-      
-            }
-         }
-      } 
-   }
-
-
-   // Helper function to identify the topic you selected
-   const handleClick = (topic) => {
-
-      // setting the state for the selected topic
-      // setSelectedFact(topic)
-      displayTopicInfo(topic)
-   }
-   
-
-
-
-   
-   
-
-   // Returns the a new post about the app details
-   function displayAbout(){
-      return (
-         <AboutPost appVersion={currentVersion}/>
-      )
-   }
 
 
 
@@ -162,7 +109,12 @@ export default function Home(){
    const bodyPostElement = useRef(null)
    const [errorMessage, setErrorMessage] = useState('')
    const errorMessageElement = useRef(null)
-   
+
+   const [grippedFeed, setGrippedFeed] = useState([])
+
+   // selected topic will default to main
+   const [grippedTopic, setGrippedTopic] = useState("Main")
+
    //  Creating a new post and sending it to the db so it can be displayed
    async function createNewPost(){
       let subject = subjectPostElement.current.value
@@ -172,13 +124,14 @@ export default function Home(){
       // checking to see if either input field is empty
       if (!subject || !body) {
          setErrorMessage('Please Enter a subject and body')
-         return 
-      } 
+         console.log(grippedTopic)
+         return
+      }
 
       setErrorMessage('Posting..')
-            
+
       // Sending post to db...
-      const response = await fetch(`/newPost`, {
+      const response = await fetch(`/newPost?feed=${grippedTopic}`, {
          method: 'POST',
          headers: {
             'Content-Type': 'application/json',
@@ -188,7 +141,7 @@ export default function Home(){
 
       if (!response.ok) {
          throw new Error(`Error posting.. ${response.status}`)
-      } 
+      }
 
       setTimeout(()=> {
          errorMessageElement.current.style.color = 'lime'
@@ -197,10 +150,79 @@ export default function Home(){
          setErrorMessage('Posted!')
       }, 900)
 
-      
+
    }
 
-   
+
+
+   // fourTopics inits this function
+   function changeTopicFeed(element, topicName) {
+      // element is any one of the 4 items in the home grid
+      async function selectGridTopic() {
+         const response = await fetch(`/update?topic=${topicName}`, {
+           method: "GET",
+           headers: {
+             "Content-Type": "application/json",
+           },
+         });
+
+         if (!response.ok) {
+           throw new Error(`Couldnt update the feed! ${response.status}`)
+         }
+
+         // returning the feed to be displayed to the user
+         const feed = await response.json();
+
+
+         // THESE STATES GET PASSED INTO THE UPDATE FEED COMPONENT
+         // gets the feed associated with the topic selected
+         setGrippedFeed(feed)
+
+         // the selected topics that are clicked on in the grid
+         setGrippedTopic(topicName)
+         console.log(grippedTopic)
+       }
+
+       selectGridTopic();
+
+   }
+
+   // Mobile nav bar functionality
+   function mobileNavFunction() {
+      sideNav.current.classList.toggle('toggleNav')
+   }
+
+   // Dropdown functionality
+   function dropdownFunction() {
+      setToggleDropdown(prevState => !prevState)
+
+      if (profileDropdown.current) {
+         if (toggleDropdown == true) {
+            profileDropdown.current.style.opacity = '1';
+            profileDropdown.current.style.pointerEvents = 'all';
+            profileDropdown.current.style.transform = 'translateY(10px)';
+         } else {
+            profileDropdown.current.style.opacity = '0';
+            profileDropdown.current.style.pointerEvents = 'none';
+            profileDropdown.current.style.transform = 'translateY(0px)';
+
+         }
+      }
+   }
+
+
+   // Helper function to identify the topic you selected
+   const handleClick = (topic) => {
+      // setting the state for the selected topic
+      displayTopicInfo(topic)
+   }
+
+   // Returns the a new post about the app details
+   function displayAbout(){
+      return (
+         <AboutPost appVersion={currentVersion}/>
+      )
+   }
 
    const createPostElement = useRef(null)
    const darkBG = useRef(null)
@@ -208,7 +230,7 @@ export default function Home(){
    // FOR THE APPEARING AND DISAPPEARING POST CREATING SCREEN
    function appearEffect() {
       // toggling wether it appears or not
-      if(createPostElement) {         
+      if(createPostElement) {
          darkBG.current.style.opacity = '1'
          darkBG.current.style.pointerEvents = 'all'
          createPostElement.current.style.opacity = '1'
@@ -217,7 +239,7 @@ export default function Home(){
          subjectPostElement.current.value = ''
          document.body.style.overflow = 'hidden';
       }
-      
+
    }
 
    function dissappearEffect(){
@@ -236,6 +258,8 @@ export default function Home(){
    }
 
 
+
+
    const navbarRefs = {mobileNavBtn, profileDropdown}
    const sidebarRefs =  {sideNav, topicBtn}
 
@@ -247,38 +271,40 @@ export default function Home(){
 
       // Navbar functionality
       dropdownFunction: dropdownFunction,
-      logOutFunction: ()=> logOut()
+      logOutFunction: ()=> logOut(),
+      mobileNavFunction: ()=> mobileNavFunction()
    }
 
-   
+
    const sidebarProps = {
       userData: userData,
 
       // sidebar functionality
-      handleClick: handleClick, // params being passed through this function 
+      handleClick: handleClick, // params being passed through this function
       displayAbout: ()=> displayAbout()
    }
 
-   
-   
+
+
    return (
       <>
-      
+
       {/* NAVBAR */}
       <Navbar {...navbarProps} ref={navbarRefs}/>
       <SideNavBar {...sidebarProps} ref={sidebarRefs}/>
 
       {/* MAIN CONTENT */}
 
-         <main onClick={(element)=> dropdownFunction(element)}>
+         <main>
             <span ref={darkBG} onClick={()=> dissappearEffect()} id="darkBG"></span>
             <section id="content">
-               <FourTopics selectedTopics={userData}/>
+               <FourTopics selectedTopics={userData} changeTopic={changeTopicFeed}/>
+
                <div id="whatsNew">
-                  <h1>Home Feed</h1>
-                  
+                  <h1>{grippedTopic} Feed</h1>
+
                   <button id="newPostBtn" onClick={()=> appearEffect()}>New Post +</button>
-                  
+
                   {/* Floating prompt for creating a new post */}
                   <form ref={createPostElement} id="createPostElement" >
                      <h2 id="createNewPostHeader">Create a new Post</h2>
@@ -294,13 +320,14 @@ export default function Home(){
                      <br />
                      <button type='button' onClick={()=> createNewPost()}>Post</button>
                      <h4 id="feedbackMessage" ref={errorMessageElement}>{errorMessage}</h4>
-                  </form>   
+                  </form>
                </div>
 
                {/* what shows up based on what topics the user selected */}
                <article className="userContent">
-                  <UpdateFeed currentActiveUser={username}/>   {/*  Updating the feed with the newest posts*/}
-                  
+                  {/* changingFeed will be the dependant topic of the user feed*/}
+                  <UpdateFeed currentActiveUser={username} selectedfeed={grippedFeed} topicDisplay={grippedTopic}/>   {/*  Updating the feed with the newest posts*/}
+
                </article>
             </section>
          </main>

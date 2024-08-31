@@ -6,7 +6,8 @@ const Navbar = forwardRef(({
    followerCount, 
    followingCount, 
    dropdownFunction, 
-   logOutFunction
+   logOutFunction,
+   mobileNavFunction
 }, ref) => {
 
    const {mobileNavBtn, profileDropdown} = ref || {};

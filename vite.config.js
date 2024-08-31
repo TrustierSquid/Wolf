@@ -13,14 +13,14 @@ export default defineConfig({
         secure: false,
         ws: true,
       },
-      // for handling and setting up users 
+      // for handling and setting up users
       '/users': {
         target: 'http://localhost:3000',
         changeOrigin: true,
         secure: false,
         ws: true,
       },
-      // for handling and setting up users 
+      // for handling and setting up users
       '/login': {
         target: 'http://localhost:3000',
         changeOrigin: true,
@@ -48,7 +48,7 @@ export default defineConfig({
         secure: false,
         ws: true,
       },
-      
+
       // for updating the user feed
       '/update': {
         target: 'http://localhost:3000',
@@ -63,7 +63,7 @@ export default defineConfig({
         secure: false,
         ws: true,
       },
-      
+
       '/unFollowUser': {
         target: 'http://localhost:3000',
         changeOrigin: true,
@@ -93,6 +93,20 @@ export default defineConfig({
       },
 
       '/viewProf': {
+        target: 'http://localhost:3000',
+        changeOrigin: true,
+        secure: false,
+        ws: true,
+      },
+
+      '/switchTopic': {
+        target: 'http://localhost:3000',
+        changeOrigin: true,
+        secure: false,
+        ws: true,
+      },
+
+      '/update': {
         target: 'http://localhost:3000',
         changeOrigin: true,
         secure: false,

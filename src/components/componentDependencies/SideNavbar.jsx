@@ -13,8 +13,7 @@ const SideNavBar = forwardRef(({
          <nav className="sideNav" ref={sideNav}>
             
             <div id="sideNavBtns">
-               <button id="homeBtn">Home <i className="fa-solid fa-house"></i></button>
-               <button id="popularBtn">What's Popular<i className="fa-solid fa-fire"></i></button>
+               <button id="homeBtn">Main Feed <i className="fa-solid fa-fire"></i></button>
                
             </div>
 

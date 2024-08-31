@@ -932,7 +932,7 @@ main {
     &:hover {
       opacity: 0.8;
       transform: translateY(-5px);
-      border: 1px solid $primary;
+      // border: 1px solid $primary;
     }
   }
 
@@ -970,7 +970,7 @@ HOME COMPONENT MEDIA QUERIES
       margin-inline: 0;
       padding-inline: 2rem;
       z-index: 3;
-      background-color: $uiBG;
+      background-color: $subBackground;;
       
       #logoContainer {
 

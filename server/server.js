@@ -8,6 +8,7 @@ import cookieParser from "cookie-parser";
 
 // IMPORTING ROUTES
 import signinRoutes from "./routes/signin.js";
+import updateRoutes from "./routes/update.js"
 
 // To check if the user has a token for accessing certain routes
 import requireAuth from "./middleware/authMiddleware.js";
@@ -40,6 +41,7 @@ app.use(express.json());
 // app.use(express.static(path.join(__dirname,  "../dist")));
 
 app.use("/users", signinRoutes);
+app.use('/update', updateRoutes)
 
 // if the user enters any file extension they will be redirected to login again
 // for prod
@@ -128,69 +130,91 @@ app.post("/profile", (req, res) => {
 
 // ROUTE EXECUTES WHEN THE USER CREATES A NEW POST
 app.post("/newPost", async (req, res) => {
-  // retrieving the username, and post details (subject, body)
-  const { whoPosted, postSubject, postBody } = req.body;
+  const {feed} = req.query
+  console.log(feed)
 
-  console.log(`${whoPosted} just posted! \n ${postSubject} \n ${postBody}`);
+  // if no feed is selected, post will default to mainFeed
+  if (feed === "Main") {
 
-  // Updating the poster's post count
-  let database = await connectMongo();
-  const users = database.collection("Users");
-  const posts = database.collection("Posts");
+    // retrieving the username, and post details (subject, body)
+    const { whoPosted, postSubject, postBody } = req.body;
 
-  // poster
-  const filter = { user: whoPosted };
-  const updateDoc = {
-    $inc: {
-      posts: 1,
-    },
-  };
+    console.log(`${whoPosted} just posted! \n ${postSubject} \n ${postBody}`);
 
-  const updatePosts = await users.updateOne(filter, updateDoc);
+    // Updating the poster's post count
+    let database = await connectMongo();
+    const users = database.collection("Users");
+    const mainFeed = database.collection("mainFeed");
 
-  // adding the post to the DB
-  const newPost = posts.insertOne({
-    poster: whoPosted,
-    subject: postSubject,
-    body: postBody,
-  });
-
-  // Adding the post to the database will lead to a call to action on the frontend
-  // The frontend will load this collection in the database to show the user feed
-  
-
-  res.json({ message: "Posted Successfully" });
-});
-
-// This route gets executed when the page reloads
-app.get("/update", async (req, res) => {
-  const database = await connectMongo();
-  const posts = database.collection("Posts");
-
-  const documents = await posts.find({}).toArray();
-
-  const allPosts = documents.map((document) => {
-    return {
-      ...document,
+    // poster
+    const filter = { user: whoPosted };
+    const updateDoc = {
+      $inc: {
+        posts: 1,
+      },
     };
-  });
 
-  // sends post from newest first
-  const reversedPosts = allPosts.reverse();
+    const updatePosts = await users.updateOne(filter, updateDoc);
 
-  res.json({ reversedPosts });
+    // adding the post to the DB
+    const newPost = mainFeed.insertOne({
+      poster: whoPosted,
+      subject: postSubject,
+      body: postBody,
+    });
+
+    // Adding the post to the database will lead to a call to action on the frontend
+    // The frontend will load this collection in the database to show the user feed
+
+
+    res.json({ message: "Posted Successfully" });
+
+  } else {
+
+    // retrieving the username, and post details (subject, body)
+    const { whoPosted, postSubject, postBody } = req.body;
+
+    console.log(`${whoPosted} just posted in ${feed}! \n ${postSubject} \n ${postBody}`);
+
+    // Updating the poster's post count
+    let database = await connectMongo();
+    const users = database.collection("Users");
+    const selectedFeed = database.collection(`${feed}Feed`);
+
+    // poster
+    const filter = { user: whoPosted };
+    const updateDoc = {
+      $inc: {
+        posts: 1,
+      },
+    };
+
+    const updatePosts = await users.updateOne(filter, updateDoc);
+
+    // adding the post to the DB
+    const newPost = selectedFeed.insertOne({
+      poster: whoPosted,
+      subject: postSubject,
+      body: postBody,
+    });
+
+    // Adding the post to the database will lead to a call to action on the frontend
+    // The frontend will load this collection in the database to show the user feed
+
+
+    res.json({ message: `Posted Successfully to ${feed}Feed` });
+
+  }
+
+
 });
-
-
-
-
 
 
 
 // checking who the logged in user is following
 app.get('/checkUser/following', requireAuth,  async (req, res)=> {
   const loggedInUserId = req.currentUser
-  
+
   // connecting to the db
   const database = await connectMongo()
   const users = database.collection("Users");
@@ -201,11 +225,11 @@ app.get('/checkUser/following', requireAuth,  async (req, res)=> {
     if (!user) return res.status(404).json({message: "Could not find user!"})
 
     res.json(user.following)
-    
+
   } catch {
     console.log("Operation failed")
   }
-  
+
 })
 
 
@@ -213,7 +237,7 @@ app.get('/checkUser/following', requireAuth,  async (req, res)=> {
 
 app.post('/checkUser', async (req, res)=> {
   const {followee, loggedInUser} = req.body
-  
+
   // connecting to the db
   const database = await connectMongo()
   const users = database.collection("Users");
@@ -237,22 +261,22 @@ app.post('/checkUser', async (req, res)=> {
     res.json({listOfFollowers: duplicateUserFollower})
   } else {
     try {
-  
+
       // updating current users following list
       await users.updateOne(
         {user: loggedInUser},
         {$addToSet: {following: followee}}
       )
-  
-  
+
+
       // updating followee list
       await users.updateOne(
         {user: followee},
         {$addToSet: {followers: loggedInUser}}
       )
-  
+
       console.log(`${loggedInUser} is now following ${followee}`)
-      
+
     } catch {
       console.log("Unable to complete the follow transaction")
     }
@@ -284,18 +308,19 @@ app.post('/pullUser', async (req, res)=> {
     )
 
     console.log(`${loggedInUser} unfollowed ${followee}`)
-    
+
   } catch {
     console.log("Unable to complete the unfollow transaction")
   }
-  
+
 
 })
 
 
+
 app.listen(port, () => {
   console.clear();
-  console.log(`Server is running on port ${port}`);
+  console.log(`Server running on port ${port}`);
 });
 
 export default connectMongo;
