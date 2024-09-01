@@ -25,7 +25,7 @@ body {
   background-color: #121010;
 }
 
-/* 
+/*
 
    LOGIN PAGE
 
@@ -37,7 +37,7 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: space-around;
-  padding: 2rem;
+  padding: 2.5rem;
   gap: 1rem;
   max-width: 600px;
   min-height: 700px;
@@ -59,6 +59,7 @@ body {
   width: 350px;
   max-width: 100%;
   text-wrap: wrap;
+  font-size: 0.9rem;
 }
 #loginContainer #inputField div {
   display: flex;
@@ -75,14 +76,17 @@ body {
 #loginContainer #inputField div input {
   background: none;
   width: 100%;
-  height: 40px;
+  height: 70px;
   font-size: 1.3rem;
   border: none;
-  border-bottom: 1px solid #FF3C3C;
+  border: 1px solid #2E2E2E;
+  border-radius: 1rem;
+  padding: 1rem;
   color: white;
 }
 #loginContainer #inputField div input:focus {
   outline: none;
+  border: 2px solid #FF3C3C;
 }
 #loginContainer #extraInfo {
   display: flex;
@@ -96,6 +100,7 @@ body {
   font-family: "roboto", sans-serif;
 }
 #loginContainer #extraInfo span {
+  text-wrap: nowrap;
   color: rgb(245, 122, 122);
 }
 #loginContainer #loginBtns {
@@ -103,7 +108,7 @@ body {
   gap: 2rem;
 }
 #loginContainer #loginBtns button {
-  background-color: #FF3C3C;
+  background-color: rgba(43, 43, 43, 0.3058823529);
   border: none;
   padding: 1rem;
   border-radius: 0.5rem;
@@ -115,29 +120,27 @@ body {
   font-weight: 900;
 }
 #loginContainer #loginBtns button:hover {
-  background-color: #7A0B31;
+  background-color: #FF3C3C;
   transform: translateY(-5px);
-  box-shadow: rgba(255, 105, 105, 0.4) 0px 4px 12px;
 }
 
-/* 
+/*
 
 CHOOSING TOPICS COMPONENT
 
 */
 #topics {
-  background: rgb(126, 31, 31);
-  background: radial-gradient(circle, rgb(126, 31, 31) 0%, rgb(18, 16, 16) 40%);
+  background: #161616;
+  background: none;
   min-height: 600px;
-  max-width: 1000px;
+  max-width: 100%;
   margin: 4rem auto;
   border-radius: 2rem;
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
-  gap: 2rem;
-  padding: 2rem;
+  padding: 3rem;
   color: white;
 }
 #topics h1 {
@@ -151,27 +154,31 @@ CHOOSING TOPICS COMPONENT
   color: #FF3C3C;
 }
 #topics #topicSelect {
-  border-top: 1px solid rgb(62, 62, 62);
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   width: 80%;
+  justify-content: center;
+  align-items: center;
   padding: 2rem;
+  border-radius: 1rem;
   gap: 1rem;
 }
 #topics #topicSelect button {
   font-weight: 500;
-  border-radius: 0.5rem;
+  border-radius: 1rem;
   border: none;
-  background: rgba(255, 60, 60, 0.2);
+  background: rgba(43, 43, 43, 0.3058823529);
   color: white;
   padding: 0.5rem 1rem;
+  text-wrap: nowrap;
   transition: 150ms;
   font-size: 1rem;
   cursor: pointer;
+  border: 2px solid #2E2E2E;
 }
 #topics #topicSelect button:hover {
-  transform: translateY(-2px);
-  box-shadow: rgba(255, 105, 105, 0.4) 0px 4px 12px;
+  background: #FF3C3C;
+  transform: translateY(-5px);
 }
 #topics #topicSelect .selected {
   background-color: #FF3C3C;
@@ -207,7 +214,7 @@ CHOOSING TOPICS COMPONENT
     margin: 1;
   }
 }
-/* 
+/*
 
 HOME PAGE
 
@@ -315,18 +322,6 @@ HOME PAGE
 }
 #profileDropdown .profileSection:nth-of-type(2) h3 {
   font-family: "Nunito", sans-serif;
-}
-#profileDropdown .profileSection:nth-of-type(2) button {
-  background-color: #FF3C3C;
-  border: none;
-  border-radius: 1rem;
-  color: white;
-  padding: 0.5rem;
-  cursor: pointer;
-  transition: 150ms;
-}
-#profileDropdown .profileSection:nth-of-type(2) button:hover {
-  background-color: #FF3C3C;
 }
 
 .sideNav {
@@ -482,7 +477,7 @@ main #content #whatsNew #createPostElement {
   padding: 3rem;
   top: 50%;
   right: 50%;
-  transform: translate(50%, -40%);
+  transform: translate(50%, -50%);
   border-radius: 1rem;
   z-index: 5;
   opacity: 0;
@@ -492,8 +487,7 @@ main #content #whatsNew #createPostElement {
   flex-direction: column;
 }
 main #content #whatsNew #createPostElement #createNewPostHeader {
-  background: rgb(251, 63, 63);
-  background: linear-gradient(90deg, rgb(251, 63, 63) 0%, rgb(255, 85, 120) 100%);
+  background-color: white;
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -578,22 +572,26 @@ main #content .userContent .userPost .mainPost .postAnalytics .userAction {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
+  align-items: center;
   gap: 1rem;
   padding: 0.1rem;
 }
 main #content .userContent .userPost .mainPost .postAnalytics .userAction .followBtn {
-  background: none;
   color: white;
-  padding: 0.5rem;
-  border: 1px solid #7A0B31;
+  padding: 0.2rem;
+  background: none;
+  border: none;
   border-radius: 0.5rem;
   cursor: pointer;
   transition: 150ms;
   text-wrap: nowrap;
+  font-size: 1rem;
+  color: #FF3C3C;
 }
 main #content .userContent .userPost .mainPost .postAnalytics .userAction .followBtn:hover {
-  background-color: #7A0B31;
+  background-color: #2E2E2E;
   transform: translateY(-4px);
+  padding: 0.5rem;
 }
 main #content .userContent .userPost .mainPost .postAnalytics .userAction .poster {
   font-family: "roboto", sans-serif;
@@ -621,7 +619,7 @@ main #content .userContent .userPost .mainPost .postAnalytics .postCaption i {
   margin-left: 0.5rem;
 }
 main #content .userContent .userPost .mainPost .postBody {
-  font-size: 1.3rem;
+  font-size: 1.2rem;
   font-family: "roboto", sans-serif;
   color: rgba(255, 255, 255, 0.859);
 }
@@ -684,7 +682,6 @@ main #content .userContent .userPost .mainPost .userTraction .likeBtn:hover {
   line-height: 1.5;
 }
 #introGrid .gridItem:hover {
-  opacity: 0.8;
   transform: translateY(-5px);
 }
 #introGrid .gridItem:nth-of-type(1) {
@@ -699,7 +696,7 @@ main #content .userContent .userPost .mainPost .userTraction .likeBtn:hover {
     grid-template-columns: 1fr 1fr;
   }
 }
-/* 
+/*
 
 HOME COMPONENT MEDIA QUERIES
 

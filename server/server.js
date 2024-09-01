@@ -38,24 +38,24 @@ app.use(cors());
 // MIDDLEWARE
 app.use(cookieParser());
 app.use(express.json());
-// app.use(express.static(path.join(__dirname,  "../dist")));
+app.use(express.static(path.join(__dirname,  "./dist")));
 
 app.use("/users", signinRoutes);
 app.use('/update', updateRoutes)
 
 // if the user enters any file extension they will be redirected to login again
 // for prod
-app.get("/home.html", (req, res) => {
+app.get("/home.html", requireAuth, (req, res) => {
   res.redirect("/");
   console.log("Cant do that, going back to home")
 });
 
-app.get("/user.html", (req, res) => {
+app.get("/topics.html", requireAuth, (req, res) => {
   res.redirect("/");
   console.log("Cant do that, going back to home")
 });
 
-app.get("/index.html", (req, res) => {
+app.get("/index.html",  requireAuth, (req, res) => {
   res.redirect("/");
   console.log("Cant do that, going back to home")
 });
@@ -94,7 +94,7 @@ app.get("/", (req, res) => {
   // for dev
   console.log("User connected to login page");
   // res.send('<h1>Login page</h1>')
-  res.sendFile(path.join(__dirname, "login.html"));
+  res.sendFile(path.join(__dirname, "index.html"));
 });
 
 /* TOPICS PAGE*/
@@ -105,15 +105,15 @@ app.get("/api/topics", (req, res) => {
 });
 
 // to get to the topics page!
-app.get("/user", (req , res) => {
-  res.sendFile(path.join(__dirname, "topics.html"));
+app.get("/user", requireAuth, (req , res) => {
+  res.sendFile(path.join(__dirname, "/dist/topics.html"));
 });
 
 /* HOME FEED PAGE */
 
 app.get("/home", requireAuth, (req, res) => {
   // for dev
-  res.sendFile(path.join(__dirname, "home.html"));
+  res.sendFile(path.join(__dirname, "/dist/home.html"));
 });
 
 app.get("/wolfTopics", (req, res) => {

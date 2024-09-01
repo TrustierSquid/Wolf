@@ -57,7 +57,7 @@ const createToken = (userId) => {
   });
 };
 
-/* 
+/*
 
 
 LOGIN PAGE
@@ -136,7 +136,7 @@ router.post("/add", async (req, res) => {
           user: username,
           password: hash,
           isLoggedIn: true,
-          
+
           // shows followers
           followers: [],
 
@@ -178,7 +178,7 @@ router.post("/add", async (req, res) => {
   }
 });
 
-/* 
+/*
 
 
 TOPICS PAGE
@@ -195,29 +195,38 @@ router.post("/topics", requireAuth, async (req, res) => {
   const users = await database.collection("Users");
 
   const documentLookup = await users.findOne({
+    // finding id of user
     _id: new ObjectId(req.currentUser),
   });
 
+  // If the user was found...
   if (documentLookup) {
-    console.log("We are golden Baby!");
 
-    // values to update
-    const updateValues = {
-      $push: {
-        topics: topic,
-      },
-    };
+    if (!documentLookup.topics.includes(topic)) {
+      // values to update
+      const updateValues = {
+        $push: {
+          topics: topic,
+        },
+      };
 
-    const result = await users.updateOne(
-      { _id: new ObjectId(req.currentUser) },
-      updateValues
-    );
+      const result = await users.updateOne(
+        { _id: new ObjectId(req.currentUser) },
+        updateValues
+      );
 
-    console.log("Updated topics");
+      console.log("Updated topics");
+    } else {
+      console.log(`This document already exists for ${documentLookup.user}`)
+    }
+
   } else {
     console.log("Failed to find user");
+    res.redirect('/')
   }
 });
+
+
 
 // when the user deselects a topic
 router.delete("/topics", requireAuth, async (req, res) => {
@@ -231,8 +240,6 @@ router.delete("/topics", requireAuth, async (req, res) => {
   });
 
   if (documentLookup) {
-    console.log("We are golden Baby!");
-
     // values to update
     const updateValues = {
       $pull: {
@@ -245,13 +252,14 @@ router.delete("/topics", requireAuth, async (req, res) => {
       updateValues
     );
 
-    console.log("Updated topics (delete)", result);
+    console.log("Updated topics (delete)");
   } else {
     console.log("Failed to find user");
+    res.redirect('/')
   }
 });
 
-/* 
+/*
 
 
 HOME FEED PAGE
@@ -270,7 +278,7 @@ router.get("/home", requireAuth, async (req, res) => {
   });
   let userSelectedTopics = loggedInUser.topics;
 
-  
+
   res.json({
     topicArr: userSelectedTopics,
     userName: loggedInUser.user,

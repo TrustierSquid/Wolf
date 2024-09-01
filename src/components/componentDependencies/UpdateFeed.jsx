@@ -310,12 +310,6 @@ export default function UpdateFeed(props) {
 
 
   function showTopic(selectedFeed){
-    console.log(props.topicDisplay)
-    switch (props.topicDisplay) {
-      case 'Sports':
-
-    }
-
     return (
       <>
         {allPosts.map((post, key) => {
@@ -331,7 +325,7 @@ export default function UpdateFeed(props) {
                       {/* {handleFollowClick(post.poster, currentUser)} */}
                       {handleFollowClick(post.poster, userFollowingList)}
                     </section>
-                    <p className="postCaption">{post.subject}</p>
+                    <p className="postCaption">- {post.subject}</p>
                   </div>
                   <h2 className="postBody">{post.body}</h2>
                 </main>
@@ -351,25 +345,25 @@ export default function UpdateFeed(props) {
       case 'Samuel':
         return (
           <>
-              <h2 className="poster">
-                {poster} | <span style={{color: '#00b3ff'}}> Developer</span>
-              </h2>
+            <h2 className="poster">
+              {poster} | <span style={{color: '#00b3ff'}}>Developer</span>
+            </h2>
           </>
         )
       case 'DemoUser':
         return (
           <>
-              <h2 className="poster" style={{color: '#73ff00'}}>
-                <i className="fa-solid fa-user" style={{color: 'white'}}></i> {poster} (Recruiter)
-              </h2>
+            <h2 className="poster">
+              {poster} | <span style={{color: '#73ff00'}}>Recruiter</span>
+            </h2>
           </>
         )
       case poster:
         return (
           <>
-              <h2 className="poster" >
-                {poster} | <span style={{color: 'orange'}}> User</span>
-              </h2>
+            <h2 className="poster" >
+              {poster} | <span style={{color: 'orange'}}> User</span>
+            </h2>
           </>
         )
     }
@@ -385,7 +379,7 @@ export default function UpdateFeed(props) {
 
     //  If the current user is following the followee
     if(!userFollowingList.includes(poster)) {
-      return <button className="followBtn" onClick={(element)=> {followUser(poster, currentUser, element)}}>Follow +</button>
+      return <button className="followBtn" onClick={(element)=> {followUser(poster, currentUser, element)}}>Follow</button>
     }
 
     return <button className="followBtn" onClick={(element)=> {unFollowUser(poster, currentUser, element)}}>Unfollow</button>

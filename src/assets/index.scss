@@ -27,12 +27,12 @@ $sc-info: #00CAE5;
 
 @mixin buttonGradient {
    background: rgb(255,60,60);
-   background: linear-gradient(208deg, rgba(255,60,60,1) 0%, rgba(153,36,36,1) 100%); 
+   background: linear-gradient(208deg, rgba(255,60,60,1) 0%, rgba(153,36,36,1) 100%);
    border: none;
    border-radius: 1rem;
    cursor: pointer;
    transition: 150ms;
-   
+
    &:hover {
       // background-color: $buttonHover;
       transform: translateY(-3px);
@@ -70,7 +70,7 @@ body {
 }
 
 
-/* 
+/*
 
    LOGIN PAGE
 
@@ -83,7 +83,7 @@ body {
    flex-direction: column;
    align-items: center;
    justify-content: space-around;
-   padding: 2rem;
+   padding: 2.5rem;
    gap: 1rem;
    max-width: 600px;
    min-height: 700px;
@@ -98,20 +98,22 @@ body {
       align-items: center;
       gap: 1rem;
    }
-   
+
    // input fields
    #inputField {
       // width: max(350px, 200px);
       width: 100%;
       padding: 1rem;
-      
+
       p {
          margin: 0 auto;
          width: 350px;
          max-width: 100%;
          text-wrap: wrap;
+         font-size: 0.9rem;
       }
-      
+
+      // both input fields with both of their headings
       div {
          display: flex;
          flex-direction: column;
@@ -124,18 +126,21 @@ body {
             color: white;
             margin-bottom: 1.5rem;
          }
-         
+
          input {
             background: none;
             width: 100%;
-            height: 40px;
+            height: 70px;
             font-size: clamp(1rem, 1.3rem, 3rem);
             border: none;
-            border-bottom: 1px solid $primary;
+            border: 1px solid $cardBorder;
+            border-radius: 1rem;
+            padding: 1rem;
             color: white;
-            
+
             &:focus {
                outline: none;
+               border: 2px solid $primary;
             }
          }
       }
@@ -155,6 +160,7 @@ body {
       }
 
       span {
+         text-wrap: nowrap;
          color: rgb(245, 122, 122);
       }
    }
@@ -165,7 +171,7 @@ body {
       gap: 2rem;
 
       button {
-         background-color: $primary;
+         background-color: $cardBG;
          border: none;
          padding: 1rem;
          border-radius: 0.5rem;
@@ -175,24 +181,23 @@ body {
          transition: 150ms;
          font-family: $ff-heading;
          font-weight: 900;
-         
+
          &:hover {
-            background-color: $buttonHover;
+            background-color: $primary;
             transform: translateY(-5px);
-            box-shadow: rgb(255, 105, 105, 0.4) 0px 4px 12px;
          }
       }
    }
-   
+
 }
- 
- 
+
+
 
 // LOGIN PAGE MEDIA QUERY
 
 
 
-/* 
+/*
 
 CHOOSING TOPICS COMPONENT
 
@@ -200,22 +205,23 @@ CHOOSING TOPICS COMPONENT
 
 
 #topics {
-   background: rgb(126,31,31);
-   background: radial-gradient(circle, rgba(126,31,31,1) 0%, rgba(18,16,16,1) 40%); 
+   background: #161616;
+   background: none;
    min-height: 600px;
-   max-width: 1000px;
+   max-width: 100%;
+   // max-width: 1000px;
    // margin: 5rem auto;
    margin: 4rem auto;
    border-radius: 2rem;
    display: flex;
    flex-direction: column;
-   justify-content: space-around;
+   justify-content: space-between;
    align-items: center;
-   gap: 2rem;
-   padding: 2rem;
+   // gap: 2rem;
+   padding: 3rem;
    color: white;
-   
-   
+
+
 
    // header
    h1 {
@@ -225,42 +231,49 @@ CHOOSING TOPICS COMPONENT
       width: 90%;
       text-align: center;
       color: white;
-   
+
       span {
          color: $primary;
       }
-      
+
    }
 
 
    #topicSelect {
-      border-top: 1px solid rgb(62, 62, 62);
       // display: flex;
       // flex-wrap: wrap;
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
       width: 80%;
+      justify-content: center;
+      align-items: center;
       padding: 2rem;
+      // background-color: $subBackground;
+      border-radius: 1rem;
       // grid-template-columns: 1fr 1fr 1fr;
       // border: 2px solid red;
       gap: 1rem;
-      
+
       button {
          font-weight: 500;
-         border-radius: 0.5rem;
+         border-radius: 1rem;
          border: none;
-         background: rgba(255, 60, 60, 0.2);
+         background: $cardBG;
          color: white;
+         // padding: 1rem;
          padding: 0.5rem 1rem;
+         text-wrap: nowrap;
          transition: 150ms;
          font-size: clamp(0.6rem, 1rem, 1.8rem);
          cursor: pointer;
-         
+         border: 2px solid $cardBorder;
 
-         
+
+
          &:hover {
-            transform: translateY(-2px);
-            box-shadow: rgb(255, 105, 105,0.4) 0px 4px 12px;
+            background: $primary;
+            transform: translateY(-5px);
+            // border: none;
          }
       }
 
@@ -287,7 +300,7 @@ CHOOSING TOPICS COMPONENT
       background: rgb(255,60,60);
       cursor: pointer;
       transition: 150ms;
-      
+
       &:hover {
          transform: translateY(-5px);
          box-shadow: rgb(255, 105, 105,0.4) 0px 4px 15px;
@@ -296,8 +309,8 @@ CHOOSING TOPICS COMPONENT
    }
 }
 
-@media (max-width: 1000px) {   
-   
+@media (max-width: 1000px) {
+
    #topics {
       margin: 1rem;
    }
@@ -306,10 +319,10 @@ CHOOSING TOPICS COMPONENT
       margin: 1;
    }
 
-   
+
 }
 
-/* 
+/*
 
 HOME PAGE
 
@@ -353,12 +366,12 @@ HOME PAGE
          cursor: pointer;
       }
    }
-   
+
    #profileContainer {
       display: flex;
       align-items: center;
       gap: 1rem;
-      
+
       // Where the username will be shown
       h4 {
          font-family: $ff-heading;
@@ -373,15 +386,15 @@ HOME PAGE
             color: white;
             cursor:pointer;
             transition: 350ms;
-            
+
          }
-         
+
          &:hover {
             text-decoration: underline;
          }
       }
 
-      
+
    }
 
    #mobileNavBtn {
@@ -403,7 +416,7 @@ HOME PAGE
    gap: 4rem;
    transition: 250ms;
    background: rgb(255,60,60);
-   background: linear-gradient(101deg, rgba(255,60,60,1) 6%, rgba(220,20,60,1) 49%); 
+   background: linear-gradient(101deg, rgba(255,60,60,1) 6%, rgba(220,20,60,1) 49%);
    box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
    z-index: 4;
 
@@ -419,7 +432,7 @@ HOME PAGE
       #userAnalyticsContainer {
          display: flex;
          gap: 3rem;
-         
+
          #dataPoint {
             display: flex;
             flex-direction: column;
@@ -428,7 +441,7 @@ HOME PAGE
             font-family: $ff-heading;
 
             h1 {
-               
+
             }
 
             p {
@@ -446,22 +459,9 @@ HOME PAGE
          font-family: $ff-heading;
       }
 
-      button {
-         background-color: $primary;
-         border: none;
-         border-radius: 1rem;
-         color: white;
-         padding: 0.5rem;
-         cursor: pointer;
-         transition: 150ms;
-         
-         &:hover {
-            background-color: $primary;
-         }
-      }
    }
 
-   
+
 }
 
 
@@ -485,9 +485,9 @@ HOME PAGE
       font-family: $ff-heading;
       font-weight: 800;
       // font-size: 1.3rem;
-      color: #f1f1f1;   
+      color: #f1f1f1;
    }
-   
+
 
    #sideNavBtns {
       display: flex;
@@ -515,10 +515,10 @@ HOME PAGE
             background-color: $primary;
             transform: translateY(-3px);
          }
-         
+
       }
 
-      
+
 
    }
 
@@ -528,8 +528,8 @@ HOME PAGE
       flex-direction: column;
       gap: 1.5rem;
 
-      
-      
+
+
       button {
          display: flex;
          align-items: center;
@@ -555,42 +555,42 @@ HOME PAGE
             background-color: $primary;
          }
       }
-      
+
       #selectedTopicsBtns {
          display: flex;
          flex-direction: column;
          gap: 1rem;
       }
-      
-      
+
+
       // Btn spacing
       #OtherResourcesBtns {
          display: flex;
          flex-direction: column;
          gap: 1rem;
       }
-      
+
    }
-   
-   
+
+
 }
 
 main {
    display: flex;
    // padding: 3rem 2rem;
-   // background: radial-gradient(circle, rgb(91, 11, 11) 0%, rgba(18,16,16,1) 71%); 
+   // background: radial-gradient(circle, rgb(91, 11, 11) 0%, rgba(18,16,16,1) 71%);
    // background: linear-gradient(238deg, rgba(43,43,43,1) 14%, #121010 100%);
-   background: linear-gradient(180deg, rgba(40,0,0,1) 0%, rgba(18,16,16,1) 38%); 
+   background: linear-gradient(180deg, rgba(40,0,0,1) 0%, rgba(18,16,16,1) 38%);
 
    #content {
       width: 50%;
       padding: 3rem;
       display: flex;
       flex-direction: column;
-      
+
       // gap: 5rem;
       margin-left: 30rem;
-      
+
       #whatsNew {
          display: flex;
          justify-content: space-between;
@@ -600,7 +600,7 @@ main {
          h1{
             font-size: 3vw;
             background: rgb(251, 63, 63);
-            background: linear-gradient(90deg, rgba(251,63,63,1) 0%, rgba(255,85,120,1) 100%); 
+            background: linear-gradient(90deg, rgba(251,63,63,1) 0%, rgba(255,85,120,1) 100%);
             -webkit-background-clip: text;
             background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -610,7 +610,7 @@ main {
             transition: 250ms;
          }
 
-         
+
          #newPostBtn {
             display: flex;
             justify-content: center;
@@ -629,7 +629,7 @@ main {
             transition: 150ms;
             text-wrap: nowrap;
 
-            
+
             &:hover {
                background-color: $buttonHover;
                transform: translateY(-2px);
@@ -641,9 +641,9 @@ main {
                   transform: translateY(2px);
                }
 
-               
+
                100% {
-                  
+
                   transform: translateY(-2px);
                }
             }
@@ -661,7 +661,7 @@ main {
             padding: 3rem;
             top: 50%;
             right: 50%;
-            transform: translate(50%,-40%);
+            transform: translate(50%,-50%);
             border-radius: 1rem;
             z-index: 5;
             opacity: 0;
@@ -671,8 +671,9 @@ main {
             flex-direction: column;
 
             #createNewPostHeader {
-               background: rgb(251, 63, 63);
-               background: linear-gradient(90deg, rgba(251,63,63,1) 0%, rgba(255,85,120,1) 100%); 
+               // background: rgb(251, 63, 63);
+               // background: linear-gradient(90deg, rgba(251,63,63,1) 0%, rgba(255,85,120,1) 100%);
+               background-color: white;
                -webkit-background-clip: text;
                background-clip: text;
                -webkit-text-fill-color: transparent;
@@ -680,23 +681,23 @@ main {
                align-self: center;
                font-size: 2rem;
                font-family: $ff-body;
-               
+
             }
 
-            
 
-            
+
+
             #formSubject, #formBody {
                display: flex;
                flex-direction: column;
                gap: 0.2rem;
-               
+
                label {
                   font-family: $ff-heading;
                }
 
                input {
-                 width: 100%; 
+                 width: 100%;
                  height: 60px;
                  max-width: 100%;
                  padding: 0.5rem;
@@ -705,7 +706,7 @@ main {
                  background-color: $cardBG;
                  border: none;
                  color: white;
-                 
+
                  &:focus {
                   outline: none;
                  }
@@ -713,11 +714,11 @@ main {
             }
 
             #formSubject {
-               
+
             }
 
             #formBody {
-               
+
             }
 
             button {
@@ -732,7 +733,7 @@ main {
                align-self: center;
                cursor: pointer;
                transition: 150ms;
-               
+
                &:hover {
                   background-color: #510917;
                }
@@ -744,7 +745,7 @@ main {
                font-family: $ff-body;
                align-self: center;
             }
-            
+
          }
 
       }
@@ -760,7 +761,7 @@ main {
          .userPost {
             transition: 150ms;
             max-width: 900px;
-            
+
             .mainPost {
                flex-direction: column;
                // min-height: 300px;
@@ -773,7 +774,7 @@ main {
                border: $cardBorder 1px solid;
                color: white;
                transition: 250ms;
-               
+
                .postAnalytics {
                   display: flex;
                   flex-direction: column;
@@ -784,26 +785,30 @@ main {
                      display: flex;
                      flex-wrap: wrap;
                      justify-content: space-between;
+                     align-items: center;
                      gap: 1rem;
                      padding: 0.1rem;
 
                      .followBtn {
-                        background: none;
                         color: white;
-                        padding: 0.5rem;
-                        border: 1px solid $buttonHover;
+                        padding: 0.2rem;
+                        background:none;
+                        border: none;
                         border-radius: 0.5rem;
                         cursor: pointer;
                         transition: 150ms;
                         text-wrap: nowrap;
-                        
+                        font-size: 1rem;
+                        color: $primary;
+
                         &:hover {
-                           background-color: $buttonHover;
+                           background-color: $cardBorder;
                            transform: translateY(-4px);
+                           padding: 0.5rem;
                         }
-   
+
                      }
-                     
+
                      .poster {
                         font-family: $ff-body;
                         display: flex;
@@ -814,11 +819,11 @@ main {
                         p {
                            font-size: 1rem;
                         }
-                     
+
                      }
 
                   }
-                  
+
 
                   .postCaption {
                      font-size: 1rem;
@@ -835,16 +840,16 @@ main {
                      i {
                         margin-left: 0.5rem;
                      }
-                     
-                  }
-                    
-               }
-               
 
-               
+                  }
+
+               }
+
+
+
 
                .postBody {
-                  font-size: 1.3rem;
+                  font-size: 1.2rem;
                   font-family: $ff-body;
                   color: rgba(255, 255, 255, 0.859);
                }
@@ -865,9 +870,9 @@ main {
                      transition: 150ms;
                      background: none;
                   }
-                  
-                  
-                  
+
+
+
                   .likeBtn {
                      border: 2px solid $primary;
                      &:hover {
@@ -887,15 +892,15 @@ main {
                   }
                }
 
-               
-               
-            
+
+
+
             }
          }
-         
-         
+
+
       }
-      
+
    }
 
 }
@@ -912,7 +917,7 @@ main {
   min-height: 400px;
   font-family: $ff-body;
 
-  
+
   .gridItem {
     padding: 1.5rem;
     border: px solid $subBackground;
@@ -930,7 +935,7 @@ main {
     }
 
     &:hover {
-      opacity: 0.8;
+      // opacity: 0.8;
       transform: translateY(-5px);
       // border: 1px solid $primary;
     }
@@ -957,35 +962,35 @@ main {
 }
 
 
-/* 
+/*
 
 HOME COMPONENT MEDIA QUERIES
 
 */
 
 @media (max-width: 1050px) {
-   
+
    #nav {
       justify-content: space-between;
       margin-inline: 0;
       padding-inline: 2rem;
       z-index: 3;
       background-color: $subBackground;;
-      
+
       #logoContainer {
 
          h1 {
             display: none;
          }
       }
-      
+
       // MOBILE NAV BTN APPEARS AND SIDE NAV DISSAPPEARS
 
       // username in the nav bar along with the icon
       #profileContainer {
          display: none;
       }
-      
+
       #mobileNavBtn  {
          display: block;
          color: $primary;
@@ -994,7 +999,7 @@ HOME COMPONENT MEDIA QUERIES
          border: none;
          cursor: pointer;
          transition: 150ms;
-         
+
          &:hover {
             color: $darkenPrimary;
          }
@@ -1008,20 +1013,20 @@ HOME COMPONENT MEDIA QUERIES
       border-radius: 0.5rem;
       z-index: 1;
    }
-   
+
    .toggleNav {
       left: 0px;
    }
 
    main {
       justify-content: center;
-      
+
       #content {
          padding: 1rem;
          margin-left: 0;
          width: 100%;
 
-         
+
 
          #whatsNew {
             display: flex;
@@ -1046,49 +1051,49 @@ HOME COMPONENT MEDIA QUERIES
 
             #createPostElement {
                width: 90%;
-   
+
                #createNewPostHeader {
                   font-size: 1.5rem;
                }
-   
-               
-   
-               
+
+
+
+
                #formSubject, #formBody {
-                  
-                  
+
+
                   label {
 
                   }
-   
+
                   input {
-                    
-                    
+
+
                     &:focus {
 
                     }
                   }
                }
-   
+
                #formSubject {
-                  
+
                }
-   
+
                #formBody {
                }
-   
+
                button {
-                 
-                  
+
+
                   &:hover {
                   }
                }
-   
+
                // Error Message
                #feedbackMessage {
-                  
+
                }
-               
+
             }
          }
 
@@ -1104,7 +1109,7 @@ HOME COMPONENT MEDIA QUERIES
                   .userAction {
                      font-size: 0.9rem;
                   }
-                  
+
                }
                // message
                .mainPost {

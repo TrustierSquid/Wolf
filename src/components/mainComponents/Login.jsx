@@ -9,7 +9,7 @@ export default function Login() {
 
   async function signIn() {
     if (username.current.value === "" || password.current.value === "") {
-      setLoginErrorMessage("A username and password are needed to login or signup")
+      setLoginErrorMessage("A username and password are needed to login or signup.")
     } else {
       const response = await fetch(`/users/login`, {
         method: "POST",
@@ -29,15 +29,15 @@ export default function Login() {
         console.log(errorData.err);
         throw new Error(`HTTP error! status: ${response.status}`);
       }
-      
-      
+
+
       password.current.value = ''
       username.current.value = ''
-      setLoginErrorMessage('Invalid username or password')
-      
+      setLoginErrorMessage("Invalid username or password.")
+
       if (response.redirected) {
-        window.location.href = response.url;
-        // window.location.href = 'home.html';
+        // window.location.href = '/home';
+        window.location.href = '/home';
       } else {
         password.current.value = ''
         username.current.value = ''
@@ -54,9 +54,9 @@ export default function Login() {
       password.current.value === "" ||
       password.current.value.length <= 5
     ) {
-      setLoginErrorMessage('A valid username and password are needed to login or signup')
+      setLoginErrorMessage('A valid username and password are needed to login or signup.')
     } else {
-      
+
       // sending form data over to backend
       const response = await fetch(`/users/add`, {
         method: "POST",
@@ -76,14 +76,14 @@ export default function Login() {
         loginErrorMessage.current.innerText = errorData.taken;
         throw new Error(`HTTP error! status: ${response.status}`);
       }
-      
+
       password.current.value = "";
       username.current.value = "";
-      setLoginErrorMessage("someone is already here with that username")
-      
+      setLoginErrorMessage("That username is already registered.")
+
       if (response.redirected) {
-        window.location.href = response.url;
-        // window.location.href = 'user.html';
+        // window.location.href = response.url;
+        window.location.href = '/user';
 
       } else {
         password.current.value = "";
@@ -92,7 +92,7 @@ export default function Login() {
         return response.json()
       }
 
-      
+
     }
 
   }
@@ -107,8 +107,10 @@ export default function Login() {
         </section>
         <form id="inputField">
           {/* for people demoing the app */}
+          <p style={{color: 'red'}}>STRICTLY FOR DEMONSTRATION PURPOSES</p>
+          <br />
           <p>
-            For recruiters demoing Wolf, sign up with: <br></br><br></br>USER: DemoUser <br></br><br></br> PASS: lovetocode
+            For recruiters demoing Wolf, CREATE NEW USER with: <br></br><br></br>USER: DemoUser <br></br><br></br> PASS: lovetocode
           </p>
           <br></br>
           <div>
@@ -121,13 +123,13 @@ export default function Login() {
           </div>
         </form>
         <div id="extraInfo">
-          
+
           {/* error message */}
           <span>{loginErrorMessage}</span>
         </div>
         <div id="loginBtns">
           <button className="signUpBtn" onClick={() => createUser()}>
-            Sign Up <i className="fa-solid fa-user-plus"></i>
+            Create New User <i className="fa-solid fa-user-plus"></i>
           </button>
           <button className="signUpBtn" onClick={() => signIn()}>
             Log in <i className="fa-solid fa-right-to-bracket"></i>

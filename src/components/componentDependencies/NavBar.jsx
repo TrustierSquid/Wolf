@@ -1,11 +1,11 @@
 import { forwardRef, useRef } from "react"
 
 const Navbar = forwardRef(({
-   logo, 
-   username, 
-   followerCount, 
-   followingCount, 
-   dropdownFunction, 
+   logo,
+   username,
+   followerCount,
+   followingCount,
+   dropdownFunction,
    logOutFunction,
    mobileNavFunction
 }, ref) => {
@@ -42,7 +42,6 @@ const Navbar = forwardRef(({
 
                <div className="profileSection">
                   <h3>Hello, {username}!</h3>
-                  <button onClick={()=> logOutFunction()}>Log out</button>
                </div>
             </section>
       </>

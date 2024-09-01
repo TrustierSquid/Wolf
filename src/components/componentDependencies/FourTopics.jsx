@@ -14,13 +14,13 @@ export default function FourTopics(props) {
                'Content-Type': 'application/json'
             },
          })
-   
+
          const data = await response.json()
          setAllTopics(data.topics)
-   
+
       }
 
-      
+
       compareTopics()
    }, [])
 
@@ -40,7 +40,7 @@ export default function FourTopics(props) {
       const commonValues = centralTopics.filter(topic => gridTopics.includes(topic.topicName))
       return commonValues
    }
-   
+
 
    return (
       <>
@@ -70,13 +70,13 @@ export default function FourTopics(props) {
                const contentStyle = {
                   position: 'relative',
                }
-               
+
 
                return(
-                  <div className="gridItem" 
+                  <div className="gridItem"
                   // callback ref
                      ref={(el) => (gridItem.current[key] = el)}
-                     onClick={()=> {props.changeTopic(gridItem.current[key], topic.topicName)}} 
+                     // onClick={()=> {props.changeTopic(gridItem.current[key], topic.topicName)}}
                      style={itemStyle}
                      key={key}
                      >

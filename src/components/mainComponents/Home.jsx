@@ -150,6 +150,10 @@ export default function Home(){
          setErrorMessage('Posted!')
       }, 900)
 
+      setTimeout(() => {
+         window.location.reload()
+      }, 1000);
+
 
    }
 
@@ -212,10 +216,10 @@ export default function Home(){
 
 
    // Helper function to identify the topic you selected
-   const handleClick = (topic) => {
-      // setting the state for the selected topic
-      displayTopicInfo(topic)
-   }
+   // const handleClick = (topic) => {
+   //    // setting the state for the selected topic
+   //    displayTopicInfo(topic)
+   // }
 
    // Returns the a new post about the app details
    function displayAbout(){
@@ -243,6 +247,19 @@ export default function Home(){
    }
 
    function dissappearEffect(){
+      darkBG.current.style.opacity = '0'
+      darkBG.current.style.pointerEvents = 'none'
+      createPostElement.current.style.opacity = '0'
+      createPostElement.current.style.pointerEvents = 'none'
+      bodyPostElement.current.value = ''
+      subjectPostElement.current.value = ''
+      document.body.style.overflow = 'auto';
+   }
+
+   function clearOut() {
+      profileDropdown.current.style.opacity = '0';
+      profileDropdown.current.style.pointerEvents = 'none';
+      profileDropdown.current.style.transform = 'translateY(0px)';
       darkBG.current.style.opacity = '0'
       darkBG.current.style.pointerEvents = 'none'
       createPostElement.current.style.opacity = '0'
@@ -280,7 +297,8 @@ export default function Home(){
       userData: userData,
 
       // sidebar functionality
-      handleClick: handleClick, // params being passed through this function
+      // handleClick: handleClick, // params being passed through this function
+      logOut: ()=> logOut(),
       displayAbout: ()=> displayAbout()
    }
 

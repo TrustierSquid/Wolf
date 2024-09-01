@@ -31,8 +31,8 @@ const requireAuth =  async (req, res, next)=> {
       console.log('No token found, redirecting to login')
       res.redirect('/')
    }
-   
-   
+
+
 }
 
 

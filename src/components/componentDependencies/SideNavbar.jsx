@@ -2,46 +2,45 @@ import { forwardRef, useRef } from "react"
 
 const SideNavBar = forwardRef(({
    userData,
-   handleClick,
+   logOut,
    displayAbout
 }, ref) => {
-   
+
    const {sideNav, topicBtn} = ref || {}
 
    return (
       <>
          <nav className="sideNav" ref={sideNav}>
-            
+
             <div id="sideNavBtns">
                <button id="homeBtn">Main Feed <i className="fa-solid fa-fire"></i></button>
-               
+               <button onClick={()=> logOut()}>Log out <i class="fa-solid fa-right-from-bracket"></i></button>
             </div>
 
 
             <section className="topicSelectionElement">
                <h2 className="subTitle">Your Topics</h2>
-               
+
                {/* mapping out the selected topics that the user selected */}
                <div id="selectedTopicsBtns">
                   {userData.map(topic => {
-                     // 
+                     //
                      return (
                         <>
-                           <button ref={topicBtn} onClick={()=> handleClick(topic)}>{topic}<i className="fa-solid fa-person-walking-arrow-right"></i></button>
+                           <button ref={topicBtn}>{topic}<i className="fa-solid fa-person-walking-arrow-right"></i></button>
                         </>
                      )
                   })}
                </div>
             </section>
 
-            <section className="topicSelectionElement">
+            {/* <section className="topicSelectionElement">
                <h2 className="subTitle">Other Resources</h2>
-               {/* mapping out the selected topics that the user selected */}
+               mapping out the selected topics that the user selected
                <div id="OtherResourcesBtns">
-                  <button onClick={()=> displayAbout()}>About <i className="fa-solid fa-book"></i></button>
-                  <button>More Topics<i className="fa-solid fa-magnifying-glass-plus"></i></button>
+
                </div>
-            </section>
+            </section> */}
 
          </nav>
       </>
