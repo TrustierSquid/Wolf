@@ -1,4 +1,4 @@
-# Wolf (1.0.0-beta):
+# 1.0.0-beta:
 
 #### CRUD social media app with JWT authentication functionality
 
@@ -20,7 +20,7 @@
 - The feed currenlty is universal so all users see the same user feed.
 - Wolf bot currently posts one fact about the topic that a user clicks on.
 
-## 2.0.0-beta
+# 2.0.0-beta
 - You can now follow the different users only when they make a post to the main feed
 - UI revamp
 - Removed Wolf bot
