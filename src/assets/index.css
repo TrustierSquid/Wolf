@@ -326,7 +326,7 @@ HOME PAGE
 
 .sideNav {
   height: 100vh;
-  width: 300px;
+  width: 275px;
   color: white;
   background-color: #121010;
   border-right: 1px solid #2E2E2E;
@@ -410,7 +410,6 @@ HOME PAGE
 
 main {
   display: flex;
-  background: linear-gradient(180deg, rgb(40, 0, 0) 0%, rgb(18, 16, 16) 38%);
 }
 main #content {
   width: 50%;
@@ -441,23 +440,25 @@ main #content #whatsNew #newPostBtn {
   display: flex;
   justify-content: center;
   border: none;
-  color: white;
-  padding: 0.5rem;
+  color: grey;
+  padding: 2rem;
   font-size: 1rem;
   font-family: "roboto", sans-serif;
   border-radius: 0.5rem;
   transition: 250ms;
   cursor: pointer;
-  width: 150px;
+  width: 100%;
+  height: 50px;
   display: flex;
-  gap: 0.5rem;
-  background-color: #FF3C3C;
+  align-items: center;
+  justify-content: start;
+  gap: 1rem;
+  background-color: rgba(43, 43, 43, 0.3058823529);
   transition: 150ms;
   text-wrap: nowrap;
 }
 main #content #whatsNew #newPostBtn:hover {
   background-color: #7A0B31;
-  transform: translateY(-2px);
 }
 @keyframes levitate {
   0% {
@@ -542,9 +543,9 @@ main #content #whatsNew #createPostElement #feedbackMessage {
 main #content .userContent {
   max-height: 1000px;
   display: flex;
+  margin-top: 1rem;
   flex-direction: column;
   gap: 0.5rem;
-  padding: 1rem;
 }
 main #content .userContent .userPost {
   transition: 150ms;
@@ -553,7 +554,6 @@ main #content .userContent .userPost {
 main #content .userContent .userPost .mainPost {
   flex-direction: column;
   max-height: 100%;
-  color: #555555;
   gap: 1rem;
   padding: 1.5rem;
   border-radius: 1rem;
@@ -567,6 +567,7 @@ main #content .userContent .userPost .mainPost .postAnalytics {
   flex-direction: column;
   align-items: left;
   margin-bottom: 0.5rem;
+  gap: 1rem;
 }
 main #content .userContent .userPost .mainPost .postAnalytics .userAction {
   display: flex;
@@ -596,22 +597,22 @@ main #content .userContent .userPost .mainPost .postAnalytics .userAction .follo
 main #content .userContent .userPost .mainPost .postAnalytics .userAction .poster {
   font-family: "roboto", sans-serif;
   display: flex;
-  align-items: center;
-  gap: 0.4rem;
+  flex-direction: column;
+  align-items: left;
   font-size: 1rem;
 }
 main #content .userContent .userPost .mainPost .postAnalytics .userAction .poster p {
   font-size: 1rem;
 }
 main #content .userContent .userPost .mainPost .postAnalytics .postCaption {
-  font-size: 1rem;
+  font-size: 1.4rem;
   font-family: "roboto", sans-serif;
-  font-weight: lighter;
+  font-weight: bold;
   /* background: linear-gradient(to bottom right, #FF7979 18%, #FFAAAA 100%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent; */
-  color: #737373;
+  color: white;
   display: flex;
   justify-content: space-between;
 }
@@ -621,7 +622,8 @@ main #content .userContent .userPost .mainPost .postAnalytics .postCaption i {
 main #content .userContent .userPost .mainPost .postBody {
   font-size: 1.2rem;
   font-family: "roboto", sans-serif;
-  color: rgba(255, 255, 255, 0.859);
+  color: rgba(255, 255, 255, 0.911);
+  font-weight: lighter;
 }
 main #content .userContent .userPost .mainPost .userTraction {
   display: flex;
@@ -672,7 +674,6 @@ main #content .userContent .userPost .mainPost .userTraction .likeBtn:hover {
   padding: 1.5rem;
   border: px solid #121010;
   border-radius: 0.5rem;
-  cursor: pointer;
   transition: 150ms;
 }
 #introGrid .gridItem h3 {
@@ -680,9 +681,6 @@ main #content .userContent .userPost .mainPost .userTraction .likeBtn:hover {
 }
 #introGrid .gridItem p {
   line-height: 1.5;
-}
-#introGrid .gridItem:hover {
-  transform: translateY(-5px);
 }
 #introGrid .gridItem:nth-of-type(1) {
   grid-column: 1/span 2;
@@ -751,8 +749,6 @@ HOME COMPONENT MEDIA QUERIES
   }
   main #content #whatsNew #newPostBtn {
     align-self: center;
-    width: 100px;
-    margin: 1rem;
     z-index: 0;
   }
   main #content #whatsNew h1 {

@@ -45,7 +45,7 @@ export default function FourTopics(props) {
    return (
       <>
          <div id="introGrid">
-            <h1>Topic Favorites</h1>
+            <h1>4 Topic Facts</h1>
             {topicSort().map((topic, key)=> {
                const itemStyle = {
                   position: 'relative',

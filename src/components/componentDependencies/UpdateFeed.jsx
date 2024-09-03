@@ -323,9 +323,9 @@ export default function UpdateFeed(props) {
                       {/* checking for whos posting */}
                       {checkAdmin(post.poster, key)}
                       {/* {handleFollowClick(post.poster, currentUser)} */}
-                      {handleFollowClick(post.poster, userFollowingList)}
+                      {/* {handleFollowClick(post.poster, userFollowingList)} */}
                     </section>
-                    <p className="postCaption">- {post.subject}</p>
+                    <p className="postCaption">{post.subject}</p>
                   </div>
                   <h2 className="postBody">{post.body}</h2>
                 </main>
@@ -346,7 +346,7 @@ export default function UpdateFeed(props) {
         return (
           <>
             <h2 className="poster">
-              {poster} | <span style={{color: '#00b3ff'}}>Developer</span>
+              {poster} <span style={{color: '#00b3ff'}}>Developer <i class="fa-solid fa-code"></i></span>
             </h2>
           </>
         )
@@ -354,7 +354,7 @@ export default function UpdateFeed(props) {
         return (
           <>
             <h2 className="poster">
-              {poster} | <span style={{color: '#73ff00'}}>Recruiter</span>
+              {poster} <span style={{color: '#73ff00'}}>Recruiter <i class="fa-solid fa-clipboard"></i></span>
             </h2>
           </>
         )
@@ -362,7 +362,7 @@ export default function UpdateFeed(props) {
         return (
           <>
             <h2 className="poster" >
-              {poster} | <span style={{color: 'orange'}}> User</span>
+              {poster}  <span style={{color: 'orange'}}> User</span>
             </h2>
           </>
         )
