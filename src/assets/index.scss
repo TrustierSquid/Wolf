@@ -610,10 +610,10 @@ main {
          #newPostBtn {
             display: flex;
             justify-content: center;
-            border: none;
+            border: $cardBorder 1px solid;
             color: grey;
             padding: 2rem;
-            font-size: 1rem;
+            font-size: 1.5rem;
             font-family: $ff-body;
             border-radius: 0.5rem;
             transition: 250ms;
@@ -630,7 +630,9 @@ main {
 
 
             &:hover {
-               background-color: $buttonHover;
+               background-color: $primary;
+               color: white;
+               transform: translateY(-5px);
             }
 
             // animation for new postbtn
@@ -758,7 +760,8 @@ main {
 
          .userPost {
             transition: 150ms;
-            max-width: 900px;
+            // max-width: 900px;
+            max-width: 100%;
 
             .mainPost {
                flex-direction: column;
@@ -833,10 +836,10 @@ main {
                      -webkit-text-fill-color: transparent; */
                      color: white;
                      display: flex;
-                     justify-content: space-between;
+                     gap: 0.5rem;
 
                      i {
-                        margin-left: 0.5rem;
+                        color: $primary;
                      }
 
                   }
@@ -891,6 +894,35 @@ main {
                   }
                }
 
+
+               .postLC {
+                  display: flex;
+                  gap: 3rem;
+
+                  .likeBtn, .commentBtn {
+                     font-size: 1.2rem;
+                     cursor: pointer;
+                     padding: 0.5rem;
+                     border-radius: 1rem;
+                     font-family: $ff-body;
+                     transition: 150ms;
+                  }
+
+                  .likeBtn {
+
+                     &:hover {
+                        background-color: #3e3e3e88;
+                     }
+                  }
+
+                  .commentBtn {
+
+                     &:hover {
+                        background-color: #3e3e3e88;
+                     }
+                  }
+
+               }
 
 
 
@@ -1030,7 +1062,6 @@ HOME COMPONENT MEDIA QUERIES
          #whatsNew {
             display: flex;
             align-items: center;
-            padding: 1rem;
 
             #newPostBtn {
                align-self: center;
@@ -1099,6 +1130,10 @@ HOME COMPONENT MEDIA QUERIES
 
             // each post
             .userPost {
+
+               .mainPost {
+
+               }
 
                .postAnalytics {
                   display: flex;
