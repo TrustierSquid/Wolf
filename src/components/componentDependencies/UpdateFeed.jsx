@@ -7,6 +7,7 @@ export default function UpdateFeed(props) {
 
   // Fetches for all posts created to update feed
   useEffect(() => {
+
     async function updateMainFeed() {
       const response = await fetch("/update", {
         method: "GET",
@@ -23,10 +24,14 @@ export default function UpdateFeed(props) {
       setAllPosts(allPosts.reversedPosts);
 
 
-    // props.grippedFeed is a array that will dynamically change the feed that user can see.
-    // props.grippedTopic is a value that will be used as a dependency for the userFeed
-  }
-    updateMainFeed();
+      // props.grippedFeed is a array that will dynamically change the feed that user can see.
+      // props.grippedTopic is a value that will be used as a dependency for the userFeed
+    }
+
+    setInterval(() => {
+      updateMainFeed();
+    }, 500);
+
   }, []);
 
 
@@ -123,7 +128,7 @@ export default function UpdateFeed(props) {
 
 
 const likeBtn = useRef([])
-const [isLiked, setIsLiked] = useState(true)
+
 
 async function addLike(postID, currentPostIndex) {
 
@@ -137,15 +142,13 @@ async function addLike(postID, currentPostIndex) {
 
     const data = await response.json()
 
-    setIsLiked(prevState => !prevState)
-    console.log(isLiked)
-    if (isLiked) {
-      likeBtn.current[currentPostIndex].style.color = 'red'; // Change color on like
+
+    if (likeBtn.current[currentPostIndex].style.color === 'red') {
+      likeBtn.current[currentPostIndex].style.color = 'white'; // Change color on like
     } else {
-      likeBtn.current[currentPostIndex].style.color = 'white'; // Change color on unlike
+      likeBtn.current[currentPostIndex].style.color = 'red'; // Change color on unlike
     }
 
-    console.log(data.latestLikeCounter.updatedLikes)
   }
 
   // 3332 dads rooom num
