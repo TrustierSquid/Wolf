@@ -14,7 +14,7 @@ const SideNavBar = forwardRef(({
 
             <div id="sideNavBtns">
                <button id="homeBtn">Main Feed <i className="fa-solid fa-fire"></i></button>
-               <button onClick={()=> logOut()}>Log out <i class="fa-solid fa-right-from-bracket"></i></button>
+               <button onClick={()=> logOut()}>Log out <i className="fa-solid fa-right-from-bracket"></i></button>
             </div>
 
 

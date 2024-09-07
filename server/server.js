@@ -29,9 +29,6 @@ const __dirname = path.dirname(__filename);
 const app = express();
 const port = process.env.PORT;
 
-// Creating new mongoClient instance
-const uri = process.env.DB_URI;
-
 // CORS
 app.use(cors());
 
@@ -42,26 +39,10 @@ app.use(express.static(path.join(__dirname,  "./dist")));
 
 app.use("/users", signinRoutes);
 app.use('/update', updateRoutes)
+// app.use('/userInteraction', likesRoutes)
 
-// if the user enters any file extension they will be redirected to login again
-// for prod
-app.get("/home.html", requireAuth, (req, res) => {
-  res.redirect("/");
-  console.log("Cant do that, going back to home")
-});
-
-app.get("/topics.html", requireAuth, (req, res) => {
-  res.redirect("/");
-  console.log("Cant do that, going back to home")
-});
-
-app.get("/index.html",  requireAuth, (req, res) => {
-  res.redirect("/");
-  console.log("Cant do that, going back to home")
-});
-
-
-
+// Creating new mongoClient instance
+const uri = process.env.DB_URI;
 
 // database configuration
 let database = null;
@@ -88,6 +69,26 @@ async function connectMongo() {
 }
 
 connectMongo();
+
+
+
+
+// if the user enters any file extension they will be redirected to login again
+// for prod
+app.get("/home.html", requireAuth, (req, res) => {
+  res.redirect("/");
+  console.log("Cant do that, going back to home")
+});
+
+app.get("/topics.html", requireAuth, (req, res) => {
+  res.redirect("/");
+  console.log("Cant do that, going back to home")
+});
+
+app.get("/index.html",  requireAuth, (req, res) => {
+  res.redirect("/");
+  console.log("Cant do that, going back to home")
+});
 
 // on load Send user to login screen
 app.get("/", (req, res) => {
@@ -131,7 +132,6 @@ app.post("/profile", (req, res) => {
 // ROUTE EXECUTES WHEN THE USER CREATES A NEW POST
 app.post("/newPost", async (req, res) => {
   const {feed} = req.query
-  console.log(feed)
 
   // if no feed is selected, post will default to mainFeed
   if (feed === "Main") {
@@ -161,6 +161,7 @@ app.post("/newPost", async (req, res) => {
       poster: whoPosted,
       subject: postSubject,
       body: postBody,
+      likes: []
     });
 
     // Adding the post to the database will lead to a call to action on the frontend
@@ -209,6 +210,93 @@ app.post("/newPost", async (req, res) => {
 
 });
 
+let latestLikeCounter = null
+
+// Helper function to watch for changes to the posts in the mainfeed
+async function watchForChanges(){
+  try {
+     const database = await connectMongo()
+     const collection = database.collection("mainFeed")
+
+     const changeStream = collection.watch()
+     changeStream.on('change', (change)=> {
+        console.log("Here is the change")
+        console.log(change)
+
+        if (change.operationType === 'update') {
+          latestLikeCounter = {
+            postID: change.documentKey._id,
+            updatedLikes: change.updateDescription.updatedFields.likes.length
+          }
+        }
+
+     })
+  } catch{
+     console.log("failed to watch")
+  }
+
+}
+
+watchForChanges()
+
+
+app.post("/addLike", requireAuth, async (req, res) => {
+ const { postID, loggedInUser } = req.body;
+
+ const database = await connectMongo();
+ const posts = database.collection("mainFeed");
+
+ // Find a duplicate user
+ let findDuplicateUser = await posts.findOne({
+   _id: new ObjectId(postID),
+   likes: { $in: [loggedInUser] },
+ });
+
+
+// If the user is already liking a post, then they will be removed from the array
+
+ if (findDuplicateUser) {
+   await posts.updateOne(
+    {_id: new ObjectId(postID)},
+    {$pull: {likes: loggedInUser}}
+   )
+   console.log(`removed ${loggedInUser}'s like ${findDuplicateUser.poster}s post`);
+   res.json({latestLikeCounter})
+ } else {
+   await posts.updateOne(
+    {_id: new ObjectId(postID)},
+    {$push: {likes: loggedInUser}}
+   )
+
+   console.log(`${loggedInUser} liked a post`);
+   res.json({latestLikeCounter})
+  }
+
+});
+
+
+
+app.post("/postLikeCounter", async (req, res) => {
+ const { postID } = req.body;
+
+ const database = await connectMongo();
+ const posts = database.collection("mainFeed");
+
+ let post = await posts.findOne({ _id: new ObjectId(postID) });
+
+ let postLikes = post.likes.length;
+
+ res.json(postLikes);
+});
+
+
+
+
+
+
+
+
+
 
 
 // checking who the logged in user is following
@@ -234,7 +322,7 @@ app.get('/checkUser/following', requireAuth,  async (req, res)=> {
 
 
 // Handling user following
-
+// add a followee to the logged in users following list
 app.post('/checkUser', async (req, res)=> {
   const {followee, loggedInUser} = req.body
 

@@ -46,7 +46,7 @@ export default function Home(){
    // GETTING USER INFORMATION AND DISPLYING IT ON THE HOME PAGE SPECIFIC TO THE USER LOGGED IN
    useEffect(()=> {
       async function getUserData(){
-         const response = await fetch(`/users/home`, {
+         const response = await fetch(`/users/homeFeed`, {
             method: 'GET',
             credentials: "include",
             headers: {
@@ -319,9 +319,8 @@ export default function Home(){
                <FourTopics selectedTopics={userData} changeTopic={changeTopicFeed}/>
 
                <div id="whatsNew">
-                  <h1>{grippedTopic} Feed</h1>
 
-                  <button id="newPostBtn" onClick={()=> appearEffect()}>New Post +</button>
+                  <span id="newPostBtn" onClick={()=> appearEffect()}><i class="fa-solid fa-comment"></i> Write something cool</span>
 
                   {/* Floating prompt for creating a new post */}
                   <form ref={createPostElement} id="createPostElement" >

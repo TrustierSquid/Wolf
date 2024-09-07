@@ -106,14 +106,33 @@ export default defineConfig({
         ws: true,
       },
 
-      '/update': {
+      '/addLike': {
         target: 'http://localhost:3000',
         changeOrigin: true,
         secure: false,
         ws: true,
       },
 
+      '/addComment': {
+        target: 'http://localhost:3000',
+        changeOrigin: true,
+        secure: false,
+        ws: true,
+      },
 
+      '/postLikeCounter': {
+        target: 'http://localhost:3000',
+        changeOrigin: true,
+        secure: false,
+        ws: true,
+      },
+
+      '/userInteraction': {
+        target: 'http://localhost:3000',
+        changeOrigin: true,
+        secure: false,
+        ws: true,
+      },
 
     }
   },

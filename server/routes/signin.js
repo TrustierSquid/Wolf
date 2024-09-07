@@ -29,12 +29,13 @@ const router = express.Router();
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// init db connection
-let database = null;
-
 // middleware
 router.use(express.json());
 router.use(cookieParser());
+
+// init db connection
+let database = null;
+
 
 // with this middleware you are shipping each req object with a database prop
 router.use(async (req, res, next) => {
@@ -95,11 +96,14 @@ router.post("/login", async (req, res) => {
 
         console.log(`${username} is now logged in. Welcome!`);
 
-        try {
+        /* try {
           res.redirect(`/home`);
         } catch {
           console.log(`Failed to redirect to home page`);
-        }
+        } */
+
+        res.redirect(`/home`);
+
       } else {
         // sending error message that is to be displayed on login page
         // res.json({ err: "Password is incorrect" });
@@ -259,16 +263,11 @@ router.delete("/topics", requireAuth, async (req, res) => {
   }
 });
 
-/*
 
-
-HOME FEED PAGE
-
-
- */
+// HOME FEED PAGE
 
 // when the user accesses their home page
-router.get("/home", requireAuth, async (req, res) => {
+router.get("/homeFeed", requireAuth, async (req, res) => {
   const database = await connectMongo();
   const users = database.collection("Users");
 
@@ -276,6 +275,7 @@ router.get("/home", requireAuth, async (req, res) => {
   let loggedInUser = await users.findOne({
     _id: new ObjectId(req.currentUser),
   });
+
   let userSelectedTopics = loggedInUser.topics;
 
 

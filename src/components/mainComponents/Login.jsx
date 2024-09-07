@@ -36,8 +36,8 @@ export default function Login() {
       setLoginErrorMessage("Invalid username or password.")
 
       if (response.redirected) {
-        // window.location.href = '/home';
         window.location.href = '/home';
+        // window.location.href = '/home';
       } else {
         password.current.value = ''
         username.current.value = ''
