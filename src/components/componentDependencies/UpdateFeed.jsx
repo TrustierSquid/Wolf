@@ -23,7 +23,6 @@ export default function UpdateFeed(props) {
       const allPosts = await response.json();
       setAllPosts(allPosts.reversedPosts);
 
-
       // props.grippedFeed is a array that will dynamically change the feed that user can see.
       // props.grippedTopic is a value that will be used as a dependency for the userFeed
     }
@@ -127,10 +126,10 @@ export default function UpdateFeed(props) {
   }
 
 
-const likeBtn = useRef([])
+  const likeBtn = useRef([])
 
 
-async function addLike(postID, currentPostIndex) {
+  async function addLike(postID, currentPostIndex) {
 
     const response = await fetch('/addLike', {
       method: 'POST',
@@ -142,17 +141,24 @@ async function addLike(postID, currentPostIndex) {
 
     const data = await response.json()
 
-
-    if (likeBtn.current[currentPostIndex].style.color === 'red') {
-      likeBtn.current[currentPostIndex].style.color = 'white'; // Change color on like
-    } else {
-      likeBtn.current[currentPostIndex].style.color = 'red'; // Change color on unlike
-    }
-
   }
 
   // 3332 dads rooom num
 
+  // Checks and shows if a user is already liking a post or not
+  function checkCurrentlyLiked(){
+    allPosts.map((post, key)=> {
+      if(post.likes.includes(currentUser)) {
+        likeBtn.current[key].style.color = 'red'
+      } else {
+        likeBtn.current[key].style.color = 'white'
+      }
+    })
+  }
+
+  setTimeout(() => {
+    checkCurrentlyLiked()
+  }, );
 
   return (
     <>
@@ -160,7 +166,7 @@ async function addLike(postID, currentPostIndex) {
       {/* post.poster is the author of the post */}
       {/* {showTopic()} */}
       {allPosts.map((post, key) => {
-          return (
+        return (
             <>
               <div key={key} className="userPost">
                 <br />
@@ -183,6 +189,8 @@ async function addLike(postID, currentPostIndex) {
               </div>
             </>
           );
+
+
         })}
     </>
   );
