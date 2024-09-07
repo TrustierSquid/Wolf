@@ -219,12 +219,6 @@ export default function Home(){
    }
 
 
-   // Helper function to identify the topic you selected
-   // const handleClick = (topic) => {
-   //    // setting the state for the selected topic
-   //    displayTopicInfo(topic)
-   // }
-
    // Returns the a new post about the app details
    function displayAbout(){
       return (

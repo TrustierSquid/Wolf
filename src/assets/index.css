@@ -669,6 +669,9 @@ main #content .userContent .userPost .mainPost .postLC .likeBtn, main #content .
 main #content .userContent .userPost .mainPost .postLC .likeBtn:hover {
   background-color: rgba(62, 62, 62, 0.5333333333);
 }
+main #content .userContent .userPost .mainPost .postLC .commentBtn {
+  color: rgb(46, 176, 128);
+}
 main #content .userContent .userPost .mainPost .postLC .commentBtn:hover {
   background-color: rgba(62, 62, 62, 0.5333333333);
 }

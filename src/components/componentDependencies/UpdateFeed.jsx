@@ -52,7 +52,7 @@ export default function UpdateFeed(props) {
   }, [])
 
    // Checks to see if certain users are admin or special
-  function checkAdmin (poster, key) {
+  function checkAdmin (poster) {
     switch (poster) {
       case 'Samuel':
         return (
@@ -174,16 +174,16 @@ export default function UpdateFeed(props) {
                   <div className="postAnalytics">
                     <section className="userAction">
                       {/* checking for whos posting */}
-                      {checkAdmin(post.poster, key)}
+                      {checkAdmin(post.poster)}
                       {/* {handleFollowClick(post.poster, currentUser)} */}
                       {/* {handleFollowClick(post.poster, userFollowingList)} */}
                     </section>
-                    <p className="postCaption"><i class="fa-solid fa-earth-oceania"></i>{post.subject}</p>
+                    <p className="postCaption"><i class="fa-solid fa-earth-americas"></i>{post.subject}</p>
                   </div>
                   <h2 className="postBody">{post.body}</h2>
                   <div className="postLC">
                     <span  ref={(el)=> (likeBtn.current[key] = el)} className="likeBtn" onClick={()=> addLike(post._id, key)}><i className="fa-solid fa-heart"></i><span style={{color: "grey"}}> {post.likes.length}</span></span>
-                    <span  className="commentBtn" ><i className="fa-solid fa-comments"></i></span>
+                    <span  className="commentBtn" ><i className="fa-solid fa-comments"></i> <span style={{color: "grey"}}> 0</span></span>
                   </div>
                 </main>
               </div>

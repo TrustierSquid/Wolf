@@ -907,6 +907,7 @@ main {
                      border-radius: 1rem;
                      font-family: $ff-body;
                      transition: 150ms;
+
                   }
 
                   .likeBtn {
@@ -917,6 +918,7 @@ main {
                   }
 
                   .commentBtn {
+                     color: rgb(46, 176, 128);
 
                      &:hover {
                         background-color: #3e3e3e88;
