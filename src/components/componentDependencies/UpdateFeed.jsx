@@ -30,7 +30,7 @@ export default function UpdateFeed(props) {
 
     setInterval(() => {
       updateMainFeed();
-    }, 500);
+    }, 100);
 
   }, []);
 
