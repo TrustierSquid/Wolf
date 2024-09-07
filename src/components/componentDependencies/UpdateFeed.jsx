@@ -172,7 +172,7 @@ async function addLike(postID, currentPostIndex) {
                       {/* {handleFollowClick(post.poster, currentUser)} */}
                       {/* {handleFollowClick(post.poster, userFollowingList)} */}
                     </section>
-                    <p className="postCaption"><i className="fa-solid fa-globe"></i>{post.subject}</p>
+                    <p className="postCaption"><i class="fa-solid fa-earth-oceania"></i>{post.subject}</p>
                   </div>
                   <h2 className="postBody">{post.body}</h2>
                   <div className="postLC">

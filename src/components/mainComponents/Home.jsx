@@ -320,7 +320,7 @@ export default function Home(){
 
                <div id="whatsNew">
 
-                  <span id="newPostBtn" onClick={()=> appearEffect()}><i class="fa-solid fa-comment"></i> Write something cool</span>
+                  <span id="newPostBtn" onClick={()=> appearEffect()}><i style={{color: "grey"}} class="fa-solid fa-comment"></i>What's New</span>
 
                   {/* Floating prompt for creating a new post */}
                   <form ref={createPostElement} id="createPostElement" >

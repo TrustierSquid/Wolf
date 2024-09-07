@@ -22,7 +22,7 @@ html {
 }
 
 body {
-  background-color: #121010;
+  background-color: #0D1012;
 }
 
 /*
@@ -458,7 +458,7 @@ main #content #whatsNew #newPostBtn {
   text-wrap: nowrap;
 }
 main #content #whatsNew #newPostBtn:hover {
-  background-color: #FF3C3C;
+  background-color: rgba(15, 15, 15, 0.5843137255);
   color: white;
   transform: translateY(-5px);
 }
