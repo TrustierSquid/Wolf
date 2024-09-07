@@ -151,9 +151,8 @@ export default function Home(){
       }, 900)
 
       setTimeout(() => {
-         window.location.reload()
-      }, 1000);
-
+         setErrorMessage('')
+      }, 3000);
 
    }
 
@@ -198,7 +197,8 @@ export default function Home(){
 
    // Dropdown functionality
    function dropdownFunction() {
-      setToggleDropdown(prevState => !prevState)
+      // ORIGINAL DROPDOWN CODE
+      /* setToggleDropdown(prevState => !prevState)
 
       if (profileDropdown.current) {
          if (toggleDropdown == true) {
@@ -211,7 +211,11 @@ export default function Home(){
             profileDropdown.current.style.transform = 'translateY(0px)';
 
          }
-      }
+      } */
+
+
+      // REVAMPED PROFILE
+
    }
 
 
@@ -327,12 +331,12 @@ export default function Home(){
                      <h2 id="createNewPostHeader">Create a new Post</h2>
                      <div id="formSubject">
                         <label>Post Subject</label><br />
-                        <input required placeholder='Enter a Post Subject' onsubmit="return false" ref={subjectPostElement} type="text" /><br />
+                        <textarea required placeholder='Enter a Post Subject' onsubmit="return false" ref={subjectPostElement}></textarea><br />
                      </div>
                      <br />
                      <div id="formBody">
                         <label>Post Body</label><br />
-                        <input required placeholder='Enter a Post Body' onsubmit="return false" ref={bodyPostElement}type="text" />
+                        <textarea required placeholder='Enter a Post Body' onsubmit="return false" ref={bodyPostElement}type="text"></textarea>
                      </div>
                      <br />
                      <button type='button' onClick={()=> createNewPost()}>Post</button>

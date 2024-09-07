@@ -611,7 +611,7 @@ main {
             display: flex;
             justify-content: center;
             border: $cardBorder 1px solid;
-            color: grey;
+            color: white;
             padding: 2rem;
             font-size: 1.5rem;
             font-family: $ff-body;
@@ -624,14 +624,13 @@ main {
             align-items: center;
             justify-content: start;
             gap: 1rem;
-            background-color: $cardBG;
+            background-color: #0f0f0f95;
             transition: 150ms;
             text-wrap: nowrap;
 
 
             &:hover {
-               background-color: #0f0f0f95;
-               color: white;
+               border: 1px solid white;
                transform: translateY(-5px);
             }
 
@@ -657,12 +656,13 @@ main {
             width: 50%;
             margin-left: 1rem;
             position: fixed;
-            background-color: $subBackground;
+            background-color: #0f0f0f;
             padding: 3rem;
             top: 50%;
             right: 50%;
             transform: translate(50%,-50%);
             border-radius: 1rem;
+            border: 1px solid $cardBG;
             z-index: 5;
             opacity: 0;
             pointer-events: none;
@@ -696,19 +696,20 @@ main {
                   font-family: $ff-heading;
                }
 
-               input {
+               input, textarea {
                  width: 100%;
-                 height: 60px;
+                 height: 50px;
                  max-width: 100%;
                  padding: 0.5rem;
                  border-radius: 0.5rem;
                  font-size: 1rem;
+                 font-family: $ff-heading;
                  background-color: $cardBG;
                  border: none;
                  color: white;
 
                  &:focus {
-                  outline: none;
+                  // outline: none;
                  }
                }
             }
