@@ -195,29 +195,6 @@ export default function Home(){
       sideNav.current.classList.toggle('toggleNav')
    }
 
-   // Dropdown functionality
-   function dropdownFunction() {
-      // ORIGINAL DROPDOWN CODE
-      /* setToggleDropdown(prevState => !prevState)
-
-      if (profileDropdown.current) {
-         if (toggleDropdown == true) {
-            profileDropdown.current.style.opacity = '1';
-            profileDropdown.current.style.pointerEvents = 'all';
-            profileDropdown.current.style.transform = 'translateY(10px)';
-         } else {
-            profileDropdown.current.style.opacity = '0';
-            profileDropdown.current.style.pointerEvents = 'none';
-            profileDropdown.current.style.transform = 'translateY(0px)';
-
-         }
-      } */
-
-
-      // REVAMPED PROFILE
-
-   }
-
 
    // Returns the a new post about the app details
    function displayAbout(){
@@ -268,25 +245,16 @@ export default function Home(){
    }
 
 
-   function logOut(){
-      window.location.href = '/'
-   }
-
-
-
-
-   const navbarRefs = {mobileNavBtn, profileDropdown}
+   const navbarRefs = {mobileNavBtn}
    const sidebarRefs =  {sideNav, topicBtn}
 
    const navbarProps = {
       logo: logo,
       username: username,
-      followerCount: followerCount,
-      followingCount: followingCount,
+      // followerCount: followerCount,
+      // followingCount: followingCount,
 
       // Navbar functionality
-      dropdownFunction: dropdownFunction,
-      logOutFunction: ()=> logOut(),
       mobileNavFunction: ()=> mobileNavFunction()
    }
 
@@ -296,7 +264,6 @@ export default function Home(){
 
       // sidebar functionality
       // handleClick: handleClick, // params being passed through this function
-      logOut: ()=> logOut(),
       displayAbout: ()=> displayAbout()
    }
 

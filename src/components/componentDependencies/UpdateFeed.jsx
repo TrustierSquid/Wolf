@@ -29,7 +29,7 @@ export default function UpdateFeed(props) {
 
     setInterval(() => {
       updateMainFeed();
-    }, 100);
+    }, 1000);
 
   }, []);
 
@@ -74,7 +74,7 @@ export default function UpdateFeed(props) {
         return (
           <>
             <h2 className="poster" >
-              {poster}  <span style={{color: 'orange'}}>User <i className="fa-solid fa-user"></i></span>
+              {poster}  <span style={{color: 'grey'}}>User <i className="fa-solid fa-user"></i></span>
             </h2>
           </>
         )

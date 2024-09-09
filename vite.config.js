@@ -34,13 +34,7 @@ export default defineConfig({
         secure: false,
         ws: true,
       },
-      // for the user viewing their own profiles
-      '/profile': {
-        target: 'http://localhost:3000',
-        changeOrigin: true,
-        secure: false,
-        ws: true,
-      },
+
       // for users creating a new post
       '/newPost': {
         target: 'http://localhost:3000',
@@ -92,13 +86,6 @@ export default defineConfig({
         ws: true,
       },
 
-      '/viewProf': {
-        target: 'http://localhost:3000',
-        changeOrigin: true,
-        secure: false,
-        ws: true,
-      },
-
       '/switchTopic': {
         target: 'http://localhost:3000',
         changeOrigin: true,
@@ -142,6 +129,7 @@ export default defineConfig({
         main: 'index.html',
         user: 'topics.html',
         home: 'home.html',
+        profile: 'profile.html'
       }
     }
   },

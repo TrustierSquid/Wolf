@@ -2,7 +2,6 @@ import { forwardRef, useRef } from "react"
 
 const SideNavBar = forwardRef(({
    userData,
-   logOut,
    displayAbout
 }, ref) => {
 
@@ -14,7 +13,7 @@ const SideNavBar = forwardRef(({
 
             <div id="sideNavBtns">
                <button id="homeBtn">Main Feed <i className="fa-solid fa-fire"></i></button>
-               <button onClick={()=> logOut()}>Log out <i className="fa-solid fa-right-from-bracket"></i></button>
+
             </div>
 
 

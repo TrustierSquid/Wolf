@@ -1,49 +1,133 @@
-import { forwardRef, useRef } from "react"
+import { forwardRef, useRef, useState, useEffect } from "react"
+import logo from '/src/assets/wolfLogo.png'
+
+
+
 
 const Navbar = forwardRef(({
-   logo,
+   /*
    username,
    followerCount,
    followingCount,
-   dropdownFunction,
-   logOutFunction,
+   viewProf,
+   logOutFunction, */
    mobileNavFunction
 }, ref) => {
+
+   const [followerCount, setFollowerCount] = useState([])
+   const [followingCount, setFollowingCount] = useState([])
+
+   // and checking user action based off of username
+   const [username, setUsername] = useState(null)
+
+   // the an array of the topics that the user selected
+   const [userData, setUserData] = useState([])
+
+
+
+   // GETTING USER INFORMATION AND DISPLYING IT ON THE HOME PAGE SPECIFIC TO THE USER LOGGED IN
+   useEffect(()=> {
+      async function getUserData(){
+         const response = await fetch(`/users/homeFeed`, {
+            method: 'GET',
+            credentials: "include",
+            headers: {
+               'Content-Type': 'application/json',
+            }
+         })
+
+         if (!response.ok) {
+            console.log("Couldn't get user data")
+            throw new Error(`HTTP error! status: ${response.status}`);
+         }
+
+         const homeData = await response.json()
+         // console.log(homeData.followingCount.length)
+         // setting the user info needed as glob vars
+
+         // the topics the current user selected
+         setUserData(homeData.topicArr)
+
+         // the current user logged in
+         setUsername(homeData.userName)
+
+         //  the current users following count
+         setFollowingCount(homeData.followingCount.length)
+
+         // the current users follower count
+         setFollowerCount(homeData.followerCount.length)
+
+
+      }
+
+      getUserData()
+
+   }, [])
+
+
+   const [isNavOpen, setIsNavOpen] = useState(true)
+   const navDropdown = useRef(null)
+   const navDropdownElement = navDropdown.current
+
+   // Dropdown functionality
+   // helper function to check to see if any element was clicked that was not the nav button
+   const navHelper = (element)=> {
+      setIsNavOpen(prevState => !prevState)
+
+      if (isNavOpen) {
+         navDropdownElement.style.transform = 'translateY(10px)'
+         navDropdownElement.style.opacity = '1'
+      } else {
+         navDropdownElement.style.transform = 'translateY(0px)'
+         navDropdownElement.style.opacity = '0'
+      }
+
+   }
+
+   function logOut(){
+      window.location.href = '/'
+   }
 
    const {mobileNavBtn, profileDropdown} = ref || {};
 
    return(
       <>
          <nav id="nav">
-               <div id="logoContainer">
-                  <img id="logo" src={logo} alt="" />
-                  <h1>WOLF</h1>
-               </div>
-               <div id="profileContainer" onClick={()=> dropdownFunction()}>
-                  <h4>
-                  <i className="fa-solid fa-user-gear"></i> {username} <i className="fa-solid fa-angle-down"></i></h4>
-               </div>
-               <button ref={mobileNavBtn} id="mobileNavBtn" onClick={()=> mobileNavFunction()}><i className="fa-solid fa-bars"></i></button>
-            </nav>
+            <div id="logoContainer">
+               <img id="logo" src={logo} alt="" />
+               <h1>WOLF</h1>
+            </div>
+            <div id="profileContainer" onClick={(element)=> navHelper(element)} >
+               <h4><i className="fa-solid fa-user-large"></i></h4>
+            </div>
+            <button ref={mobileNavBtn} id="mobileNavBtn" onClick={()=> mobileNavFunction()}><i className="fa-solid fa-bars"></i></button>
+         </nav>
 
-            <section ref={profileDropdown} id="profileDropdown">
-               <div className="profileSection">
-                  <span id="userAnalyticsContainer">
-                     <div id="dataPoint">
-                        <h1>{followerCount}</h1>
-                        <p>Followers</p>
-                     </div>
-                     <div id="dataPoint">
-                        <h1>{followingCount}</h1>
-                        <p>Following</p>
-                     </div>
-                  </span>
+         <section id="navDropdown" ref={navDropdown}>
+            {/* view profile button */}
+            <div className="navDropdownItemProfile">
+               <span><h1><i className="fa-solid fa-user-large"></i></h1></span>
+               <div>
+                  <h4>See Profile</h4>
+                  <h3 id="navUsername">{username}</h3>
                </div>
+            </div>
 
-               <div className="profileSection">
-                  <h3>Hello, {username}!</h3>
-               </div>
-            </section>
+
+
+            <div className="navDropdownItem">
+
+            </div>
+
+            <div className="navDropdownItem">
+
+            </div>
+
+            <div className="navDropdownItem" onClick={()=> logOut()}>
+               <i className="fa-solid fa-right-from-bracket"></i> Log out
+            </div>
+         </section>
+
       </>
    )
 })
