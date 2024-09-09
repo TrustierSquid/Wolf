@@ -117,6 +117,10 @@ app.get("/home", requireAuth, (req, res) => {
   res.sendFile(path.join(__dirname, "/dist/home.html"));
 });
 
+app.get('/viewProf', (req, res)=> {
+  res.sendFile(path.join(__dirname, "../profile.html"));
+})
+
 app.get("/wolfTopics", (req, res) => {
   res.json(topicFacts);
 });
