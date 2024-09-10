@@ -242,7 +242,7 @@ export default function Home(){
    }
 
 
-   const navbarRefs = {mobileNavBtn}
+   // const navbarRefs = {mobileNavBtn}
    const sidebarRefs =  {sideNav, topicBtn}
 
    const navbarProps = {
@@ -270,7 +270,7 @@ export default function Home(){
       <>
 
       {/* NAVBAR */}
-      <Navbar {...navbarProps} ref={navbarRefs}/>
+      <Navbar {...navbarProps}/>
       <SideNavBar {...sidebarProps} ref={sidebarRefs}/>
 
       {/* MAIN CONTENT */}

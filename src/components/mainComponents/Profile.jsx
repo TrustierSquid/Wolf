@@ -51,40 +51,118 @@ export default function Profile(){
 
    }, [])
 
+   const [profilePostData, setProfilePostData] = useState([])
 
+   useEffect(()=> {
+      if (!username) return
+
+      async function getUserProfilePosts() {
+         try {
+            const response = await fetch(`/profileData?user=${username}`, {
+               method: "GET",
+               headers: {
+                  'Content-Type': 'application/json'
+               },
+            })
+
+            const profileData = await response.json()
+            setProfilePostData(profileData)
+
+
+         } catch {
+            throw new Error("Couldnt fetch for profile data")
+         }
+
+         // console.log(profileData)
+
+      }
+
+      getUserProfilePosts()
+
+
+
+   }, [username])
+
+
+   function checkUserType(){
+      switch (username) {
+         // For developers
+         case 'Samuel':
+            return (
+               <>
+                  <h2>{username}</h2>
+                  <h5 className="profileUserTypeHeader"
+                  style={{color: "#00b3ff"}}>
+                     Developer <i className="fa-solid fa-code"></i></h5>
+               </>
+            )
+         // For regular users
+         case username:
+            return (
+               <>
+                  <h1>{username}</h1>
+                  <h5 className="profileUserTypeHeader"
+                  style={{color: "grey"}}>User<i className="fa-solid fa-code"> </i></h5>
+               </>
+            )
+         case 'DemoUser':
+            return (
+               <>
+                  <h1>{username}</h1>
+                  <h5 className="profileUserTypeHeader"
+                  style={{color: "#73ff00"}}>Recruiter<i className="fa-solid fa-code"></i></h5>
+               </>
+            )
+      }
+   }
 
 
    return (
       <>
          <Navbar/>
          <main id="mainProfile">
+            <h2 className="profHeaders">Profile Overview</h2>
             <div className="profileAnalytics">
                <section className="profileSectionInfo">
-                  <h1>Samuel</h1>
-                  <p>Developer</p>
+                  {checkUserType()}
                   {/* Add a bio */}
                </section>
                <section className="profileSectionInfo">
-                  <h2>User Analytics</h2>
+                  <h3>User Analytics</h3>
                   <br />
                   <div id="showUserStats">
                      <span>
-                        <p>0</p>
+                        <p>{followerCount}</p>
                         <h4>Followers</h4>
                      </span>
                      <span>
-                        <p>0</p>
+                        <p>{followingCount}</p>
                         <h4>Following</h4>
                      </span>
                   </div>
                </section>
             </div>
 
-            <h1 className="profHeaders">Your Posts</h1>
+            <h2 className="profHeaders">Your Posts</h2>
             <div className="profileAnalytics">
-               <section className="profileSectionInfo">
-                  {/* Add a bio */}
-               </section>
+
+               {profilePostData.map((post)=> {
+                  return (
+                     <>
+                        <article className="existingPost">
+                           <h2 className="profilePostSubject"><i style={{color: "red"}} className="fa-solid fa-earth-americas"></i> {post.subject}</h2>
+
+                           <div className="profilePostAnalytics">
+                              <h2><i className="fa-solid fa-heart"></i> {post.likes.length}</h2>
+                              <h2><i className="fa-solid fa-comments"></i> 0</h2>
+                           </div>
+                        </article>
+                     </>
+                  )
+               })}
+
+
+
             </div>
 
 

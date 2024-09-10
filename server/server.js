@@ -8,7 +8,7 @@ import cookieParser from "cookie-parser";
 
 // IMPORTING ROUTES
 import signinRoutes from "./routes/signin.js";
-import updateRoutes from "./routes/update.js"
+import profileRoutes from "./routes/profileData.js"
 
 // To check if the user has a token for accessing certain routes
 import requireAuth from "./middleware/authMiddleware.js";
@@ -38,7 +38,7 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname,  "./dist")));
 
 app.use("/users", signinRoutes);
-app.use('/update', updateRoutes)
+app.use('/profileData', profileRoutes)
 // app.use('/userInteraction', likesRoutes)
 
 // Creating new mongoClient instance
@@ -131,6 +131,22 @@ app.post("/profile", (req, res) => {
   const { username } = req.body;
   console.log(`${username} wants to look at his profile!`);
 });
+
+
+// Sends the current list of posts in the mainFeed
+app.get('/update', async (req, res)=> {
+  const database = await connectMongo()
+  const mainFeedCollection = database.collection("mainFeed")
+
+  const posts = await mainFeedCollection.find({}).toArray()
+
+
+  res.json({reversedPosts: posts.reverse()})
+
+})
+
+
+
 
 
 // ROUTE EXECUTES WHEN THE USER CREATES A NEW POST
@@ -292,15 +308,6 @@ app.post("/postLikeCounter", async (req, res) => {
 
  res.json(postLikes);
 });
-
-
-
-
-
-
-
-
-
 
 
 // checking who the logged in user is following

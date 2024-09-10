@@ -987,7 +987,7 @@ main {
    width: 70%;
    display: flex;
    flex-direction: column;
-   gap: 4rem;
+   gap: 1rem;
    height: 800px;
    margin: 0 auto;
    color: white;
@@ -998,7 +998,7 @@ main {
    }
 
 
-   .profileAnalytics {
+   .profileAnalytics:nth-of-type(1) {
       // background-color: #0D1012;
       // background-color: red;
       padding: 1rem;
@@ -1010,8 +1010,8 @@ main {
       gap: 2rem;
 
       .profileSectionInfo {
-         background-color: #0D1012;
-         border-radius: 2rem;
+         background-color: #00000079;
+         border-radius: 1rem;
          padding: 1.5rem;
          font-family: $ff-heading;
       }
@@ -1022,8 +1022,12 @@ main {
          flex-direction: column;
          align-items: left;
          justify-content: center;
-         width: 60%;
+         width: 70%;
          font-size: 1.7rem;
+
+         .profileUserTypeHeader {
+            font-size: 16px;
+         }
 
       }
 
@@ -1037,15 +1041,11 @@ main {
 
             span {
                width: 50%;
-               background-color: #00000079;
+               // background-color: #0D1012;
                padding: 0.5rem;
                border-radius: 0.5rem;
-               transition: 150ms;
+               transition: 100ms;
                cursor: pointer;
-
-               &:hover {
-                  transform: translateY(-3px)
-               }
 
 
             }
@@ -1053,6 +1053,38 @@ main {
       }
 
 
+
+   }
+
+   .profileAnalytics:nth-of-type(2){
+      // background-color: red;
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      width: 100%;
+      margin: 0 auto;
+      font-family: $ff-body;
+
+      .existingPost {
+         background-color: #1D1C1C;
+         border: 1px solid $cardBorder;
+         padding: 2rem;
+         border-radius: 1rem;
+         display: flex;
+         justify-content: space-between;
+         transition: 150ms;
+         cursor: pointer;
+
+         .profilePostAnalytics {
+            display: flex;
+            gap: 3.5rem;
+         }
+
+         &:hover {
+            transform: translateY(-5px);
+         }
+      }
 
    }
 
