@@ -11,9 +11,6 @@ export default function Home(){
    // Each topic that the user selected displayed in the sideNav as individual elements
    const topicBtn = useRef(null)
 
-   // Mobile Nav button that appears at a certain breakpoint
-   const mobileNavBtn = useRef(null)
-
    // The side navigation element
    const sideNav = useRef(null)
 

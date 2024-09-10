@@ -2,17 +2,7 @@ import { forwardRef, useRef, useState, useEffect } from "react"
 import logo from '/src/assets/wolfLogo.png'
 
 
-
-
-const Navbar = forwardRef(({
-   /*
-   username,
-   followerCount,
-   followingCount,
-   viewProf,
-   logOutFunction, */
-   mobileNavFunction
-}, ref) => {
+export default function Navbar() {
 
    const [followerCount, setFollowerCount] = useState([])
    const [followingCount, setFollowingCount] = useState([])
@@ -69,6 +59,9 @@ const Navbar = forwardRef(({
    const navDropdown = useRef(null)
    const navDropdownElement = navDropdown.current
 
+   // Mobile Nav button that appears at a certain breakpoint
+   const mobileNavBtn = useRef(null)
+
    // Dropdown functionality
    // helper function to check to see if any element was clicked that was not the nav button
    const navHelper = (element)=> {
@@ -76,10 +69,12 @@ const Navbar = forwardRef(({
 
       if (isNavOpen) {
          navDropdownElement.style.transform = 'translateY(10px)'
+         navDropdownElement.style.pointerEvents = 'all'
          navDropdownElement.style.opacity = '1'
       } else {
          navDropdownElement.style.transform = 'translateY(0px)'
          navDropdownElement.style.opacity = '0'
+         navDropdownElement.style.pointerEvents = 'none'
       }
 
    }
@@ -87,8 +82,6 @@ const Navbar = forwardRef(({
    function logOut(){
       window.location.href = '/'
    }
-
-   const {mobileNavBtn, profileDropdown} = ref || {};
 
    return(
       <>
@@ -98,9 +91,9 @@ const Navbar = forwardRef(({
                <h1>WOLF</h1>
             </div>
             <div id="profileContainer" onClick={(element)=> navHelper(element)} >
-               <h4><i className="fa-solid fa-user-large"></i></h4>
+               <h1 id="dropdownBtn"><i className="fa-solid fa-user-large"></i></h1>
             </div>
-            <button ref={mobileNavBtn} id="mobileNavBtn" onClick={()=> mobileNavFunction()}><i className="fa-solid fa-bars"></i></button>
+            <button ref={mobileNavBtn} id="mobileNavBtn"><i className="fa-solid fa-bars"></i></button>
          </nav>
 
          <section id="navDropdown" ref={navDropdown}>
@@ -130,6 +123,4 @@ const Navbar = forwardRef(({
 
       </>
    )
-})
-
-export default Navbar
+}
