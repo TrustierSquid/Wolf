@@ -23,8 +23,15 @@ router.get('/', async (req, res)=> {
       {poster: user},
    ).toArray()
 
+   const userData = await usersCollection.findOne(
+      {user: user}
+   )
 
-   res.json(userPosts)
+
+   res.json({
+      profilePostData: userPosts,
+      userData: userData
+   })
 
 })
 

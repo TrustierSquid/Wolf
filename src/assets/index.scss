@@ -775,35 +775,20 @@ main {
                      gap: 1rem;
                      padding: 0.1rem;
 
-                     .followBtn {
-                        color: white;
-                        padding: 0.2rem;
-                        background:none;
-                        border: none;
-                        border-radius: 0.5rem;
-                        cursor: pointer;
-                        transition: 150ms;
-                        text-wrap: nowrap;
-                        font-size: 1rem;
-                        color: $primary;
-
-                        &:hover {
-                           background-color: $cardBorder;
-                           transform: translateY(-4px);
-                           padding: 0.5rem;
-                        }
-
-                     }
-
                      .poster {
                         font-family: $ff-body;
                         display: flex;
                         flex-direction: column;
                         align-items: left;
                         font-size: 1rem;
+                        cursor: pointer;
 
                         p {
                            font-size: 1rem;
+                        }
+
+                        &:hover {
+                           text-decoration: underline;
                         }
 
                      }
@@ -1027,6 +1012,23 @@ main {
 
          .profileUserTypeHeader {
             font-size: 16px;
+         }
+
+         .followUserBtn {
+            align-self: end;
+            width: 40%;
+            padding: 0.5rem;
+            color: white;
+            background-color: rgb(0, 108, 180);
+            border: none;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: 150ms;
+            font-family: $ff-heading;
+
+            &:hover {
+               background-color: rgba(0, 108, 180, 0.479);
+            }
          }
 
       }

@@ -51,13 +51,21 @@ export default function UpdateFeed(props) {
     getFollowing()
   }, [])
 
+  // poster is used to find the corresponding profile for the poster
+  function navigateToProfile(poster){
+    // window.location.href = `/profile.html?user=${poster}`
+    window.location.href = `/profile?user=${poster}`
+  }
+
+
+
    // Checks to see if certain users are admin or special
   function checkAdmin (poster) {
     switch (poster) {
       case 'Samuel':
         return (
           <>
-            <h2 className="poster">
+            <h2 className="poster" onClick={()=> navigateToProfile(poster)}>
               {poster} <span style={{color: '#00b3ff'}}>Developer <i className="fa-solid fa-code"></i></span>
             </h2>
           </>
@@ -65,7 +73,7 @@ export default function UpdateFeed(props) {
       case 'DemoUser':
         return (
           <>
-            <h2 className="poster">
+            <h2 className="poster" onClick={()=> navigateToProfile(poster)}>
               {poster} <span style={{color: '#73ff00'}}>Recruiter <i className="fa-solid fa-clipboard"></i></span>
             </h2>
           </>
@@ -73,7 +81,7 @@ export default function UpdateFeed(props) {
       case poster:
         return (
           <>
-            <h2 className="poster" >
+            <h2 className="poster" onClick={()=> navigateToProfile(poster)}>
               {poster}  <span style={{color: 'grey'}}>User <i className="fa-solid fa-user"></i></span>
             </h2>
           </>
@@ -97,33 +105,6 @@ export default function UpdateFeed(props) {
 
   }
 
-
-  // currrent user is the userthat is currently logged in
-  async function followUser(postAuthor, currentUser, element){
-    element.target.innerHTML = 'Followed!'
-    const response = await fetch('/checkUser', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({followee: postAuthor, loggedInUser: currentUser})
-    })
-
-
-  }
-
-  async function unFollowUser(postAuthor, currentUser, element) {
-    element.target.innerHTML = 'Unfollowed!'
-    const response = await fetch('/pullUser', {
-      method: 'POST',
-      headers : {
-        'Content-Type': 'application/json'
-      },
-
-      body: JSON.stringify({followee: postAuthor, loggedInUser: currentUser})
-
-    })
-  }
 
 
   const likeBtn = useRef([])

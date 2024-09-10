@@ -79,14 +79,22 @@ export default function Navbar() {
 
    }
 
-   function logOut(){
+   function navigateLogOut(){
       window.location.href = '/'
+   }
+
+   function navigateBackToHome(){
+      window.location.href = "/home"
+   }
+
+   function navigateProfile(){
+      window.location.href = `/profile?user=${username}`
    }
 
    return(
       <>
          <nav id="nav">
-            <div id="logoContainer">
+            <div id="logoContainer" onClick={()=> navigateBackToHome()}>
                <img id="logo" src={logo} alt="" />
                <h1>WOLF</h1>
             </div>
@@ -98,7 +106,7 @@ export default function Navbar() {
 
          <section id="navDropdown" ref={navDropdown}>
             {/* view profile button */}
-            <div className="navDropdownItemProfile">
+            <div className="navDropdownItemProfile" onClick={()=> navigateProfile()}>
                <span><h1><i className="fa-solid fa-user-large"></i></h1></span>
                <div>
                   <h4>See Profile</h4>
@@ -116,7 +124,7 @@ export default function Navbar() {
 
             </div>
 
-            <div className="navDropdownItem" onClick={()=> logOut()}>
+            <div className="navDropdownItem" onClick={()=> navigateLogOut()}>
                <i className="fa-solid fa-right-from-bracket"></i> Log out
             </div>
          </section>

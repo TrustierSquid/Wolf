@@ -1,4 +1,5 @@
-import { forwardRef, useRef, useState, useEffect } from "react"
+import { forwardRef, useRef, useState, useEffect} from "react"
+import { useLocation } from "react-router-dom"
 import Navbar from "../componentDependencies/NavBar"
 
 export default function Profile(){
@@ -12,7 +13,7 @@ export default function Profile(){
    const [userData, setUserData] = useState([])
 
 
-   // GETTING USER INFORMATION AND DISPLYING IT ON THE HOME PAGE SPECIFIC TO THE USER LOGGED IN
+   // Data for the user logged in
    useEffect(()=> {
       async function getUserData(){
          const response = await fetch(`/users/homeFeed`, {
@@ -52,21 +53,31 @@ export default function Profile(){
    }, [])
 
    const [profilePostData, setProfilePostData] = useState([])
+   const [userProfileData, setUserProfileData] = useState([])
+
+   const queryString = window.location.search;
+   const urlParams = new URLSearchParams(queryString)
+   const userSearched = urlParams.get('user')
 
    useEffect(()=> {
-      if (!username) return
+      if (!userSearched) return
+
 
       async function getUserProfilePosts() {
          try {
-            const response = await fetch(`/profileData?user=${username}`, {
+            const response = await fetch(`/profileData?user=${userSearched}`, {
                method: "GET",
                headers: {
                   'Content-Type': 'application/json'
                },
             })
 
-            const profileData = await response.json()
-            setProfilePostData(profileData)
+            // Sending back post data for the searched user
+            const postData = await response.json()
+            setProfilePostData(postData.profilePostData || [])
+            // sending back the userdata for the searched user
+
+            setUserProfileData(postData.userData || [])
 
 
          } catch {
@@ -79,40 +90,84 @@ export default function Profile(){
 
       getUserProfilePosts()
 
+   }, [userSearched])
+
+   useEffect(()=> {
+      console.log(userProfileData)
+   }, [userProfileData])
 
 
-   }, [username])
+
+   function addFollower(queryStringUser){
+      /*
+         * hashed querystring that contains the username that the backend will search for
+         * once found, it will display the respective profile page
+         * If the queryString matches the loggedIn users name it will know that it is looking
+         at the logged in users own page. Therefore, no followbtn will be rendered
+       */
+
+      if (queryStringUser === username) {
+         return
+      }
+
+      // uses the queryString to find the user and add the logged in user to the current list of followers
+      async function followUser(queryStringUser){
+
+         const response = await fetch('/addFollowingUser', {
+            method: 'POST',
+            headers: {
+               "Content-Type": "application/json"
+            },
+            body: JSON.stringify({followee: queryStringUser, loggedInUser: username})
+         })
+
+      }
+
+
+      function checkFollowing(){
+        if (userProfileData.followers?.includes(username)) {
+         return <button className="followUserBtn" onClick={()=> followUser(queryStringUser)}>Following <i className="fa-solid fa-check-double"></i></button>
+        }
+
+        return <button  className="followUserBtn" onClick={()=> followUser(queryStringUser)}>Follow <i className="fa-solid fa-user-plus"></i></button>
+
+      }
+
+      return checkFollowing()
+
+   }
 
 
    function checkUserType(){
-      switch (username) {
+      switch (userSearched) {
          // For developers
          case 'Samuel':
             return (
                <>
-                  <h2>{username}</h2>
+                  <h2>{userSearched}</h2>
                   <h5 className="profileUserTypeHeader"
                   style={{color: "#00b3ff"}}>
                      Developer <i className="fa-solid fa-code"></i></h5>
                </>
             )
-         // For regular users
-         case username:
-            return (
-               <>
-                  <h1>{username}</h1>
-                  <h5 className="profileUserTypeHeader"
-                  style={{color: "grey"}}>User<i className="fa-solid fa-code"> </i></h5>
-               </>
-            )
+            // for recruiters
          case 'DemoUser':
             return (
                <>
-                  <h1>{username}</h1>
-                  <h5 className="profileUserTypeHeader"
-                  style={{color: "#73ff00"}}>Recruiter<i className="fa-solid fa-code"></i></h5>
+                  <h1>{userSearched}</h1>
+                  <h5 className="profileUserTypeHeader" style={{color: "#73ff00"}}>Recruiter <i className="fa-solid fa-clipboard"></i></h5>
                </>
             )
+         // For regular users
+         default:
+            return (
+               <>
+                  <h1>{userSearched}</h1>
+                  <h5 className="profileUserTypeHeader"
+                  style={{color: "grey"}}>User <i className="fa-solid fa-user"> </i></h5>
+               </>
+            )
+
       }
    }
 
@@ -125,18 +180,18 @@ export default function Profile(){
             <div className="profileAnalytics">
                <section className="profileSectionInfo">
                   {checkUserType()}
-                  {/* Add a bio */}
+                  {addFollower(userSearched)}
                </section>
                <section className="profileSectionInfo">
                   <h3>User Analytics</h3>
                   <br />
                   <div id="showUserStats">
                      <span>
-                        <p>{followerCount}</p>
+                        <p>{userProfileData.followers?.length || 0}</p>
                         <h4>Followers</h4>
                      </span>
                      <span>
-                        <p>{followingCount}</p>
+                        <p>{userProfileData.following?.length || 0}</p>
                         <h4>Following</h4>
                      </span>
                   </div>

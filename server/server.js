@@ -35,7 +35,7 @@ app.use(cors());
 // MIDDLEWARE
 app.use(cookieParser());
 app.use(express.json());
-app.use(express.static(path.join(__dirname,  "./dist")));
+// app.use(express.static(path.join(__dirname,  "./dist")));
 
 app.use("/users", signinRoutes);
 app.use('/profileData', profileRoutes)
@@ -334,7 +334,7 @@ app.get('/checkUser/following', requireAuth,  async (req, res)=> {
 
 // Handling user following
 // add a followee to the logged in users following list
-app.post('/checkUser', async (req, res)=> {
+app.post('/addFollowingUser', async (req, res)=> {
   const {followee, loggedInUser} = req.body
 
   // connecting to the db
@@ -356,9 +356,27 @@ app.post('/checkUser', async (req, res)=> {
   )
 
   if(duplicateUserFollowing || duplicateUserFollower) {
-    console.log("User already follows this person")
-    res.json({listOfFollowers: duplicateUserFollower})
+
+    console.log(`${loggedInUser} unfollows follows ${followee}`)
+    try {
+      // updating current users following list
+      await users.updateOne(
+        {user: loggedInUser},
+        {$pull: {following: followee}}
+      )
+
+
+      // updating followee list
+      await users.updateOne(
+        {user: followee},
+        {$pull: {followers: loggedInUser}}
+      )
+    } catch {
+      console.log("Unable to complete the follow transaction")
+    }
+
   } else {
+
     try {
 
       // updating current users following list
@@ -379,38 +397,9 @@ app.post('/checkUser', async (req, res)=> {
     } catch {
       console.log("Unable to complete the follow transaction")
     }
+
   }
 
-
-
-})
-
-app.post('/pullUser', async (req, res)=> {
-  const {followee, loggedInUser} = req.body
-
-  // connecting to the db
-  const database = await connectMongo()
-  const users = database.collection("Users");
-
-  try {
-    // updating current users following list
-    await users.updateOne(
-      {user: loggedInUser},
-      {$pull: {following: followee}}
-    )
-
-
-    // updating followee list
-    await users.updateOne(
-      {user: followee},
-      {$pull: {followers: loggedInUser}}
-    )
-
-    console.log(`${loggedInUser} unfollowed ${followee}`)
-
-  } catch {
-    console.log("Unable to complete the unfollow transaction")
-  }
 
 
 })

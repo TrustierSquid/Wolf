@@ -573,32 +573,19 @@ main #content .userContent .userPost .mainPost .postAnalytics .userAction {
   gap: 1rem;
   padding: 0.1rem;
 }
-main #content .userContent .userPost .mainPost .postAnalytics .userAction .followBtn {
-  color: white;
-  padding: 0.2rem;
-  background: none;
-  border: none;
-  border-radius: 0.5rem;
-  cursor: pointer;
-  transition: 150ms;
-  text-wrap: nowrap;
-  font-size: 1rem;
-  color: #FF3C3C;
-}
-main #content .userContent .userPost .mainPost .postAnalytics .userAction .followBtn:hover {
-  background-color: #2E2E2E;
-  transform: translateY(-4px);
-  padding: 0.5rem;
-}
 main #content .userContent .userPost .mainPost .postAnalytics .userAction .poster {
   font-family: "roboto", sans-serif;
   display: flex;
   flex-direction: column;
   align-items: left;
   font-size: 1rem;
+  cursor: pointer;
 }
 main #content .userContent .userPost .mainPost .postAnalytics .userAction .poster p {
   font-size: 1rem;
+}
+main #content .userContent .userPost .mainPost .postAnalytics .userAction .poster:hover {
+  text-decoration: underline;
 }
 main #content .userContent .userPost .mainPost .postAnalytics .postCaption {
   font-size: 1.4rem;
@@ -750,6 +737,21 @@ main #content .userContent .userPost .mainPost .postLC .commentBtn:hover {
 }
 #mainProfile .profileAnalytics:nth-of-type(1) .profileSectionInfo:nth-of-type(1) .profileUserTypeHeader {
   font-size: 16px;
+}
+#mainProfile .profileAnalytics:nth-of-type(1) .profileSectionInfo:nth-of-type(1) .followUserBtn {
+  align-self: end;
+  width: 40%;
+  padding: 0.5rem;
+  color: white;
+  background-color: rgb(0, 108, 180);
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: 150ms;
+  font-family: "Nunito", sans-serif;
+}
+#mainProfile .profileAnalytics:nth-of-type(1) .profileSectionInfo:nth-of-type(1) .followUserBtn:hover {
+  background-color: rgba(0, 108, 180, 0.479);
 }
 #mainProfile .profileAnalytics:nth-of-type(1) .profileSectionInfo:nth-of-type(2) {
   width: 30%;
