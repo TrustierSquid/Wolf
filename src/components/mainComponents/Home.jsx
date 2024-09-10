@@ -289,7 +289,7 @@ export default function Home(){
                      <h2 id="createNewPostHeader">Create a new Post</h2>
                      <div id="formSubject">
                         <label>Post Subject</label><br />
-                        <textarea required placeholder='Enter a Post Subject' onsubmit="return false" ref={subjectPostElement}></textarea><br />
+                        <textarea maxLength={40} required placeholder='Enter a Post Subject' onsubmit="return false" ref={subjectPostElement}></textarea><br />
                      </div>
                      <br />
                      <div id="formBody">

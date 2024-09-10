@@ -43,6 +43,7 @@ app.use('/profileData', profileRoutes)
 
 // Creating new mongoClient instance
 const uri = process.env.DB_URI;
+const currentDate = new Date()
 
 // database configuration
 let database = null;
@@ -147,11 +148,12 @@ app.get('/update', async (req, res)=> {
 
 
 
-
-
 // ROUTE EXECUTES WHEN THE USER CREATES A NEW POST
 app.post("/newPost", async (req, res) => {
   const {feed} = req.query
+
+
+
 
   // if no feed is selected, post will default to mainFeed
   if (feed === "Main") {
@@ -181,7 +183,8 @@ app.post("/newPost", async (req, res) => {
       poster: whoPosted,
       subject: postSubject,
       body: postBody,
-      likes: []
+      likes: [],
+      postCreationDate: new Date()
     });
 
     // Adding the post to the database will lead to a call to action on the frontend
@@ -357,7 +360,7 @@ app.post('/addFollowingUser', async (req, res)=> {
 
   if(duplicateUserFollowing || duplicateUserFollower) {
 
-    console.log(`${loggedInUser} unfollows follows ${followee}`)
+    console.log(`${loggedInUser} unfollows  ${followee}`)
     try {
       // updating current users following list
       await users.updateOne(
@@ -408,6 +411,8 @@ app.post('/addFollowingUser', async (req, res)=> {
 app.listen(port, () => {
   console.clear();
   console.log(`Server running on port ${port}`);
+  console.log(currentDate)
+
 });
 
 export default connectMongo;

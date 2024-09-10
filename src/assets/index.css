@@ -587,6 +587,10 @@ main #content .userContent .userPost .mainPost .postAnalytics .userAction .poste
 main #content .userContent .userPost .mainPost .postAnalytics .userAction .poster:hover {
   text-decoration: underline;
 }
+main #content .userContent .userPost .mainPost .postAnalytics .userAction .postData {
+  font-family: "Nunito", sans-serif;
+  color: lightgrey;
+}
 main #content .userContent .userPost .mainPost .postAnalytics .postCaption {
   font-size: 1.4rem;
   font-family: "roboto", sans-serif;
@@ -607,6 +611,7 @@ main #content .userContent .userPost .mainPost .postBody {
   font-family: "roboto", sans-serif;
   color: rgba(255, 255, 255, 0.911);
   font-weight: lighter;
+  word-wrap: break-word;
 }
 main #content .userContent .userPost .mainPost .userTraction {
   display: flex;
@@ -704,7 +709,6 @@ main #content .userContent .userPost .mainPost .postLC .commentBtn:hover {
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  height: 800px;
   margin: 0 auto;
   color: white;
   padding: 2rem;

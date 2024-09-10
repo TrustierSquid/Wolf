@@ -74,7 +74,7 @@ export default function Profile(){
 
             // Sending back post data for the searched user
             const postData = await response.json()
-            setProfilePostData(postData.profilePostData || [])
+            setProfilePostData(postData.profilePostData.reverse() || [])
             // sending back the userdata for the searched user
 
             setUserProfileData(postData.userData || [])
@@ -198,7 +198,7 @@ export default function Profile(){
                </section>
             </div>
 
-            <h2 className="profHeaders">Your Posts</h2>
+            <h2 className="profHeaders">{userSearched}'s Posts</h2>
             <div className="profileAnalytics">
 
                {profilePostData.map((post)=> {

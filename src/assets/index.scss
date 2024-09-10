@@ -793,6 +793,11 @@ main {
 
                      }
 
+                     .postData {
+                        font-family: $ff-heading;
+                        color: lightgrey;
+                     }
+
                   }
 
 
@@ -824,6 +829,7 @@ main {
                   font-family: $ff-body;
                   color: rgba(255, 255, 255, 0.911);
                   font-weight: lighter;
+                  word-wrap: break-word;
                }
 
                .userTraction {
@@ -973,7 +979,7 @@ main {
    display: flex;
    flex-direction: column;
    gap: 1rem;
-   height: 800px;
+   // height: 800px;
    margin: 0 auto;
    color: white;
    padding: 2rem;

@@ -34,22 +34,7 @@ export default function UpdateFeed(props) {
   }, []);
 
 
-  // checks for the loggedin users following list
-  useEffect(()=> {
-    async function getFollowing() {
-      const response = await fetch('/checkUser/following', {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      })
 
-      const followingList = await response.json()
-      setUserFollowingList(followingList)
-    }
-
-    getFollowing()
-  }, [])
 
   // poster is used to find the corresponding profile for the poster
   function navigateToProfile(poster){
@@ -90,23 +75,6 @@ export default function UpdateFeed(props) {
   }
 
 
-  const [userFollowingList, setUserFollowingList] = useState([])
-
-
-  const handleFollowClick = (poster, followList)=> {
-    if (poster === currentUser) return
-
-    //  If the current user is following the followee
-    if(!userFollowingList.includes(poster)) {
-      return <button className="followBtn" onClick={(element)=> {followUser(poster, currentUser, element)}}>Follow</button>
-    }
-
-    return <button className="followBtn" onClick={(element)=> {unFollowUser(poster, currentUser, element)}}>Unfollow</button>
-
-  }
-
-
-
   const likeBtn = useRef([])
 
 
@@ -141,6 +109,45 @@ export default function UpdateFeed(props) {
     checkCurrentlyLiked()
   }, );
 
+  const currentDate = new Date()
+
+  function showPostDate(postCreationDate){
+    // Get the difference in milliseconds
+    const startDate = new Date(postCreationDate)
+    const timeDifference = currentDate - startDate
+    // console.log(postCreationDate)
+
+    // Covert the difference from milliseconds to day and hours
+    const millisecondsInOneDay = 24 * 60 * 60 * 1000;
+    const millisecondsInOneHour = 60 * 60 * 1000
+    const millisecondsInOneMinute = 60 * 1000;
+
+    // Calculate days and hours
+    const daysPassed = Math.floor(timeDifference / millisecondsInOneDay);
+    const hoursPassed = Math.floor((timeDifference % millisecondsInOneDay) / millisecondsInOneHour);
+    const minutesPassed = Math.floor((timeDifference % millisecondsInOneHour) / millisecondsInOneMinute);
+
+    // console.log(`${daysPassed} days passed, ${hoursPassed} hours passed, ${minutesPassed} minutes passed`)
+
+    if (minutesPassed === 0 && hoursPassed === 0 && daysPassed === 0) {
+      return <h1 className="postData">Just now</h1>
+    }
+
+    if (minutesPassed > 0 && hoursPassed === 0 && daysPassed === 0) {
+      return <h1 className="postData">{`${minutesPassed}m ago`}</h1>
+    }
+
+    if (hoursPassed > 0 || minutesPassed >= 60 && daysPassed === 0) {
+      return <h1 className="postData">{`${hoursPassed}hr. ago`}</h1>
+    }
+
+    if (daysPassed > 0) {
+      return <h1 className="postData">{`${daysPassed}d. ago`}</h1>
+    }
+    // return `${minutesPassed} minutes passed ${hoursPassed} hours passed ${daysPassed}`
+
+  }
+
   return (
     <>
       {/* Mapping each post in reverse (newest first) */}
@@ -156,6 +163,7 @@ export default function UpdateFeed(props) {
                     <section className="userAction">
                       {/* checking for whos posting */}
                       {checkAdmin(post.poster)}
+                      {showPostDate(post.postCreationDate)}
                       {/* {handleFollowClick(post.poster, currentUser)} */}
                       {/* {handleFollowClick(post.poster, userFollowingList)} */}
                     </section>
@@ -164,7 +172,7 @@ export default function UpdateFeed(props) {
                   <h2 className="postBody">{post.body}</h2>
                   <div className="postLC">
                     <span  ref={(el)=> (likeBtn.current[key] = el)} className="likeBtn" onClick={()=> addLike(post._id, key)}><i className="fa-solid fa-heart"></i><span style={{color: "grey"}}> {post.likes.length}</span></span>
-                    <span  className="commentBtn" ><i className="fa-solid fa-comments"></i> <span style={{color: "grey"}}> 0</span></span>
+                    <span  className="commentBtn" ><i className="fa-solid fa-comments"></i> <span style={{color: "grey"}}> Coming soon...</span></span>
                   </div>
                 </main>
               </div>
