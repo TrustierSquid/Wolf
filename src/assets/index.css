@@ -6,6 +6,7 @@
 
 html {
   max-height: 100000px;
+  min-height: 100vh;
   scroll-behavior: smooth;
 }
 
@@ -412,7 +413,7 @@ main #content #whatsNew #newPostBtn {
   display: flex;
   justify-content: center;
   border: #2E2E2E 1px solid;
-  color: white;
+  color: #00CAE5;
   padding: 2rem;
   font-size: 1.5rem;
   font-family: "roboto", sans-serif;

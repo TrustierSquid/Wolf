@@ -4,6 +4,7 @@ import express from "express";
 import dotenv from "dotenv";
 dotenv.config();
 import bcrypt from "bcrypt";
+import crypto from 'crypto'
 
 // for file redirections
 import path from "path";
@@ -57,6 +58,9 @@ const createToken = (userId) => {
     expiresIn: maxAge,
   });
 };
+
+
+
 
 /*
 
@@ -125,6 +129,7 @@ router.post("/add", async (req, res) => {
   const { username, password } = req.body;
 
   try {
+    const UID = crypto.randomBytes(16).toString('hex')
     const users = await req.db.collection("Users");
 
     // checking to find if the user is already registered
@@ -139,6 +144,7 @@ router.post("/add", async (req, res) => {
         await users.insertOne({
           user: username,
           password: hash,
+          UID: UID,
           isLoggedIn: true,
 
           // shows followers
@@ -148,7 +154,7 @@ router.post("/add", async (req, res) => {
           following: [],
           posts: 0,
           topics: [],
-          lastLogin: new Date(),
+          created: new Date(),
           profilePicture: "",
         });
 
@@ -284,6 +290,7 @@ router.get("/homeFeed", requireAuth, async (req, res) => {
     userName: loggedInUser.user,
     followerCount: loggedInUser.followers,
     followingCount: loggedInUser.following,
+    UID: loggedInUser.UID
   });
 
 });

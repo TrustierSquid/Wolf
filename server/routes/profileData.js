@@ -1,41 +1,49 @@
-import express from 'express'
+import express from "express";
 
 // for Database connectivity
 import connectMongo from "../server.js";
 import { ObjectId } from "mongodb";
 
-const router = express.Router()
+const router = express.Router();
 
+router.get("/", async (req, res) => {
+  const { user } = req.query; // The user to find
 
-router.get('/', async (req, res)=> {
-   const {user} = req.query // The user to find
+  // connection to the users collection in the db
+  const database = await connectMongo();
+  const usersCollection = database.collection("Users");
+  const mainFeedCollection = database.collection("mainFeed");
 
-   // connection to the users collection in the db
-   const database = await connectMongo()
-   const usersCollection = database.collection("Users")
-   const mainFeedCollection = database.collection("mainFeed")
+  /*
+   * Finding the user in the db based off of the query string
+   */
 
-   /*
-      * Finding the user in the db based off of the query string
-    */
+  // finds the user based of their uid
+  const userData = await usersCollection.findOne({ UID: user });
 
-   const userPosts = await mainFeedCollection.find(
-      {poster: user},
-   ).toArray()
+  // finds the posts of the selected user
+  const userPosts = await mainFeedCollection
+    .find({ poster: userData.user })
+    .toArray();
 
-   const userData = await usersCollection.findOne(
-      {user: user}
-   )
+  res.json({
+    profilePostData: userPosts,
+    userData: userData,
+  });
+});
 
+router.get("/getID", async (req, res) => {
+  const { poster } = req.query;
+  console.log(poster);
 
-   res.json({
-      profilePostData: userPosts,
-      userData: userData
-   })
+  const database = await connectMongo();
+  const users = database.collection("Users");
 
-})
+  const foundUser = await users.findOne({ user: poster });
 
+  res.json({ userUID: foundUser.UID });
 
+  console.log(`Here is the found users UID ${foundUser.UID}`);
+});
 
-
-export default router
+export default router;

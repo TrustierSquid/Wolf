@@ -298,7 +298,18 @@ export default function Home(){
       displayAbout: ()=> displayAbout()
    }
 
+   const createPostMessage = ()=> {
+      const queryString = window.location.search;
+      const urlParams = new URLSearchParams(queryString);
+      const userSearched = urlParams.get("topicFeed");
 
+      if (!queryString) {
+         return `Create Post on Home +`
+      }
+
+      let splicedTopic = userSearched.split("Feed")
+      return  `Create Post On ${splicedTopic[0]} +`
+   }
 
    return (
       <>
@@ -316,7 +327,7 @@ export default function Home(){
 
                <div id="whatsNew">
 
-                  <span id="newPostBtn" onClick={()=> appearEffect()}>Create Post +</span>
+                  <span id="newPostBtn" onClick={()=> appearEffect()}>{createPostMessage()}</span>
 
                   {/* Floating prompt for creating a new post */}
                   <form ref={createPostElement} id="createPostElement" >

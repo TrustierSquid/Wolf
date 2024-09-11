@@ -43,9 +43,20 @@ export default function UpdateFeed(props) {
   }
 
   // poster is used to find the corresponding profile for the poster
-  function navigateToProfile(poster) {
-    // window.location.href = `/profile.html?user=${poster}`
-    window.location.href = `/profile?user=${poster}`;
+  async function navigateToProfile(poster) {
+    const response = await fetch(`/profileData/getID?poster=${poster}`, {
+      method: "GET",
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+
+    const data = await response.json()
+    console.log(data)
+
+    window.location.href = `/profile?user=${data.userUID}`;
+    /* setTimeout(() => {
+    }, 500); */
   }
 
   // Checks to see if certain users are admin or special

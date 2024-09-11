@@ -23,6 +23,8 @@ import topics from "./json/topics.json" assert { type: "json" };
 // A fact that comes with each topic
 import topicFacts from "./json/facts.json" assert { type: "json" };
 
+
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
@@ -106,7 +108,7 @@ app.get("/api/topics", (req, res) => {
 });
 
 // to get to the topics page!
-app.get("/user", requireAuth, (req, res) => {
+app.get("/topics", requireAuth, (req, res) => {
   res.sendFile(path.join(__dirname, "/dist/topics.html"));
 });
 
@@ -392,6 +394,7 @@ app.post("/addFollowingUser", async (req, res) => {
     }
   }
 });
+
 
 app.listen(port, () => {
   console.clear();

@@ -50,6 +50,7 @@ $sc-info: #00CAE5;
 
 html {
    max-height: 100000px;
+   min-height: 100vh;
    scroll-behavior: smooth;
 }
 
@@ -565,7 +566,7 @@ main {
             display: flex;
             justify-content: center;
             border: $cardBorder 1px solid;
-            color: white;
+            color:#00CAE5 ;
             padding: 2rem;
             font-size: 1.5rem;
             font-family: $ff-body;

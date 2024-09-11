@@ -59,6 +59,8 @@ export default function Profile(){
    const urlParams = new URLSearchParams(queryString)
    const userSearched = urlParams.get('user')
 
+   const [dynamicUsername, setDynamicUsername] = useState(null)
+
    useEffect(()=> {
       if (!userSearched) return
 
@@ -78,6 +80,8 @@ export default function Profile(){
             // sending back the userdata for the searched user
 
             setUserProfileData(postData.userData || [])
+
+            setDynamicUsername(postData.userData.user)
 
 
          } catch {
@@ -139,12 +143,12 @@ export default function Profile(){
 
 
    function checkUserType(){
-      switch (userSearched) {
+      switch (dynamicUsername) {
          // For developers
          case 'Samuel':
             return (
                <>
-                  <h2>{userSearched}</h2>
+                  <h2>{dynamicUsername}</h2>
                   <h5 className="profileUserTypeHeader"
                   style={{color: "#00b3ff"}}>
                      Developer <i className="fa-solid fa-code"></i></h5>
@@ -154,7 +158,7 @@ export default function Profile(){
          case 'DemoUser':
             return (
                <>
-                  <h1>{userSearched}</h1>
+                  <h1>{dynamicUsername}</h1>
                   <h5 className="profileUserTypeHeader" style={{color: "#73ff00"}}>Recruiter <i className="fa-solid fa-clipboard"></i></h5>
                </>
             )
@@ -162,7 +166,7 @@ export default function Profile(){
          default:
             return (
                <>
-                  <h1>{userSearched}</h1>
+                  <h1>{dynamicUsername}</h1>
                   <h5 className="profileUserTypeHeader"
                   style={{color: "grey"}}>User <i className="fa-solid fa-user"> </i></h5>
                </>
@@ -198,7 +202,7 @@ export default function Profile(){
                </section>
             </div>
 
-            <h2 className="profHeaders">{userSearched}'s Posts</h2>
+            <h2 className="profHeaders">{dynamicUsername}'s Posts</h2>
             <div className="profileAnalytics">
 
                {profilePostData.map((post)=> {
