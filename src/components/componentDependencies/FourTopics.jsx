@@ -44,7 +44,7 @@ export default function FourTopics(props) {
 
    return (
       <>
-         <div id="introGrid">
+         {/* <div id="introGrid">
             <h1>4 Topic Facts</h1>
             {topicSort().map((topic, key)=> {
                const itemStyle = {
@@ -90,7 +90,7 @@ export default function FourTopics(props) {
                   </div>
                )
             })}
-         </div>
+         </div> */}
       </>
    )
 }

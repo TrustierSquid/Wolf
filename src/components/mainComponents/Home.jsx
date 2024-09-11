@@ -117,6 +117,9 @@ export default function Home(){
       let subject = subjectPostElement.current.value
       let body = bodyPostElement.current.value
 
+      const queryString = window.location.search;
+      const urlParams = new URLSearchParams(queryString)
+      const userSearched = urlParams.get('topicFeed')
 
       // checking to see if either input field is empty
       if (!subject || !body) {
@@ -127,29 +130,60 @@ export default function Home(){
 
       setErrorMessage('Posting..')
 
-      // Sending post to db...
-      const response = await fetch(`/newPost?feed=${grippedTopic}`, {
-         method: 'POST',
-         headers: {
-            'Content-Type': 'application/json',
-         },
-         body: JSON.stringify({whoPosted: username, postSubject: subject, postBody: body})
-      })
+      if (!queryString) {
+         // Sending post to db...
+         const response = await fetch(`/newPost?feed=mainFeed`, {
+            method: 'POST',
+            headers: {
+               'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({whoPosted: username, postSubject: subject, postBody: body})
+         })
 
-      if (!response.ok) {
-         throw new Error(`Error posting.. ${response.status}`)
+         if (!response.ok) {
+            throw new Error(`Error posting.. ${response.status}`)
+         }
+
+         setTimeout(()=> {
+            errorMessageElement.current.style.color = 'lime'
+            bodyPostElement.current.value = ''
+            subjectPostElement.current.value = ''
+            setErrorMessage('Posted!')
+         }, 900)
+
+         setTimeout(() => {
+            // setErrorMessage('')
+            window.location.reload()
+         }, 3000);
+
+      } else {
+
+         // Sending post to db...
+         const response = await fetch(`/newPost?feed=${userSearched}`, {
+            method: 'POST',
+            headers: {
+               'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({whoPosted: username, postSubject: subject, postBody: body})
+         })
+
+         if (!response.ok) {
+            throw new Error(`Error posting.. ${response.status}`)
+         }
+
+         setTimeout(()=> {
+            errorMessageElement.current.style.color = 'lime'
+            bodyPostElement.current.value = ''
+            subjectPostElement.current.value = ''
+            setErrorMessage('Posted!')
+         }, 900)
+
+         setTimeout(() => {
+            // setErrorMessage('')
+            window.location.reload()
+         }, 1000);
+
       }
-
-      setTimeout(()=> {
-         errorMessageElement.current.style.color = 'lime'
-         bodyPostElement.current.value = ''
-         subjectPostElement.current.value = ''
-         setErrorMessage('Posted!')
-      }, 900)
-
-      setTimeout(() => {
-         setErrorMessage('')
-      }, 3000);
 
    }
 
@@ -282,7 +316,7 @@ export default function Home(){
 
                <div id="whatsNew">
 
-                  <span id="newPostBtn" onClick={()=> appearEffect()}><i style={{color: "grey"}} class="fa-solid fa-comment"></i>What's New</span>
+                  <span id="newPostBtn" onClick={()=> appearEffect()}>Create Post +</span>
 
                   {/* Floating prompt for creating a new post */}
                   <form ref={createPostElement} id="createPostElement" >

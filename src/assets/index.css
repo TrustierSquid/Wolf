@@ -14,7 +14,7 @@ html {
   position: absolute;
   top: 0;
   left: 0;
-  min-height: 165%;
+  min-height: 100%;
   width: 100%;
   z-index: 5;
   pointer-events: none;
@@ -108,7 +108,7 @@ body {
   gap: 2rem;
 }
 #loginContainer #loginBtns button {
-  background-color: #1e1d1d;
+  background-color: #131212;
   border: none;
   padding: 1rem;
   border-radius: 0.5rem;
@@ -167,7 +167,7 @@ CHOOSING TOPICS COMPONENT
   font-weight: 500;
   border-radius: 1rem;
   border: none;
-  background: #1e1d1d;
+  background: #131212;
   color: white;
   padding: 0.5rem 1rem;
   text-wrap: nowrap;
@@ -277,7 +277,7 @@ HOME PAGE
 #navDropdown {
   display: flex;
   flex-direction: column;
-  background-color: #1e1d1d;
+  background-color: #131212;
   border: 1px solid #2E2E2E;
   font-family: "Nunito", sans-serif;
   padding: 1rem;
@@ -326,44 +326,20 @@ HOME PAGE
   color: white;
   background-color: #121010;
   border-right: 1px solid #2E2E2E;
-  padding: 1.5rem;
+  padding: 1rem;
   display: flex;
   flex-direction: column;
-  gap: 7rem;
+  gap: 2rem;
   font-family: "roboto", sans-serif;
   position: fixed;
   overflow-y: scroll;
 }
 .sideNav .subTitle {
-  font-family: "Nunito", sans-serif;
-  font-weight: 800;
-  color: #f1f1f1;
-}
-.sideNav #sideNavBtns {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-.sideNav #sideNavBtns button {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
+  font-family: "roboto", sans-serif;
+  font-weight: lighter;
+  letter-spacing: 2px;
   padding: 1rem;
-  font-size: 1rem;
-  cursor: pointer;
-  background: none;
-  color: white;
-  border: none;
-  border-radius: 0.5rem;
-  transition: 150ms;
-  text-align: left;
-  padding-left: 1rem;
-  display: flex;
-  justify-content: space-between;
-}
-.sideNav #sideNavBtns button:hover {
-  background-color: #FF3C3C;
-  transform: translateY(-3px);
+  color: #878787;
 }
 .sideNav .topicSelectionElement {
   display: flex;
@@ -409,7 +385,7 @@ main {
 }
 main #content {
   width: 50%;
-  padding: 3rem;
+  padding: 2rem;
   display: flex;
   flex-direction: column;
   margin-left: 30rem;
@@ -449,7 +425,7 @@ main #content #whatsNew #newPostBtn {
   align-items: center;
   justify-content: start;
   gap: 1rem;
-  background-color: rgba(15, 15, 15, 0.5843137255);
+  background: none;
   transition: 150ms;
   text-wrap: nowrap;
 }
@@ -477,7 +453,7 @@ main #content #whatsNew #createPostElement {
   right: 50%;
   transform: translate(50%, -50%);
   border-radius: 1rem;
-  border: 1px solid #1e1d1d;
+  border: 1px solid #131212;
   z-index: 5;
   opacity: 0;
   pointer-events: none;
@@ -511,7 +487,7 @@ main #content #whatsNew #createPostElement #formSubject input, main #content #wh
   border-radius: 0.5rem;
   font-size: 1rem;
   font-family: "Nunito", sans-serif;
-  background-color: #1e1d1d;
+  background-color: #131212;
   border: none;
   color: white;
 }
@@ -553,7 +529,7 @@ main #content .userContent .userPost .mainPost {
   gap: 1rem;
   padding: 1.5rem;
   border-radius: 1rem;
-  background: #1e1d1d;
+  background: #131212;
   border: #2E2E2E 1px solid;
   color: white;
   transition: 250ms;
@@ -709,9 +685,10 @@ main #content .userContent .userPost .mainPost .postLC .commentBtn:hover {
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  margin: 0 auto;
+  margin: 2% auto;
   color: white;
   padding: 2rem;
+  border-radius: 1.5rem;
 }
 #mainProfile .profHeaders {
   font-family: "Nunito", sans-serif;
@@ -786,13 +763,20 @@ main #content .userContent .userPost .mainPost .postLC .commentBtn:hover {
   padding: 2rem;
   border-radius: 1rem;
   display: flex;
+  flex-direction: column;
+  gap: 2rem;
   justify-content: space-between;
   transition: 150ms;
   cursor: pointer;
 }
+#mainProfile .profileAnalytics:nth-of-type(2) .existingPost .profilePostSubject {
+  display: flex;
+  gap: 1rem;
+}
 #mainProfile .profileAnalytics:nth-of-type(2) .existingPost .profilePostAnalytics {
   display: flex;
-  gap: 3.5rem;
+  align-items: center;
+  gap: 1rem;
 }
 #mainProfile .profileAnalytics:nth-of-type(2) .existingPost:hover {
   transform: translateY(-5px);
@@ -853,6 +837,7 @@ HOME COMPONENT MEDIA QUERIES
   main #content #whatsNew #newPostBtn {
     align-self: center;
     z-index: 0;
+    margin-top: 3rem;
   }
   main #content #whatsNew h1 {
     font-size: 6vw;
