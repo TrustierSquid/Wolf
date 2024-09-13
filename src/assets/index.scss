@@ -10,7 +10,7 @@ $subBackground: #121010;
 // navbarBG
 $navBG: #510917;
 
-$primary: #FF3C3C;
+$primary: #ff3c3c;
 $darkenPrimary: #532C2C;
 $inputField: #1B1B1B;
 $buttonHover: #7A0B31;
@@ -210,7 +210,7 @@ CHOOSING TOPICS COMPONENT
    background: #161616;
    background: none;
    min-height: 600px;
-   max-width: 100%;
+   max-width: 70%;
    // max-width: 1000px;
    // margin: 5rem auto;
    margin: 4rem auto;
@@ -226,12 +226,12 @@ CHOOSING TOPICS COMPONENT
 
 
    // header
-   h1 {
+   #pageHeader {
       // font-weight: lighter;
       font-family: $ff-heading;
       font-size: min(2rem, 4rem);
-      width: 90%;
-      text-align: center;
+      // width: 90%;
+      align-self: start;
       color: white;
 
       span {
@@ -240,81 +240,96 @@ CHOOSING TOPICS COMPONENT
 
    }
 
+   #pageSubHeader {
+      font-family: $ff-heading;
+      font-size: min(1.5rem, 2rem);
+      align-self: start;
+      color: grey;
+   }
+
 
    #topicSelect {
-      // display: flex;
-      // flex-wrap: wrap;
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      width: 80%;
+      // grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      grid-template-columns: 1fr 1fr 1fr;
       justify-content: center;
       align-items: center;
-      padding: 2rem;
-      // background-color: $subBackground;
       border-radius: 1rem;
-      // grid-template-columns: 1fr 1fr 1fr;
-      // border: 2px solid red;
+      margin-top: 2rem;
       gap: 1rem;
 
-      button {
+
+
+
+      .topicSelectionBtn {
          font-weight: 500;
+         padding: 1.5rem;
+         height: 250px;
          border-radius: 1rem;
+         font-family: $ff-heading;
          border: none;
          background: $cardBG;
          color: white;
          // padding: 1rem;
-         padding: 0.5rem 1rem;
-         text-wrap: nowrap;
+         text-wrap: wrap;
          transition: 150ms;
          font-size: clamp(0.6rem, 1rem, 1.8rem);
-         cursor: pointer;
+         display: flex;
+         flex-direction: column;
          border: 2px solid $cardBorder;
+         justify-content: space-between;
 
+         .topicHeader {
+            display: flex;
+            justify-content: space-between;
 
-
-         &:hover {
-            background: $primary;
-            transform: translateY(-5px);
-            // border: none;
+            .memberCount {
+               color: lightgrey;
+               font-size: 0.9rem;
+            }
          }
+
+         .communityJoinBtn {
+            cursor: pointer;
+            padding: 0.5rem;
+            width: 75px;
+            align-self: end;
+            background-color: $primary;
+            border: none;
+            border-radius: 0.5rem;
+            color: white;
+            transition: 150ms;
+
+            &:hover {
+               background-color: $buttonHover;
+            }
+         }
+
       }
 
-      // appends to the topic buttons on click
-      .selected {
-         background-color: $primary;
+
+      .topicSelectionBtn:nth-child(even) {
+         background-color: $inputField;
       }
 
-      .disabled {
-         transition: 150ms;
-         background-color: #303030;
-         pointer-events: none;
-      }
-   }
 
-   #continuteBtn {
-      font-family: $ff-heading;
-      font-weight: 900;
-      padding: 1rem;
-      border-radius: 0.5rem;
-      background-color: $primary;
-      border: none;
-      color: white;
-      background: rgb(255,60,60);
-      cursor: pointer;
-      transition: 150ms;
-
-      &:hover {
-         transform: translateY(-5px);
-         box-shadow: rgb(255, 105, 105,0.4) 0px 4px 15px;
-         background-color: $buttonHover;
-      }
    }
 }
 
-@media (max-width: 1000px) {
+@media (max-width: 1050px) {
 
    #topics {
-      margin: 1rem;
+      max-width: 100%;
+
+      #pageHeader, #pageSubHeader {
+         text-align: center;
+         align-self: center;
+      }
+
+      #topicSelect {
+         // grid-template-columns: 1fr 1fr;
+         grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      }
    }
 
    #loginContainer {

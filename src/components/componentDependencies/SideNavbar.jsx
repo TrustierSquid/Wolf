@@ -27,6 +27,10 @@ const SideNavBar = forwardRef(({
       window.location.href = `/home`
    }
 
+   function navigateToTopicSelection(){
+      window.location.href = `/topics`
+   }
+
 
    return (
       <>

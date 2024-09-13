@@ -129,13 +129,27 @@ export default defineConfig({
         ws: true,
       },
 
+      '/topicsAdd': {
+        target: 'http://localhost:3000',
+        changeOrigin: true,
+        secure: false,
+        ws: true,
+      },
+
+      '/topicsJoined': {
+        target: 'http://localhost:3000',
+        changeOrigin: true,
+        secure: false,
+        ws: true,
+      },
+
     }
   },
   build: {
     rollupOptions: {
       input: {
         main: 'index.html',
-        user: 'topics.html',
+        topics: 'topics.html',
         home: 'home.html',
         profile: 'profile.html'
       }

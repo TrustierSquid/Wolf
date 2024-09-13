@@ -197,77 +197,7 @@ TOPICS PAGE
 */
 
 // RECORDING THE TOPICS THE NEWUSER SELECTS
-// when the user selects a topic it pushes to the db
-router.post("/topics", requireAuth, async (req, res) => {
-  const { topic } = req.body;
 
-  const database = await connectMongo();
-  const users = await database.collection("Users");
-
-  const documentLookup = await users.findOne({
-    // finding id of user
-    _id: new ObjectId(req.currentUser),
-  });
-
-  // If the user was found...
-  if (documentLookup) {
-
-    if (!documentLookup.topics.includes(topic)) {
-      // values to update
-      const updateValues = {
-        $push: {
-          topics: topic,
-        },
-      };
-
-      const result = await users.updateOne(
-        { _id: new ObjectId(req.currentUser) },
-        updateValues
-      );
-
-      console.log("Updated topics");
-    } else {
-      console.log(`This document already exists for ${documentLookup.user}`)
-    }
-
-  } else {
-    console.log("Failed to find user");
-    res.redirect('/')
-  }
-});
-
-
-
-// when the user deselects a topic
-router.delete("/topics", requireAuth, async (req, res) => {
-  const { topic } = req.body;
-
-  const database = await connectMongo();
-  const users = database.collection("Users");
-
-  const documentLookup = await users.findOne({
-    _id: new ObjectId(req.currentUser),
-  });
-
-  if (documentLookup) {
-    // values to update
-    const updateValues = {
-      $pull: {
-        topics: topic,
-      },
-    };
-
-    const result = await users.updateOne(
-      { _id: new ObjectId(req.currentUser) },
-      updateValues
-    );
-
-    console.log("Updated topics (delete)");
-  } else {
-    console.log("Failed to find user");
-    res.redirect('/')
-  }
-});
 
 
 // HOME FEED PAGE

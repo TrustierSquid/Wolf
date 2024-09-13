@@ -22,6 +22,7 @@ import topics from "./json/topics.json" assert { type: "json" };
 
 // A fact that comes with each topic
 import topicFacts from "./json/facts.json" assert { type: "json" };
+import { connect } from "http2";
 
 
 
@@ -108,15 +109,20 @@ app.get("/api/topics", (req, res) => {
 });
 
 // to get to the topics page!
-app.get("/topics", requireAuth, (req, res) => {
+/* app.get("/topics", requireAuth, (req, res) => {
   res.sendFile(path.join(__dirname, "/dist/topics.html"));
-});
+}); */
 
 /* HOME FEED PAGE */
 
 app.get("/home", requireAuth, (req, res) => {
   // for dev
   res.sendFile(path.join(__dirname, "/dist/home.html"));
+});
+
+app.get("/topics", requireAuth, (req, res) => {
+  // for dev
+  res.sendFile(path.join(__dirname, "/dist/topics.html"));
 });
 
 app.get("/viewProf", (req, res) => {
@@ -394,6 +400,65 @@ app.post("/addFollowingUser", async (req, res) => {
     }
   }
 });
+
+
+app.post('/topicsAdd', async (req, res)=> {
+  const {topicToAdd} = req.body
+
+  // by UID
+  const {loggedInUser} = req.query
+
+  const database = await connectMongo()
+  const users = database.collection('Users')
+
+  // checking to see if it exists in the topics array
+  let findTopic = await users.findOne(
+    {UID: loggedInUser,
+    topics: {$in: [topicToAdd]} }
+  )
+
+  /* let user = await users.findOne(
+    {UID: loggedInUser}
+  ) */
+
+  if (!findTopic) {
+    await users.updateOne(
+      {UID: loggedInUser},
+      {$addToSet: {topics: topicToAdd}}
+    )
+
+    console.log(`${loggedInUser} Joined ${topicToAdd}`)
+
+  } else {
+    await users.updateOne(
+      {UID: loggedInUser},
+      {$pull: {topics: topicToAdd}}
+    )
+
+    console.log(`Left ${topicToAdd}`)
+  }
+
+})
+
+
+app.get('/topicsJoined', async (req, res)=> {
+  const {UUID} = req.query
+
+  const database = await connectMongo()
+  const users = database.collection('Users')
+
+  // find the user so we can get his list of topics
+  let findUser = await users.findOne(
+    {UID: UUID},
+  )
+
+  console.log(UUID)
+
+  res.json(findUser)
+
+})
+
+
 
 
 app.listen(port, () => {

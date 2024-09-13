@@ -1,78 +1,108 @@
 import { useState, useEffect, useRef } from "react";
+import Navbar from "../componentDependencies/NavBar";
 
-export default function Topics() {
+export default function Topics(props) {
   const [topicCounter, setTopicCounter] = useState(null);
-  const [topic, setTopic] = useState([]);
+  const [topics, setTopics] = useState([]);
+  const [topicsJoined, setTopicsJoined] = useState([])
   const topicRefs = useRef({});
   const plusIcon = useRef(null);
   const checkIcon = useRef(null);
+  const cardBtnRef = useRef([])
 
-  useEffect(() => {
-    async function getTopic() {
-      // grabbing topics to display on the topic select screen
-      const response = await fetch(`/api/topics`, {
-        method: "GET",
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      const data = await response.json();
+  async function getTopics(){
+    const response = await fetch('/api/topics', {
+      method: 'GET',
+      headers: {
+        "Content-Type": 'application/json'
+      }
+    })
 
-      // retrieving all topics and throwing them in a state var
-      setTopic(data.topics);
-    }
+    if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
 
-    getTopic();
-  }, []);
-
-  // the value is the topic the user selected.
-  // refs is an object that keeps track of all the topic buttons on the page
-  let addedTopics = 0;
-  function recordTopic(topicElementValue, refs) {
-    // post the data that the user selected
-    let stageTopics = async (topic) => {
-      const response = await fetch(`/users/topics`, {
-        method: "POST",
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ topic: topic }),
-      });
-    };
-
-    // remove the selected topic from the server
-    let removeStagedTopics = async (topic) => {
-      const response = await fetch(`/users/topics`, {
-        method: "DELETE",
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ topic: topic }),
-      });
-
-      addedTopics--;
-    };
-
-    /* STYLING FOR THE BUTTONS ON CLICK */
-
-    refs.classList.toggle("selected");
-    // if the "selected" class in not appended to the element, the innerHTML will remain
-    if (!refs.classList.contains("selected")) {
-      refs.innerHTML = `${topicElementValue} +`;
-      removeStagedTopics(topicElementValue);
-    }
-
-    // if the "selected" class is appended to the element, the innerHTML will be a check mark
-    if (refs.innerText.includes("+") && refs.classList.contains("selected")) {
-      stageTopics(topicElementValue);
-      refs.innerHTML = `${topicElementValue} <i class="fa-solid fa-circle-check"></i>`;
-    }
-
-    console.log(topicElementValue);
+    const data = await response.json()
+    setTopics(data.topics)
   }
+
+
+  async function checkTopicsJoined(){
+    const response = await fetch(`/topicsJoined?UUID=${props.loggedInUID}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const data = await response.json()
+    setTopicsJoined(data?.topics || [])
+  }
+
+  useEffect(()=> {
+    getTopics()
+    console.log(topicsJoined)
+  }, [topicsJoined])
+
+  useEffect(()=> {
+    if (props.loggedInUID) {
+      checkTopicsJoined()
+    }
+  }, [props.loggedInUID])
+
+  useEffect(()=> {
+    checkTopicsJoined()
+  }, [])
+
+
+  useEffect(()=> {
+    topics.forEach((topic, index)=> {
+      if(topicsJoined.includes(topic.name)){
+        const button = cardBtnRef.current[index]
+        if(button){
+          button.style.backgroundColor = 'green'
+          button.innerHTML = 'joined!'
+        }
+      }
+    })
+  }, [topics, topicsJoined])
+
+
+
+
+
+  // toggles weather or not you join a topic or leave one
+  async function joinTopic(topicName){
+    const response = await fetch(`/topicsAdd?loggedInUser=${props.loggedInUID}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({topicToAdd: topicName}),
+    })
+
+
+    await getTopics()
+    await checkTopicsJoined()
+
+
+
+  }
+
+  async function showJoined() {
+    topics.map((topic, key)=> {
+      if (topicsJoined?.includes(topic.name)) {
+        cardBtnRef.current[key].style.backgroundColor = 'green'
+      }
+    })
+  }
+
+  showJoined()
+
 
   // go to home page for user
   async function reDirectToHome() {
@@ -81,33 +111,33 @@ export default function Topics() {
 
   return (
     <>
+      <Navbar/>
       <main id="topics">
-        <h1>
-          Select <span>topics</span> that interest you.
-        </h1>
+        <h1 id="pageHeader">Select <span>topics</span> that interest you. <i className="fa-solid fa-users"></i></h1>
+        <p id="pageSubHeader">Browse and participate in these communities</p>
         <div id="topicSelect">
-          {topic.map((topic) => {
+          {topics?.map((topic, key)=> {
             return (
               <>
-                <button
-                  // going by the object id, ref={} will cache each button
-                  // we extract the name of each button mapped out.
-                  key={topic.id}
-                  ref={(element) => (topicRefs.current[topic.id] = element)}
-                  onClick={() =>
-                    recordTopic(topic.name, topicRefs.current[topic.id])
-                  }
-                >
-                  {topic.name} +
-                </button>
+                <div key={topic.name} className="topicSelectionBtn">
+
+                  <div className='topicHeader'>
+                    <h3>{topic.name}</h3>
+                    <p className='memberCount'>0 Participants</p>
+                  </div>
+
+                  <p>{topic.fact1}</p>
+                  <button ref={(el) => (cardBtnRef.current[key] = el)} className="communityJoinBtn" onClick={()=> joinTopic(topic.name)}>{topicsJoined.includes(topic.name) ? 'Joined!' : 'Join'}</button>
+
+                </div>
               </>
-            );
+            )
           })}
         </div>
         <br />
-        <button id="continuteBtn" onClick={() => reDirectToHome()}>
+        {/* <button id="continuteBtn" onClick={() => reDirectToHome()}>
           Next <i className="fa-solid fa-right-long"></i>
-        </button>
+        </button> */}
       </main>
     </>
   );
