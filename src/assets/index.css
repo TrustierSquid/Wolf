@@ -279,6 +279,9 @@ HOME PAGE
   cursor: pointer;
   transition: 150ms;
 }
+#nav #profileContainer #dropdownBtn:focus {
+  color: #ff3c3c;
+}
 #nav #profileContainer #dropdownBtn:hover {
   color: #ff3c3c;
 }

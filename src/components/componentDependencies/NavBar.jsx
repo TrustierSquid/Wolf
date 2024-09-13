@@ -76,7 +76,7 @@ export default function Navbar() {
         </div>
         <div id="profileContainer" onClick={(element) => navHelper(element)}>
           <h1 id="dropdownBtn">
-            <i className="fa-solid fa-user-large"></i>
+            <i className="fa-solid fa-user-large"></i> Profile
           </h1>
         </div>
         <button ref={mobileNavBtn} id="mobileNavBtn">

@@ -394,6 +394,12 @@ HOME PAGE
          color: white;
          cursor:pointer;
          transition: 150ms;
+
+         &:focus {
+            color: $primary;
+         }
+
+
          &:hover {
             color: $primary;
          }
