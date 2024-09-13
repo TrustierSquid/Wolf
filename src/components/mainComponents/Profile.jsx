@@ -61,44 +61,43 @@ export default function Profile(props){
 
    const [dynamicUsername, setDynamicUsername] = useState(null)
 
-   useEffect(()=> {
-      if (!userSearched) return
 
 
-      async function getUserProfilePosts() {
-         try {
-            const response = await fetch(`/profileData?user=${userSearched}`, {
-               method: "GET",
-               headers: {
-                  'Content-Type': 'application/json'
-               },
-            })
 
-            // Sending back post data for the searched user
-            const postData = await response.json()
-            setProfilePostData(postData.profilePostData.reverse() || [])
-            // sending back the userdata for the searched user
+   async function getUserProfilePosts(feedView = 'mainFeed') {
+      try {
+         const response = await fetch(`/profileData?user=${userSearched}&feed=${feedView}`, {
+            method: "GET",
+            headers: {
+               'Content-Type': 'application/json'
+            },
+         })
 
-            setUserProfileData(postData.userData || [])
+         // Sending back post data for the searched user
+         const postData = await response.json()
+         setProfilePostData(postData.profilePostData.reverse() || [])
+         // sending back the userdata for the searched user
 
-            setDynamicUsername(postData.userData.user)
+         setUserProfileData(postData.userData || [])
+
+         setDynamicUsername(postData.userData.user)
 
 
-         } catch {
-            throw new Error("Couldnt fetch for profile data")
-         }
-
-         // console.log(profileData)
-
+      } catch {
+         throw new Error("Couldnt fetch for profile data")
       }
 
-      getUserProfilePosts()
-
-   }, [userSearched])
+      // console.log(profileData)
+   }
 
    useEffect(()=> {
-      // console.log(userProfileData)
-   }, [userProfileData])
+      if (!userSearched) return
+      getUserProfilePosts()
+   }, [userSearched])
+
+  /*  useEffect(()=> {
+      console.log(userProfileData)
+   }, [userProfileData]) */
 
 
 // queryStringUser is the user looked up via query string
@@ -204,8 +203,26 @@ export default function Profile(props){
                </section>
             </div>
 
-            <h2 className="profHeaders">{dynamicUsername}'s Posts</h2>
+
+
             <div className="profileAnalytics">
+               <section className="profHeaders">
+                  <h2>{dynamicUsername}'s Posts</h2>
+                  <form>
+                     <label>See Posts From Your Topics: </label>
+
+                     {/* The topics that the user is currently apart of  */}
+                     {userProfileData?.topics?.length > 0 && (
+                        <select className="topicDisplaySelection">
+                           {userProfileData.topics.map((topic, index) => (
+                              <option key={index} onClick={()=> getUserProfilePosts(topic + "Feed")}>{topic} Feed</option>
+                           ))}
+                           <option onClick={()=> getUserProfilePosts("mainFeed")}>Home Feed</option>
+                        </select>
+                     )}
+
+                  </form>
+               </section>
 
                {profilePostData.map((post)=> {
                   return (

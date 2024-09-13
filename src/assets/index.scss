@@ -1062,6 +1062,32 @@ main {
       margin: 0 auto;
       font-family: $ff-body;
 
+      .profHeaders {
+         display: flex;
+         justify-content: space-between;
+         align-items: center;
+
+         form {
+            display: flex;
+            justify-content: end;
+            gap: 1rem;
+            align-items: center;
+
+            select {
+               background-color: $cardBG;
+               color: white;
+               padding: 0.5rem;
+               border-radius: 0.5rem;
+               border: 0.5px solid $cardBorder;
+
+               option {
+                  color: white;
+               }
+            }
+         }
+      }
+
+
       .existingPost {
          background-color: #1D1C1C;
          border: 1px solid $cardBorder;

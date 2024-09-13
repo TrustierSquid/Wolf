@@ -768,6 +768,27 @@ main #content .userContent .userPost .mainPost .postLC .commentBtn:hover {
   margin: 0 auto;
   font-family: "roboto", sans-serif;
 }
+#mainProfile .profileAnalytics:nth-of-type(2) .profHeaders {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+#mainProfile .profileAnalytics:nth-of-type(2) .profHeaders form {
+  display: flex;
+  justify-content: end;
+  gap: 1rem;
+  align-items: center;
+}
+#mainProfile .profileAnalytics:nth-of-type(2) .profHeaders form select {
+  background-color: #131212;
+  color: white;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  border: 0.5px solid #2E2E2E;
+}
+#mainProfile .profileAnalytics:nth-of-type(2) .profHeaders form select option {
+  color: white;
+}
 #mainProfile .profileAnalytics:nth-of-type(2) .existingPost {
   background-color: #1D1C1C;
   border: 1px solid #2E2E2E;

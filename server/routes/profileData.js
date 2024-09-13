@@ -7,12 +7,14 @@ import { ObjectId } from "mongodb";
 const router = express.Router();
 
 router.get("/", async (req, res) => {
-  const { user } = req.query; // The user to find
+  const { user, feed } = req.query; // The user to find
 
   // connection to the users collection in the db
   const database = await connectMongo();
   const usersCollection = database.collection("Users");
-  const mainFeedCollection = database.collection("mainFeed");
+
+  // dynamic feed based on what was in the dropdown of the user profile
+  const feedCollection = database.collection(feed);
 
   /*
    * Finding the user in the db based off of the query string
@@ -22,12 +24,14 @@ router.get("/", async (req, res) => {
   const userData = await usersCollection.findOne({ UID: user });
 
   // finds the posts of the selected user
-  const userPosts = await mainFeedCollection
-    .find({ poster: userData.user })
-    .toArray();
+  const userPosts = await feedCollection.find({ poster: userData.user }).toArray();
+
 
   res.json({
+    // posts from the mainfeed
     profilePostData: userPosts,
+
+    // profile data based on the query string
     userData: userData,
   });
 });

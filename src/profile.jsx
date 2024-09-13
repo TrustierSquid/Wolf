@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react'
 // grabbing the logged in user
 function App() {
   const [loggedInUID, setLoggedInUID] = useState(null)
+  const [userTopicArray, setUserTopicArray] = useState(null)
 
   useEffect(() => {
     async function getUserData() {
@@ -27,6 +28,7 @@ function App() {
       // console.log(homeData.followingCount.length)
       // setting the user info needed as glob vars
       setLoggedInUID(homeData.UID);
+      setUserTopicArray(homeData.topicArr)
     }
 
     getUserData();
@@ -34,11 +36,12 @@ function App() {
 
   useEffect(()=> {
     console.log(`Here is the currently logged in UID ${loggedInUID}`)
+    console.log(userTopicArray)
   }, [loggedInUID])
 
   return (
     <React.StrictMode>
-      <Profile loggedInUID={loggedInUID}/>
+      <Profile loggedInUID={loggedInUID} userTopics={userTopicArray}/>
     </React.StrictMode>
   )
 }
