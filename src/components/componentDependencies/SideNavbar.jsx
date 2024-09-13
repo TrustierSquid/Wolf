@@ -6,7 +6,8 @@ const SideNavBar = forwardRef(({
 }, ref) => {
    const {sideNav, topicBtn} = ref || {}
 
-   useEffect(()=> {
+
+   /* useEffect(()=> {
       async function loadTopicFeed(topic){
          const response = await fetch(`/loadTopicFeed?topicFeed=${topic}`, {
             method: "GET",
@@ -17,12 +18,14 @@ const SideNavBar = forwardRef(({
 
          const data = response.json()
       }
-   }, [])
+   }, []) */
 
+   // Goes to the feed determined in the query string
    function navigateToFeed(topic){
       window.location.href = `/home?topicFeed=${topic + 'Feed'}`
    }
 
+   // if there is no query string when navigating feeds, then it will default to home
    function navigateToHome(){
       window.location.href = `/home`
    }

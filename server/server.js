@@ -353,29 +353,48 @@ app.post("/addFollowingUser", async (req, res) => {
   const database = await connectMongo();
   const users = database.collection("Users");
 
+  // getting the followw document
+  let findFollowee = await users.findOne({
+    UID: followee
+  })
+
+  // getting the logged in user document
+  let findLoggedInUser = await users.findOne({
+    UID: loggedInUser
+  })
+
+  // grabbing the names out of both documents
+  findFollowee = findFollowee.user,
+  findLoggedInUser = findLoggedInUser.user
+
+
+
   // checks to see if a user is already a follower of a user
   const duplicateUserFollowing = await users.findOne({
-    user: loggedInUser,
-    following: { $in: [followee] },
-  });
-  const duplicateUserFollower = await users.findOne({
-    user: followee,
-    followers: { $in: [loggedInUser] },
+    user: findLoggedInUser,
+    following: { $in: [findFollowee] },
   });
 
+
+  const duplicateUserFollower = await users.findOne({
+    user: findFollowee,
+    followers: { $in: [findLoggedInUser] },
+  });
+
+
   if (duplicateUserFollowing || duplicateUserFollower) {
-    console.log(`${loggedInUser} unfollows  ${followee}`);
+    console.log(`${findLoggedInUser} unfollows ${findFollowee}`);
     try {
       // updating current users following list
       await users.updateOne(
-        { user: loggedInUser },
-        { $pull: { following: followee } }
+        { user: findLoggedInUser },
+        { $pull: { following: findFollowee } }
       );
 
       // updating followee list
       await users.updateOne(
-        { user: followee },
-        { $pull: { followers: loggedInUser } }
+        { user: findFollowee },
+        { $pull: { followers: findLoggedInUser } }
       );
     } catch {
       console.log("Unable to complete the follow transaction");
@@ -384,17 +403,17 @@ app.post("/addFollowingUser", async (req, res) => {
     try {
       // updating current users following list
       await users.updateOne(
-        { user: loggedInUser },
-        { $addToSet: { following: followee } }
+        { user: findLoggedInUser },
+        { $addToSet: { following: findFollowee } }
       );
 
       // updating followee list
       await users.updateOne(
-        { user: followee },
-        { $addToSet: { followers: loggedInUser } }
+        { user: findFollowee },
+        { $addToSet: { followers: findLoggedInUser } }
       );
 
-      console.log(`${loggedInUser} is now following ${followee}`);
+      console.log(`${findLoggedInUser} is now following ${findFollowee}`);
     } catch {
       console.log("Unable to complete the follow transaction");
     }

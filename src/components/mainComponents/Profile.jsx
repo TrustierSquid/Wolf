@@ -2,7 +2,7 @@ import { forwardRef, useRef, useState, useEffect} from "react"
 import { useLocation } from "react-router-dom"
 import Navbar from "../componentDependencies/NavBar"
 
-export default function Profile(){
+export default function Profile(props){
    const [followerCount, setFollowerCount] = useState([])
    const [followingCount, setFollowingCount] = useState([])
 
@@ -97,11 +97,12 @@ export default function Profile(){
    }, [userSearched])
 
    useEffect(()=> {
-      console.log(userProfileData)
+      // console.log(userProfileData)
    }, [userProfileData])
 
 
-
+// queryStringUser is the user looked up via query string
+// and comparing it to the uuid of the logged in user
    function addFollower(queryStringUser){
       /*
          * hashed querystring that contains the username that the backend will search for
@@ -110,7 +111,7 @@ export default function Profile(){
          at the logged in users own page. Therefore, no followbtn will be rendered
        */
 
-      if (queryStringUser === username) {
+      if (queryStringUser === props.loggedInUID) {
          return
       }
 
@@ -122,7 +123,8 @@ export default function Profile(){
             headers: {
                "Content-Type": "application/json"
             },
-            body: JSON.stringify({followee: queryStringUser, loggedInUser: username})
+            // both are UUIDs
+            body: JSON.stringify({followee: queryStringUser, loggedInUser: props.loggedInUID})
          })
 
       }

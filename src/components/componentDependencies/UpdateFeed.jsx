@@ -4,7 +4,7 @@ export default function UpdateFeed(props) {
   const [allPosts, setAllPosts] = useState([]);
   const currentUser = props.currentActiveUser;
 
-  // Fetches for all posts created to update feed
+  // Fetches for all posts created to update all feeds
   async function updateMainFeed() {
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);

@@ -4,7 +4,7 @@ import '/src/assets/index.css'
 import Topics from './components/mainComponents/Topics'
 import { useEffect, useState } from 'react'
 
-
+// grabbing the logged in user
 function App() {
   const [loggedInUID, setLoggedInUID] = useState(null)
 
