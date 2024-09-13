@@ -209,11 +209,14 @@ export default function Profile(){
                   return (
                      <>
                         <article className="existingPost">
-                           <h2 className="profilePostSubject"><i style={{color: "red"}} className="fa-solid fa-earth-americas"></i>
-                            {post.subject} |
+                           <h2 className="profilePostSubject">
+                              <span>
+                                 <i style={{color: 'crimson'}} className="fa-solid fa-bolt"></i>
+                                 {" " + post.subject}
+                              </span>
                               <div className="profilePostAnalytics">
-                                 <h5><i style={{color: "crimson"}} className="fa-solid fa-heart"></i> {post.likes.length}</h5>
-                                 <h5 style={{color: "grey"}}><i style={{color: "#2EAF7F"}} className="fa-solid fa-comments"></i> Coming soon...</h5>
+                                 <h5><i style={{color: "grey"}} className="fa-solid fa-heart"></i> {post.likes.length}</h5>
+                                 <h5 style={{color: "grey"}}><i style={{color: "grey"}} className="fa-solid fa-comments"></i> 0</h5>
                               </div>
                            </h2>
                            <h3 className="profilePostSubject">{post.body}</h3>

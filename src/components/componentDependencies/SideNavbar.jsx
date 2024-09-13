@@ -33,9 +33,10 @@ const SideNavBar = forwardRef(({
          <nav className="sideNav" ref={sideNav}>
             <br />
             <section className="topicSelectionElement">
-               <button onClick={()=> navigateToHome()}>Home Feed</button>
+               <button onClick={()=> navigateToHome()}>Home Feed <i className="fa-solid fa-house"></i></button>
+               <button onClick={()=> navigateToTopicSelection()}>Join Topic <i className="fa-solid fa-person-circle-plus"></i></button>
 
-               <h4 className="subTitle">YOUR TOPICS</h4>
+               <h4 className="subTitle">JOINED TOPICS</h4>
 
                {/* mapping out the selected topics that the user selected */}
                <div id="selectedTopicsBtns">

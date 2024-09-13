@@ -697,7 +697,6 @@ main #content .userContent .userPost .mainPost .postLC .commentBtn:hover {
 #mainProfile .profileAnalytics:nth-of-type(1) {
   padding: 1rem;
   border-radius: 1rem;
-  height: 200px;
   width: 100%;
   display: flex;
   justify-content: center;
@@ -772,6 +771,7 @@ main #content .userContent .userPost .mainPost .postLC .commentBtn:hover {
 }
 #mainProfile .profileAnalytics:nth-of-type(2) .existingPost .profilePostSubject {
   display: flex;
+  justify-content: space-between;
   gap: 1rem;
 }
 #mainProfile .profileAnalytics:nth-of-type(2) .existingPost .profilePostAnalytics {
@@ -861,5 +861,16 @@ HOME COMPONENT MEDIA QUERIES
   }
   main #content .userContent .userPost .mainPost {
     gap: 2rem;
+  }
+  #mainProfile {
+    width: 90%;
+  }
+  #mainProfile .profileAnalytics:nth-of-type(1) {
+    flex-direction: column;
+    justify-content: start;
+    align-items: start;
+  }
+  #mainProfile .profileAnalytics:nth-of-type(1) .profileSectionInfo:nth-of-type(1), #mainProfile .profileAnalytics:nth-of-type(1) .profileSectionInfo:nth-of-type(2) {
+    width: 100%;
   }
 }/*# sourceMappingURL=index.css.map */
