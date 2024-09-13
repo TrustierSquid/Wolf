@@ -199,24 +199,23 @@ export default function UpdateFeed(props) {
       (timeDifference % millisecondsInOneHour) / millisecondsInOneMinute
     );
 
-    // console.log(`${daysPassed} days passed, ${hoursPassed} hours passed, ${minutesPassed} minutes passed`)
 
-    if (minutesPassed === 0 && hoursPassed === 0 && daysPassed === 0) {
-      return <h1 className="postData">Just now</h1>;
+    // Display time passed
+    if (daysPassed >= 1) {
+      return <h1 className="postData">{`${daysPassed}d ago`}</h1>;
     }
 
-    if (minutesPassed > 0 && hoursPassed === 0 && daysPassed === 0) {
+    if (hoursPassed > 0) {
+      return <h1 className="postData">{`${hoursPassed}hr ago`}</h1>;
+    }
+
+    if (minutesPassed > 0) {
       return <h1 className="postData">{`${minutesPassed}m ago`}</h1>;
     }
 
-    if (hoursPassed > 0 || (minutesPassed >= 60 && daysPassed === 0)) {
-      return <h1 className="postData">{`${hoursPassed}hr. ago`}</h1>;
-    }
+    return <h1 className="postData">Just now</h1>;
 
-    if (daysPassed > 0) {
-      return <h1 className="postData">{`${daysPassed}d. ago`}</h1>;
-    }
-    // return `${minutesPassed} minutes passed ${hoursPassed} hours passed ${daysPassed}`
+
   }
 
   return (
