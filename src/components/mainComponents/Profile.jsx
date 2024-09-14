@@ -103,6 +103,7 @@ export default function Profile(props){
 // queryStringUser is the user looked up via query string
 // and comparing it to the uuid of the logged in user
    function addFollower(queryStringUser){
+
       /*
          * hashed querystring that contains the username that the backend will search for
          * once found, it will display the respective profile page
@@ -184,19 +185,27 @@ export default function Profile(props){
             <h2 className="profHeaders">Profile Overview</h2>
             <div className="profileAnalytics">
                <section className="profileSectionInfo">
+
+                  {/* Checks for the type of user is being displayed */}
                   {checkUserType()}
+
                   {addFollower(userSearched)}
+
                </section>
                <section className="profileSectionInfo">
-                  <h3>User Analytics</h3>
+                  <h2>User Analytics</h2>
                   <br />
                   <div id="showUserStats">
                      <span>
-                        <p>{userProfileData.followers?.length || 0}</p>
+                        <p style={{color: "yellow"}}>{userProfileData.posts || 0}</p>
+                        <h4>Total Posts</h4>
+                     </span>
+                     <span>
+                        <p style={{color: "yellow"}}>{userProfileData.followers?.length || 0}</p>
                         <h4>Followers</h4>
                      </span>
                      <span>
-                        <p>{userProfileData.following?.length || 0}</p>
+                        <p style={{color: "yellow"}}>{userProfileData.following?.length || 0}</p>
                         <h4>Following</h4>
                      </span>
                   </div>
@@ -214,10 +223,11 @@ export default function Profile(props){
                      {/* The topics that the user is currently apart of  */}
                      {userProfileData?.topics?.length > 0 && (
                         <select className="topicDisplaySelection">
+                           <option onClick={()=> getUserProfilePosts("mainFeed")}>Home Feed</option>
                            {userProfileData.topics.map((topic, index) => (
                               <option key={index} onClick={()=> getUserProfilePosts(topic + "Feed")}>{topic} Feed</option>
                            ))}
-                           <option onClick={()=> getUserProfilePosts("mainFeed")}>Home Feed</option>
+
                         </select>
                      )}
 

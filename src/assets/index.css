@@ -695,7 +695,6 @@ main #content .userContent .userPost .mainPost .postLC .commentBtn:hover {
   }
 }
 #mainProfile {
-  background-color: rgba(10, 12, 14, 0.9803921569);
   width: 70%;
   display: flex;
   flex-direction: column;
@@ -717,7 +716,7 @@ main #content .userContent .userPost .mainPost .postLC .commentBtn:hover {
   gap: 2rem;
 }
 #mainProfile .profileAnalytics:nth-of-type(1) .profileSectionInfo {
-  background-color: rgba(0, 0, 0, 0.4745098039);
+  background-color: rgba(30, 30, 30, 0.4745098039);
   border-radius: 1rem;
   padding: 1.5rem;
   font-family: "Nunito", sans-serif;
@@ -728,28 +727,34 @@ main #content .userContent .userPost .mainPost .postLC .commentBtn:hover {
   align-items: left;
   justify-content: center;
   width: 70%;
+  gap: 0.5rem;
   font-size: 1.7rem;
 }
 #mainProfile .profileAnalytics:nth-of-type(1) .profileSectionInfo:nth-of-type(1) .profileUserTypeHeader {
   font-size: 16px;
 }
 #mainProfile .profileAnalytics:nth-of-type(1) .profileSectionInfo:nth-of-type(1) .followUserBtn {
-  align-self: end;
-  width: 40%;
+  align-self: center;
+  width: 100%;
   padding: 0.5rem;
   color: white;
-  background-color: rgb(0, 108, 180);
+  background-color: rgb(0, 103, 228);
   border: none;
   border-radius: 0.5rem;
   cursor: pointer;
   transition: 150ms;
   font-family: "Nunito", sans-serif;
+  margin-top: 1rem;
 }
 #mainProfile .profileAnalytics:nth-of-type(1) .profileSectionInfo:nth-of-type(1) .followUserBtn:hover {
   background-color: rgba(0, 108, 180, 0.479);
 }
 #mainProfile .profileAnalytics:nth-of-type(1) .profileSectionInfo:nth-of-type(2) {
-  width: 30%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  gap: 1rem;
+  width: 40%;
 }
 #mainProfile .profileAnalytics:nth-of-type(1) .profileSectionInfo:nth-of-type(2) #showUserStats {
   display: flex;
@@ -898,7 +903,7 @@ HOME COMPONENT MEDIA QUERIES
     gap: 2rem;
   }
   #mainProfile {
-    width: 90%;
+    width: 100%;
   }
   #mainProfile .profileAnalytics:nth-of-type(1) {
     flex-direction: column;
