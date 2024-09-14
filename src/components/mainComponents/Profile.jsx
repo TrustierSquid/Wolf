@@ -197,16 +197,16 @@ export default function Profile(props){
                   <br />
                   <div id="showUserStats">
                      <span>
-                        <p style={{color: "yellow"}}>{userProfileData.posts || 0}</p>
-                        <h4>Total Posts</h4>
+                        <h1 style={{color: "yellow"}}>{userProfileData.posts || 0}</h1>
+                        <p>Total Posts</p>
                      </span>
                      <span>
-                        <p style={{color: "yellow"}}>{userProfileData.followers?.length || 0}</p>
-                        <h4>Followers</h4>
+                        <h1 style={{color: "yellow"}}>{userProfileData.followers?.length || 0}</h1>
+                        <p>Followers</p>
                      </span>
                      <span>
-                        <p style={{color: "yellow"}}>{userProfileData.following?.length || 0}</p>
-                        <h4>Following</h4>
+                        <h1 style={{color: "yellow"}}>{userProfileData.following?.length || 0}</h1>
+                        <p>Following</p>
                      </span>
                   </div>
                </section>
@@ -218,7 +218,7 @@ export default function Profile(props){
                <section className="profHeaders">
                   <h2>{dynamicUsername}'s Posts</h2>
                   <form>
-                     <label>See Posts From Your Topics: </label>
+                     <label>Posts From {dynamicUsername}'s Topics: </label>
 
                      {/* The topics that the user is currently apart of  */}
                      {userProfileData?.topics?.length > 0 && (

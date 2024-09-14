@@ -25,6 +25,9 @@ $sc-warning: #FFD507;
 $sc-error: #F96E36;
 $sc-info: #00CAE5;
 
+$subTitle: #ff7b00;
+$onHover: #55555543;
+
 @mixin buttonGradient {
    background: rgb(255,60,60);
    background: linear-gradient(208deg, rgba(255,60,60,1) 0%, rgba(153,36,36,1) 100%);
@@ -366,7 +369,7 @@ HOME PAGE
    background-color: $subBackground;
    border-top: 1px solid $cardBorder;
    border-bottom: 1px solid $cardBorder;
-   z-index: 4;
+   z-index: 7;
 
    #logoContainer {
       display: flex;
@@ -410,8 +413,99 @@ HOME PAGE
 
    #mobileNavBtn {
       display: none;
+      // animation-name: shake;
+      // animation-duration: 2s;
+      // animation-fill-mode: forwards;
+      transition: 150ms;
+
    }
 
+}
+
+#mobileNavMenu {
+   height: 130%;
+   width: 50%;
+   background-color: darkblue;
+   position: absolute;
+   z-index: 2;
+   left: -100%;
+   transition: 150ms;
+   opacity: 0;
+   background-color: #0e0d0d;
+   color: white;
+   font-family: $ff-body;
+   display: flex;
+   flex-direction: column;
+   padding: 2rem;
+   gap: 2rem;
+   overflow: scroll;
+
+
+   .mobileNavProfileSection {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      cursor: pointer;
+      transition: 150ms;
+      padding: 1rem;
+      border-radius: 1rem;
+
+      &:hover {
+         background-color: $onHover;
+      }
+   }
+
+   .subTitle {
+      color: #ff7b00;
+      font-weight: lighter;
+      letter-spacing: 2px;
+   }
+
+   .mobileNavMainBtns {
+      padding: 1rem;
+      padding-left: 0.8rem;
+      transition: 100ms;
+      border-radius: 1rem;
+      cursor: pointer;
+
+      &:hover {
+         background-color: $onHover;
+      }
+   }
+
+   .mobileNavTopicBtns {
+      padding: 1rem;
+      padding-left: 0.8rem;
+      border-radius: 1rem;
+      transition: 100ms;
+      cursor: pointer;
+
+      &:hover {
+         background-color: $onHover;
+      }
+   }
+
+
+
+}
+
+
+
+@keyframes shake {
+   0%{
+      transform: translateX(10px)
+   }
+   25% {
+      transform: translateX(-10px)
+   }
+
+   50%{
+      transform: translateX(10px)
+   }
+
+   100% {
+      transform: translateX(-10px)
+   }
 }
 
 
@@ -494,7 +588,7 @@ HOME PAGE
       letter-spacing: 2px;
       padding: 1rem;
       // font-size: 1.3rem;
-      color: #878787;
+      color: $subTitle;
    }
 
 
@@ -968,14 +1062,14 @@ main {
 // Profile Page
 #mainProfile {
    // background-color: #0a0c0efa;
-   width: 70%;
+   width: 90%;
    display: flex;
    flex-direction: column;
    gap: 1rem;
    // height: 800px;
    margin: 2% auto;
    color: white;
-   padding: 2rem;
+   padding: 1rem;
    border-radius: 1.5rem;
 
    .profHeaders {
@@ -986,7 +1080,6 @@ main {
    .profileAnalytics:nth-of-type(1) {
       // background-color: #0D1012;
       // background-color: red;
-      padding: 1rem;
       border-radius: 1rem;
       // height: 200px;
       width: 100%;
@@ -1007,7 +1100,7 @@ main {
          flex-direction: column;
          align-items: left;
          justify-content: center;
-         width: 70%;
+         width: 40%;
          gap: 0.5rem;
          font-size: 1.7rem;
 
@@ -1016,8 +1109,8 @@ main {
          }
 
          .followUserBtn {
-            align-self: center;
-            width: 100%;
+            align-self: end;
+            width: 40%;
             padding: 0.5rem;
             color: white;
             background-color: rgb(0, 103, 228);
@@ -1041,7 +1134,7 @@ main {
          flex-direction: column;
          justify-content: space-around;
          gap: 1rem;
-         width: 40%;
+         width: 60%;
 
          #showUserStats {
             display: flex;
@@ -1054,6 +1147,11 @@ main {
                border-radius: 0.5rem;
                transition: 100ms;
                cursor: pointer;
+               text-align: center;
+               // following/follower number
+               p {
+                  font-size: 1rem;
+               }
 
 
             }
@@ -1066,7 +1164,6 @@ main {
 
    .profileAnalytics:nth-of-type(2){
       // background-color: red;
-      padding: 1rem;
       display: flex;
       flex-direction: column;
       gap: 2rem;
@@ -1152,6 +1249,7 @@ HOME COMPONENT MEDIA QUERIES
       background-color: $subBackground;;
 
       #logoContainer {
+         height: 40px;
 
          h1 {
             display: none;
@@ -1167,9 +1265,9 @@ HOME COMPONENT MEDIA QUERIES
 
       #mobileNavBtn  {
          display: block;
-         color: $primary;
+         color: white;
          background: none;
-         font-size: 2.5rem;
+         font-size: 2rem;
          border: none;
          cursor: pointer;
          transition: 150ms;
@@ -1307,6 +1405,16 @@ HOME COMPONENT MEDIA QUERIES
 
             }
          }
+
+         .profHeaders {
+            flex-direction: column;
+            gap: 0.5rem;
+
+            form {
+               flex-direction: column;
+            }
+         }
+
       }
 
       .profileAnalytics:nth-of-type(1){

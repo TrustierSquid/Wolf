@@ -252,7 +252,7 @@ HOME PAGE
   background-color: #121010;
   border-top: 1px solid #2E2E2E;
   border-bottom: 1px solid #2E2E2E;
-  z-index: 4;
+  z-index: 7;
 }
 #nav #logoContainer {
   display: flex;
@@ -287,8 +287,79 @@ HOME PAGE
 }
 #nav #mobileNavBtn {
   display: none;
+  transition: 150ms;
 }
 
+#mobileNavMenu {
+  height: 130%;
+  width: 50%;
+  background-color: darkblue;
+  position: absolute;
+  z-index: 2;
+  left: -100%;
+  transition: 150ms;
+  opacity: 0;
+  background-color: #0e0d0d;
+  color: white;
+  font-family: "roboto", sans-serif;
+  display: flex;
+  flex-direction: column;
+  padding: 2rem;
+  gap: 2rem;
+  overflow: scroll;
+}
+#mobileNavMenu .mobileNavProfileSection {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  cursor: pointer;
+  transition: 150ms;
+  padding: 1rem;
+  border-radius: 1rem;
+}
+#mobileNavMenu .mobileNavProfileSection:hover {
+  background-color: rgba(85, 85, 85, 0.262745098);
+}
+#mobileNavMenu .subTitle {
+  color: #ff7b00;
+  font-weight: lighter;
+  letter-spacing: 2px;
+}
+#mobileNavMenu .mobileNavMainBtns {
+  padding: 1rem;
+  padding-left: 0.8rem;
+  transition: 100ms;
+  border-radius: 1rem;
+  cursor: pointer;
+}
+#mobileNavMenu .mobileNavMainBtns:hover {
+  background-color: rgba(85, 85, 85, 0.262745098);
+}
+#mobileNavMenu .mobileNavTopicBtns {
+  padding: 1rem;
+  padding-left: 0.8rem;
+  border-radius: 1rem;
+  transition: 100ms;
+  cursor: pointer;
+}
+#mobileNavMenu .mobileNavTopicBtns:hover {
+  background-color: rgba(85, 85, 85, 0.262745098);
+}
+
+@keyframes shake {
+  0% {
+    transform: translateX(10px);
+  }
+  25% {
+    transform: translateX(-10px);
+  }
+  50% {
+    transform: translateX(10px);
+  }
+  100% {
+    transform: translateX(-10px);
+  }
+}
 #navDropdown {
   display: flex;
   flex-direction: column;
@@ -354,7 +425,7 @@ HOME PAGE
   font-weight: lighter;
   letter-spacing: 2px;
   padding: 1rem;
-  color: #878787;
+  color: #ff7b00;
 }
 .sideNav .topicSelectionElement {
   display: flex;
@@ -695,20 +766,19 @@ main #content .userContent .userPost .mainPost .postLC .commentBtn:hover {
   }
 }
 #mainProfile {
-  width: 70%;
+  width: 90%;
   display: flex;
   flex-direction: column;
   gap: 1rem;
   margin: 2% auto;
   color: white;
-  padding: 2rem;
+  padding: 1rem;
   border-radius: 1.5rem;
 }
 #mainProfile .profHeaders {
   font-family: "Nunito", sans-serif;
 }
 #mainProfile .profileAnalytics:nth-of-type(1) {
-  padding: 1rem;
   border-radius: 1rem;
   width: 100%;
   display: flex;
@@ -726,7 +796,7 @@ main #content .userContent .userPost .mainPost .postLC .commentBtn:hover {
   flex-direction: column;
   align-items: left;
   justify-content: center;
-  width: 70%;
+  width: 40%;
   gap: 0.5rem;
   font-size: 1.7rem;
 }
@@ -734,8 +804,8 @@ main #content .userContent .userPost .mainPost .postLC .commentBtn:hover {
   font-size: 16px;
 }
 #mainProfile .profileAnalytics:nth-of-type(1) .profileSectionInfo:nth-of-type(1) .followUserBtn {
-  align-self: center;
-  width: 100%;
+  align-self: end;
+  width: 40%;
   padding: 0.5rem;
   color: white;
   background-color: rgb(0, 103, 228);
@@ -754,7 +824,7 @@ main #content .userContent .userPost .mainPost .postLC .commentBtn:hover {
   flex-direction: column;
   justify-content: space-around;
   gap: 1rem;
-  width: 40%;
+  width: 60%;
 }
 #mainProfile .profileAnalytics:nth-of-type(1) .profileSectionInfo:nth-of-type(2) #showUserStats {
   display: flex;
@@ -766,9 +836,12 @@ main #content .userContent .userPost .mainPost .postLC .commentBtn:hover {
   border-radius: 0.5rem;
   transition: 100ms;
   cursor: pointer;
+  text-align: center;
+}
+#mainProfile .profileAnalytics:nth-of-type(1) .profileSectionInfo:nth-of-type(2) #showUserStats span p {
+  font-size: 1rem;
 }
 #mainProfile .profileAnalytics:nth-of-type(2) {
-  padding: 1rem;
   display: flex;
   flex-direction: column;
   gap: 2rem;
@@ -836,6 +909,9 @@ HOME COMPONENT MEDIA QUERIES
     z-index: 3;
     background-color: #121010;
   }
+  #nav #logoContainer {
+    height: 40px;
+  }
   #nav #logoContainer h1 {
     display: none;
   }
@@ -844,9 +920,9 @@ HOME COMPONENT MEDIA QUERIES
   }
   #nav #mobileNavBtn {
     display: block;
-    color: #ff3c3c;
+    color: white;
     background: none;
-    font-size: 2.5rem;
+    font-size: 2rem;
     border: none;
     cursor: pointer;
     transition: 150ms;
@@ -904,6 +980,13 @@ HOME COMPONENT MEDIA QUERIES
   }
   #mainProfile {
     width: 100%;
+  }
+  #mainProfile .profileAnalytics .profHeaders {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  #mainProfile .profileAnalytics .profHeaders form {
+    flex-direction: column;
   }
   #mainProfile .profileAnalytics:nth-of-type(1) {
     flex-direction: column;

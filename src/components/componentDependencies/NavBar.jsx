@@ -4,6 +4,7 @@ import logo from "/src/assets/wolfLogo.png";
 export default function Navbar() {
   const [loggedInUID, setLoggedInUID] = useState(null);
   const [username, setUsername] = useState(null);
+  const [userTopicList, setUserTopicList] = useState([])
 
   // GETTING USER INFORMATION AND DISPLYING IT ON THE HOME PAGE SPECIFIC TO THE USER LOGGED IN
   useEffect(() => {
@@ -27,10 +28,31 @@ export default function Navbar() {
 
       setLoggedInUID(homeData.UID);
       setUsername(homeData.userName);
+      setUserTopicList(homeData.topicArr || [])
     }
 
     getUserData();
   }, []);
+
+  function determineUserType(user){
+    switch (user) {
+      case "Samuel":
+        return (
+          <><h4 style={{color: '#00b3ff'}}>Developer <i className="fa-solid fa-code"></i></h4></>
+        )
+      case "DemoUser":
+        return (
+          <><h4 style={{ color: "#73ff00" }}>Recruiter</h4></>
+        )
+      default:
+        return (
+          <>
+            <h4 style={{ color: "grey" }}>User</h4>
+          </>
+        )
+
+    }
+  }
 
   const [isNavOpen, setIsNavOpen] = useState(true);
   const navDropdown = useRef(null);
@@ -38,6 +60,9 @@ export default function Navbar() {
 
   // Mobile Nav button that appears at a certain breakpoint
   const mobileNavBtn = useRef(null);
+
+  const mobileNavMenu = useRef(null)
+  const [isMobileNavMenuOpen, setIsMobileNavMenuOpen] = useState(true)
 
   // Dropdown functionality
   // helper function to check to see if any element was clicked that was not the nav button
@@ -55,6 +80,25 @@ export default function Navbar() {
     }
   };
 
+  function openMobileNavMenu(navBtn){
+    setIsMobileNavMenuOpen(prevState => !prevState)
+
+    if (isMobileNavMenuOpen) {
+      mobileNavMenu.current.style.left = '0%'
+      mobileNavMenu.current.style.opacity = '1'
+      // document.body.style.overflow = 'hidden';
+      navBtn.target.style.color = 'red'
+      window.scrollTo(-10, -10);
+
+    } else {
+      mobileNavMenu.current.style.left = '-50%'
+      document.body.style.overflow = 'auto';
+      navBtn.target.style.color = 'white'
+      mobileNavMenu.current.style.opacity = '0'
+
+    }
+  }
+
   function navigateLogOut() {
     window.location.href = "/";
   }
@@ -66,6 +110,15 @@ export default function Navbar() {
   function navigateProfile() {
     window.location.href = `/profile?user=${loggedInUID}`;
   }
+
+  function navigateToFeed(feed){
+    window.location.href = `/home?topicFeed=${feed}`
+  }
+
+  function navigateToTopics(){
+    window.location.href = `/topics`
+  }
+
 
   return (
     <>
@@ -79,10 +132,35 @@ export default function Navbar() {
             <i className="fa-solid fa-user-large"></i> Profile
           </h1>
         </div>
-        <button ref={mobileNavBtn} id="mobileNavBtn">
+
+        {/* Mobile Navs */}
+        <button ref={mobileNavBtn} id="mobileNavBtn" onClick={(self)=> openMobileNavMenu(self)}>
           <i className="fa-solid fa-bars"></i>
         </button>
       </nav>
+
+      <section id="mobileNavMenu" ref={mobileNavMenu} >
+        <div className='mobileNavProfileSection' onClick={()=> navigateProfile()}>
+          <h5 className="subTitle">View Profile</h5>
+          <h2>{username}</h2>
+          <h3>{determineUserType(username)}</h3>
+        </div>
+
+        {/* <hr /> */}
+        <h4 className="mobileNavMainBtns" onClick={()=> navigateBackToHome()}>Home Feed</h4>
+        <h4 className="mobileNavMainBtns" onClick={()=> navigateToTopics()}>Join Topic</h4>
+        <h4 className="subTitle">JOINED TOPICS</h4>
+        {userTopicList.map((topic, key)=> {
+          return (
+            <>
+              <h4 className="mobileNavTopicBtns"
+               key={key}
+               onClick={()=> navigateToFeed(topic + 'Feed')}
+               >{topic}</h4>
+            </>
+          )
+        })}
+      </section>
 
       <section id="navDropdown" ref={navDropdown}>
         {/* view profile button */}
