@@ -6,6 +6,18 @@ export default function Navbar() {
   const [username, setUsername] = useState(null);
   const [userTopicList, setUserTopicList] = useState([])
 
+
+  const [isNavOpen, setIsNavOpen] = useState(true);
+  const navDropdown = useRef(null);
+  const navDropdownElement = navDropdown.current;
+
+
+  // Mobile Nav button that appears at a certain breakpoint
+  const mobileNavBtn = useRef(null);
+
+  const mobileNavMenu = useRef(null)
+  const [isMobileNavMenuOpen, setIsMobileNavMenuOpen] = useState(true)
+
   // GETTING USER INFORMATION AND DISPLYING IT ON THE HOME PAGE SPECIFIC TO THE USER LOGGED IN
   useEffect(() => {
     async function getUserData() {
@@ -31,18 +43,26 @@ export default function Navbar() {
       setUserTopicList(homeData.topicArr || [])
     }
 
+
     getUserData();
+
+
+
   }, []);
 
   function determineUserType(user){
     switch (user) {
       case "Samuel":
         return (
-          <><h4 style={{color: '#00b3ff'}}>Developer <i className="fa-solid fa-code"></i></h4></>
+          <>
+            <h4 style={{color: '#00b3ff'}}>Developer <i className="fa-solid fa-code"></i></h4>
+          </>
         )
       case "DemoUser":
         return (
-          <><h4 style={{ color: "#73ff00" }}>Recruiter</h4></>
+          <>
+            <h4 style={{ color: "#73ff00" }}>Recruiter</h4>
+          </>
         )
       default:
         return (
@@ -54,19 +74,21 @@ export default function Navbar() {
     }
   }
 
-  const [isNavOpen, setIsNavOpen] = useState(true);
-  const navDropdown = useRef(null);
-  const navDropdownElement = navDropdown.current;
 
-  // Mobile Nav button that appears at a certain breakpoint
-  const mobileNavBtn = useRef(null);
 
-  const mobileNavMenu = useRef(null)
-  const [isMobileNavMenuOpen, setIsMobileNavMenuOpen] = useState(true)
-
+  /* window.addEventListener('click', (e)=> {
+    if(e.target.id != 'dropdownBtn') {
+      navDropdownElement.style.transform = "translateY(0px)";
+      navDropdownElement.style.opacity = "0";
+      navDropdownElement.style.pointerEvents = "none";
+    }
+  }) */
   // Dropdown functionality
   // helper function to check to see if any element was clicked that was not the nav button
+
+
   const navHelper = (element) => {
+
     setIsNavOpen((prevState) => !prevState);
 
     if (isNavOpen) {
@@ -123,13 +145,14 @@ export default function Navbar() {
   return (
     <>
       <nav id="nav">
+        {/* For Desktop */}
         <div id="logoContainer" onClick={() => navigateBackToHome()}>
           <img id="logo" src={logo} alt="" />
           <h1>WOLF</h1>
         </div>
         <div id="profileContainer" onClick={(element) => navHelper(element)}>
           <h1 id="dropdownBtn">
-            <i className="fa-solid fa-user-large"></i> Profile
+            {username} <i className="fa-solid fa-fire"></i>
           </h1>
         </div>
 

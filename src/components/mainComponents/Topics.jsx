@@ -11,97 +11,81 @@ export default function Topics(props) {
   const cardBtnRef = useRef([])
 
   async function getTopics(){
-    const response = await fetch('/api/topics', {
-      method: 'GET',
-      headers: {
-        "Content-Type": 'application/json'
-      }
-    })
+    try {
+      const response = await fetch('/api/topics', {
+        method: 'GET',
+        headers: {
+          "Content-Type": 'application/json'
+        }
+      })
 
-    if (!response.ok) {
+      if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
 
-    const data = await response.json()
-    setTopics(data.topics)
+      const data = await response.json()
+      setTopics(data.topics)
+
+    } catch {
+      console.log("Failed to get Topics")
+    }
   }
 
 
-  async function checkTopicsJoined(){
-    const response = await fetch(`/topicsJoined?UUID=${props.loggedInUID}`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
+  const [joinedTopicsState, setJoinedTopicsState] = useState([])
 
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+  // toggles weather or not you join a topic or leave one
+  async function joinTopic(topicName, key){
+    console.log("Sent join req")
+
+    try {
+      const response = await fetch(`/topicsAdd?loggedInUser=${props.loggedInUID}&topicToAdd=${topicName}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+
+      if (!response.ok) {
+        throw new Error('Response was not okay!')
+      } else {
+        if (cardBtnRef.current[key].style.backgroundColor === 'green' && cardBtnRef.current[key].innerHTML === 'Joined!') {
+          cardBtnRef.current[key].style.backgroundColor = '#ff3c3c'
+          cardBtnRef.current[key].innerHTML = 'Join'
+        } else {
+          cardBtnRef.current[key].style.backgroundColor = 'green'
+          cardBtnRef.current[key].innerHTML = 'Joined!'
+        }
+      }
+
+
+    } catch {
+      throw new Error("Could not send the join req")
     }
 
-    const data = await response.json()
-    setTopicsJoined(data?.topics || [])
   }
+
+  function checkCurrentlyJoin(){
+    topics.map((topic, key)=> {
+      if (props.joinedTopics.includes(topic.name)) {
+        cardBtnRef.current[key].style.backgroundColor = 'green'
+        cardBtnRef.current[key].innerHTML = 'Joined!'
+      } else {
+        cardBtnRef.current[key].style.backgroundColor = '#ff3c3c'
+        cardBtnRef.current[key].innerHTML = 'Join'
+      }
+
+    })
+  }
+
+  useEffect(()=> {
+    checkCurrentlyJoin()
+  }, [topics, props.loggedInUID])
 
   useEffect(()=> {
     getTopics()
-    console.log(topicsJoined)
-  }, [topicsJoined])
-
-  useEffect(()=> {
-    if (props.loggedInUID) {
-      checkTopicsJoined()
-    }
-  }, [props.loggedInUID])
-
-  useEffect(()=> {
-    checkTopicsJoined()
   }, [])
 
-
-  useEffect(()=> {
-    topics.forEach((topic, index)=> {
-      if(topicsJoined.includes(topic.name)){
-        const button = cardBtnRef.current[index]
-        if(button){
-          button.style.backgroundColor = 'green'
-          button.innerHTML = 'joined!'
-        }
-      }
-    })
-  }, [topics, topicsJoined])
-
-
-
-
-
-  // toggles weather or not you join a topic or leave one
-  async function joinTopic(topicName){
-    const response = await fetch(`/topicsAdd?loggedInUser=${props.loggedInUID}`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({topicToAdd: topicName}),
-    })
-
-
-    await getTopics()
-    await checkTopicsJoined()
-
-
-
-  }
-
-  async function showJoined() {
-    topics.map((topic, key)=> {
-      if (topicsJoined?.includes(topic.name)) {
-        cardBtnRef.current[key].style.backgroundColor = 'green'
-      }
-    })
-  }
-
-  showJoined()
 
 
   // go to home page for user
@@ -113,21 +97,27 @@ export default function Topics(props) {
     <>
       <Navbar/>
       <main id="topics">
-        <h1 id="pageHeader">Select <span>topics</span> that interest you. <i className="fa-solid fa-users"></i></h1>
+        <h1 id="pageHeader">Select <span>topics</span> that interest you.</h1>
         <p id="pageSubHeader">Browse and participate in these communities</p>
         <div id="topicSelect">
           {topics?.map((topic, key)=> {
+
             return (
               <>
                 <div key={topic.name} className="topicSelectionBtn">
 
                   <div className='topicHeader'>
                     <h3>{topic.name}</h3>
-                    <p className='memberCount'>0 Participants</p>
+                    {/* <p className='memberCount'>0 Participants</p> */}
                   </div>
 
                   <p>{topic.fact1}</p>
-                  <button ref={(el) => (cardBtnRef.current[key] = el)} className="communityJoinBtn" onClick={()=> joinTopic(topic.name)}>{topicsJoined.includes(topic.name) ? 'Joined!' : 'Join'}</button>
+                  <button
+                   ref={(el) => (cardBtnRef.current[key] = el)}
+                   className='communityJoinBtn'
+                   onClick={()=> joinTopic(topic.name, key)}>
+                    join
+                   </button>
 
                 </div>
               </>

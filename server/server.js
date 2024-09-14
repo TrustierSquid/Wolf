@@ -421,8 +421,8 @@ app.post("/addFollowingUser", async (req, res) => {
 });
 
 
-app.post('/topicsAdd', async (req, res)=> {
-  const {topicToAdd} = req.body
+app.get('/topicsAdd', async (req, res)=> {
+  const {topicToAdd} = req.query
 
   // by UID
   const {loggedInUser} = req.query
@@ -447,6 +447,7 @@ app.post('/topicsAdd', async (req, res)=> {
     )
 
     console.log(`${loggedInUser} Joined ${topicToAdd}`)
+    res.sendStatus(200)
 
   } else {
     await users.updateOne(
@@ -455,25 +456,8 @@ app.post('/topicsAdd', async (req, res)=> {
     )
 
     console.log(`Left ${topicToAdd}`)
+    res.sendStatus(200)
   }
-
-})
-
-
-app.get('/topicsJoined', async (req, res)=> {
-  const {UUID} = req.query
-
-  const database = await connectMongo()
-  const users = database.collection('Users')
-
-  // find the user so we can get his list of topics
-  let findUser = await users.findOne(
-    {UID: UUID},
-  )
-
-  console.log(UUID)
-
-  res.json(findUser)
 
 })
 
