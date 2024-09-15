@@ -260,13 +260,10 @@ export default function Profile(props){
                   })
                ) : (
                   <div className="noPostsMessage">
-                     <h3>No posts available yet!</h3>
-                     <p>Start sharing posts to see them here.</p>
+                     <h3>{dynamicUsername} hasn't posted anything here yet!</h3>
+                     <p>Get them to share something! 😃</p>
                   </div>
                )}
-
-
-
             </div>
 
 

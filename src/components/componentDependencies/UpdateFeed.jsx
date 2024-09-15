@@ -385,16 +385,23 @@ export default function UpdateFeed(props) {
           <br />
           <h4 style={{color: 'lime'}}>{errorMessage}</h4>
           <article>
-            {postComments?.map((comment)=> {
-              return (
-                <>
-                  <div className='comment'>
-                    <h3>{comment.from} <span>{showPostDate(comment.timePosted)}</span></h3>
-                    <p>{comment.comment}</p>
-                  </div>
-                </>
-              )
-            })}
+            {postComments?.length > 0 ? (
+              postComments?.map((comment)=> {
+                return (
+                  <>
+                    <div className='comment'>
+                      <h3>{comment.from} <span>{showPostDate(comment.timePosted)}</span></h3>
+                      <p>{comment.comment}</p>
+                    </div>
+                  </>
+                )
+              })
+            ) : (
+              <div className="noPostsMessage">
+                <h3>No comments available yet!</h3>
+                <p>Be the first to leave a comment here! 🗣️</p>
+              </div>
+            )}
           </article>
         </section>
 
