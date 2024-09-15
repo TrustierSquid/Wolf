@@ -396,6 +396,7 @@ app.post("/addFollowingUser", async (req, res) => {
         { user: findFollowee },
         { $pull: { followers: findLoggedInUser } }
       );
+      res.sendStatus(200)
     } catch {
       console.log("Unable to complete the follow transaction");
     }
@@ -414,6 +415,7 @@ app.post("/addFollowingUser", async (req, res) => {
       );
 
       console.log(`${findLoggedInUser} is now following ${findFollowee}`);
+      res.sendStatus(200)
     } catch {
       console.log("Unable to complete the follow transaction");
     }

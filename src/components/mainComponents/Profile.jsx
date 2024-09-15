@@ -99,6 +99,7 @@ export default function Profile(props){
       console.log(userProfileData)
    }, [userProfileData]) */
 
+   const followBtnRef = useRef(null)
 
 // queryStringUser is the user looked up via query string
 // and comparing it to the uuid of the logged in user
@@ -127,21 +128,36 @@ export default function Profile(props){
             body: JSON.stringify({followee: queryStringUser, loggedInUser: props.loggedInUID})
          })
 
+         if (response.ok){
+
+            if (followBtnRef.current.innerHTML === 'Following') {
+               followBtnRef.current.innerHTML = 'Follow'
+               followBtnRef.current.style.background = 'none'
+            } else {
+               followBtnRef.current.innerHTML = 'Following'
+               followBtnRef.current.style.backgroundColor = '#0067e4'
+            }
+         }
+
+
+
       }
 
 
       function checkFollowing(){
+
         if (userProfileData.followers?.includes(username)) {
-         return <button className="followUserBtn" onClick={()=> followUser(queryStringUser)}>Following <i className="fa-solid fa-check-double"></i></button>
+         return <button ref={followBtnRef} className="followUserBtn" onClick={(element)=> followUser(queryStringUser)}>Following</button>
         }
 
-        return <button  className="followUserBtn" onClick={()=> followUser(queryStringUser)}>Follow <i className="fa-solid fa-user-plus"></i></button>
+        return <button ref={followBtnRef} className="followUserBtn" onClick={(element)=> followUser(queryStringUser)}>Follow</button>
 
       }
 
       return checkFollowing()
 
    }
+
 
 
    function checkUserType(){

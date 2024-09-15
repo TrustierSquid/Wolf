@@ -424,7 +424,7 @@ HOME PAGE
 
 #mobileNavMenu {
    height: 130%;
-   width: 50%;
+   width: 60%;
    background-color: darkblue;
    position: absolute;
    z-index: 2;
@@ -437,7 +437,7 @@ HOME PAGE
    display: flex;
    flex-direction: column;
    padding: 2rem;
-   gap: 2rem;
+   gap: 1rem;
    overflow: scroll;
 
 
@@ -462,7 +462,7 @@ HOME PAGE
    }
 
    .mobileNavMainBtns {
-      padding: 1rem;
+      padding: 1.5rem;
       padding-left: 0.8rem;
       transition: 100ms;
       border-radius: 1rem;
@@ -474,7 +474,7 @@ HOME PAGE
    }
 
    .mobileNavTopicBtns {
-      padding: 1rem;
+      padding: 1.5rem;
       padding-left: 0.8rem;
       border-radius: 1rem;
       transition: 100ms;
@@ -512,12 +512,13 @@ HOME PAGE
 #navDropdown {
    display: flex;
    flex-direction: column;
+   justify-content: center;
    background-color: $cardBG;
    border: 1px solid $cardBorder;
    font-family: $ff-heading;
-   padding: 1rem;
+   padding: 2rem;
    color: rgba(255, 255, 255, 0.818);
-   height: 300px;
+   height: 150px;
    width: 300px;
    position: fixed;
    right: 11%;
@@ -1113,8 +1114,8 @@ main {
             width: 40%;
             padding: 0.5rem;
             color: white;
-            background-color: rgb(0, 103, 228);
-            border: none;
+            background: none;
+            border: 2px solid #0067e4;
             border-radius: 0.5rem;
             cursor: pointer;
             transition: 150ms;
@@ -1181,6 +1182,7 @@ main {
             justify-content: end;
             gap: 1rem;
             align-items: center;
+            cursor: pointer;
 
             select {
                background-color: $cardBG;
@@ -1188,9 +1190,11 @@ main {
                padding: 0.5rem;
                border-radius: 0.5rem;
                border: 0.5px solid $cardBorder;
+               cursor: pointer;
 
                option {
                   color: white;
+                  cursor: pointer;
                }
             }
          }
