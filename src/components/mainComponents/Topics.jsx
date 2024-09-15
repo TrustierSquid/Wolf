@@ -96,7 +96,7 @@ export default function Topics(props) {
     <>
       <Navbar/>
       <main id="topics">
-        <h1 id="pageHeader">Select <span>topics</span> that interest you.</h1>
+        <h1 id="pageHeader">Select a <span>topic</span> that interests you.</h1>
         <p id="pageSubHeader">Browse and participate in these communities</p>
         <div id="topicSelect">
           {topics?.map((topic, key)=> {
