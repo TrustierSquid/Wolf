@@ -313,7 +313,7 @@ export default function Home(){
       const userSearched = urlParams.get("topicFeed");
 
       if (!queryString) {
-         return `Create Post on Home +`
+         return <><h4>{`Post On Home Page`} </h4> <i className="fa-solid fa-file-circle-plus"></i></>
       }
 
       let splicedTopic = userSearched.split("Feed")
