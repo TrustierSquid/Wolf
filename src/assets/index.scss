@@ -82,6 +82,15 @@ body {
    margin-top: 2rem;
 }
 
+.noTopicsMessage {
+   display: flex;
+   flex-direction: column;
+   gap: 0.5rem;
+   padding: 0.5rem;
+   font-family: $ff-heading;
+   color: grey;
+}
+
 /*
 
    LOGIN PAGE
@@ -1196,32 +1205,33 @@ main {
    // max-height: 500px;
     grid-template-columns: 1fr 1fr;
   }
+
+  #commentInterface {
+     width: 90%;
+
+     #commentSection {
+        #exitBtnRow {
+           #exitCommentBtn {
+              text-wrap: nowrap;
+           }
+        }
+     }
+
+     #commentSection2 {
+        #commentInput {
+           flex-direction: column;
+           input {
+              width: 100%;
+           }
+
+           button {
+              width: 100%;
+           }
+        }
+     }
+  }
 }
 
-#commentInterface {
-   width: 90%;
-
-   #commentSection {
-      #exitBtnRow {
-         #exitCommentBtn {
-            text-wrap: nowrap;
-         }
-      }
-   }
-
-   #commentSection2 {
-      #commentInput {
-         flex-direction: column;
-         input {
-            width: 100%;
-         }
-
-         button {
-            width: 100%;
-         }
-      }
-   }
-}
 
 
 

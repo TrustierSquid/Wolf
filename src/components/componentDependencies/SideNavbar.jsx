@@ -47,16 +47,28 @@ const SideNavBar = forwardRef(({
 
                {/* mapping out the selected topics that the user selected */}
                <div id="selectedTopicsBtns">
-                  {userData.map(topic => {
-                     //
-                     return (
-                        <>
-                           <button ref={topicBtn} onClick={()=> navigateToFeed(topic)}>{topic}<i className="fa-solid fa-person-walking-arrow-right"></i></button>
-                        </>
-                     )
-                  })}
+                  {userData?.length > 0 ? (
+                     userData.map((topic, key) => {
+                        return (
+                           <>
+                              <button key={key} ref={topicBtn} onClick={()=> navigateToFeed(topic)}>{topic}<i className="fa-solid fa-person-walking-arrow-right"></i></button>
+                           </>
+                        );
+                     })
+
+                  ) : (
+                  <div className="noTopicsMessage">
+                     <h3>No Topics Available</h3>
+                     <p>Start joining topics to see them here.</p>
+                  </div>
+               )}
                </div>
             </section>
+
+
+
+
+
 
             {/* <section className="topicSelectionElement">
                <h2 className="subTitle">Other Resources</h2>

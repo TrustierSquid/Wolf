@@ -33,6 +33,15 @@ body {
   margin-top: 2rem;
 }
 
+.noTopicsMessage {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  font-family: "Nunito", sans-serif;
+  color: grey;
+}
+
 /*
 
    LOGIN PAGE
@@ -882,23 +891,22 @@ main #content .userContent .userPost .mainPost .postLC .commentBtn:hover {
   #introGrid {
     grid-template-columns: 1fr 1fr;
   }
+  #commentInterface {
+    width: 90%;
+  }
+  #commentInterface #commentSection #exitBtnRow #exitCommentBtn {
+    text-wrap: nowrap;
+  }
+  #commentInterface #commentSection2 #commentInput {
+    flex-direction: column;
+  }
+  #commentInterface #commentSection2 #commentInput input {
+    width: 100%;
+  }
+  #commentInterface #commentSection2 #commentInput button {
+    width: 100%;
+  }
 }
-#commentInterface {
-  width: 90%;
-}
-#commentInterface #commentSection #exitBtnRow #exitCommentBtn {
-  text-wrap: nowrap;
-}
-#commentInterface #commentSection2 #commentInput {
-  flex-direction: column;
-}
-#commentInterface #commentSection2 #commentInput input {
-  width: 100%;
-}
-#commentInterface #commentSection2 #commentInput button {
-  width: 100%;
-}
-
 #mainProfile {
   width: 60%;
   display: flex;
