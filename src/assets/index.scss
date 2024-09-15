@@ -547,6 +547,8 @@ HOME PAGE
       transition: 100ms;
       border-radius: 1rem;
       cursor: pointer;
+      display: flex;
+      justify-content: space-between;
 
       &:hover {
          background-color: $onHover;

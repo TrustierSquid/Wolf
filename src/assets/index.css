@@ -387,6 +387,8 @@ HOME PAGE
   transition: 100ms;
   border-radius: 1rem;
   cursor: pointer;
+  display: flex;
+  justify-content: space-between;
 }
 #mobileNavMenu .mobileNavMainBtns:hover {
   background-color: rgba(85, 85, 85, 0.262745098);

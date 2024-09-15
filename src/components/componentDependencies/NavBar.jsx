@@ -156,8 +156,9 @@ export default function Navbar() {
         </div>
 
         {/* <hr /> */}
-        <h4 className="mobileNavMainBtns" onClick={()=> navigateBackToHome()}>Home Feed</h4>
-        <h4 className="mobileNavMainBtns" onClick={()=> navigateToTopics()}>Join a Topic</h4>
+        <h4 className="mobileNavMainBtns" onClick={()=> navigateLogOut()}>Log Out <i className="fa-solid fa-right-from-bracket"></i></h4>
+        <h4 className="mobileNavMainBtns" onClick={()=> navigateBackToHome()}>Home Feed <i className="fa-solid fa-house"></i></h4>
+        <h4 className="mobileNavMainBtns" onClick={()=> navigateToTopics()}>Join a Topic <i className="fa-solid fa-users"></i></h4>
         <h4 className="subTitle">JOINED TOPICS</h4>
         {userTopicList.map((topic, key)=> {
           return (
