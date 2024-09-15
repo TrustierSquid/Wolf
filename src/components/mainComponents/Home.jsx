@@ -341,7 +341,7 @@ export default function Home(){
 
                   {/* Floating prompt for creating a new post */}
                   <form ref={createPostElement} id="createPostElement" >
-                     <h2 id="createNewPostHeader">Create New Post <span onClick={()=> dissappearEffect()}>Back <i className="fa-solid fa-arrow-right"></i></span></h2>
+                     <h2 id="createNewPostHeader">Create Post <span onClick={()=> dissappearEffect()}>Back <i className="fa-solid fa-arrow-right"></i></span></h2>
                      <div id="formSubject">
                         <label>Post Subject</label><br />
                         <textarea maxLength={40} required placeholder='Enter a Post Subject' onsubmit="return false" ref={subjectPostElement}></textarea><br />

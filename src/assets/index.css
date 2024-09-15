@@ -26,6 +26,13 @@ body {
   background-color: #0D1012;
 }
 
+.noPostsMessage {
+  color: white;
+  font-family: "Nunito", sans-serif;
+  text-align: center;
+  margin-top: 2rem;
+}
+
 /*
 
    LOGIN PAGE
@@ -533,13 +540,13 @@ main #content #whatsNew #createPostElement {
   width: 50%;
   margin-left: 1rem;
   position: fixed;
-  background-color: #0f0f0f;
+  background-color: #181818;
   padding: 3rem;
   top: 50%;
   right: 50%;
   transform: translate(50%, -50%);
   border-radius: 1rem;
-  border: 1px solid #131212;
+  border: 1px solid #2E2E2E;
   z-index: 5;
   opacity: 0;
   pointer-events: none;
@@ -583,8 +590,8 @@ main #content #whatsNew #createPostElement #formSubject input, main #content #wh
   border-radius: 0.5rem;
   font-size: 1rem;
   font-family: "Nunito", sans-serif;
-  background-color: #131212;
-  border: none;
+  background-color: #1B1B1B;
+  border: 2px solid #2E2E2E;
   color: white;
 }
 main #content #whatsNew #createPostElement button {
@@ -747,6 +754,7 @@ main #content .userContent .userPost .mainPost .postLC .commentBtn:hover {
   transform: translate(50%, -50%);
   color: white;
   background-color: #181818;
+  border: 2px solid #2E2E2E;
   border-radius: 1rem;
   padding: 2rem;
   transition: 150ms;
@@ -875,6 +883,22 @@ main #content .userContent .userPost .mainPost .postLC .commentBtn:hover {
     grid-template-columns: 1fr 1fr;
   }
 }
+#commentInterface {
+  width: 90%;
+}
+#commentInterface #commentSection #exitBtnRow #exitCommentBtn {
+  text-wrap: nowrap;
+}
+#commentInterface #commentSection2 #commentInput {
+  flex-direction: column;
+}
+#commentInterface #commentSection2 #commentInput input {
+  width: 100%;
+}
+#commentInterface #commentSection2 #commentInput button {
+  width: 100%;
+}
+
 #mainProfile {
   width: 60%;
   display: flex;
@@ -1081,9 +1105,11 @@ HOME COMPONENT MEDIA QUERIES
   }
   main #content #whatsNew #createPostElement {
     width: 90%;
+    padding: 2rem;
   }
   main #content #whatsNew #createPostElement #createNewPostHeader {
-    font-size: 1.5rem;
+    font-size: 1.3rem;
+    width: 100%;
   }
   main #content .userContent .userPost .postAnalytics {
     display: flex;

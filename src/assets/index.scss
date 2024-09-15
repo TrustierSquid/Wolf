@@ -3,6 +3,7 @@
 $uiBG: #2b2b2b;
 $cardBG: #131212;
 $cardBorder: #2E2E2E;
+$moodleBG: #181818;
 
 // darker BG
 $subBackground: #121010;
@@ -74,6 +75,12 @@ body {
    // overflow-y: hidden;
 }
 
+.noPostsMessage {
+   color: white;
+   font-family: $ff-heading;
+   text-align: center;
+   margin-top: 2rem;
+}
 
 /*
 
@@ -727,13 +734,13 @@ main {
             width: 50%;
             margin-left: 1rem;
             position: fixed;
-            background-color: #0f0f0f;
+            background-color: $moodleBG;
             padding: 3rem;
             top: 50%;
             right: 50%;
             transform: translate(50%,-50%);
             border-radius: 1rem;
-            border: 1px solid $cardBG;
+            border: 1px solid $cardBorder;
             z-index: 5;
             opacity: 0;
             pointer-events: none;
@@ -785,8 +792,8 @@ main {
                  border-radius: 0.5rem;
                  font-size: 1rem;
                  font-family: $ff-heading;
-                 background-color: $cardBG;
-                 border: none;
+                 background-color: $inputField;
+                 border: 2px solid $cardBorder;
                  color: white;
 
                  &:focus {
@@ -1023,6 +1030,7 @@ main {
    transform: translate(50%, -50%);
    color: white;
    background-color: #181818;
+   border: 2px solid $cardBorder;
    border-radius: 1rem;
    padding: 2rem;
    transition: 150ms;
@@ -1189,6 +1197,40 @@ main {
     grid-template-columns: 1fr 1fr;
   }
 }
+
+#commentInterface {
+   width: 90%;
+
+   #commentSection {
+      #exitBtnRow {
+         #exitCommentBtn {
+            text-wrap: nowrap;
+         }
+      }
+   }
+
+   #commentSection2 {
+      #commentInput {
+         flex-direction: column;
+         input {
+            width: 100%;
+         }
+
+         button {
+            width: 100%;
+         }
+      }
+   }
+}
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1462,9 +1504,11 @@ HOME COMPONENT MEDIA QUERIES
 
             #createPostElement {
                width: 90%;
+               padding: 2rem;
 
                #createNewPostHeader {
-                  font-size: 1.5rem;
+                  font-size: 1.3rem;
+                  width: 100%;
                }
 
 

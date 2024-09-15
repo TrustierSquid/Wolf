@@ -316,48 +316,58 @@ export default function UpdateFeed(props) {
       {/* Mapping each post in reverse (newest first) */}
       {/* post.poster is the author of the post */}
       {/* {showTopic()} */}
-      {allPosts?.map((post, key) => {
-        return (
-          <>
-            <div key={key} className="userPost">
-              <br />
-              <main className="mainPost">
-                <div className="postAnalytics">
-                  <section className="userAction">
-                    {/* checking for whos posting */}
-                    {checkAdmin(post.poster)}
-                    {showPostDate(post.postCreationDate)}
-                    {/* {handleFollowClick(post.poster, currentUser)} */}
-                    {/* {handleFollowClick(post.poster, userFollowingList)} */}
-                  </section>
-                  <p className="postCaption">
-                    <i className="fa-solid fa-bolt"></i>
-                    {post.subject}
-                  </p>
-                </div>
-                <h2 className="postBody">{post.body}</h2>
-                <div className="postLC">
-                  <span
-                    ref={(el) => (likeBtn.current[key] = el)}
-                    className="likeBtn"
-                    onClick={() => addLike(post._id, key)}
-                  >
-                    <i className="fa-solid fa-heart"></i>
-                    <span style={{ color: "grey" }}> {post.likes.length}</span>
-                  </span>
-                  <span className="commentBtn"
-                   onClick={()=> {commentInterfaceAppear(post.subject, post.body, post.poster, post.postcreationDate, post._id, key, post.likes.length, post.comments), props.bgEffect()}}>
-                    <i className="fa-solid fa-comments"></i>{" "}
-                    <span style={{ color: "grey" }}
-                    > {post.comments.length}</span>
-                  </span>
+      {allPosts?.length > 0 ? (
+        allPosts.map((post, key) => {
+          return (
+            <>
+              <div key={key} className="userPost">
+                <br />
+                <main className="mainPost">
+                  <div className="postAnalytics">
+                    <section className="userAction">
+                      {/* checking for whos posting */}
+                      {checkAdmin(post.poster)}
+                      {showPostDate(post.postCreationDate)}
+                      {/* {handleFollowClick(post.poster, currentUser)} */}
+                      {/* {handleFollowClick(post.poster, userFollowingList)} */}
+                    </section>
+                    <p className="postCaption">
+                      <i className="fa-solid fa-bolt"></i>
+                      {post.subject}
+                    </p>
+                  </div>
+                  <h2 className="postBody">{post.body}</h2>
+                  <div className="postLC">
+                    <span
+                      ref={(el) => (likeBtn.current[key] = el)}
+                      className="likeBtn"
+                      onClick={() => addLike(post._id, key)}
+                    >
+                      <i className="fa-solid fa-heart"></i>
+                      <span style={{ color: "grey" }}> {post.likes.length}</span>
+                    </span>
+                    <span className="commentBtn"
+                     onClick={()=> {commentInterfaceAppear(post.subject, post.body, post.poster, post.postcreationDate, post._id, key, post.likes.length, post.comments), props.bgEffect()}}>
+                      <i className="fa-solid fa-comments"></i>{" "}
+                      <span style={{ color: "grey" }}
+                      > {post.comments.length}</span>
+                    </span>
 
-                </div>
-              </main>
-            </div>
-          </>
-        );
-      })}
+                  </div>
+                </main>
+              </div>
+            </>
+          );
+        })
+      ) : (
+        <div className="noPostsMessage">
+          <h2>No posts available</h2>
+          <p>Be the first to share something!</p>
+        </div>
+      )}
+
+
+
 
       <div id="commentInterface" ref={commentInterface}>
         <section id="commentSection">
@@ -391,7 +401,7 @@ export default function UpdateFeed(props) {
           </article>
         </section>
 
-      </div>r
+      </div>
     </>
   );
 }
