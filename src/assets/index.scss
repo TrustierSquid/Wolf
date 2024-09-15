@@ -11,7 +11,7 @@ $subBackground: #121010;
 // navbarBG
 $navBG: #510917;
 
-$primary: #ff3c3c;
+$primary: #d43737;
 $darkenPrimary: #532C2C;
 $inputField: #1B1B1B;
 $buttonHover: #7A0B31;
@@ -24,7 +24,7 @@ $ff-body: "roboto", sans-serif;
 $sc-success: #86DB1E;
 $sc-warning: #FFD507;
 $sc-error: #F96E36;
-$sc-info: #00CAE5;
+$sc-info: #00a1b6;
 
 $subTitle: #ff7b00;
 $onHover: #55555543;
@@ -760,9 +760,7 @@ main {
 
          #newPostBtn {
             display: flex;
-            justify-content: center;
-            border: $cardBorder 1px solid;
-            color:#00CAE5 ;
+            color: white;
             padding: 2rem;
             font-size: 1.5rem;
             font-family: $ff-body;
@@ -773,15 +771,15 @@ main {
             height: 50px;
             display: flex;
             align-items: center;
-            justify-content: start;
+            justify-content: space-between;
             gap: 1rem;
             background: none;
+            border: 1px solid $sc-info;
             transition: 150ms;
             text-wrap: nowrap;
 
-
             &:hover {
-               border: 1px solid white;
+               background-color: $sc-info;
                transform: translateY(-5px);
             }
 

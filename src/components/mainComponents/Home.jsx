@@ -317,7 +317,7 @@ export default function Home(){
       }
 
       let splicedTopic = userSearched.split("Feed")
-      return  `Create Post On ${splicedTopic[0]} +`
+      return  <><h4>{`Post On ${splicedTopic[0]}`} </h4> <i className="fa-solid fa-file-circle-plus"></i></>
    }
 
    return (

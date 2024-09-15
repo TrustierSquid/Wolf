@@ -135,7 +135,7 @@ body {
   gap: 2rem;
 }
 #loginContainer #extraInfo a {
-  color: #ff3c3c;
+  color: #d43737;
   font-family: "roboto", sans-serif;
 }
 #loginContainer #extraInfo p {
@@ -152,7 +152,7 @@ body {
   width: 100%;
 }
 #loginContainer #loginBtns button {
-  background-color: #ff3c3c;
+  background-color: #d43737;
   border: none;
   padding: 0.8rem;
   border-radius: 0.5rem;
@@ -207,7 +207,7 @@ CHOOSING TOPICS COMPONENT
   color: white;
 }
 #topics #pageHeader span {
-  color: #ff3c3c;
+  color: #d43737;
 }
 #topics #pageSubHeader {
   font-family: "Nunito", sans-serif;
@@ -254,7 +254,7 @@ CHOOSING TOPICS COMPONENT
   padding: 0.5rem;
   width: 75px;
   align-self: end;
-  background-color: #ff3c3c;
+  background-color: #d43737;
   border: none;
   border-radius: 0.5rem;
   color: white;
@@ -336,10 +336,10 @@ HOME PAGE
   transition: 150ms;
 }
 #nav #profileContainer #dropdownBtn:focus {
-  color: #ff3c3c;
+  color: #d43737;
 }
 #nav #profileContainer #dropdownBtn:hover {
-  color: #ff3c3c;
+  color: #d43737;
 }
 #nav #mobileNavBtn {
   display: none;
@@ -460,7 +460,7 @@ HOME PAGE
   color: white;
 }
 #navDropdown .navDropdownItemProfile:hover #navUsername {
-  color: #ff3c3c;
+  color: #d43737;
 }
 
 .sideNav {
@@ -506,10 +506,10 @@ HOME PAGE
 }
 .sideNav .topicSelectionElement button:hover {
   transform: translateY(-3px);
-  background-color: #ff3c3c;
+  background-color: #d43737;
 }
 .sideNav .topicSelectionElement button:focus {
-  background-color: #ff3c3c;
+  background-color: #d43737;
 }
 .sideNav .topicSelectionElement #selectedTopicsBtns {
   display: flex;
@@ -552,9 +552,7 @@ main #content #whatsNew h1 {
 }
 main #content #whatsNew #newPostBtn {
   display: flex;
-  justify-content: center;
-  border: #2E2E2E 1px solid;
-  color: #00CAE5;
+  color: white;
   padding: 2rem;
   font-size: 1.5rem;
   font-family: "roboto", sans-serif;
@@ -565,14 +563,15 @@ main #content #whatsNew #newPostBtn {
   height: 50px;
   display: flex;
   align-items: center;
-  justify-content: start;
+  justify-content: space-between;
   gap: 1rem;
   background: none;
+  border: 1px solid #00a1b6;
   transition: 150ms;
   text-wrap: nowrap;
 }
 main #content #whatsNew #newPostBtn:hover {
-  border: 1px solid white;
+  background-color: #00a1b6;
   transform: translateY(-5px);
 }
 @keyframes levitate {
@@ -646,7 +645,7 @@ main #content #whatsNew #createPostElement #formSubject input, main #content #wh
 main #content #whatsNew #createPostElement button {
   padding: 0.5rem;
   color: white;
-  background-color: #ff3c3c;
+  background-color: #d43737;
   border: none;
   border-radius: 0.5rem;
   font-size: 1rem;
@@ -660,7 +659,7 @@ main #content #whatsNew #createPostElement button:hover {
   background-color: #510917;
 }
 main #content #whatsNew #createPostElement #feedbackMessage {
-  color: #ff3c3c;
+  color: #d43737;
   font-family: "roboto", sans-serif;
   align-self: center;
 }
@@ -732,7 +731,7 @@ main #content .userContent .userPost .mainPost .postAnalytics .postCaption {
   gap: 0.5rem;
 }
 main #content .userContent .userPost .mainPost .postAnalytics .postCaption i {
-  color: #ff3c3c;
+  color: #d43737;
 }
 main #content .userContent .userPost .mainPost .postBody {
   font-size: 1.2rem;
@@ -757,10 +756,10 @@ main #content .userContent .userPost .mainPost .userTraction button {
   background: none;
 }
 main #content .userContent .userPost .mainPost .userTraction .likeBtn {
-  border: 2px solid #ff3c3c;
+  border: 2px solid #d43737;
 }
 main #content .userContent .userPost .mainPost .userTraction .likeBtn:hover {
-  background-color: #ff3c3c;
+  background-color: #d43737;
 }
 @keyframes postBtnAnimation {
   0% {
