@@ -157,7 +157,7 @@ export default function Navbar() {
 
         {/* <hr /> */}
         <h4 className="mobileNavMainBtns" onClick={()=> navigateBackToHome()}>Home Feed</h4>
-        <h4 className="mobileNavMainBtns" onClick={()=> navigateToTopics()}>Join Topic</h4>
+        <h4 className="mobileNavMainBtns" onClick={()=> navigateToTopics()}>Join a Topic</h4>
         <h4 className="subTitle">JOINED TOPICS</h4>
         {userTopicList.map((topic, key)=> {
           return (

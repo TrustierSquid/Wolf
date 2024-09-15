@@ -41,7 +41,7 @@ const SideNavBar = forwardRef(({
             <br />
             <section className="topicSelectionElement">
                <button onClick={()=> navigateToHome()}>Home Feed <i className="fa-solid fa-house"></i></button>
-               <button onClick={()=> navigateToTopicSelection()}>Join Topic <i className="fa-solid fa-person-circle-plus"></i></button>
+               <button onClick={()=> navigateToTopicSelection()}>Join a Topic <i className="fa-solid fa-person-circle-plus"></i></button>
 
                <h4 className="subTitle">JOINED TOPICS</h4>
 
