@@ -891,6 +891,10 @@ main #content .userContent .userPost .mainPost .postLC .commentBtn:hover {
   display: flex;
   justify-content: space-between;
   margin-bottom: 1rem;
+  color: turquoise;
+}
+#commentInterface #commentSection2 article .comment h3 span {
+  color: rgb(153, 153, 153);
 }
 
 #introGrid {
