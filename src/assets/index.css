@@ -6,7 +6,7 @@
 
 html {
   max-height: 100000px;
-  min-height: 100vh;
+  min-height: 200vh;
   scroll-behavior: smooth;
 }
 
@@ -15,7 +15,7 @@ html {
   position: absolute;
   top: 0;
   left: 0;
-  min-height: 100%;
+  min-height: 200%;
   width: 100%;
   z-index: 5;
   pointer-events: none;
@@ -876,10 +876,10 @@ main #content .userContent .userPost .mainPost .postLC .commentBtn:hover {
   }
 }
 #mainProfile {
-  width: 90%;
+  width: 60%;
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 5rem;
   margin: 2% auto;
   color: white;
   padding: 1rem;
@@ -892,19 +892,19 @@ main #content .userContent .userPost .mainPost .postLC .commentBtn:hover {
   border-radius: 1rem;
   width: 100%;
   display: flex;
-  justify-content: center;
+  align-items: start;
+  justify-content: space-between;
   gap: 2rem;
 }
 #mainProfile .profileAnalytics:nth-of-type(1) .profileSectionInfo {
-  background-color: rgba(30, 30, 30, 0.4745098039);
   border-radius: 1rem;
   padding: 1.5rem;
   font-family: "Nunito", sans-serif;
+  margin-bottom: 2rem;
 }
 #mainProfile .profileAnalytics:nth-of-type(1) .profileSectionInfo:nth-of-type(1) {
   display: flex;
   flex-direction: column;
-  align-items: left;
   justify-content: center;
   width: 40%;
   gap: 0.5rem;
@@ -914,7 +914,7 @@ main #content .userContent .userPost .mainPost .postLC .commentBtn:hover {
   font-size: 16px;
 }
 #mainProfile .profileAnalytics:nth-of-type(1) .profileSectionInfo:nth-of-type(1) .followUserBtn {
-  align-self: end;
+  align-self: start;
   width: 40%;
   padding: 0.5rem;
   color: white;
@@ -934,7 +934,7 @@ main #content .userContent .userPost .mainPost .postLC .commentBtn:hover {
   flex-direction: column;
   justify-content: space-around;
   gap: 1rem;
-  width: 60%;
+  width: 30%;
 }
 #mainProfile .profileAnalytics:nth-of-type(1) .profileSectionInfo:nth-of-type(2) #showUserStats {
   display: flex;
@@ -947,6 +947,9 @@ main #content .userContent .userPost .mainPost .postLC .commentBtn:hover {
   transition: 100ms;
   cursor: pointer;
   text-align: center;
+}
+#mainProfile .profileAnalytics:nth-of-type(1) .profileSectionInfo:nth-of-type(2) #showUserStats span h1 {
+  font-size: 2rem;
 }
 #mainProfile .profileAnalytics:nth-of-type(1) .profileSectionInfo:nth-of-type(2) #showUserStats span p {
   font-size: 1rem;
@@ -1093,6 +1096,7 @@ HOME COMPONENT MEDIA QUERIES
   }
   #mainProfile {
     width: 100%;
+    gap: 1rem;
   }
   #mainProfile .profileAnalytics .profHeaders {
     flex-direction: column;
@@ -1108,5 +1112,28 @@ HOME COMPONENT MEDIA QUERIES
   }
   #mainProfile .profileAnalytics:nth-of-type(1) .profileSectionInfo:nth-of-type(1), #mainProfile .profileAnalytics:nth-of-type(1) .profileSectionInfo:nth-of-type(2) {
     width: 100%;
+  }
+  #mainProfile .profileAnalytics:nth-of-type(1) .profileSectionInfo:nth-of-type(1) {
+    align-items: center;
+    margin-bottom: 0rem;
+  }
+  #mainProfile .profileAnalytics:nth-of-type(1) .profileSectionInfo:nth-of-type(1) .followUserBtn {
+    align-self: center;
+    font-size: 1.2rem;
+    width: 80%;
+  }
+  #mainProfile .profileAnalytics:nth-of-type(1) .profileSectionInfo:nth-of-type(2) {
+    align-self: center;
+    width: 90%;
+    margin-bottom: 0rem;
+  }
+  #mainProfile .profileAnalytics:nth-of-type(1) .profileSectionInfo:nth-of-type(2) #showUserStats {
+    padding: 1.5rem;
+  }
+  #mainProfile .profileAnalytics:nth-of-type(2) .existingPost {
+    font-size: 1rem;
+  }
+  #mainProfile .profileAnalytics:nth-of-type(2) .existingPost .profilePostSubject {
+    font-size: 1.3rem;
   }
 }/*# sourceMappingURL=index.css.map */

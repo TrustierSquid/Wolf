@@ -53,7 +53,7 @@ $onHover: #55555543;
 
 html {
    max-height: 100000px;
-   min-height: 100vh;
+   min-height: 200vh;
    scroll-behavior: smooth;
 }
 
@@ -62,7 +62,7 @@ html {
    position: absolute;
    top: 0;
    left: 0;
-   min-height: 100%;
+   min-height: 200%;
    width: 100%;
    z-index: 5;
    pointer-events: none;
@@ -1195,10 +1195,10 @@ main {
 // Profile Page
 #mainProfile {
    // background-color: #0a0c0efa;
-   width: 90%;
+   width: 60%;
    display: flex;
    flex-direction: column;
-   gap: 1rem;
+   gap: 5rem;
    // height: 800px;
    margin: 2% auto;
    color: white;
@@ -1217,21 +1217,22 @@ main {
       // height: 200px;
       width: 100%;
       display: flex;
-      justify-content: center;
+      align-items: start;
+      justify-content: space-between;
       gap: 2rem;
 
       .profileSectionInfo {
-         background-color: #1e1e1e79;
+         // background-color: #1e1e1e79;
          border-radius: 1rem;
          padding: 1.5rem;
          font-family: $ff-heading;
+         margin-bottom: 2rem;
       }
 
       // Displaying name and user status
       .profileSectionInfo:nth-of-type(1){
          display: flex;
          flex-direction: column;
-         align-items: left;
          justify-content: center;
          width: 40%;
          gap: 0.5rem;
@@ -1242,7 +1243,7 @@ main {
          }
 
          .followUserBtn {
-            align-self: end;
+            align-self: start;
             width: 40%;
             padding: 0.5rem;
             color: white;
@@ -1267,7 +1268,7 @@ main {
          flex-direction: column;
          justify-content: space-around;
          gap: 1rem;
-         width: 60%;
+         width: 30%;
 
          #showUserStats {
             display: flex;
@@ -1282,6 +1283,10 @@ main {
                cursor: pointer;
                text-align: center;
                // following/follower number
+               h1 {
+                  font-size: 2rem;
+               }
+
                p {
                   font-size: 1rem;
                }
@@ -1534,6 +1539,7 @@ HOME COMPONENT MEDIA QUERIES
 
    #mainProfile {
       width: 100%;
+      gap: 1rem;
 
       .profileAnalytics {
          article{
@@ -1562,6 +1568,39 @@ HOME COMPONENT MEDIA QUERIES
             width: 100%;
          }
 
+         .profileSectionInfo:nth-of-type(1){
+            align-items: center;
+            margin-bottom: 0rem;
+
+            .followUserBtn {
+               align-self: center;
+               font-size: 1.2rem;
+               width: 80%;
+            }
+         }
+
+         .profileSectionInfo:nth-of-type(2) {
+            align-self: center;
+            width: 90%;
+            margin-bottom: 0rem;
+
+            #showUserStats {
+               padding: 1.5rem;
+            }
+
+         }
+
+
+      }
+
+      .profileAnalytics:nth-of-type(2) {
+
+         .existingPost {
+            .profilePostSubject {
+               font-size: 1.3rem;
+            }
+            font-size: 1rem;
+         }
       }
 
 

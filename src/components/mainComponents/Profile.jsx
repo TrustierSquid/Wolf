@@ -195,7 +195,7 @@ export default function Profile(props){
       <>
          <Navbar/>
          <main id="mainProfile">
-            <h2 className="profHeaders">Profile Overview</h2>
+            {/* <h2 className="profHeaders">Profile Overview</h2> */}
             <div className="profileAnalytics">
                <section className="profileSectionInfo">
 
@@ -206,15 +206,14 @@ export default function Profile(props){
 
                </section>
                <section className="profileSectionInfo">
-                  <h2>User Analytics</h2>
                   <br />
                   <div id="showUserStats">
                      <span>
-                        <h1 style={{color: "yellow"}}>{userProfileData.followers?.length || 0}</h1>
+                        <h1>{userProfileData.followers?.length || 0}</h1>
                         <p>Followers</p>
                      </span>
                      <span>
-                        <h1 style={{color: "yellow"}}>{userProfileData.following?.length || 0}</h1>
+                        <h1>{userProfileData.following?.length || 0}</h1>
                         <p>Following</p>
                      </span>
                   </div>

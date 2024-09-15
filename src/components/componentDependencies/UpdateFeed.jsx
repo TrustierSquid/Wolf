@@ -246,9 +246,6 @@ export default function UpdateFeed(props) {
       }, 500);
 
       setErrorMessage('Added Comment!')
-      setTimeout(() => {
-        window.location.reload()
-      }, 500);
     } else {
 
       const response = await fetch(`/addPostComment?postID=${postID}&feed=${userSearched}&commentFrom=${props.currentActiveUser}`, {
@@ -264,9 +261,6 @@ export default function UpdateFeed(props) {
       }
 
       setErrorMessage('Added Comment!')
-      setTimeout(() => {
-        window.location.reload()
-      }, 500);
       await updateMainFeed()
     }
 
