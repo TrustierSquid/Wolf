@@ -227,6 +227,7 @@ export default function Profile(props){
                      {userProfileData?.topics?.length > 0 && (
                         <select className="topicDisplaySelection">
                            <option onClick={()=> getUserProfilePosts("mainFeed")}>Home Feed</option>
+
                            {userProfileData.topics.map((topic, index) => (
                               <option key={index} onClick={()=> getUserProfilePosts(topic + "Feed")}>{topic} Feed</option>
                            ))}
@@ -236,27 +237,33 @@ export default function Profile(props){
 
                   </form>
                </section>
+               {profilePostData?.length > 0 ? (
+                  profilePostData.map((post, index)=> {
+                     return (
+                        <>
+                           <article key={index} className="existingPost">
+                              <h2 className="profilePostSubject">
+                                 <span>
+                                    <i style={{color: 'crimson'}} className="fa-solid fa-bolt"></i>
+                                    {" " + post.subject}
+                                 </span>
+                                 <div className="profilePostAnalytics">
+                                    <h5><i style={{color: "grey"}} className="fa-solid fa-heart"></i> {post.likes.length}</h5>
+                                    <h5 style={{color: "grey"}}><i style={{color: "grey"}} className="fa-solid fa-comments"></i> {post.comments.length}</h5>
+                                 </div>
+                              </h2>
+                              <h3 className="profilePostSubject">{post.body}</h3>
 
-               {profilePostData.map((post)=> {
-                  return (
-                     <>
-                        <article className="existingPost">
-                           <h2 className="profilePostSubject">
-                              <span>
-                                 <i style={{color: 'crimson'}} className="fa-solid fa-bolt"></i>
-                                 {" " + post.subject}
-                              </span>
-                              <div className="profilePostAnalytics">
-                                 <h5><i style={{color: "grey"}} className="fa-solid fa-heart"></i> {post.likes.length}</h5>
-                                 <h5 style={{color: "grey"}}><i style={{color: "grey"}} className="fa-solid fa-comments"></i> {post.comments.length}</h5>
-                              </div>
-                           </h2>
-                           <h3 className="profilePostSubject">{post.body}</h3>
-
-                        </article>
-                     </>
-                  )
-               })}
+                           </article>
+                        </>
+                     )
+                  })
+               ) : (
+                  <div className="noPostsMessage">
+                     <h3>No posts available yet!</h3>
+                     <p>Start sharing posts to see them here.</p>
+                  </div>
+               )}
 
 
 
