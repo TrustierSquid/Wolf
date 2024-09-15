@@ -8,7 +8,6 @@ const router = express.Router()
 // Grabing the posts based off of what topic was clicked on
 router.get('/', async (req, res)=> {
    const {topicFeed} = req.query
-   console.log(`Showing a different Feed ${topicFeed}`)
 
    const database = await connectMongo()
    const feed = database.collection(topicFeed)

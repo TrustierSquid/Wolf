@@ -39,7 +39,7 @@ app.use(cors());
 // MIDDLEWARE
 app.use(cookieParser());
 app.use(express.json());
-// app.use(express.static(path.join(__dirname,  "./dist")));
+app.use(express.static(path.join(__dirname,  "./dist")));
 
 app.use("/users", signinRoutes);
 app.use("/profileData", profileRoutes);
@@ -80,23 +80,19 @@ connectMongo();
 // for prod
 app.get("/home.html", requireAuth, (req, res) => {
   res.redirect("/");
-  console.log("Cant do that, going back to home");
 });
 
 app.get("/topics.html", requireAuth, (req, res) => {
   res.redirect("/");
-  console.log("Cant do that, going back to home");
 });
 
 app.get("/index.html", requireAuth, (req, res) => {
   res.redirect("/");
-  console.log("Cant do that, going back to home");
 });
 
 // on load Send user to login screen
 app.get("/", (req, res) => {
   // for dev
-  console.log("User connected to login page");
   // res.send('<h1>Login page</h1>')
   res.sendFile(path.join(__dirname, "index.html"));
 });
@@ -125,6 +121,11 @@ app.get("/topics", requireAuth, (req, res) => {
   res.sendFile(path.join(__dirname, "/dist/topics.html"));
 });
 
+app.get("/profile", requireAuth, (req, res) => {
+  // for dev
+  res.sendFile(path.join(__dirname, "/dist/profile.html"));
+});
+
 app.get("/viewProf", (req, res) => {
   res.sendFile(path.join(__dirname, "../profile.html"));
 });
@@ -136,7 +137,6 @@ app.get("/wolfTopics", (req, res) => {
 // ROUTE EXECUTES WHEN THE USER WANTS TO LOOK AT THEIR OWN PROFILE
 app.post("/profile", (req, res) => {
   const { username } = req.body;
-  console.log(`${username} wants to look at his profile!`);
 });
 
 
@@ -164,7 +164,6 @@ app.post("/newPost", async (req, res) => {
     // retrieving the username, and post details (subject, body)
     const { whoPosted, postSubject, postBody } = req.body;
 
-    console.log(`${whoPosted} just posted! \n ${postSubject} \n ${postBody}`);
 
     // Updating the poster's post count
     let database = await connectMongo();
@@ -199,9 +198,6 @@ app.post("/newPost", async (req, res) => {
     // retrieving the username, and post details (subject, body)
     const { whoPosted, postSubject, postBody } = req.body;
 
-    console.log(
-      `${whoPosted} just posted in ${feed}! \n ${postSubject} \n ${postBody}`
-    );
 
     // Updating the poster's post count
     let database = await connectMongo();
@@ -263,9 +259,8 @@ app.post("/addLike", requireAuth, async (req, res) => {
         { _id: new ObjectId(postID) },
         { $pull: { likes: loggedInUser } }
       );
-      console.log(
-        `removed ${loggedInUser}'s like ${findDuplicateUser.poster}s post`
-      );
+
+
       res.json({ latestLikeCounter });
     } else {
       await posts.updateOne(
@@ -273,7 +268,6 @@ app.post("/addLike", requireAuth, async (req, res) => {
         { $push: { likes: loggedInUser } }
       );
 
-      console.log(`${loggedInUser} liked a post`);
       res.json({ latestLikeCounter });
     }
   } else {
@@ -292,9 +286,8 @@ app.post("/addLike", requireAuth, async (req, res) => {
         { _id: new ObjectId(postID) },
         { $pull: { likes: loggedInUser } }
       );
-      console.log(
-        `removed ${loggedInUser}'s like ${findDuplicateUser.poster}s post`
-      );
+
+
       res.json({ latestLikeCounter });
     } else {
       await posts.updateOne(
@@ -302,7 +295,6 @@ app.post("/addLike", requireAuth, async (req, res) => {
         { $push: { likes: loggedInUser } }
       );
 
-      console.log(`${loggedInUser} liked a post`);
       res.json({ latestLikeCounter });
     }
   }
@@ -385,7 +377,6 @@ app.post("/addFollowingUser", async (req, res) => {
 
 
   if (duplicateUserFollowing || duplicateUserFollower) {
-    console.log(`${findLoggedInUser} unfollows ${findFollowee}`);
     try {
       // updating current users following list
       await users.updateOne(
@@ -416,7 +407,6 @@ app.post("/addFollowingUser", async (req, res) => {
         { $addToSet: { followers: findLoggedInUser } }
       );
 
-      console.log(`${findLoggedInUser} is now following ${findFollowee}`);
       res.sendStatus(200)
     } catch {
       console.log("Unable to complete the follow transaction");
@@ -450,7 +440,6 @@ app.get('/topicsAdd', async (req, res)=> {
       {$addToSet: {topics: topicToAdd}}
     )
 
-    console.log(`${loggedInUser} Joined ${topicToAdd}`)
     res.sendStatus(200)
 
   } else {
@@ -459,7 +448,6 @@ app.get('/topicsAdd', async (req, res)=> {
       {$pull: {topics: topicToAdd}}
     )
 
-    console.log(`Left ${topicToAdd}`)
     res.sendStatus(200)
   }
 
@@ -490,7 +478,6 @@ app.post('/addPostComment', async (req, res)=> {
     {$push: {comments: newComment}}
   )
 
-  console.log(`Comment received! \n${comment} from ${commentFrom}`)
   res.sendStatus(200)
 
 })

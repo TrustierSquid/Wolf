@@ -6,7 +6,7 @@
 
 html {
   max-height: 100000px;
-  min-height: 200vh;
+  min-height: 100vh;
   scroll-behavior: smooth;
 }
 
@@ -54,11 +54,14 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: space-around;
+  border: 2px solid #2E2E2E;
   padding: 2.5rem;
   gap: 1rem;
-  max-width: 600px;
-  min-height: 700px;
-  margin: 4rem auto;
+  width: 40%;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
   border-radius: 2rem;
   color: white;
 }
@@ -66,6 +69,30 @@ body {
   display: flex;
   align-items: center;
   gap: 1rem;
+  justify-content: space-between;
+  width: 100%;
+}
+#loginContainer #title .titleSection:nth-of-type(1) {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+#loginContainer #optionalDecision {
+  display: flex;
+  justify-content: end;
+  width: 100%;
+  align-items: center;
+  gap: 1rem;
+  text-wrap: nowrap;
+}
+#loginContainer #optionalDecision #signUpLink {
+  color: magenta;
+  font-size: 1.2rem;
+  text-decoration: none;
+  align-self: end;
+}
+#loginContainer #optionalDecision #signUpLink:hover {
+  text-decoration: underline;
 }
 #loginContainer #inputField {
   width: 100%;
@@ -82,11 +109,10 @@ body {
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
-  padding: 1rem;
+  padding-top: 2rem;
 }
-#loginContainer #inputField div h5 {
-  font-family: "Nunito", sans-serif;
-  font-weight: 900;
+#loginContainer #inputField div h3 {
+  font-family: "roboto", sans-serif;
   color: white;
   margin-bottom: 1.5rem;
 }
@@ -103,7 +129,6 @@ body {
 }
 #loginContainer #inputField div input:focus {
   outline: none;
-  border: 2px solid #ff3c3c;
 }
 #loginContainer #extraInfo {
   display: flex;
@@ -122,12 +147,14 @@ body {
 }
 #loginContainer #loginBtns {
   display: flex;
+  justify-content: end;
   gap: 2rem;
+  width: 100%;
 }
 #loginContainer #loginBtns button {
-  background-color: #131212;
+  background-color: #ff3c3c;
   border: none;
-  padding: 1rem;
+  padding: 0.8rem;
   border-radius: 0.5rem;
   color: white;
   cursor: pointer;
@@ -135,12 +162,25 @@ body {
   transition: 150ms;
   font-family: "Nunito", sans-serif;
   font-weight: 900;
+  width: 40%;
 }
 #loginContainer #loginBtns button:hover {
-  background-color: #ff3c3c;
+  background-color: #7A0B31;
   transform: translateY(-5px);
 }
 
+@media (max-width: 1050px) {
+  #loginContainer {
+    width: 95%;
+  }
+  #loginContainer #optionalDecision {
+    justify-content: center;
+  }
+  #loginContainer #loginBtns button {
+    width: 100%;
+    font-size: 1.2rem;
+  }
+}
 /*
 
 CHOOSING TOPICS COMPONENT

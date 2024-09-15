@@ -33,12 +33,11 @@ export default function Login() {
 
       password.current.value = ''
       username.current.value = ''
-      setLoginErrorMessage("Invalid username or password.")
 
       if (response.redirected) {
         window.location.href = '/home';
-        // window.location.href = '/home';
       } else {
+        setLoginErrorMessage("Invalid username or password.")
         password.current.value = ''
         username.current.value = ''
         return response.json()
@@ -83,7 +82,7 @@ export default function Login() {
 
       if (response.redirected) {
         // window.location.href = response.url;
-        window.location.href = '/user';
+        window.location.href = '/home';
 
       } else {
         password.current.value = "";
@@ -97,43 +96,64 @@ export default function Login() {
 
   }
 
+  const queryString = window.location.search;
+  const urlParams = new URLSearchParams(queryString);
+  const signinCheck = urlParams.get("signUp");
+
+  function determineSignUp(){
+    // if on signUp version
+    if (signinCheck) {
+      return (
+        <button className="signUpBtn" onClick={() => createUser()}>
+          Sign Up <i className="fa-solid fa-user-plus"></i>
+        </button>
+      )
+    } else {
+      return (
+        <button className="signUpBtn" onClick={() => signIn()}>
+          Log In <i className="fa-solid fa-right-to-bracket"></i>
+        </button>
+      )
+    }
+
+  }
+
+
+
   // "/src/img/wolfLogo.png"
   return (
     <>
       <main id="loginContainer">
         <section id="title">
-          <img src={logo} alt="" />
-          <h1>WOLF</h1>
+          <div className="titleSection">
+            <img src={logo} alt="" />
+            <h1>WOLF</h1>
+          </div>
+          <div className="titleSection">
+            <h2>{signinCheck ? 'Sign up' : 'Login'}</h2>
+          </div>
         </section>
         <form id="inputField">
           {/* for people demoing the app */}
-          <p style={{color: 'red'}}>STRICTLY FOR DEMONSTRATION PURPOSES</p>
-          <br />
-          <p>
-            For recruiters demoing Wolf, CREATE NEW USER with: <br></br><br></br>USER: DemoUser <br></br><br></br> PASS: lovetocode
-          </p>
-          <br></br>
           <div>
-            <h5>USERNAME</h5>
+            <h3>USERNAME</h3>
             <input ref={username} type="text" placeholder="Enter your username"/>
           </div>
           <div>
-            <h5>PASSWORD</h5>
+            <h3>PASSWORD</h3>
             <input ref={password} type="password" placeholder="Enter your password"/>
           </div>
         </form>
+        <section id="optionalDecision">
+          <p>{signinCheck ? 'Have an Account?' : "Don't have an account?"}</p>
+          <a href={signinCheck ? '/' : "/?signUp=true"} id="signUpLink">{signinCheck ? "Login" : "Sign Up"}</a>
+        </section>
         <div id="extraInfo">
-
           {/* error message */}
           <span>{loginErrorMessage}</span>
         </div>
         <div id="loginBtns">
-          <button className="signUpBtn" onClick={() => createUser()}>
-            Create New User <i className="fa-solid fa-user-plus"></i>
-          </button>
-          <button className="signUpBtn" onClick={() => signIn()}>
-            Log in <i className="fa-solid fa-right-to-bracket"></i>
-          </button>
+          {determineSignUp()}
         </div>
       </main>
     </>

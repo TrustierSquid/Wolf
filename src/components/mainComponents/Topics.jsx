@@ -36,7 +36,6 @@ export default function Topics(props) {
 
   // toggles weather or not you join a topic or leave one
   async function joinTopic(topicName, key){
-    console.log("Sent join req")
 
     try {
       const response = await fetch(`/topicsAdd?loggedInUser=${props.loggedInUID}&topicToAdd=${topicName}`, {

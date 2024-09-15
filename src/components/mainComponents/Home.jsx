@@ -214,7 +214,6 @@ export default function Home(){
 
          // the selected topics that are clicked on in the grid
          setGrippedTopic(topicName)
-         console.log(grippedTopic)
        }
 
        selectGridTopic();

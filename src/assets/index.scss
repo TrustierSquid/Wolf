@@ -54,7 +54,7 @@ $onHover: #55555543;
 
 html {
    max-height: 100000px;
-   min-height: 200vh;
+   min-height: 100vh;
    scroll-behavior: smooth;
 }
 
@@ -104,11 +104,15 @@ body {
    flex-direction: column;
    align-items: center;
    justify-content: space-around;
+   border: 2px solid $cardBorder;
    padding: 2.5rem;
    gap: 1rem;
-   max-width: 600px;
-   min-height: 700px;
-   margin: 4rem auto ;
+   width: 40%;
+   position: absolute;
+   // min-height: 700px;
+   left: 50%;
+   top: 50%;
+   transform: translate(-50%, -50%);
    border-radius: 2rem;
    color: white;
 
@@ -118,7 +122,43 @@ body {
       display: flex;
       align-items: center;
       gap: 1rem;
+      justify-content: space-between;
+      width: 100%;
+
+      .titleSection:nth-of-type(1) {
+         display: flex;
+         align-items: center;
+         gap: 0.5rem;
+      }
+
+      .titleSection:nth-of-type(2) {
+
+      }
+
    }
+
+
+   #optionalDecision {
+      display: flex;
+      justify-content: end;
+      width: 100%;
+      align-items: center;
+      gap: 1rem;
+      text-wrap: nowrap;
+
+      #signUpLink {
+         color: magenta;
+         font-size: 1.2rem;
+         text-decoration: none;
+         align-self: end;
+
+         &:hover {
+            text-decoration: underline;
+         }
+      }
+   }
+
+
 
    // input fields
    #inputField {
@@ -139,11 +179,10 @@ body {
          display: flex;
          flex-direction: column;
          flex-wrap: wrap;
-         padding: 1rem;
+         padding-top: 2rem;
 
-         h5 {
-            font-family: $ff-heading;
-            font-weight: 900;
+         h3 {
+            font-family: $ff-body;
             color: white;
             margin-bottom: 1.5rem;
          }
@@ -161,7 +200,6 @@ body {
 
             &:focus {
                outline: none;
-               border: 2px solid $primary;
             }
          }
       }
@@ -189,12 +227,14 @@ body {
    // buttons for login and signup
    #loginBtns {
       display: flex;
+      justify-content: end;
       gap: 2rem;
+      width: 100%;
 
       button {
-         background-color: $cardBG;
+         background-color: $primary;
          border: none;
-         padding: 1rem;
+         padding: 0.8rem;
          border-radius: 0.5rem;
          color: white;
          cursor: pointer;
@@ -202,9 +242,11 @@ body {
          transition: 150ms;
          font-family: $ff-heading;
          font-weight: 900;
+         width: 40%;
+
 
          &:hover {
-            background-color: $primary;
+            background-color: $buttonHover;
             transform: translateY(-5px);
          }
       }
@@ -215,6 +257,28 @@ body {
 
 
 // LOGIN PAGE MEDIA QUERY
+@media (max-width: 1050px) {
+   #loginContainer {
+      width: 95%;
+
+      #optionalDecision {
+         justify-content: center;
+
+         #signUpLink {
+
+         }
+      }
+
+      #loginBtns {
+
+
+         button {
+            width: 100%;
+            font-size: 1.2rem;
+         }
+      }
+   }
+}
 
 
 

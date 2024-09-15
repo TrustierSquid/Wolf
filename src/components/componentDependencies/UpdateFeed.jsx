@@ -11,7 +11,6 @@ export default function UpdateFeed(props) {
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
     const userSearched = urlParams.get("topicFeed");
-    console.log(`${userSearched}`)
 
     // if there is no query string fetching for a different feed, then the main feed will be returned
     if (!queryString) {
@@ -55,7 +54,6 @@ export default function UpdateFeed(props) {
     })
 
     const data = await response.json()
-    console.log(data)
 
     window.location.href = `/profile?user=${data.userUID}`;
     /* setTimeout(() => {
@@ -195,7 +193,6 @@ export default function UpdateFeed(props) {
 
   async function commentInterfaceAppear(postSubject, postBody, poster, creationDate, postID, keyOfPost,
      postLikesCount, postComments, ){
-    console.log("comment interface")
 
     setPostSubject(postSubject)
     setPostBody(postBody)

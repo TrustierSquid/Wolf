@@ -25,7 +25,6 @@ function App() {
       }
 
       const homeData = await response.json();
-      // console.log(homeData.followingCount.length)
       // setting the user info needed as glob vars
       setLoggedInUID(homeData.UID);
       setUserTopicArray(homeData.topicArr)
@@ -34,10 +33,6 @@ function App() {
     getUserData();
   }, []);
 
-  useEffect(()=> {
-    console.log(`Here is the currently logged in UID ${loggedInUID}`)
-    console.log(userTopicArray)
-  }, [loggedInUID])
 
   return (
     <React.StrictMode>

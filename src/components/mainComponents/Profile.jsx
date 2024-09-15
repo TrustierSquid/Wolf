@@ -30,7 +30,6 @@ export default function Profile(props){
          }
 
          const homeData = await response.json()
-         // console.log(homeData.followingCount.length)
          // setting the user info needed as glob vars
 
          // the topics the current user selected
@@ -87,7 +86,6 @@ export default function Profile(props){
          throw new Error("Couldnt fetch for profile data")
       }
 
-      // console.log(profileData)
    }
 
    useEffect(()=> {
@@ -95,9 +93,6 @@ export default function Profile(props){
       getUserProfilePosts()
    }, [userSearched])
 
-  /*  useEffect(()=> {
-      console.log(userProfileData)
-   }, [userProfileData]) */
 
    const followBtnRef = useRef(null)
 

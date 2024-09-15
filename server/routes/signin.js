@@ -100,17 +100,13 @@ router.post("/login", async (req, res) => {
 
         console.log(`${username} is now logged in. Welcome!`);
 
-        /* try {
-          res.redirect(`/home`);
-        } catch {
-          console.log(`Failed to redirect to home page`);
-        } */
+
 
         res.redirect(`/home`);
 
       } else {
         // sending error message that is to be displayed on login page
-        // res.json({ err: "Password is incorrect" });
+        res.json({ err: "Password is incorrect" });
 
         console.log("Password is incorrect");
       }
@@ -172,14 +168,12 @@ router.post("/add", async (req, res) => {
         console.log("Successfully added user!");
 
         setTimeout(() => {
-          res.redirect(`/user`);
+          res.redirect(`/home`);
         }, 500);
       } catch {
         console.log("failed to give cookie");
         console.log(`Failed to redirect to topic page`);
       }
-
-      // req.session.userId = newUser._id;
 
       // DEV TESTING
     }
@@ -188,20 +182,12 @@ router.post("/add", async (req, res) => {
   }
 });
 
-/*
 
-
-TOPICS PAGE
-
-
-*/
-
-// RECORDING THE TOPICS THE NEWUSER SELECTS
+/*TOPICS PAGE*/
 
 
 
 // HOME FEED PAGE
-
 // when the user accesses their home page
 router.get("/homeFeed", requireAuth, async (req, res) => {
   const database = await connectMongo();

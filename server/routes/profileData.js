@@ -38,7 +38,6 @@ router.get("/", async (req, res) => {
 
 router.get("/getID", async (req, res) => {
   const { poster } = req.query;
-  console.log(poster);
 
   const database = await connectMongo();
   const users = database.collection("Users");
@@ -47,7 +46,6 @@ router.get("/getID", async (req, res) => {
 
   res.json({ userUID: foundUser.UID });
 
-  console.log(`Here is the found users UID ${foundUser.UID}`);
 });
 
 export default router;

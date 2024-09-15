@@ -30,7 +30,6 @@ export default function Navbar() {
       });
 
       if (!response.ok) {
-        console.log("Couldn't get user data");
         throw new Error(`HTTP error! status: ${response.status}`);
       }
 
@@ -73,19 +72,6 @@ export default function Navbar() {
 
     }
   }
-
-
-
-  /* window.addEventListener('click', (e)=> {
-    if(e.target.id != 'dropdownBtn') {
-      navDropdownElement.style.transform = "translateY(0px)";
-      navDropdownElement.style.opacity = "0";
-      navDropdownElement.style.pointerEvents = "none";
-    }
-  }) */
-  // Dropdown functionality
-  // helper function to check to see if any element was clicked that was not the nav button
-
 
   const navHelper = (element) => {
 
