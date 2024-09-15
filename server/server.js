@@ -188,6 +188,7 @@ app.post("/newPost", async (req, res) => {
       body: postBody,
       likes: [],
       postCreationDate: new Date(),
+      comments: []
     });
 
     // Adding the post to the database will lead to a call to action on the frontend
@@ -224,6 +225,7 @@ app.post("/newPost", async (req, res) => {
       body: postBody,
       likes: [],
       postCreationDate: new Date(),
+      comments: []
     });
 
     // Adding the post to the database will lead to a call to action on the frontend
@@ -460,6 +462,36 @@ app.get('/topicsAdd', async (req, res)=> {
     console.log(`Left ${topicToAdd}`)
     res.sendStatus(200)
   }
+
+})
+
+
+app.post('/addPostComment', async (req, res)=> {
+  const {postID} = req.query
+  const {feed} = req.query
+  const {commentFrom} = req.query
+  const {comment} = req.body
+
+  const database = await connectMongo()
+
+  // for posts in the homepage
+
+  const collection = database.collection(feed)
+
+  // the comment to push to the database
+  let newComment = {
+    from: commentFrom,
+    comment: comment,
+    timePosted: new Date()
+  }
+
+  const result = await collection.updateOne(
+    {_id: new ObjectId(postID)},
+    {$push: {comments: newComment}}
+  )
+
+  console.log(`Comment received! \n${comment} from ${commentFrom}`)
+  res.sendStatus(200)
 
 })
 

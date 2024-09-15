@@ -129,7 +129,6 @@ export default function Profile(props){
          })
 
          if (response.ok){
-
             if (followBtnRef.current.innerHTML === 'Following') {
                followBtnRef.current.innerHTML = 'Follow'
                followBtnRef.current.style.background = 'none'
@@ -138,8 +137,6 @@ export default function Profile(props){
                followBtnRef.current.style.backgroundColor = '#0067e4'
             }
          }
-
-
 
       }
 
@@ -213,10 +210,6 @@ export default function Profile(props){
                   <br />
                   <div id="showUserStats">
                      <span>
-                        <h1 style={{color: "yellow"}}>{userProfileData.posts || 0}</h1>
-                        <p>Total Posts</p>
-                     </span>
-                     <span>
                         <h1 style={{color: "yellow"}}>{userProfileData.followers?.length || 0}</h1>
                         <p>Followers</p>
                      </span>
@@ -261,7 +254,7 @@ export default function Profile(props){
                               </span>
                               <div className="profilePostAnalytics">
                                  <h5><i style={{color: "grey"}} className="fa-solid fa-heart"></i> {post.likes.length}</h5>
-                                 <h5 style={{color: "grey"}}><i style={{color: "grey"}} className="fa-solid fa-comments"></i> 0</h5>
+                                 <h5 style={{color: "grey"}}><i style={{color: "grey"}} className="fa-solid fa-comments"></i> {post.comments.length}</h5>
                               </div>
                            </h2>
                            <h3 className="profilePostSubject">{post.body}</h3>

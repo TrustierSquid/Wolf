@@ -249,7 +249,6 @@ export default function Home(){
          subjectPostElement.current.value = ''
          document.body.style.overflow = 'hidden';
       }
-
    }
 
    function dissappearEffect(){
@@ -259,6 +258,22 @@ export default function Home(){
       createPostElement.current.style.pointerEvents = 'none'
       bodyPostElement.current.value = ''
       subjectPostElement.current.value = ''
+      document.body.style.overflow = 'auto';
+
+   }
+
+   // for making the comments section appear and disappear
+   function appearEffectComments() {
+      if (commentInterface) {
+         darkBG.current.style.opacity = '1'
+         darkBG.current.style.pointerEvents = 'all'
+         document.body.style.overflow = 'hidden';
+      }
+   }
+
+   function removeEffect(){
+      darkBG.current.style.opacity = '0'
+      darkBG.current.style.pointerEvents = 'none'
       document.body.style.overflow = 'auto';
    }
 
@@ -276,28 +291,23 @@ export default function Home(){
    }
 
 
-   // const navbarRefs = {mobileNavBtn}
    const sidebarRefs =  {sideNav, topicBtn}
 
+   // Navbar functionality
    const navbarProps = {
       logo: logo,
       username: username,
-      // followerCount: followerCount,
-      // followingCount: followingCount,
-
-      // Navbar functionality
       mobileNavFunction: ()=> mobileNavFunction()
    }
 
 
+   // sidebar functionality
    const sidebarProps = {
       userData: userData,
-
-      // sidebar functionality
-      // handleClick: handleClick, // params being passed through this function
       displayAbout: ()=> displayAbout()
    }
 
+   // determining what feed the user is looking at
    const createPostMessage = ()=> {
       const queryString = window.location.search;
       const urlParams = new URLSearchParams(queryString);
@@ -321,7 +331,7 @@ export default function Home(){
       {/* MAIN CONTENT */}
 
          <main>
-            <span ref={darkBG} onClick={()=> dissappearEffect()} id="darkBG"></span>
+            <span ref={darkBG} id="darkBG"></span>
             <section id="content">
                <FourTopics selectedTopics={userData} changeTopic={changeTopicFeed}/>
 
@@ -331,7 +341,7 @@ export default function Home(){
 
                   {/* Floating prompt for creating a new post */}
                   <form ref={createPostElement} id="createPostElement" >
-                     <h2 id="createNewPostHeader">Create a new Post</h2>
+                     <h2 id="createNewPostHeader">Create New Post <span onClick={()=> dissappearEffect()}>Back <i className="fa-solid fa-arrow-right"></i></span></h2>
                      <div id="formSubject">
                         <label>Post Subject</label><br />
                         <textarea maxLength={40} required placeholder='Enter a Post Subject' onsubmit="return false" ref={subjectPostElement}></textarea><br />
@@ -342,15 +352,15 @@ export default function Home(){
                         <textarea required placeholder='Enter a Post Body' onsubmit="return false" ref={bodyPostElement}type="text"></textarea>
                      </div>
                      <br />
-                     <button type='button' onClick={()=> createNewPost()}>Post</button>
                      <h4 id="feedbackMessage" ref={errorMessageElement}>{errorMessage}</h4>
+                     <button type='button' onClick={()=> createNewPost()}>Post</button>
                   </form>
                </div>
 
                {/* what shows up based on what topics the user selected */}
                <article className="userContent">
                   {/* changingFeed will be the dependant topic of the user feed*/}
-                  <UpdateFeed currentActiveUser={username} selectedfeed={grippedFeed} topicDisplay={grippedTopic}/>   {/*  Updating the feed with the newest posts*/}
+                  <UpdateFeed currentActiveUser={username} selectedfeed={grippedFeed} topicDisplay={grippedTopic} bgEffect={appearEffectComments} removeBGEffect={removeEffect} />   {/*  Updating the feed with the newest posts*/}
 
                </article>
             </section>

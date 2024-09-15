@@ -3,12 +3,15 @@ import { useEffect, useState, useRef } from "react";
 export default function UpdateFeed(props) {
   const [allPosts, setAllPosts] = useState([]);
   const currentUser = props.currentActiveUser;
+  // const darkBG = useRef(null)
+  const commentInterface = useRef(null)
 
   // Fetches for all posts created to update all feeds
   async function updateMainFeed() {
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
     const userSearched = urlParams.get("topicFeed");
+    console.log(`${userSearched}`)
 
     // if there is no query string fetching for a different feed, then the main feed will be returned
     if (!queryString) {
@@ -176,6 +179,101 @@ export default function UpdateFeed(props) {
     updateMainFeed();
   }, []);
 
+  const [postSubject, setPostSubject] = useState(null)
+  const [postBody, setPostBody] = useState(null)
+  const [poster, setPoster] = useState(null)
+  const [postCreationDate, setPostCreationDate] = useState(null)
+  const [postID, setPostID] = useState(null)
+  const [keyOfPost, setKeyOfPost] = useState(null)
+  const [postLikesCount, setPostLikesCount] = useState(null)
+  const [commentsCount, setCommentsCount] = useState(null)
+
+  // for comments
+  const [errorMessage, setErrorMessage] = useState('')
+  const commentValue = useRef(null)
+  const [postComments, setPostComments] = useState([])
+
+  async function commentInterfaceAppear(postSubject, postBody, poster, creationDate, postID, keyOfPost,
+     postLikesCount, postComments, ){
+    console.log("comment interface")
+
+    setPostSubject(postSubject)
+    setPostBody(postBody)
+    setPoster(poster)
+    setPostCreationDate(creationDate)
+    setPostID(postID)
+    setKeyOfPost(keyOfPost)
+    setPostLikesCount(postLikesCount)
+    setPostComments(postComments.reverse())
+    setCommentsCount(postComments.length)
+
+
+    // styling
+    commentInterface.current.style.opacity = '1'
+    commentInterface.current.style.pointerEvents = 'all'
+
+
+  }
+
+  function removeEffect(){
+    commentInterface.current.style.opacity = '0'
+    commentInterface.current.style.pointerEvents = 'none'
+  }
+
+  // for processing comments for posts
+  async function addComment(comment, postID) {
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const userSearched = urlParams.get("topicFeed");
+
+    if (comment === '') return
+    commentValue.current.value = ''
+    setErrorMessage('Adding Comment...')
+    if (!queryString) {
+      setTimeout( async () => {
+        const response = await fetch(`/addPostComment?postID=${postID}&feed=mainFeed&commentFrom=${props.currentActiveUser}`, {
+          method: "POST",
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({comment: comment})
+        })
+
+        if (!response.ok) {
+          throw new Error("That shit didnt go through");
+        }
+        await updateMainFeed()
+      }, 500);
+
+      setErrorMessage('Added Comment!')
+      setTimeout(() => {
+        window.location.reload()
+      }, 500);
+    } else {
+
+      const response = await fetch(`/addPostComment?postID=${postID}&feed=${userSearched}&commentFrom=${props.currentActiveUser}`, {
+        method: "POST",
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({comment: comment})
+      })
+
+      if (!response.ok) {
+        throw new Error("That shit didnt go through");
+      }
+
+      setErrorMessage('Added Comment!')
+      setTimeout(() => {
+        window.location.reload()
+      }, 500);
+      await updateMainFeed()
+    }
+
+
+  }
+
+
   const currentDate = new Date();
 
   // Configuration for posts's creation data
@@ -220,6 +318,7 @@ export default function UpdateFeed(props) {
 
   return (
     <>
+      {/* <span ref={darkBG} onClick={()=> dissappearEffect()} id="darkBG"></span> */}
       {/* Mapping each post in reverse (newest first) */}
       {/* post.poster is the author of the post */}
       {/* {showTopic()} */}
@@ -252,16 +351,53 @@ export default function UpdateFeed(props) {
                     <i className="fa-solid fa-heart"></i>
                     <span style={{ color: "grey" }}> {post.likes.length}</span>
                   </span>
-                  <span className="commentBtn">
+                  <span className="commentBtn"
+                   onClick={()=> {commentInterfaceAppear(post.subject, post.body, post.poster, post.postcreationDate, post._id, key, post.likes.length, post.comments), props.bgEffect()}}>
                     <i className="fa-solid fa-comments"></i>{" "}
-                    <span style={{ color: "grey" }}> Coming soon...</span>
+                    <span style={{ color: "grey" }}
+                    > {post.comments.length}</span>
                   </span>
+
                 </div>
               </main>
             </div>
           </>
         );
       })}
+
+      <div id="commentInterface" ref={commentInterface}>
+        <section id="commentSection">
+          <h2 id="exitBtnRow"> {postSubject} <span id="exitCommentBtn" onClick={()=> {removeEffect(), props.removeBGEffect()}}>Back <i className="fa-solid fa-arrow-right"></i></span></h2>
+          <p>{postBody}</p>
+
+          <div id="indicators">
+            <span id="commentSectionLike"><i className="fa-solid fa-heart"></i> {postLikesCount}</span>
+            <span id="commentSectionComment"><i className="fa-solid fa-comments"></i> {commentsCount}</span>
+          </div>
+        </section>
+
+        <section id="commentSection2">
+          <form id="commentInput">
+            <input ref={commentValue} required type="text" placeholder="Add a comment.."/>
+            <button type="button" onClick={()=> addComment(commentValue.current.value, postID, )}>Comment +</button>
+          </form>
+          <br />
+          <h4 style={{color: 'lime'}}>{errorMessage}</h4>
+          <article>
+            {postComments?.map((comment)=> {
+              return (
+                <>
+                  <div className='comment'>
+                    <h3>{comment.from} <span>{showPostDate(comment.timePosted)}</span></h3>
+                    <p>{comment.comment}</p>
+                  </div>
+                </>
+              )
+            })}
+          </article>
+        </section>
+
+      </div>r
     </>
   );
 }

@@ -577,7 +577,7 @@ HOME PAGE
    padding: 1rem;
    display: flex;
    flex-direction: column;
-   gap: 2rem;
+   // gap: 2rem;
    font-family: $ff-body;
    // margin: 2rem;
    position: fixed;
@@ -723,7 +723,7 @@ main {
 
          #createPostElement {
             color: white;
-            gap: 1.5rem;
+            gap: 2.5rem;
             width: 50%;
             margin-left: 1rem;
             position: fixed;
@@ -742,16 +742,26 @@ main {
             flex-direction: column;
 
             #createNewPostHeader {
-               // background: rgb(251, 63, 63);
-               // background: linear-gradient(90deg, rgba(251,63,63,1) 0%, rgba(255,85,120,1) 100%);
-               background-color: white;
-               -webkit-background-clip: text;
-               background-clip: text;
-               -webkit-text-fill-color: transparent;
+              color: white;
                font-weight: bold;
-               align-self: center;
+               align-self: left;
                font-size: 2rem;
                font-family: $ff-body;
+               display: flex;
+               align-items: center;
+               justify-content: space-between;
+
+               span {
+                  font-size: 1.3rem;
+                  padding: 1rem;
+                  border-radius: 1rem;
+                  color: $subTitle;
+                  cursor: pointer;
+
+                  &:hover {
+                     background-color: #57575765;
+                  }
+               }
 
             }
 
@@ -800,9 +810,9 @@ main {
                border: none;
                border-radius: 0.5rem;
                font-size: 1rem;
-               width: 300px;
+               width: 30%;
                max-width: 100%;
-               align-self: center;
+               align-self: end;
                cursor: pointer;
                transition: 150ms;
 
@@ -992,11 +1002,133 @@ main {
 
 
             }
+
          }
 
 
       }
 
+   }
+
+}
+
+#commentInterface {
+   opacity: 0;
+   pointer-events: none;
+   position: fixed;
+   height: 70%;
+   width: 60%;
+   top: 50%;
+   right: 50%;
+   transform: translate(50%, -50%);
+   color: white;
+   background-color: #181818;
+   border-radius: 1rem;
+   padding: 2rem;
+   transition: 150ms;
+   font-family: $ff-heading;
+   display: flex;
+   flex-direction: column;
+   gap: 1rem;
+   z-index: 6;
+   overflow: scroll;
+
+   #commentSection {
+      display: flex;
+      flex-direction: column;
+
+      #exitBtnRow {
+         display: flex;
+         justify-content: space-between;
+
+         #exitCommentBtn {
+            color: $subTitle;
+            font-family: $ff-heading;
+            cursor: pointer;
+            border-radius: 0.5rem;
+            padding: 0.5rem;
+            transition: 150ms;
+            font-size: 1.3rem;
+
+            &:hover {
+               background-color: rgba(87, 87, 87, 0.398);
+
+            }
+         }
+      }
+
+      #indicators {
+         margin-top: 4rem;
+         margin-bottom: 1rem;
+         #commentSectionLike, #commentSectionComment {
+            font-size: 1.2rem;
+            align-self: start;
+            padding: 0.5rem;
+            border-radius: 1rem;
+            transition: 150ms;
+            color: #8c8c8c;
+         }
+
+      }
+
+   }
+
+   #commentSection2 {
+      #commentInput {
+         display: flex;
+         gap: 1rem;
+
+         input {
+            width: 80%;
+            padding: 0.5rem;
+            border-radius: 0.5rem;
+            background-color: $inputField;
+            border: 1px solid $cardBorder;
+            color: white;
+            font-size: 1.3rem;
+            &:focus {
+               outline: none;
+            }
+         }
+
+         button {
+            width: 20%;
+            padding: 0.5rem;
+            border-radius: 0.5rem;
+            background-color: crimson;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: 150ms;
+            font-size: 1rem;
+
+            &:hover {
+               background-color: $buttonHover;
+            }
+         }
+
+
+      }
+
+      article {
+         margin-top: 0.5rem;
+         display: flex;
+         flex-direction: column;
+         gap: 1rem;
+
+         .comment {
+            background-color: $cardBG;
+            border: 1px solid $cardBorder;
+            padding: 1rem;
+            border-radius: 1rem;
+
+            h3 {
+               display: flex;
+               justify-content: space-between;
+            }
+
+         }
+      }
    }
 
 }
