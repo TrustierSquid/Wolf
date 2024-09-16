@@ -15,7 +15,7 @@
 - Following other users based on what topics they like.
 - Send likes and comments to other users posts.
 
-# Major Feature Updates
+# Feature Updates
 
 ### 1.0 alpha
 
