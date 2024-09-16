@@ -160,16 +160,23 @@ export default function Navbar() {
         <h4 className="mobileNavMainBtns" onClick={()=> navigateBackToHome()}>Home Feed <i className="fa-solid fa-house"></i></h4>
         <h4 className="mobileNavMainBtns" onClick={()=> navigateToTopics()}>Join a Topic <i className="fa-solid fa-users"></i></h4>
         <h4 className="subTitle">JOINED TOPICS</h4>
-        {userTopicList.map((topic, key)=> {
-          return (
-            <>
-              <h4 className="mobileNavTopicBtns"
-               key={key}
-               onClick={()=> navigateToFeed(topic + 'Feed')}
-               >{topic}</h4>
-            </>
-          )
-        })}
+        {userTopicList?.length > 0 ? (
+          userTopicList.map((topic, key)=> {
+            return (
+              <>
+                <h4 className="mobileNavTopicBtns"
+                 key={key}
+                 onClick={()=> navigateToFeed(topic + 'Feed')}
+                 > View {topic} Feed <i className="fa-solid fa-arrow-right"></i></h4>
+              </>
+            )
+          })
+        ) : (
+          <div className="noTopicsMessage">
+            <h3>No Topics Available</h3>
+            <p>Start joining topics to see them here.</p>
+          </div>
+        )}
       </section>
 
       <section id="navDropdown" ref={navDropdown}>

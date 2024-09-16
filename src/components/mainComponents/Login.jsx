@@ -9,7 +9,7 @@ export default function Login() {
 
   async function signIn() {
     if (username.current.value === "" || password.current.value === "") {
-      setLoginErrorMessage("A username and password are needed to login or signup.")
+      setLoginErrorMessage("Enter a username and password.")
     } else {
       const response = await fetch(`/users/login`, {
         method: "POST",
@@ -53,7 +53,7 @@ export default function Login() {
       password.current.value === "" ||
       password.current.value.length <= 5
     ) {
-      setLoginErrorMessage('A valid username and password are needed to login or signup.')
+      setLoginErrorMessage('Enter a username and password.')
     } else {
 
       // sending form data over to backend
@@ -137,11 +137,11 @@ export default function Login() {
           {/* for people demoing the app */}
           <div>
             <h3>USERNAME</h3>
-            <input ref={username} type="text" placeholder="Enter your username"/>
+            <input required ref={username} type="text" placeholder="Enter your username"/>
           </div>
           <div>
             <h3>PASSWORD</h3>
-            <input ref={password} type="password" placeholder="Enter your password"/>
+            <input required ref={password} type="password" placeholder="Enter your password"/>
           </div>
         </form>
         <section id="optionalDecision">

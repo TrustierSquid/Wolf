@@ -309,7 +309,6 @@ export default function UpdateFeed(props) {
 
   return (
     <>
-      {/* <span ref={darkBG} onClick={()=> dissappearEffect()} id="darkBG"></span> */}
       {/* Mapping each post in reverse (newest first) */}
       {/* post.poster is the author of the post */}
       {/* {showTopic()} */}
@@ -325,8 +324,6 @@ export default function UpdateFeed(props) {
                       {/* checking for whos posting */}
                       {checkAdmin(post.poster)}
                       {showPostDate(post.postCreationDate)}
-                      {/* {handleFollowClick(post.poster, currentUser)} */}
-                      {/* {handleFollowClick(post.poster, userFollowingList)} */}
                     </section>
                     <p className="postCaption">
                       <i className="fa-solid fa-bolt"></i>
@@ -363,12 +360,14 @@ export default function UpdateFeed(props) {
         </div>
       )}
 
-
-
-
       <div id="commentInterface" ref={commentInterface}>
+
+        <h3 id="topDiv">{poster} <span id="exitCommentBtn" onClick={()=> {removeEffect(), props.removeBGEffect()}}><i className="fa-solid fa-arrow-right"></i></span></h3>
+
+
+
         <section id="commentSection">
-          <h2 id="exitBtnRow"> {postSubject} <span id="exitCommentBtn" onClick={()=> {removeEffect(), props.removeBGEffect()}}>Back <i className="fa-solid fa-arrow-right"></i></span></h2>
+          <h2 id="exitBtnRow">{postSubject}</h2>
           <p>{postBody}</p>
 
           <div id="indicators">

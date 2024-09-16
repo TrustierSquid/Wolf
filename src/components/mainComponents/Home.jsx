@@ -235,6 +235,7 @@ export default function Home(){
 
    const createPostElement = useRef(null)
    const darkBG = useRef(null)
+   const newPostBtn = useRef(null)
 
    // FOR THE APPEARING AND DISAPPEARING POST CREATING SCREEN
    function appearEffect() {
@@ -247,6 +248,8 @@ export default function Home(){
          bodyPostElement.current.value = ''
          subjectPostElement.current.value = ''
          document.body.style.overflow = 'hidden';
+         newPostBtn.current.style.opacity = '0'
+         newPostBtn.current.style.pointerEvents = 'none'
       }
    }
 
@@ -258,6 +261,8 @@ export default function Home(){
       bodyPostElement.current.value = ''
       subjectPostElement.current.value = ''
       document.body.style.overflow = 'auto';
+      newPostBtn.current.style.opacity = '1'
+      newPostBtn.current.style.pointerEvents = 'all'
 
    }
 
@@ -274,6 +279,8 @@ export default function Home(){
       darkBG.current.style.opacity = '0'
       darkBG.current.style.pointerEvents = 'none'
       document.body.style.overflow = 'auto';
+      newPostBtn.current.style.opacity = '1'
+      newPostBtn.current.style.pointerEvents = 'all'
    }
 
    function clearOut() {
@@ -313,11 +320,11 @@ export default function Home(){
       const userSearched = urlParams.get("topicFeed");
 
       if (!queryString) {
-         return <><h4>{`Post On Home Page`} </h4> <i className="fa-solid fa-file-circle-plus"></i></>
+         return <><h4>{`Post to Home`} +</h4></>
       }
 
       let splicedTopic = userSearched.split("Feed")
-      return  <><h4>{`Post On ${splicedTopic[0]}`} </h4> <i className="fa-solid fa-file-circle-plus"></i></>
+      return  <><h4>{`Post to ${splicedTopic[0]}`} +</h4> </>
    }
 
    return (
@@ -336,11 +343,11 @@ export default function Home(){
 
                <div id="whatsNew">
 
-                  <span id="newPostBtn" onClick={()=> appearEffect()}>{createPostMessage()}</span>
+                  <span id="newPostBtn" ref={newPostBtn} onClick={()=> appearEffect()}>{createPostMessage()}</span>
 
                   {/* Floating prompt for creating a new post */}
                   <form ref={createPostElement} id="createPostElement" >
-                     <h2 id="createNewPostHeader">Create Post <span onClick={()=> dissappearEffect()}>Back <i className="fa-solid fa-arrow-right"></i></span></h2>
+                     <h2 id="createNewPostHeader">Create Post <span onClick={()=> dissappearEffect()}><i className="fa-solid fa-arrow-right"></i></span></h2>
                      <div id="formSubject">
                         <label>Post Subject</label><br />
                         <textarea maxLength={40} required placeholder='Enter a Post Subject' onsubmit="return false" ref={subjectPostElement}></textarea><br />

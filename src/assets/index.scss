@@ -29,6 +29,12 @@ $sc-info: #00a1b6;
 $subTitle: #ff7b00;
 $onHover: #55555543;
 
+$fs-h1: 2.3rem;
+$fs-h2: 2rem;
+$fs-h3: 1.5rem;
+
+$fs-paragraph: 1rem;
+
 @mixin buttonGradient {
    background: rgb(255,60,60);
    background: linear-gradient(208deg, rgba(255,60,60,1) 0%, rgba(153,36,36,1) 100%);
@@ -53,8 +59,8 @@ $onHover: #55555543;
 }
 
 html {
-   max-height: 100000px;
-   min-height: 100vh;
+   // max-height: 100000px;
+   // min-height: 100vh;
    scroll-behavior: smooth;
 }
 
@@ -63,11 +69,11 @@ html {
    position: absolute;
    top: 0;
    left: 0;
-   min-height: 200%;
+   height: 150vh;
    width: 100%;
-   z-index: 5;
    pointer-events: none;
    opacity: 0;
+   // z-index: 3;
 }
 
 body {
@@ -504,7 +510,7 @@ HOME PAGE
 
 #mobileNavMenu {
    height: 130%;
-   width: 60%;
+   width: 90%;
    background-color: darkblue;
    position: absolute;
    z-index: 2;
@@ -516,7 +522,7 @@ HOME PAGE
    font-family: $ff-body;
    display: flex;
    flex-direction: column;
-   padding: 2rem;
+   padding: 1rem;
    gap: 1rem;
    overflow: scroll;
 
@@ -561,6 +567,8 @@ HOME PAGE
       border-radius: 1rem;
       transition: 100ms;
       cursor: pointer;
+      display: flex;
+      justify-content: space-between;
 
       &:hover {
          background-color: $onHover;
@@ -742,7 +750,7 @@ main {
 
       #whatsNew {
          display: flex;
-         justify-content: space-between;
+         justify-content: end;
          align-items: center;
          letter-spacing: 1px;
 
@@ -763,26 +771,27 @@ main {
          #newPostBtn {
             display: flex;
             color: white;
-            padding: 2rem;
-            font-size: 1.5rem;
+            padding: 0.5rem;
+            font-size: $fs-h3;
             font-family: $ff-body;
             border-radius: 0.5rem;
             transition: 250ms;
             cursor: pointer;
-            width: 100%;
+            // width: 25%;
+            // position: fixed;
             height: 50px;
             display: flex;
             align-items: center;
             justify-content: space-between;
             gap: 1rem;
-            background: none;
-            border: 1px solid $sc-info;
             transition: 150ms;
             text-wrap: nowrap;
+            top: 5rem;
+            right: 1rem;
+            background-color: $primary;
 
             &:hover {
-               background-color: $sc-info;
-               transform: translateY(-5px);
+               background-color: $buttonHover;
             }
 
             // animation for new postbtn
@@ -814,12 +823,12 @@ main {
             transform: translate(50%,-50%);
             border-radius: 1rem;
             border: 1px solid $cardBorder;
-            z-index: 5;
             opacity: 0;
             pointer-events: none;
             transition: 250ms;
             display: flex;
             flex-direction: column;
+            z-index: 8;
 
             #createNewPostHeader {
               color: white;
@@ -1111,31 +1120,40 @@ main {
    display: flex;
    flex-direction: column;
    gap: 1rem;
-   z-index: 6;
+   z-index: 8;
    overflow: scroll;
+
+   #topDiv {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: turquoise;
+
+      #exitCommentBtn {
+         color: $subTitle;
+         font-family: $ff-heading;
+         cursor: pointer;
+         border-radius: 0.5rem;
+         padding: 0.5rem;
+         transition: 150ms;
+         font-size: 1.3rem;
+
+         &:hover {
+            background-color: rgba(87, 87, 87, 0.398);
+
+         }
+      }
+   }
 
    #commentSection {
       display: flex;
       flex-direction: column;
 
+
       #exitBtnRow {
          display: flex;
          justify-content: space-between;
 
-         #exitCommentBtn {
-            color: $subTitle;
-            font-family: $ff-heading;
-            cursor: pointer;
-            border-radius: 0.5rem;
-            padding: 0.5rem;
-            transition: 150ms;
-            font-size: 1.3rem;
-
-            &:hover {
-               background-color: rgba(87, 87, 87, 0.398);
-
-            }
-         }
       }
 
       #indicators {
@@ -1271,6 +1289,59 @@ main {
 }
 
 @media (max-width: 1050px) {
+
+   #loginContainer {
+      background: none;
+      border: none;
+      width: 95%;
+      padding: 1.5rem;
+      gap: 3rem;
+
+      #title {
+         .titleSection:nth-of-type(1) {
+            // logo
+            img {
+               height: 50px;
+            }
+
+            // Text
+            h1 {
+               font-size: $fs-paragraph;
+            }
+         }
+
+         .titleSection:nth-of-type(2) {
+            // Text
+            h2 {
+               font-size: $fs-paragraph;
+            }
+         }
+
+      }
+
+      #loginBtns {
+         button {
+            font-size: $fs-paragraph;
+         }
+      }
+
+
+
+      #inputField {
+         padding: 0;
+
+         div {
+            h3 {
+               font-size: $fs-paragraph;
+            }
+         }
+
+      }
+   }
+
+
+
+
   #introGrid {
    // max-height: 500px;
     grid-template-columns: 1fr 1fr;
@@ -1278,18 +1349,29 @@ main {
 
   #commentInterface {
      width: 90%;
+     border-radius: 1rem;
+     border: 1px solid $cardBorder;
 
      #commentSection {
         #exitBtnRow {
-           #exitCommentBtn {
-              text-wrap: nowrap;
-           }
-        }
+            font-size: $fs-h3;
+
+         }
+
+         #exitCommentBtn {
+            text-wrap: nowrap;
+         }
+
+         p {
+            margin-top: 1rem;
+            line-height: 1.5;
+         }
      }
 
      #commentSection2 {
         #commentInput {
            flex-direction: column;
+
            input {
               width: 100%;
            }
@@ -1298,20 +1380,33 @@ main {
               width: 100%;
            }
         }
+
+        article {
+         gap: 0rem;
+
+         .comment {
+            border: none;
+            border-top: 1px solid $cardBorder;
+            border-bottom: 1px solid $cardBorder;
+            border-radius: 0;
+            background: none;
+
+            // header for comment
+            h3 {
+
+            }
+
+
+            // paragraph for comment
+            p {
+               font-size: $fs-paragraph;
+               line-height: 1.5;
+            }
+         }
+        }
      }
   }
 }
-
-
-
-
-
-
-
-
-
-
-
 
 
 // Profile Page
@@ -1557,20 +1652,20 @@ HOME COMPONENT MEDIA QUERIES
       justify-content: center;
 
       #content {
-         padding: 1rem;
+         padding: 0rem;
          margin-left: 0;
          width: 100%;
 
 
-
          #whatsNew {
-            display: flex;
-            align-items: center;
+            position: fixed;
+            bottom: 2.5rem;
+            right: 2.5rem;
 
             #newPostBtn {
-               align-self: center;
-               z-index: 0;
-               margin-top: 3rem;
+               z-index: -1;
+               font-size: $fs-paragraph;
+               // width: 60%;
             }
 
             h1 {
@@ -1594,7 +1689,7 @@ HOME COMPONENT MEDIA QUERIES
 
 
 
-               #formSubject, #formBody {
+               /* #formSubject, #formBody {
 
 
                   label {
@@ -1623,24 +1718,26 @@ HOME COMPONENT MEDIA QUERIES
                   &:hover {
                   }
                }
-
+               */
                // Error Message
-               #feedbackMessage {
+               /* #feedbackMessage {
 
-               }
+               } */
 
             }
          }
 
          // Container for posting content
          .userContent {
+            margin: 0;
+            gap: 0;
 
             // each post
             .userPost {
 
-               .mainPost {
 
-               }
+               /* .mainPost {
+               } */
 
                .postAnalytics {
                   display: flex;
@@ -1652,7 +1749,17 @@ HOME COMPONENT MEDIA QUERIES
                }
                // message
                .mainPost {
-                  gap: 2rem;
+                  border: none;
+                  border-top: 1px solid $cardBorder;
+                  border-bottom: 1px solid $cardBorder;
+                  border-radius: 0rem;
+                  gap: 1.5rem;
+                  background: none;
+
+                  .postBody {
+                     font-size: $fs-paragraph;
+                     line-height: 1.5;
+                  }
                }
             }
          }
