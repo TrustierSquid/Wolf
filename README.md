@@ -1,12 +1,12 @@
 
 #### Wolf | Social Media Platform
 
-![Wolf Picture](/src/assets/wolfSS.png)
-
 - Built with Node/Express.
 - Frontend is built with React.
 - Uses MongoDB Node.js Driver v6.8.
 - Styled with SCSS.
+
+- ![Wolf Picture](/src/assets/wolfSS.png)
 
 #### Features that are to arrive in upcoming versions
 
@@ -17,13 +17,13 @@
 
 # Major Feature Updates
 
-### 1.0 beta
+### 1.0 alpha
 
 - You can only post to the social media feed.
 - The feed currently is universal so all users will see the same user feed.
 - Wolf bot currently posts one fact about the topic that a user clicks on.
 
-### 2.0 beta
+### 2.0 alpha
 
 - You can now follow the different users only when they make a post to the main feed
 - UI revamp
@@ -31,7 +31,7 @@
 
 ![Wolf Picture](/src/assets/newBeta.png)
 
-### 3.0 beta
+### 3.0 alpha
 
 ![Wolf Picture](/src/assets/productionWolf.png)
 
