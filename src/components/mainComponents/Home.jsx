@@ -4,7 +4,6 @@ import AboutPost from "../componentDependencies/AboutPost"
 import UpdateFeed from "../componentDependencies/UpdateFeed"
 import Navbar from "../componentDependencies/NavBar"
 import SideNavBar from "../componentDependencies/SideNavbar"
-import FourTopics from "../componentDependencies/FourTopics"
 
 
 export default function Home(){
@@ -320,11 +319,11 @@ export default function Home(){
       const userSearched = urlParams.get("topicFeed");
 
       if (!queryString) {
-         return <><h4>{`Post to Home`} +</h4></>
+         return <><h4><i class="fa-solid fa-plus"></i></h4></>
       }
 
-      let splicedTopic = userSearched.split("Feed")
-      return  <><h4>{`Post to ${splicedTopic[0]}`} +</h4> </>
+      // let splicedTopic = userSearched.split("Feed")
+      return  <><h4><i class="fa-solid fa-plus"></i></h4> </>
    }
 
    return (
@@ -339,23 +338,22 @@ export default function Home(){
          <main>
             <span ref={darkBG} id="darkBG"></span>
             <section id="content">
-               <FourTopics selectedTopics={userData} changeTopic={changeTopicFeed}/>
 
-               <div id="whatsNew">
+               <div id="newPost">
 
                   <span id="newPostBtn" ref={newPostBtn} onClick={()=> appearEffect()}>{createPostMessage()}</span>
 
                   {/* Floating prompt for creating a new post */}
                   <form ref={createPostElement} id="createPostElement" >
-                     <h2 id="createNewPostHeader">Create Post <span onClick={()=> dissappearEffect()}><i className="fa-solid fa-arrow-right"></i></span></h2>
+                     <h2 id="createNewPostHeader">Create Post <span onClick={()=> dissappearEffect()}><i className="fa-solid fa-x"></i></span></h2>
                      <div id="formSubject">
                         <label>Post Subject</label><br />
-                        <textarea maxLength={40} required placeholder='Enter a Post Subject' onsubmit="return false" ref={subjectPostElement}></textarea><br />
+                        <input maxLength={40} required placeholder='Enter a Post Subject' onsubmit="return false" ref={subjectPostElement}></input><br />
                      </div>
                      <br />
                      <div id="formBody">
                         <label>Post Body</label><br />
-                        <textarea required placeholder='Enter a Post Body' onsubmit="return false" ref={bodyPostElement}type="text"></textarea>
+                        <input required placeholder='Enter a Post Body' onsubmit="return false" ref={bodyPostElement}type="text"></input>
                      </div>
                      <br />
                      <h4 id="feedbackMessage" ref={errorMessageElement}>{errorMessage}</h4>

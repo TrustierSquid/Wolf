@@ -317,7 +317,6 @@ export default function UpdateFeed(props) {
           return (
             <>
               <div key={key} className="userPost">
-                <br />
                 <main className="mainPost">
                   <div className="postAnalytics">
                     <section className="userAction">
@@ -362,7 +361,7 @@ export default function UpdateFeed(props) {
 
       <div id="commentInterface" ref={commentInterface}>
 
-        <h3 id="topDiv">{poster} <span id="exitCommentBtn" onClick={()=> {removeEffect(), props.removeBGEffect()}}><i className="fa-solid fa-arrow-right"></i></span></h3>
+        <h3 id="topDiv">{poster} <span id="exitCommentBtn" onClick={()=> {removeEffect(), props.removeBGEffect()}}><i className="fa-solid fa-x"></i></span></h3>
 
 
 

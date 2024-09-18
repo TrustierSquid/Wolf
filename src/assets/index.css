@@ -5,6 +5,7 @@
 }
 
 html {
+  max-height: 100000px;
   scroll-behavior: smooth;
 }
 
@@ -13,7 +14,6 @@ html {
   position: absolute;
   top: 0;
   left: 0;
-  height: 150vh;
   width: 100%;
   pointer-events: none;
   opacity: 0;
@@ -68,6 +68,9 @@ body {
   gap: 1rem;
   justify-content: space-between;
   width: 100%;
+  /* .titleSection:nth-of-type(2) {
+
+  } */
 }
 #loginContainer #title .titleSection:nth-of-type(1) {
   display: flex;
@@ -168,19 +171,41 @@ body {
 
 @media (max-width: 1050px) {
   #loginContainer {
+    background: none;
+    border: none;
     width: 95%;
+    padding: 1.5rem;
+    gap: 3rem;
   }
   #loginContainer #optionalDecision {
     justify-content: center;
+    /* #signUpLink {
+
+    } */
+  }
+  #loginContainer #title .titleSection:nth-of-type(1) img {
+    height: 50px;
+  }
+  #loginContainer #title .titleSection:nth-of-type(1) h1 {
+    font-size: 1rem;
+  }
+  #loginContainer #title .titleSection:nth-of-type(2) h2 {
+    font-size: 1rem;
   }
   #loginContainer #loginBtns button {
     width: 100%;
-    font-size: 1.2rem;
+    font-size: 1rem;
+  }
+  #loginContainer #inputField {
+    padding: 0;
+  }
+  #loginContainer #inputField div h3 {
+    font-size: 1rem;
   }
 }
 /*
 
-CHOOSING TOPICS COMPONENT
+TOPICS COMPONENT
 
 */
 #topics {
@@ -281,20 +306,9 @@ CHOOSING TOPICS COMPONENT
 }
 /*
 
-HOME PAGE
+DEFAULT PAGE
 
  */
-.profilePicture {
-  height: 50px;
-  width: 50px;
-  border-radius: 50%;
-  border: none;
-  -o-object-fit: cover;
-     object-fit: cover;
-  cursor: pointer;
-  background-color: grey;
-}
-
 #nav {
   display: flex;
   padding: 0.5rem;
@@ -533,13 +547,13 @@ main #content {
   flex-direction: column;
   margin-left: 30rem;
 }
-main #content #whatsNew {
+main #content #newPost {
   display: flex;
   justify-content: end;
   align-items: center;
   letter-spacing: 1px;
 }
-main #content #whatsNew h1 {
+main #content #newPost h1 {
   font-size: 3vw;
   background: rgb(251, 63, 63);
   background: linear-gradient(90deg, rgb(251, 63, 63) 0%, rgb(255, 85, 120) 100%);
@@ -551,13 +565,13 @@ main #content #whatsNew h1 {
   font-weight: bolder;
   transition: 250ms;
 }
-main #content #whatsNew #newPostBtn {
+main #content #newPost #newPostBtn {
   display: flex;
   color: white;
-  padding: 0.5rem;
+  padding: 0.8rem;
   font-size: 1.5rem;
   font-family: "roboto", sans-serif;
-  border-radius: 0.5rem;
+  border-radius: 1rem;
   transition: 250ms;
   cursor: pointer;
   height: 50px;
@@ -571,7 +585,7 @@ main #content #whatsNew #newPostBtn {
   right: 1rem;
   background-color: #d43737;
 }
-main #content #whatsNew #newPostBtn:hover {
+main #content #newPost #newPostBtn:hover {
   background-color: #7A0B31;
 }
 @keyframes levitate {
@@ -582,7 +596,7 @@ main #content #whatsNew #newPostBtn:hover {
     transform: translateY(-2px);
   }
 }
-main #content #whatsNew #createPostElement {
+main #content #newPost #createPostElement {
   color: white;
   gap: 2.5rem;
   width: 50%;
@@ -602,7 +616,7 @@ main #content #whatsNew #createPostElement {
   flex-direction: column;
   z-index: 8;
 }
-main #content #whatsNew #createPostElement #createNewPostHeader {
+main #content #newPost #createPostElement #createNewPostHeader {
   color: white;
   font-weight: bold;
   align-self: left;
@@ -612,25 +626,25 @@ main #content #whatsNew #createPostElement #createNewPostHeader {
   align-items: center;
   justify-content: space-between;
 }
-main #content #whatsNew #createPostElement #createNewPostHeader span {
+main #content #newPost #createPostElement #createNewPostHeader span {
   font-size: 1.3rem;
   padding: 1rem;
   border-radius: 1rem;
   color: #ff7b00;
   cursor: pointer;
 }
-main #content #whatsNew #createPostElement #createNewPostHeader span:hover {
+main #content #newPost #createPostElement #createNewPostHeader span:hover {
   background-color: rgba(87, 87, 87, 0.3960784314);
 }
-main #content #whatsNew #createPostElement #formSubject, main #content #whatsNew #createPostElement #formBody {
+main #content #newPost #createPostElement #formSubject, main #content #newPost #createPostElement #formBody {
   display: flex;
   flex-direction: column;
   gap: 0.2rem;
 }
-main #content #whatsNew #createPostElement #formSubject label, main #content #whatsNew #createPostElement #formBody label {
+main #content #newPost #createPostElement #formSubject label, main #content #newPost #createPostElement #formBody label {
   font-family: "Nunito", sans-serif;
 }
-main #content #whatsNew #createPostElement #formSubject input, main #content #whatsNew #createPostElement #formSubject textarea, main #content #whatsNew #createPostElement #formBody input, main #content #whatsNew #createPostElement #formBody textarea {
+main #content #newPost #createPostElement #formSubject input, main #content #newPost #createPostElement #formBody input {
   width: 100%;
   height: 50px;
   max-width: 100%;
@@ -642,7 +656,10 @@ main #content #whatsNew #createPostElement #formSubject input, main #content #wh
   border: 2px solid #2E2E2E;
   color: white;
 }
-main #content #whatsNew #createPostElement button {
+main #content #newPost #createPostElement #formSubject input:focus, main #content #newPost #createPostElement #formBody input:focus {
+  outline: none;
+}
+main #content #newPost #createPostElement button {
   padding: 0.5rem;
   color: white;
   background-color: #d43737;
@@ -655,10 +672,10 @@ main #content #whatsNew #createPostElement button {
   cursor: pointer;
   transition: 150ms;
 }
-main #content #whatsNew #createPostElement button:hover {
+main #content #newPost #createPostElement button:hover {
   background-color: #510917;
 }
-main #content #whatsNew #createPostElement #feedbackMessage {
+main #content #newPost #createPostElement #feedbackMessage {
   color: #d43737;
   font-family: "roboto", sans-serif;
   align-self: center;
@@ -668,7 +685,7 @@ main #content .userContent {
   display: flex;
   margin-top: 1rem;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 1rem;
 }
 main #content .userContent .userPost {
   transition: 150ms;
@@ -722,10 +739,6 @@ main #content .userContent .userPost .mainPost .postAnalytics .postCaption {
   font-size: 1.4rem;
   font-family: "roboto", sans-serif;
   font-weight: bold;
-  /* background: linear-gradient(to bottom right, #FF7979 18%, #FFAAAA 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent; */
   color: white;
   display: flex;
   gap: 0.5rem;
@@ -903,69 +916,7 @@ main #content .userContent .userPost .mainPost .postLC .commentBtn:hover {
   color: rgb(153, 153, 153);
 }
 
-#introGrid {
-  color: white;
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: 1rem;
-  margin-bottom: 2rem;
-  min-height: 400px;
-  font-family: "roboto", sans-serif;
-  /* .gridItem:nth-of-type(3) {
-
-   }
-   .gridItem:nth-of-type(4) {
-
-   } */
-}
-#introGrid .gridItem {
-  padding: 1.5rem;
-  border: px solid #121010;
-  border-radius: 0.5rem;
-  transition: 150ms;
-}
-#introGrid .gridItem h3 {
-  font-family: "Nunito", sans-serif;
-}
-#introGrid .gridItem p {
-  line-height: 1.5;
-}
-#introGrid .gridItem:nth-of-type(1) {
-  grid-column: 1/span 2;
-}
-#introGrid .gridItem:nth-of-type(2) {
-  grid-row: span 2;
-}
-
 @media (max-width: 1050px) {
-  #loginContainer {
-    background: none;
-    border: none;
-    width: 95%;
-    padding: 1.5rem;
-    gap: 3rem;
-  }
-  #loginContainer #title .titleSection:nth-of-type(1) img {
-    height: 50px;
-  }
-  #loginContainer #title .titleSection:nth-of-type(1) h1 {
-    font-size: 1rem;
-  }
-  #loginContainer #title .titleSection:nth-of-type(2) h2 {
-    font-size: 1rem;
-  }
-  #loginContainer #loginBtns button {
-    font-size: 1rem;
-  }
-  #loginContainer #inputField {
-    padding: 0;
-  }
-  #loginContainer #inputField div h3 {
-    font-size: 1rem;
-  }
-  #introGrid {
-    grid-template-columns: 1fr 1fr;
-  }
   #commentInterface {
     width: 90%;
     border-radius: 1rem;
@@ -999,6 +950,9 @@ main #content .userContent .userPost .mainPost .postLC .commentBtn:hover {
     border-bottom: 1px solid #2E2E2E;
     border-radius: 0;
     background: none;
+    /* h3 {
+
+    } */
   }
   #commentInterface #commentSection2 article .comment p {
     font-size: 1rem;
@@ -1193,24 +1147,17 @@ HOME COMPONENT MEDIA QUERIES
     margin-left: 0;
     width: 100%;
   }
-  main #content #whatsNew {
+  main #content #newPost {
     position: fixed;
     bottom: 2.5rem;
     right: 2.5rem;
   }
-  main #content #whatsNew #newPostBtn {
+  main #content #newPost #newPostBtn {
     z-index: -1;
-    font-size: 1rem;
+    font-size: 1.5rem;
   }
-  main #content #whatsNew h1 {
-    font-size: 6vw;
-    text-wrap: nowrap;
-  }
-  main #content #whatsNew h2 {
-    align-self: center;
-  }
-  main #content #whatsNew #createPostElement {
-    width: 90%;
+  main #content #newPost #createPostElement {
+    width: 100%;
     padding: 2rem;
     /* #formSubject, #formBody {
 
@@ -1246,7 +1193,7 @@ HOME COMPONENT MEDIA QUERIES
 
     } */
   }
-  main #content #whatsNew #createPostElement #createNewPostHeader {
+  main #content #newPost #createPostElement #createNewPostHeader {
     font-size: 1.3rem;
     width: 100%;
   }

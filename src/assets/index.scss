@@ -59,7 +59,7 @@ $fs-paragraph: 1rem;
 }
 
 html {
-   // max-height: 100000px;
+   max-height: 100000px;
    // min-height: 100vh;
    scroll-behavior: smooth;
 }
@@ -69,7 +69,7 @@ html {
    position: absolute;
    top: 0;
    left: 0;
-   height: 150vh;
+   // height: 150vh;
    width: 100%;
    pointer-events: none;
    opacity: 0;
@@ -97,11 +97,14 @@ body {
    color: grey;
 }
 
+
+
 /*
 
    LOGIN PAGE
 
  */
+
 
 #loginContainer {
    font-family: comfortaa;
@@ -137,9 +140,9 @@ body {
          gap: 0.5rem;
       }
 
-      .titleSection:nth-of-type(2) {
+      /* .titleSection:nth-of-type(2) {
 
-      }
+      } */
 
    }
 
@@ -261,36 +264,77 @@ body {
 }
 
 
+// Media query for login page
 
-// LOGIN PAGE MEDIA QUERY
 @media (max-width: 1050px) {
+
+   // login component
+
    #loginContainer {
+      background: none;
+      border: none;
       width: 95%;
+      padding: 1.5rem;
+      gap: 3rem;
 
       #optionalDecision {
          justify-content: center;
 
-         #signUpLink {
+         /* #signUpLink {
 
+         } */
+      }
+
+      #title {
+         .titleSection:nth-of-type(1) {
+            // logo
+            img {
+               height: 50px;
+            }
+
+            // Text
+            h1 {
+               font-size: $fs-paragraph;
+            }
          }
+
+         .titleSection:nth-of-type(2) {
+            // Text
+            h2 {
+               font-size: $fs-paragraph;
+            }
+         }
+
       }
 
       #loginBtns {
-
-
          button {
             width: 100%;
-            font-size: 1.2rem;
+            font-size: $fs-paragraph;
          }
       }
+
+
+
+      #inputField {
+         padding: 0;
+
+         div {
+            h3 {
+               font-size: $fs-paragraph;
+            }
+         }
+
+      }
    }
+
 }
 
 
 
 /*
 
-CHOOSING TOPICS COMPONENT
+TOPICS COMPONENT
 
 */
 
@@ -405,6 +449,8 @@ CHOOSING TOPICS COMPONENT
    }
 }
 
+// Media query for topics component
+
 @media (max-width: 1050px) {
 
    #topics {
@@ -430,19 +476,12 @@ CHOOSING TOPICS COMPONENT
 
 /*
 
-HOME PAGE
+DEFAULT PAGE
 
  */
 
-.profilePicture {
-   height: 50px;
-   width: 50px;
-   border-radius: 50%;
-   border: none;
-   object-fit: cover;
-   cursor: pointer;
-   background-color: grey;
-}
+
+// Navbar
 
 #nav {
    // border-bottom: 1px solid $primary;
@@ -507,6 +546,8 @@ HOME PAGE
    }
 
 }
+
+// mobile Nav menu
 
 #mobileNavMenu {
    height: 130%;
@@ -580,7 +621,6 @@ HOME PAGE
 }
 
 
-
 @keyframes shake {
    0%{
       transform: translateX(10px)
@@ -598,6 +638,8 @@ HOME PAGE
    }
 }
 
+
+// Dropdown in the navbar
 
 #navDropdown {
    display: flex;
@@ -656,7 +698,7 @@ HOME PAGE
 }
 
 
-
+// side nav bar
 
 .sideNav {
    height: 100vh;
@@ -736,6 +778,8 @@ HOME PAGE
 
 }
 
+// Feed styles for the Home page
+
 main {
    display: flex;
 
@@ -744,11 +788,10 @@ main {
       padding: 2rem;
       display: flex;
       flex-direction: column;
-
-      // gap: 5rem;
       margin-left: 30rem;
 
-      #whatsNew {
+      // container for the new post Btn on the feed UI
+      #newPost {
          display: flex;
          justify-content: end;
          align-items: center;
@@ -768,17 +811,16 @@ main {
          }
 
 
+         // Btn for making new posts
          #newPostBtn {
             display: flex;
             color: white;
-            padding: 0.5rem;
+            padding: 0.8rem;
             font-size: $fs-h3;
             font-family: $ff-body;
-            border-radius: 0.5rem;
+            border-radius: 1rem;
             transition: 250ms;
             cursor: pointer;
-            // width: 25%;
-            // position: fixed;
             height: 50px;
             display: flex;
             align-items: center;
@@ -809,7 +851,7 @@ main {
 
          }
 
-
+         // the moodle for making new posts
          #createPostElement {
             color: white;
             gap: 2.5rem;
@@ -854,19 +896,19 @@ main {
 
             }
 
-
-
-
+            // the subject and body containers of the new post moodle
             #formSubject, #formBody {
                display: flex;
                flex-direction: column;
                gap: 0.2rem;
 
+               // labeles for the containers
                label {
                   font-family: $ff-heading;
                }
 
-               input, textarea {
+               // input fields for both containers
+               input {
                  width: 100%;
                  height: 50px;
                  max-width: 100%;
@@ -879,19 +921,12 @@ main {
                  color: white;
 
                  &:focus {
-                  // outline: none;
+                  outline: none;
                  }
                }
             }
 
-            #formSubject {
-
-            }
-
-            #formBody {
-
-            }
-
+            // Post button inside the newPost moodle
             button {
                padding: 0.5rem;
                color: white;
@@ -910,7 +945,7 @@ main {
                }
             }
 
-            // Error Message
+            // The feed back message that is sent for validation
             #feedbackMessage {
                color: $primary;
                font-family: $ff-body;
@@ -921,17 +956,17 @@ main {
 
       }
 
+      // container for each post that is mapped
       .userContent {
          max-height: 1000px;
          display: flex;
          margin-top: 1rem;
          flex-direction: column;
-         gap: 0.5rem;
+         gap: 1rem;
 
-
+         // each individual post
          .userPost {
             transition: 150ms;
-            // max-width: 900px;
             max-width: 100%;
 
             .mainPost {
@@ -946,6 +981,8 @@ main {
                color: white;
                transition: 250ms;
 
+
+               //  header for each post (post author, type of user, time ago posted)
                .postAnalytics {
                   display: flex;
                   flex-direction: column;
@@ -991,10 +1028,6 @@ main {
                      font-size: 1.4rem;
                      font-family: $ff-body;
                      font-weight: bold;
-                     /* background: linear-gradient(to bottom right, #FF7979 18%, #FFAAAA 100%);
-                     -webkit-background-clip: text;
-                     background-clip: text;
-                     -webkit-text-fill-color: transparent; */
                      color: white;
                      display: flex;
                      gap: 0.5rem;
@@ -1007,9 +1040,6 @@ main {
 
                }
 
-
-
-
                .postBody {
                   font-size: 1.2rem;
                   font-family: $ff-body;
@@ -1021,7 +1051,6 @@ main {
                .userTraction {
                   display: flex;
                   justify-content: right;
-
                   gap: 1rem;
 
                   button {
@@ -1057,6 +1086,7 @@ main {
                }
 
 
+               // container for liking and commenting on a post.
                .postLC {
                   display: flex;
                   gap: 3rem;
@@ -1101,6 +1131,8 @@ main {
 
 }
 
+
+// Interfact for making a comment
 #commentInterface {
    opacity: 0;
    pointer-events: none;
@@ -1239,121 +1271,17 @@ main {
 }
 
 
-#introGrid {
-  color: white;
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  // grid-template-rows: 1fr 1fr;
-  // grid-template-columns: repeat(auto-fit, minmax(min(100%, 33%), 1fr));
-  gap: 1rem;
-  margin-bottom: 2rem;
-  min-height: 400px;
-  font-family: $ff-body;
-
-
-  .gridItem {
-    padding: 1.5rem;
-    border: px solid $subBackground;
-    border-radius: 0.5rem;
-    // height: 100px;
-   //  cursor: pointer;
-    transition: 150ms;
-
-    h3 {
-      font-family: $ff-heading;
-    }
-
-    p {
-      line-height: 1.5;
-    }
-
-    &:hover {
-      // opacity: 0.8;
-      // transform: translateY(-5px);
-      // border: 1px solid $primary;
-    }
-  }
-
-  .gridItem:nth-of-type(1) {
-    grid-column: 1 / span 2;
-  }
-  .gridItem:nth-of-type(2) {
-    grid-row: span 2;
-  }
-  /* .gridItem:nth-of-type(3) {
-
-   }
-   .gridItem:nth-of-type(4) {
-
-   } */
-}
+// Comment section media query
 
 @media (max-width: 1050px) {
 
-   #loginContainer {
-      background: none;
-      border: none;
-      width: 95%;
-      padding: 1.5rem;
-      gap: 3rem;
+   #commentInterface {
+      width: 90%;
+      border-radius: 1rem;
+      border: 1px solid $cardBorder;
 
-      #title {
-         .titleSection:nth-of-type(1) {
-            // logo
-            img {
-               height: 50px;
-            }
-
-            // Text
-            h1 {
-               font-size: $fs-paragraph;
-            }
-         }
-
-         .titleSection:nth-of-type(2) {
-            // Text
-            h2 {
-               font-size: $fs-paragraph;
-            }
-         }
-
-      }
-
-      #loginBtns {
-         button {
-            font-size: $fs-paragraph;
-         }
-      }
-
-
-
-      #inputField {
-         padding: 0;
-
-         div {
-            h3 {
-               font-size: $fs-paragraph;
-            }
-         }
-
-      }
-   }
-
-
-
-
-  #introGrid {
-   // max-height: 500px;
-    grid-template-columns: 1fr 1fr;
-  }
-
-  #commentInterface {
-     width: 90%;
-     border-radius: 1rem;
-     border: 1px solid $cardBorder;
-
-     #commentSection {
-        #exitBtnRow {
+      #commentSection {
+         #exitBtnRow {
             font-size: $fs-h3;
 
          }
@@ -1366,22 +1294,22 @@ main {
             margin-top: 1rem;
             line-height: 1.5;
          }
-     }
+      }
 
-     #commentSection2 {
-        #commentInput {
-           flex-direction: column;
+      #commentSection2 {
+         #commentInput {
+            flex-direction: column;
 
-           input {
-              width: 100%;
-           }
+            input {
+               width: 100%;
+            }
 
-           button {
-              width: 100%;
-           }
-        }
+            button {
+               width: 100%;
+            }
+         }
 
-        article {
+         article {
          gap: 0rem;
 
          .comment {
@@ -1392,9 +1320,9 @@ main {
             background: none;
 
             // header for comment
-            h3 {
+            /* h3 {
 
-            }
+            } */
 
 
             // paragraph for comment
@@ -1403,20 +1331,19 @@ main {
                line-height: 1.5;
             }
          }
-        }
-     }
-  }
+         }
+      }
+   }
 }
 
 
-// Profile Page
+// Profile Component
+
 #mainProfile {
-   // background-color: #0a0c0efa;
    width: 60%;
    display: flex;
    flex-direction: column;
    gap: 5rem;
-   // height: 800px;
    margin: 2% auto;
    color: white;
    padding: 1rem;
@@ -1428,10 +1355,7 @@ main {
 
 
    .profileAnalytics:nth-of-type(1) {
-      // background-color: #0D1012;
-      // background-color: red;
       border-radius: 1rem;
-      // height: 200px;
       width: 100%;
       display: flex;
       align-items: start;
@@ -1439,7 +1363,6 @@ main {
       gap: 2rem;
 
       .profileSectionInfo {
-         // background-color: #1e1e1e79;
          border-radius: 1rem;
          padding: 1.5rem;
          font-family: $ff-heading;
@@ -1493,13 +1416,11 @@ main {
 
             span {
                width: 50%;
-               // background-color: #0D1012;
                padding: 0.5rem;
                border-radius: 0.5rem;
                transition: 100ms;
                cursor: pointer;
                text-align: center;
-               // following/follower number
                h1 {
                   font-size: 2rem;
                }
@@ -1599,6 +1520,8 @@ HOME COMPONENT MEDIA QUERIES
 
 @media (max-width: 1050px) {
 
+   // navbar component
+
    #nav {
       justify-content: space-between;
       margin-inline: 0;
@@ -1613,8 +1536,6 @@ HOME COMPONENT MEDIA QUERIES
             display: none;
          }
       }
-
-      // MOBILE NAV BTN APPEARS AND SIDE NAV DISSAPPEARS
 
       // username in the nav bar along with the icon
       #profileContainer {
@@ -1648,6 +1569,8 @@ HOME COMPONENT MEDIA QUERIES
       left: 0px;
    }
 
+   // Feed styles for the Home page
+
    main {
       justify-content: center;
 
@@ -1656,31 +1579,24 @@ HOME COMPONENT MEDIA QUERIES
          margin-left: 0;
          width: 100%;
 
-
-         #whatsNew {
+         // container for the new post button
+         #newPost {
             position: fixed;
             bottom: 2.5rem;
             right: 2.5rem;
 
             #newPostBtn {
                z-index: -1;
-               font-size: $fs-paragraph;
+               font-size: $fs-h3;
                // width: 60%;
             }
 
-            h1 {
-               font-size: 6vw;
-               text-wrap: nowrap;
-            }
-
-            h2 {
-               align-self: center;
-            }
-
+            // moodle for creating a new post
             #createPostElement {
-               width: 90%;
+               width: 100%;
                padding: 2rem;
 
+               // header for the moodle
                #createNewPostHeader {
                   font-size: 1.3rem;
                   width: 100%;
