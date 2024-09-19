@@ -10,21 +10,25 @@ import cookieParser from "cookie-parser";
 import signinRoutes from "./routes/signin.js";
 import profileRoutes from "./routes/profileData.js";
 import topicFeedRoutes from "./routes/topicFeed.js";
+import handleImages from './routes/imageHandling.js'
 
 // To check if the user has a token for accessing certain routes
 import requireAuth from "./middleware/authMiddleware.js";
 
 // MONGODB
-import { MongoClient, ServerApiVersion, ObjectId } from "mongodb";
+import { MongoClient, ServerApiVersion, ObjectId, GridFSBucket } from "mongodb";
+import multer from 'multer';
+import GridFsStorage from 'multer-gridfs-storage';
+/* import pkg from 'multer-gridfs-storage'
+const { GridFsStorage } = pkg */
+import crypto from 'crypto'
 
 // list of topics for the user to choose from
 import topics from "./json/topics.json" assert { type: "json" };
 
 // A fact that comes with each topic
 import topicFacts from "./json/facts.json" assert { type: "json" };
-import { connect } from "http2";
-
-
+// import { connect } from "http2";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -44,6 +48,7 @@ app.use(express.static(path.join(__dirname,  "./dist")));
 app.use("/users", signinRoutes);
 app.use("/profileData", profileRoutes);
 app.use("/loadTopicFeed", topicFeedRoutes);
+app.use('/handleImage', handleImages)
 // app.use('/userInteraction', likesRoutes)
 
 // Creating new mongoClient instance
@@ -52,6 +57,8 @@ const currentDate = new Date();
 
 // database configuration
 let database = null;
+let gfs;
+
 const client = new MongoClient(uri, {
   serverApi: {
     version: ServerApiVersion.v1,
@@ -67,6 +74,7 @@ async function connectMongo() {
   try {
     await client.connect();
     database = client.db(process.env.DB_NAME);
+    gfs = new GridFSBucket(database, {bucketName: 'uploads'})
     console.log("Connected to MongoDB!");
     return database;
   } catch (err) {
@@ -74,71 +82,40 @@ async function connectMongo() {
   }
 }
 
+// Promisify crypto.randomBytes to use async/await
+// const randomBytes = promisify(crypto.randomBytes);
+
+
+// Set up GridFS storage engine
+const storage = new GridFsStorage({
+  url: uri,
+  file: (req, file)=> {
+    return new Promise((resolve, reject)=> {
+      crypto.randomBytes(16, (err, buf)=> {
+        if (err) {
+          return reject(err)
+        }
+
+        const filename = buf.toString('hex') + path.extname(file.originalname)
+        const fileInfo =  {
+          filename: filename,
+          bucketName: 'uploads', // Collection name where files will be stored
+        }
+
+        resolve(fileInfo)
+
+      })
+    })
+  }
+})
+
+const upload = multer({storage})
 connectMongo();
 
-// if the user enters any file extension they will be redirected to login again
-// for prod
-app.get("/home.html", requireAuth, (req, res) => {
-  res.redirect("/");
-});
 
-app.get("/topics.html", requireAuth, (req, res) => {
-  res.redirect("/");
-});
-
-app.get("/index.html", requireAuth, (req, res) => {
-  res.redirect("/");
-});
-
-// on load Send user to login screen
-app.get("/", (req, res) => {
-  // for dev
-  // res.send('<h1>Login page</h1>')
-  res.sendFile(path.join(__dirname, "index.html"));
-});
-
-/* TOPICS PAGE*/
-
-// Retrieving the list of topics that the user can choose from
-app.get("/api/topics", (req, res) => {
-  res.json(topics);
-});
-
-// to get to the topics page!
-/* app.get("/topics", requireAuth, (req, res) => {
-  res.sendFile(path.join(__dirname, "/dist/topics.html"));
-}); */
-
-/* HOME FEED PAGE */
-
-app.get("/home", requireAuth, (req, res) => {
-  // for dev
-  res.sendFile(path.join(__dirname, "/dist/home.html"));
-});
-
-app.get("/topics", requireAuth, (req, res) => {
-  // for dev
-  res.sendFile(path.join(__dirname, "/dist/topics.html"));
-});
-
-app.get("/profile", requireAuth, (req, res) => {
-  // for dev
-  res.sendFile(path.join(__dirname, "/dist/profile.html"));
-});
-
-app.get("/viewProf", (req, res) => {
-  res.sendFile(path.join(__dirname, "../profile.html"));
-});
-
-app.get("/wolfTopics", (req, res) => {
-  res.json(topicFacts);
-});
-
-// ROUTE EXECUTES WHEN THE USER WANTS TO LOOK AT THEIR OWN PROFILE
-app.post("/profile", (req, res) => {
-  const { username } = req.body;
-});
-
+app.post('/uploadImage', upload.single('file'), (req, res)=> {
+  res.json({file: req.file})
+})
 
 
 
@@ -483,6 +460,64 @@ app.post('/addPostComment', async (req, res)=> {
 })
 
 
+// if the user enters any file extension they will be redirected to login again
+// for prod
+app.get("/home.html", requireAuth, (req, res) => {
+  res.redirect("/");
+});
+
+app.get("/topics.html", requireAuth, (req, res) => {
+  res.redirect("/");
+});
+
+app.get("/index.html", requireAuth, (req, res) => {
+  res.redirect("/");
+});
+
+// on load Send user to login screen
+app.get("/", (req, res) => {
+  // for dev
+  // res.send('<h1>Login page</h1>')
+  res.sendFile(path.join(__dirname, "index.html"));
+});
+
+/* TOPICS PAGE*/
+
+// Retrieving the list of topics that the user can choose from
+app.get("/api/topics", (req, res) => {
+  res.json(topics);
+});
+
+
+/* HOME FEED PAGE */
+
+app.get("/home", requireAuth, (req, res) => {
+  // for dev
+  res.sendFile(path.join(__dirname, "/dist/home.html"));
+});
+
+app.get("/topics", requireAuth, (req, res) => {
+  // for dev
+  res.sendFile(path.join(__dirname, "/dist/topics.html"));
+});
+
+app.get("/profile", requireAuth, (req, res) => {
+  // for dev
+  res.sendFile(path.join(__dirname, "/dist/profile.html"));
+});
+
+app.get("/viewProf", (req, res) => {
+  res.sendFile(path.join(__dirname, "../profile.html"));
+});
+
+app.get("/wolfTopics", (req, res) => {
+  res.json(topicFacts);
+});
+
+// ROUTE EXECUTES WHEN THE USER WANTS TO LOOK AT THEIR OWN PROFILE
+app.post("/profile", (req, res) => {
+  const { username } = req.body;
+});
 
 
 app.listen(port, () => {
