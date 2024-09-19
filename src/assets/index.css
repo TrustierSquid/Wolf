@@ -542,6 +542,8 @@ DEFAULT PAGE
 
 main {
   display: flex;
+  justify-content: center;
+  overflow: auto;
 }
 main #content {
   height: 90vh;
@@ -549,8 +551,6 @@ main #content {
   padding: 2rem;
   display: flex;
   flex-direction: column;
-  margin-left: 30rem;
-  overflow: auto;
 }
 main #content #newPostBtn {
   width: 100%;

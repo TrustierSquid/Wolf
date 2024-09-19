@@ -782,6 +782,8 @@ DEFAULT PAGE
 
 main {
    display: flex;
+   justify-content: center;
+   overflow: auto;
 
    #content {
       height: 90vh;
@@ -789,8 +791,6 @@ main {
       padding: 2rem;
       display: flex;
       flex-direction: column;
-      margin-left: 30rem;
-      overflow: auto;
 
       #newPostBtn {
          // height: 50px;
