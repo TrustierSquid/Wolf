@@ -60,17 +60,18 @@ $fs-paragraph: 1rem;
 }
 
 html {
+   min-height: 100vh;
    max-height: 100000px;
-   // min-height: 100vh;
    scroll-behavior: smooth;
+   overflow: hidden;
 }
 
 #darkBG {
    background-color: #000000a4;
-   position: absolute;
+   position: fixed;
    top: 0;
    left: 0;
-   height: 150vh;
+   height: 100vh;
    width: 100%;
    pointer-events: none;
    opacity: 0;
@@ -79,7 +80,6 @@ html {
 
 body {
    background-color: #0D1012;
-   // overflow-y: hidden;
 }
 
 .noPostsMessage {
@@ -119,7 +119,6 @@ body {
    gap: 1rem;
    width: 40%;
    position: absolute;
-   // min-height: 700px;
    left: 50%;
    top: 50%;
    transform: translate(-50%, -50%);
@@ -219,6 +218,7 @@ body {
    #extraInfo {
       display: flex;
       gap: 2rem;
+
       a {
          color: $primary;
          font-family: $ff-body;
@@ -485,7 +485,6 @@ DEFAULT PAGE
 // Navbar
 
 #nav {
-   // border-bottom: 1px solid $primary;
    display: flex;
    padding: 0.5rem;
    justify-content: space-around;
@@ -703,6 +702,7 @@ DEFAULT PAGE
 
 .sideNav {
    height: 100vh;
+   position: fixed;
    width: 275px;
    color: white;
    background-color: $subBackground;
@@ -713,8 +713,7 @@ DEFAULT PAGE
    // gap: 2rem;
    font-family: $ff-body;
    // margin: 2rem;
-   position: fixed;
-   overflow-y: scroll;
+   overflow-y: auto;
 
    .subTitle {
       font-family: $ff-body;
@@ -785,53 +784,38 @@ main {
    display: flex;
 
    #content {
+      height: 90vh;
       width: 50%;
       padding: 2rem;
       display: flex;
       flex-direction: column;
       margin-left: 30rem;
+      overflow: auto;
 
+      #newPostBtn {
+         // height: 50px;
+         width: 100%;
+         color: rgb(151, 151, 151);
+         background-color: $cardBG;
+         border: 1px solid $cardBorder;
+         border-radius: 1rem;
+         padding: 1rem;
+         cursor: pointer;
+         font-size: $fs-h3;
+         font-family: $ff-heading;
+
+         &:hover {
+            background-color: $cardBorder;
+         }
+      }
       // container for the new post Btn on the feed UI
       #newPost {
-         display: flex;
-         justify-content: end;
-         align-items: center;
-         letter-spacing: 1px;
-
-         h1{
-            font-size: 3vw;
-            background: rgb(251, 63, 63);
-            background: linear-gradient(90deg, rgba(251,63,63,1) 0%, rgba(255,85,120,1) 100%);
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-shadow: rgba(255,63,63,0.3) 0px 0px 39px;
-            font-family: $ff-heading;
-            font-weight: bolder;
-            transition: 250ms;
-         }
-
-
          // Btn for making new posts
-         #newPostBtn {
-            display: flex;
-            color: white;
-            padding: 0.8rem;
-            font-size: $fs-h3;
-            font-family: $ff-body;
-            border-radius: 1rem;
-            transition: 250ms;
-            cursor: pointer;
-            height: 50px;
-            display: flex;
+         #newPostBtnMobile {
+            display: none;
             align-items: center;
-            justify-content: space-between;
-            gap: 1rem;
-            transition: 150ms;
-            text-wrap: nowrap;
-            top: 5rem;
-            right: 1rem;
-            background-color: $primary;
+            justify-content: center;
+
 
             &:hover {
                background-color: $buttonHover;
@@ -898,7 +882,7 @@ main {
             }
 
             // the subject and body containers of the new post moodle
-            #formSubject, #formBody {
+            #formSubject, #formBody, #upload {
                display: flex;
                flex-direction: column;
                gap: 0.2rem;
@@ -1606,15 +1590,36 @@ HOME COMPONENT MEDIA QUERIES
          margin-left: 0;
          width: 100%;
 
+         #newPostBtn {
+            display: none;
+         }
          // container for the new post button
          #newPost {
             position: fixed;
             bottom: 2.5rem;
             right: 2.5rem;
 
-            #newPostBtn {
-               z-index: -1;
+
+            #newPostBtnMobile {
+               display: flex;
+               align-items: center;
+               justify-content: center;
+               height: 80px;
+               width: 80px;
                font-size: $fs-h3;
+               font-family: $ff-body;
+               z-index: -1;
+               border-radius: 20%;
+               color: white;
+               padding: 0.8rem;
+               transition: 250ms;
+               cursor: pointer;
+               gap: 1rem;
+               border-radius: 50%;
+               transition: 150ms;
+               text-wrap: nowrap;
+               background-color: $primary;
+
                // width: 60%;
             }
 

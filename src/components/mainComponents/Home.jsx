@@ -235,6 +235,7 @@ export default function Home(){
    const createPostElement = useRef(null)
    const darkBG = useRef(null)
    const newPostBtn = useRef(null)
+   const newPostBtnMobile = useRef(null)
 
    // FOR THE APPEARING AND DISAPPEARING POST CREATING SCREEN
    function appearEffect() {
@@ -247,8 +248,8 @@ export default function Home(){
          bodyPostElement.current.value = ''
          subjectPostElement.current.value = ''
          document.body.style.overflow = 'hidden';
-         newPostBtn.current.style.opacity = '0'
-         newPostBtn.current.style.pointerEvents = 'none'
+         newPostBtnMobile.current.style.opacity = '0'
+         newPostBtnMobile.current.style.pointerEvents = 'none'
       }
    }
 
@@ -260,8 +261,8 @@ export default function Home(){
       bodyPostElement.current.value = ''
       subjectPostElement.current.value = ''
       document.body.style.overflow = 'auto';
-      newPostBtn.current.style.opacity = '1'
-      newPostBtn.current.style.pointerEvents = 'all'
+      newPostBtnMobile.current.style.opacity = '1'
+      newPostBtnMobile.current.style.pointerEvents = 'all'
 
    }
 
@@ -278,8 +279,8 @@ export default function Home(){
       darkBG.current.style.opacity = '0'
       darkBG.current.style.pointerEvents = 'none'
       document.body.style.overflow = 'auto';
-      newPostBtn.current.style.opacity = '1'
-      newPostBtn.current.style.pointerEvents = 'all'
+      newPostBtnMobile.current.style.opacity = '1'
+      newPostBtnMobile.current.style.pointerEvents = 'all'
    }
 
    function clearOut() {
@@ -339,9 +340,12 @@ export default function Home(){
             <span ref={darkBG} id="darkBG"></span>
             <section id="content">
 
+               {/* New post button for desktop with a message with it */}
+               <span id="newPostBtn" ref={newPostBtn} onClick={()=> appearEffect()}>Express yourself.</span>
                <div id="newPost">
 
-                  <span id="newPostBtn" ref={newPostBtn} onClick={()=> appearEffect()}>{createPostMessage()}</span>
+                  {/* New Post button for mobile will always show a plus */}
+                  <span id="newPostBtnMobile" ref={newPostBtnMobile} onClick={()=> appearEffect()}><h4><i class="fa-solid fa-plus"></i></h4></span>
 
                   {/* Floating prompt for creating a new post */}
                   <form ref={createPostElement} id="createPostElement" >
@@ -354,6 +358,10 @@ export default function Home(){
                         <label>Post Body</label><br />
                         <input required placeholder='Enter a Post Body' onsubmit="return false" ref={bodyPostElement}type="text"></input>
                      </div>
+                     <div id="upload">
+                        <label>Upload a picture</label><br />
+                        <input type="file" />
+                     </div>
                      <h4 id="feedbackMessage" ref={errorMessageElement}>{errorMessage}</h4>
                      <button type='button' onClick={()=> createNewPost()}><i className="fa-solid fa-paper-plane"></i></button>
                   </form>
@@ -363,7 +371,6 @@ export default function Home(){
                <article className="userContent">
                   {/* changingFeed will be the dependant topic of the user feed*/}
                   <UpdateFeed currentActiveUser={username} selectedfeed={grippedFeed} topicDisplay={grippedTopic} bgEffect={appearEffectComments} removeBGEffect={removeEffect} />   {/*  Updating the feed with the newest posts*/}
-
                </article>
             </section>
          </main>
