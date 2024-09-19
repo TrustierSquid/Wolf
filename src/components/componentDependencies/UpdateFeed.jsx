@@ -191,6 +191,7 @@ export default function UpdateFeed(props) {
   const commentValue = useRef(null)
   const [postComments, setPostComments] = useState([])
 
+  // Getting the information for the post selected when the interface appears.
   async function commentInterfaceAppear(postSubject, postBody, poster, creationDate, postID, keyOfPost,
      postLikesCount, postComments, ){
 
@@ -205,10 +206,13 @@ export default function UpdateFeed(props) {
     setCommentsCount(postComments.length)
 
 
-    // styling
+    /*
+      When invoked, the interface has these states relative to the post selected
+      The opacity is changed and the pointer events are enabled
+     */
     commentInterface.current.style.opacity = '1'
     commentInterface.current.style.pointerEvents = 'all'
-
+    // props.bgEffect also gets envoked from the home component
 
   }
 
@@ -219,6 +223,7 @@ export default function UpdateFeed(props) {
 
   // for processing comments for posts
   async function addComment(comment, postID) {
+    // Grabbing the query key and string
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
     const userSearched = urlParams.get("topicFeed");
@@ -291,18 +296,18 @@ export default function UpdateFeed(props) {
 
     // Display time passed
     if (daysPassed >= 1) {
-      return <h1 className="postData">{`${daysPassed}d ago`}</h1>;
+      return <h4 className="postData">{`${daysPassed}d ago`}</h4>;
     }
 
     if (hoursPassed > 0) {
-      return <h1 className="postData">{`${hoursPassed}hr ago`}</h1>;
+      return <h4 className="postData">{`${hoursPassed}hr ago`}</h4>;
     }
 
     if (minutesPassed > 0) {
-      return <h1 className="postData">{`${minutesPassed}m ago`}</h1>;
+      return <h4 className="postData">{`${minutesPassed}m ago`}</h4>;
     }
 
-    return <h1 className="postData">Just now</h1>;
+    return <h4 className="postData">Just now</h4>;
 
 
   }
@@ -325,11 +330,18 @@ export default function UpdateFeed(props) {
                       {showPostDate(post.postCreationDate)}
                     </section>
                     <p className="postCaption">
-                      <i className="fa-solid fa-bolt"></i>
+                      <i className="fa-solid fa-pen-nib"></i>
                       {post.subject}
                     </p>
                   </div>
                   <h2 className="postBody">{post.body}</h2>
+                  <br />
+                </main>
+                <nav className='postInteractionSection'>
+                  <div className="postDetails">
+                    <span><i className="fa-regular fa-heart"></i> {post.likes.length}</span>
+                    <span><i className="fa-regular fa-comment"></i> {post.comments.length}</span>
+                  </div>
                   <div className="postLC">
                     <span
                       ref={(el) => (likeBtn.current[key] = el)}
@@ -337,17 +349,16 @@ export default function UpdateFeed(props) {
                       onClick={() => addLike(post._id, key)}
                     >
                       <i className="fa-solid fa-heart"></i>
-                      <span style={{ color: "grey" }}> {post.likes.length}</span>
+                      <span style={{ color: "grey" }}> Like</span>
                     </span>
                     <span className="commentBtn"
-                     onClick={()=> {commentInterfaceAppear(post.subject, post.body, post.poster, post.postcreationDate, post._id, key, post.likes.length, post.comments), props.bgEffect()}}>
+                    onClick={()=> {commentInterfaceAppear(post.subject, post.body, post.poster, post.postcreationDate, post._id, key, post.likes.length, post.comments), props.bgEffect()}}>
                       <i className="fa-solid fa-comments"></i>{" "}
                       <span style={{ color: "grey" }}
-                      > {post.comments.length}</span>
+                      > Comment</span>
                     </span>
-
                   </div>
-                </main>
+                </nav>
               </div>
             </>
           );
@@ -361,8 +372,7 @@ export default function UpdateFeed(props) {
 
       <div id="commentInterface" ref={commentInterface}>
 
-        <h3 id="topDiv">{poster} <span id="exitCommentBtn" onClick={()=> {removeEffect(), props.removeBGEffect()}}><i className="fa-solid fa-x"></i></span></h3>
-
+        <h3 id="topDiv">{poster}<span id="exitCommentBtn" onClick={()=> {removeEffect(), props.removeBGEffect()}}><i className="fa-solid fa-x"></i></span></h3>
 
 
         <section id="commentSection">
@@ -378,31 +388,31 @@ export default function UpdateFeed(props) {
         <section id="commentSection2">
           <form id="commentInput">
             <input ref={commentValue} required type="text" placeholder="Add a comment.."/>
-            <button type="button" onClick={()=> addComment(commentValue.current.value, postID, )}>Comment +</button>
+            <button type="button" onClick={()=> addComment(commentValue.current.value, postID, )}><i className="fa-solid fa-paper-plane"></i></button>
           </form>
           <br />
           <h4 style={{color: 'lime'}}>{errorMessage}</h4>
-          <article>
-            {postComments?.length > 0 ? (
-              postComments?.map((comment)=> {
-                return (
-                  <>
-                    <div className='comment'>
-                      <h3>{comment.from} <span>{showPostDate(comment.timePosted)}</span></h3>
-                      <p>{comment.comment}</p>
-                    </div>
-                  </>
-                )
-              })
-            ) : (
-              <div className="noPostsMessage">
-                <h3>No comments available yet!</h3>
-                <p>Be the first to leave a comment here! 🗣️</p>
-              </div>
-            )}
-          </article>
         </section>
 
+        <article className='commentContainer'>
+          {postComments?.length > 0 ? (
+            postComments?.map((comment)=> {
+              return (
+                <>
+                  <div className='comment'>
+                    <h3>{comment.from} <span>{showPostDate(comment.timePosted)}</span></h3>
+                    <p>{comment.comment}</p>
+                  </div>
+                </>
+              )
+            })
+          ) : (
+            <div className="noPostsMessage">
+              <h3>No comments available yet!</h3>
+              <p>Be the first to leave a comment here! 🗣️</p>
+            </div>
+          )}
+        </article>
       </div>
     </>
   );

@@ -14,6 +14,7 @@ html {
   position: absolute;
   top: 0;
   left: 0;
+  height: 150vh;
   width: 100%;
   pointer-events: none;
   opacity: 0;
@@ -630,7 +631,7 @@ main #content #newPost #createPostElement #createNewPostHeader span {
   font-size: 1.3rem;
   padding: 1rem;
   border-radius: 1rem;
-  color: #ff7b00;
+  color: #d43737;
   cursor: pointer;
 }
 main #content #newPost #createPostElement #createNewPostHeader span:hover {
@@ -646,7 +647,7 @@ main #content #newPost #createPostElement #formSubject label, main #content #new
 }
 main #content #newPost #createPostElement #formSubject input, main #content #newPost #createPostElement #formBody input {
   width: 100%;
-  height: 50px;
+  height: 70px;
   max-width: 100%;
   padding: 0.5rem;
   border-radius: 0.5rem;
@@ -685,11 +686,14 @@ main #content .userContent {
   display: flex;
   margin-top: 1rem;
   flex-direction: column;
-  gap: 1rem;
+  gap: 4rem;
 }
 main #content .userContent .userPost {
   transition: 150ms;
   max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 }
 main #content .userContent .userPost .mainPost {
   flex-direction: column;
@@ -782,11 +786,26 @@ main #content .userContent .userPost .mainPost .userTraction .likeBtn:hover {
     transform: translateY(10px);
   }
 }
-main #content .userContent .userPost .mainPost .postLC {
+main #content .userContent .userPost .postInteractionSection {
+  background-color: #131212;
+  border-radius: 1rem;
+  padding: 1rem;
+  border: 1px solid #2E2E2E;
+}
+main #content .userContent .userPost .postInteractionSection .postDetails {
+  display: flex;
+  gap: 1rem;
+  font-family: "Nunito", sans-serif;
+}
+main #content .userContent .userPost .postInteractionSection .postDetails span {
+  padding: 0.5rem;
+  color: white;
+}
+main #content .userContent .userPost .postInteractionSection .postLC {
   display: flex;
   gap: 3rem;
 }
-main #content .userContent .userPost .mainPost .postLC .likeBtn, main #content .userContent .userPost .mainPost .postLC .commentBtn {
+main #content .userContent .userPost .postInteractionSection .postLC .likeBtn, main #content .userContent .userPost .postInteractionSection .postLC .commentBtn {
   font-size: 1.2rem;
   cursor: pointer;
   padding: 0.5rem;
@@ -794,13 +813,13 @@ main #content .userContent .userPost .mainPost .postLC .likeBtn, main #content .
   font-family: "roboto", sans-serif;
   transition: 150ms;
 }
-main #content .userContent .userPost .mainPost .postLC .likeBtn:hover {
+main #content .userContent .userPost .postInteractionSection .postLC .likeBtn:hover {
   background-color: rgba(62, 62, 62, 0.5333333333);
 }
-main #content .userContent .userPost .mainPost .postLC .commentBtn {
+main #content .userContent .userPost .postInteractionSection .postLC .commentBtn {
   color: rgb(46, 176, 128);
 }
-main #content .userContent .userPost .mainPost .postLC .commentBtn:hover {
+main #content .userContent .userPost .postInteractionSection .postLC .commentBtn:hover {
   background-color: rgba(62, 62, 62, 0.5333333333);
 }
 
@@ -869,7 +888,7 @@ main #content .userContent .userPost .mainPost .postLC .commentBtn:hover {
   gap: 1rem;
 }
 #commentInterface #commentSection2 #commentInput input {
-  width: 80%;
+  width: 90%;
   padding: 0.5rem;
   border-radius: 0.5rem;
   background-color: #1B1B1B;
@@ -881,7 +900,7 @@ main #content .userContent .userPost .mainPost .postLC .commentBtn:hover {
   outline: none;
 }
 #commentInterface #commentSection2 #commentInput button {
-  width: 20%;
+  width: 10%;
   padding: 0.5rem;
   border-radius: 0.5rem;
   background-color: crimson;
@@ -894,33 +913,36 @@ main #content .userContent .userPost .mainPost .postLC .commentBtn:hover {
 #commentInterface #commentSection2 #commentInput button:hover {
   background-color: #7A0B31;
 }
-#commentInterface #commentSection2 article {
+#commentInterface .commentContainer {
   margin-top: 0.5rem;
   display: flex;
   flex-direction: column;
   gap: 1rem;
 }
-#commentInterface #commentSection2 article .comment {
+#commentInterface .commentContainer .comment {
   background-color: #131212;
   border: 1px solid #2E2E2E;
   padding: 1rem;
   border-radius: 1rem;
 }
-#commentInterface #commentSection2 article .comment h3 {
+#commentInterface .commentContainer .comment h3 {
   display: flex;
   justify-content: space-between;
   margin-bottom: 1rem;
   color: turquoise;
 }
-#commentInterface #commentSection2 article .comment h3 span {
+#commentInterface .commentContainer .comment h3 span {
   color: rgb(153, 153, 153);
 }
 
 @media (max-width: 1050px) {
   #commentInterface {
-    width: 90%;
-    border-radius: 1rem;
+    width: 100%;
+    height: 100%;
+    border-radius: 0;
     border: 1px solid #2E2E2E;
+    transition: 100ms;
+    padding: 1rem;
   }
   #commentInterface #commentSection #exitBtnRow {
     font-size: 1.5rem;
@@ -932,14 +954,11 @@ main #content .userContent .userPost .mainPost .postLC .commentBtn:hover {
     margin-top: 1rem;
     line-height: 1.5;
   }
-  #commentInterface #commentSection2 #commentInput {
-    flex-direction: column;
-  }
   #commentInterface #commentSection2 #commentInput input {
-    width: 100%;
+    font-size: 1rem;
   }
   #commentInterface #commentSection2 #commentInput button {
-    width: 100%;
+    width: 20%;
   }
   #commentInterface #commentSection2 article {
     gap: 0rem;
@@ -949,10 +968,12 @@ main #content .userContent .userPost .mainPost .postLC .commentBtn:hover {
     border-top: 1px solid #2E2E2E;
     border-bottom: 1px solid #2E2E2E;
     border-radius: 0;
+    /* padding-right: 0;
+    padding-left: 0; */
     background: none;
-    /* h3 {
-
-    } */
+  }
+  #commentInterface #commentSection2 article .comment h3 {
+    font-size: 1rem;
   }
   #commentInterface #commentSection2 article .comment p {
     font-size: 1rem;
@@ -1159,36 +1180,7 @@ HOME COMPONENT MEDIA QUERIES
   main #content #newPost #createPostElement {
     width: 100%;
     padding: 2rem;
-    /* #formSubject, #formBody {
-
-
-       label {
-
-       }
-
-       input {
-
-
-         &:focus {
-
-         }
-       }
-    }
-
-    #formSubject {
-
-    }
-
-    #formBody {
-    }
-
-    button {
-
-
-       &:hover {
-       }
-    }
-    */
+    gap: 2rem;
     /* #feedbackMessage {
 
     } */
@@ -1197,19 +1189,22 @@ HOME COMPONENT MEDIA QUERIES
     font-size: 1.3rem;
     width: 100%;
   }
+  main #content #newPost #createPostElement button {
+    width: 100%;
+    font-size: 1.5rem;
+  }
   main #content .userContent {
     margin: 0;
-    gap: 0;
+    gap: 3rem;
   }
   main #content .userContent .userPost {
-    /* .mainPost {
-    } */
+    gap: 0;
   }
   main #content .userContent .userPost .postAnalytics {
     display: flex;
   }
   main #content .userContent .userPost .postAnalytics .userAction {
-    font-size: 0.9rem;
+    font-size: 1rem;
   }
   main #content .userContent .userPost .mainPost {
     border: none;
@@ -1222,6 +1217,43 @@ HOME COMPONENT MEDIA QUERIES
   main #content .userContent .userPost .mainPost .postBody {
     font-size: 1rem;
     line-height: 1.5;
+  }
+  main #content .userContent .userPost .postInteractionSection {
+    border-radius: 0;
+    padding: 1rem;
+    border: none;
+    border-top: 1px solid #2E2E2E;
+    border-bottom: 1px solid #2E2E2E;
+  }
+  main #content .userContent .userPost .postInteractionSection .postDetails {
+    display: flex;
+    gap: 1rem;
+    font-family: "Nunito", sans-serif;
+  }
+  main #content .userContent .userPost .postInteractionSection .postDetails span {
+    padding: 0.5rem;
+    color: white;
+  }
+  main #content .userContent .userPost .postInteractionSection .postLC {
+    display: flex;
+    gap: 3rem;
+  }
+  main #content .userContent .userPost .postInteractionSection .postLC .likeBtn, main #content .userContent .userPost .postInteractionSection .postLC .commentBtn {
+    font-size: 1.2rem;
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 1rem;
+    font-family: "roboto", sans-serif;
+    transition: 150ms;
+  }
+  main #content .userContent .userPost .postInteractionSection .postLC .likeBtn:hover {
+    background-color: rgba(62, 62, 62, 0.5333333333);
+  }
+  main #content .userContent .userPost .postInteractionSection .postLC .commentBtn {
+    color: rgb(46, 176, 128);
+  }
+  main #content .userContent .userPost .postInteractionSection .postLC .commentBtn:hover {
+    background-color: rgba(62, 62, 62, 0.5333333333);
   }
   #mainProfile {
     width: 100%;

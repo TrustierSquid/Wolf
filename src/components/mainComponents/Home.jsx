@@ -350,14 +350,12 @@ export default function Home(){
                         <label>Post Subject</label><br />
                         <input maxLength={40} required placeholder='Enter a Post Subject' onsubmit="return false" ref={subjectPostElement}></input><br />
                      </div>
-                     <br />
                      <div id="formBody">
                         <label>Post Body</label><br />
                         <input required placeholder='Enter a Post Body' onsubmit="return false" ref={bodyPostElement}type="text"></input>
                      </div>
-                     <br />
                      <h4 id="feedbackMessage" ref={errorMessageElement}>{errorMessage}</h4>
-                     <button type='button' onClick={()=> createNewPost()}>Post</button>
+                     <button type='button' onClick={()=> createNewPost()}><i className="fa-solid fa-paper-plane"></i></button>
                   </form>
                </div>
 
