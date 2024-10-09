@@ -843,7 +843,7 @@ main {
             width: 50%;
             margin-left: 1rem;
             position: fixed;
-            background-color: $moodleBG;
+            background-color: $cardBG;
             padding: 3rem;
             top: 50%;
             right: 50%;
@@ -882,9 +882,7 @@ main {
             }
 
             // the subject and body containers of the new post moodle
-            #formSubject, #formBody, #upload {
-               display: flex;
-               flex-direction: column;
+            #formBody {
                gap: 0.2rem;
 
                // labeles for the containers
@@ -895,14 +893,37 @@ main {
                // input fields for both containers
                input {
                  width: 100%;
-                 height: 70px;
+                 height: 60px;
                  max-width: 100%;
                  padding: 0.5rem;
                  border-radius: 0.5rem;
                  font-size: 1rem;
                  font-family: $ff-heading;
                  background-color: $inputField;
-                 border: 2px solid $cardBorder;
+                 border: 1px solid $cardBorder;
+                 color: white;
+
+                 &:focus {
+                  outline: none;
+                 }
+               }
+            }
+
+            #formSubject {
+               display: flex;
+               align-items: center;
+               gap: 0.5rem;
+
+               input {
+                  width: 100%;
+                 height: 50px;
+                 max-width: 100%;
+                 padding: 0.5rem;
+                 border-radius: 0.5rem;
+                 font-size: 1rem;
+                 font-family: $ff-heading;
+                 background-color: $inputField;
+                 border: 1px solid $cardBorder;
                  color: white;
 
                  &:focus {
@@ -1078,10 +1099,11 @@ main {
 
 
             .postInteractionSection {
-               background-color: $cardBG;
+               // background-color: $cardBG;
+               box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
                border-radius: 1rem;
                padding: 1rem;
-               border: 1px solid $cardBorder;
+               border: 0.5px solid $cardBorder;
 
                .postDetails {
                   display: flex;
@@ -1189,7 +1211,12 @@ main {
 
       #exitBtnRow {
          display: flex;
-         justify-content: space-between;
+         align-items: center;
+         gap: 1rem;
+
+         i {
+            color: $primary;
+         }
 
       }
 
@@ -1287,13 +1314,13 @@ main {
       height: 100%;
       border-radius: 0;
       border: 1px solid $cardBorder;
+      background-color: $cardBG;
       transition: 100ms;
       padding: 1rem;
 
       #commentSection {
          #exitBtnRow {
             font-size: $fs-h3;
-
          }
 
          #exitCommentBtn {
@@ -1628,6 +1655,7 @@ HOME COMPONENT MEDIA QUERIES
                width: 100%;
                padding: 2rem;
                gap: 2rem;
+               border-radius: 0rem;
 
                // header for the moodle
                #createNewPostHeader {
@@ -1663,7 +1691,7 @@ HOME COMPONENT MEDIA QUERIES
 
                button {
                   width: 100%;
-                  font-size: $fs-h3;
+                  font-size: $fs-paragraph;
 
                   &:hover {
 
@@ -1681,7 +1709,7 @@ HOME COMPONENT MEDIA QUERIES
          // Container for posting content
          .userContent {
             margin: 0;
-            gap: 3rem;
+            gap: 0rem;
 
             // each post
             .userPost {
@@ -1698,8 +1726,7 @@ HOME COMPONENT MEDIA QUERIES
                // message
                .mainPost {
                   border: none;
-                  border-top: 1px solid $cardBorder;
-                  border-bottom: 1px solid $cardBorder;
+                  border-top: 0.5px solid $cardBorder;
                   border-radius: 0rem;
                   gap: 1.5rem;
                   background: none;
@@ -1715,8 +1742,8 @@ HOME COMPONENT MEDIA QUERIES
                   border-radius: 0;
                   padding: 1rem;
                   border: none;
-                  border-top: 1px solid $cardBorder;
-                  border-bottom: 1px solid $cardBorder;
+                  border-bottom: 0.5px solid $cardBorder;
+                  box-shadow: none;
 
 
                   .postDetails {

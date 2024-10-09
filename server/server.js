@@ -18,6 +18,8 @@ import requireAuth from "./middleware/authMiddleware.js";
 // MONGODB
 import { MongoClient, ServerApiVersion, ObjectId, GridFSBucket } from "mongodb";
 import multer from 'multer';
+import { Readable } from 'stream';
+
 import GridFsStorage from 'multer-gridfs-storage';
 /* import pkg from 'multer-gridfs-storage'
 const { GridFsStorage } = pkg */
@@ -55,9 +57,13 @@ app.use('/handleImage', handleImages)
 const uri = process.env.DB_URI;
 const currentDate = new Date();
 
+// Configure multer for file uploads
+const storage = multer.memoryStorage(); // Store files in memory
+const upload = multer({ storage });
+
 // database configuration
 let database = null;
-let gfs;
+// let gfs;
 
 const client = new MongoClient(uri, {
   serverApi: {
@@ -73,50 +79,19 @@ async function connectMongo() {
 
   try {
     await client.connect();
+    // let databaseAd = client.db('admin');
     database = client.db(process.env.DB_NAME);
-    gfs = new GridFSBucket(database, {bucketName: 'uploads'})
-    console.log("Connected to MongoDB!");
+
+    console.log(`Connected to database: ${database.databaseName}`);
     return database;
   } catch (err) {
     console.log("Error connecting to MongoDB!");
   }
 }
 
-// Promisify crypto.randomBytes to use async/await
-// const randomBytes = promisify(crypto.randomBytes);
 
 
-// Set up GridFS storage engine
-const storage = new GridFsStorage({
-  url: uri,
-  file: (req, file)=> {
-    return new Promise((resolve, reject)=> {
-      crypto.randomBytes(16, (err, buf)=> {
-        if (err) {
-          return reject(err)
-        }
-
-        const filename = buf.toString('hex') + path.extname(file.originalname)
-        const fileInfo =  {
-          filename: filename,
-          bucketName: 'uploads', // Collection name where files will be stored
-        }
-
-        resolve(fileInfo)
-
-      })
-    })
-  }
-})
-
-const upload = multer({storage})
 connectMongo();
-
-
-app.post('/uploadImage', upload.single('file'), (req, res)=> {
-  res.json({file: req.file})
-})
-
 
 
 // Sends the current list of posts in the mainFeed
@@ -131,30 +106,117 @@ app.get("/update", async (req, res) => {
 
 
 
+// IMAGE HANDLING
+app.get('/file/:id', async (req, res)=> {
+  // by default feed will be mainFeed if empty string
+  const { id } = req.params
+  console.log(id)
 
-// ROUTE EXECUTES WHEN THE USER CREATES A NEW POST
-app.post("/newPost", async (req, res) => {
-  const { feed } = req.query;
+
+  try {
+    let database = await connectMongo();
+    const mainFeed = database.collection('mainFeed');
+
+    const bucket = new GridFSBucket(database, {bucketName: 'uploads'})
+    res.setHeader('Content-Type', 'image/jpeg')
+    console.log(id)
+
+    res.set('Content-Type', 'image/jpeg');
+    const downloadStream = bucket.openDownloadStream(new ObjectId(id));
+
+    downloadStream.on('error', (error) => {
+      console.error('Error downloading file:', error);
+      return res.status(404).json({ error: 'File not found' });
+    })
+
+
+    downloadStream.pipe(res).on('finish', ()=> {
+      console.log('File downloaded successfully')
+    }); // Pipe the stream to the response
+
+  } catch (error) {
+    console.error('Error connecting to MongoDB:', error);
+    return res.status(500).json({ error: 'Internal server error' });
+  }
+
+})
+
+
+// WHEN THE USER CREATES A NEW POST
+app.post("/newPost", upload.single('file'), async (req, res) => {
+  const { feed = 'mainFeed'} = req.query;
 
   // if no feed is selected, post will default to mainFeed
   if (feed === "mainFeed") {
     // retrieving the username, and post details (subject, body)
-    const { whoPosted, postSubject, postBody } = req.body;
-
+    const { whoPosted, postSubject, postBody} = req.body;
 
     // Updating the poster's post count
     let database = await connectMongo();
     const users = database.collection("Users");
     const mainFeed = database.collection("mainFeed");
 
-    // poster
+
+
+    // if the user uploaded an image
+    if (req.file) {
+      // Prepare post details for sending it to the database
+      const postDetails = {
+        poster: whoPosted,
+        subject: postSubject,
+        body: postBody,
+        likes: [],
+        postCreationDate: new Date(),
+        comments: []
+      };
+
+      // initializing gridFs instance for file storing
+      const bucket = new GridFSBucket(database, {bucketName: 'uploads'})
+
+      // Creating upload stream to store the file in the 'uploads' bucket
+      const uploadStream = bucket.openUploadStream(req.file.originalname)
+
+      // Creating readable stream from the uploaded file buffer
+      const stream = Readable.from(req.file.buffer)
+
+      // Pipe the file stream to the gridFs upload steam
+      // Connecting these two together, we will be able upload the files to the bucket
+      stream.pipe(uploadStream)
+        .on('error', async (error) => {
+          // Handling the error during file upload
+          console.error('Error uploading file:', error);
+          res.status(500).json({error: 'File upload failed'})
+        })
+        .on('finish', async () => {
+
+          // Create the post details with the file ID
+          // On successful upload, store the file ID (uploadStream.id) in the post details
+          postDetails.img = uploadStream.id
+
+          await mainFeed.insertOne(postDetails)
+          console.log({
+            whoPosted,
+            postSubject,
+            postBody
+          })
+          console.log('File uploaded successfully!');
+        });
+
+      return
+    }
+
+    // Fetching the poster of the new post
     const filter = { user: whoPosted };
+
+    // action for updating the document
     const updateDoc = {
       $inc: {
         posts: 1,
       },
     };
 
+    // document update for the user document in the user collection
+    // This just increments the number of posts that is displayed a users document
     const updatePosts = await users.updateOne(filter, updateDoc);
 
     // adding the post to the DB
@@ -170,7 +232,7 @@ app.post("/newPost", async (req, res) => {
     // Adding the post to the database will lead to a call to action on the frontend
     // The frontend will load this collection in the database to show the user feed
 
-    res.json({ message: "Posted Successfully" });
+
   } else {
     // retrieving the username, and post details (subject, body)
     const { whoPosted, postSubject, postBody } = req.body;

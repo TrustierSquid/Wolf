@@ -111,35 +111,44 @@ export default function Home(){
    // selected topic will default to main
    const [grippedTopic, setGrippedTopic] = useState("Main")
 
+   // image upload element
+   const imageRef = useRef(null)
+
    //  Creating a new post and sending it to the db so it can be displayed
    async function createNewPost(){
       let subject = subjectPostElement.current.value
       let body = bodyPostElement.current.value
+      let img = imageRef.current.files[0]
 
       const queryString = window.location.search;
       const urlParams = new URLSearchParams(queryString)
       const userSearched = urlParams.get('topicFeed')
 
-      // checking to see if either input field is empty
+      // handling to see if either input field is empty
       if (!subject || !body) {
          setErrorMessage('Please Enter a subject and body')
-         console.log(grippedTopic)
          return
       }
 
+      // Caching the form data for the created post
+      const formData = new FormData()
+      formData.append('postSubject', subject)
+      formData.append('whoPosted', username)
+      formData.append('postBody', body);
+      formData.append('file', img); // Append the file to the form data
+
       setErrorMessage('Posting..')
 
+      // If the query string is empty then the post will get sent to the home page
       if (!queryString) {
+
          // Sending post to db...
-         const response = await fetch(`/newPost?feed=mainFeed`, {
+         const responseForPost = await fetch(`/newPost?feed=mainFeed`, {
             method: 'POST',
-            headers: {
-               'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({whoPosted: username, postSubject: subject, postBody: body})
+            body: formData
          })
 
-         if (!response.ok) {
+         if (!responseForPost.ok) {
             throw new Error(`Error posting.. ${response.status}`)
          }
 
@@ -147,15 +156,12 @@ export default function Home(){
             errorMessageElement.current.style.color = 'lime'
             bodyPostElement.current.value = ''
             subjectPostElement.current.value = ''
+            imageRef.current.value = ''
             setErrorMessage('Posted!')
          }, 900)
 
-         setTimeout(() => {
-            // setErrorMessage('')
-            window.location.reload()
-         }, 3000);
-
       } else {
+         // the post will go to whatever the query string is
 
          // Sending post to db...
          const response = await fetch(`/newPost?feed=${userSearched}`, {
@@ -163,7 +169,7 @@ export default function Home(){
             headers: {
                'Content-Type': 'application/json',
             },
-            body: JSON.stringify({whoPosted: username, postSubject: subject, postBody: body})
+            body: JSON.stringify({whoPosted: username, postSubject: subject, postBody: body,})
          })
 
          if (!response.ok) {
@@ -185,7 +191,6 @@ export default function Home(){
       }
 
    }
-
 
 
    // fourTopics inits this function
@@ -348,22 +353,20 @@ export default function Home(){
                   <span id="newPostBtnMobile" ref={newPostBtnMobile} onClick={()=> appearEffect()}><h4><i class="fa-solid fa-plus"></i></h4></span>
 
                   {/* Floating prompt for creating a new post */}
-                  <form ref={createPostElement} id="createPostElement" >
-                     <h2 id="createNewPostHeader">Create Post <span onClick={()=> dissappearEffect()}><i className="fa-solid fa-x"></i></span></h2>
+                  <form enctype="multipart/form-data" ref={createPostElement} id="createPostElement" >
+                     <h2 id="createNewPostHeader">What's on your mind? <span onClick={()=> dissappearEffect()}><i className="fa-solid fa-x"></i></span></h2>
                      <div id="formSubject">
-                        <label>Post Subject</label><br />
-                        <input maxLength={40} required placeholder='Enter a Post Subject' onsubmit="return false" ref={subjectPostElement}></input><br />
+                        <input maxLength={40} required placeholder="What's it about?" onsubmit="return false" ref={subjectPostElement}></input><br />
                      </div>
                      <div id="formBody">
-                        <label>Post Body</label><br />
-                        <input required placeholder='Enter a Post Body' onsubmit="return false" ref={bodyPostElement}type="text"></input>
+                        <input required placeholder='Say Something..' onsubmit="return false" ref={bodyPostElement}type="text"></input>
                      </div>
-                     <div id="upload">
+                     {/* <div id="upload">
                         <label>Upload a picture</label><br />
-                        <input type="file" />
-                     </div>
+                        <input accept="image/*" ref={imageRef} type="file" />
+                     </div> */}
                      <h4 id="feedbackMessage" ref={errorMessageElement}>{errorMessage}</h4>
-                     <button type='button' onClick={()=> createNewPost()}><i className="fa-solid fa-paper-plane"></i></button>
+                     <button  type='button' onClick={()=> createNewPost()}>Post <i className="fa-solid fa-paper-plane"></i></button>
                   </form>
                </div>
 

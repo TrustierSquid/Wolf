@@ -153,7 +153,70 @@ export default function UpdateFeed(props) {
     }
   }
 
-  // 3332 dads rooom num
+  /* const [imageUrls, setImageUrls] = useState({});
+
+  // For each url of an image on the page, tie them to a state variable
+  useEffect(()=> {
+    const fetchImages = async ()=> {
+      const  urls = {}
+      for (const post of allPosts) {
+        const imageUrl = await handleImages(post.img)
+        if (imageUrl) {
+          urls[post._id] = imageUrl
+        }
+      }
+
+      setImageUrls(urls)
+    }
+
+    fetchImages()
+
+    return () => {
+      Object.values(imageUrls).forEach((url) => URL.revokeObjectURL(url));
+    };
+
+  }, [allPosts])
+
+  const [imgSrc, setImgSrc] = useState()
+
+// HANDLING WHEN IMAGES ARE POSTED
+  async function handleImages(postImageID){
+    // Getting current query string
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const userSearched = urlParams.get("topicFeed");
+
+    if (!postImageID) return
+
+    try {
+
+      const response = await fetch(`/file/${postImageID}`, {
+        method: 'GET',
+      })
+
+      // handle response errors
+      if(!response.ok) {
+        throw new Error('Network response was not okay')
+      }
+
+
+      const blob = await response.blob()
+      console.log(blob)
+
+      const imageUrl = URL.createObjectURL(blob)
+
+      setImgSrc(imageUrl)
+
+
+
+
+
+      // const url = URL.createObjectURL(blob)
+      // return url
+    } catch (err) {
+       console.error('Error fetching image', err)
+    }
+  } */
 
   // Checks and shows if a user is already liking a post or not
   // all dependent on when the feed gets updated
@@ -167,10 +230,12 @@ export default function UpdateFeed(props) {
     });
   }
 
+
   // ran on component mount. Dependent on the the allPosts array
   useEffect(() => {
     checkCurrentlyLiked();
   }, [allPosts, currentUser]);
+
 
   // ran on component mount
   useEffect(() => {
@@ -242,7 +307,7 @@ export default function UpdateFeed(props) {
         })
 
         if (!response.ok) {
-          throw new Error("That shit didnt go through");
+          throw new Error("That didnt go through");
         }
         await updateMainFeed()
       }, 500);
@@ -259,7 +324,7 @@ export default function UpdateFeed(props) {
       })
 
       if (!response.ok) {
-        throw new Error("That shit didnt go through");
+        throw new Error("That didnt go through");
       }
 
       setErrorMessage('Added Comment!')
@@ -330,10 +395,11 @@ export default function UpdateFeed(props) {
                       {showPostDate(post.postCreationDate)}
                     </section>
                     <p className="postCaption">
-                      <i className="fa-solid fa-pen-nib"></i>
+                      <i className="fa-solid fa-square"></i>
                       {post.subject}
                     </p>
                   </div>
+                  {/* <img alt="post"/> */}
                   <h2 className="postBody">{post.body}</h2>
                   <br />
                 </main>
@@ -376,7 +442,7 @@ export default function UpdateFeed(props) {
 
 
         <section id="commentSection">
-          <h2 id="exitBtnRow">{postSubject}</h2>
+          <h2 id="exitBtnRow"><i className="fa-solid fa-square"></i> {postSubject}</h2>
           <p>{postBody}</p>
 
           <div id="indicators">

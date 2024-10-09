@@ -588,7 +588,7 @@ main #content #newPost #createPostElement {
   width: 50%;
   margin-left: 1rem;
   position: fixed;
-  background-color: #181818;
+  background-color: #131212;
   padding: 3rem;
   top: 50%;
   right: 50%;
@@ -622,27 +622,45 @@ main #content #newPost #createPostElement #createNewPostHeader span {
 main #content #newPost #createPostElement #createNewPostHeader span:hover {
   background-color: rgba(87, 87, 87, 0.3960784314);
 }
-main #content #newPost #createPostElement #formSubject, main #content #newPost #createPostElement #formBody, main #content #newPost #createPostElement #upload {
-  display: flex;
-  flex-direction: column;
+main #content #newPost #createPostElement #formBody {
   gap: 0.2rem;
 }
-main #content #newPost #createPostElement #formSubject label, main #content #newPost #createPostElement #formBody label, main #content #newPost #createPostElement #upload label {
+main #content #newPost #createPostElement #formBody label {
   font-family: "Nunito", sans-serif;
 }
-main #content #newPost #createPostElement #formSubject input, main #content #newPost #createPostElement #formBody input, main #content #newPost #createPostElement #upload input {
+main #content #newPost #createPostElement #formBody input {
   width: 100%;
-  height: 70px;
+  height: 60px;
   max-width: 100%;
   padding: 0.5rem;
   border-radius: 0.5rem;
   font-size: 1rem;
   font-family: "Nunito", sans-serif;
   background-color: #1B1B1B;
-  border: 2px solid #2E2E2E;
+  border: 1px solid #2E2E2E;
   color: white;
 }
-main #content #newPost #createPostElement #formSubject input:focus, main #content #newPost #createPostElement #formBody input:focus, main #content #newPost #createPostElement #upload input:focus {
+main #content #newPost #createPostElement #formBody input:focus {
+  outline: none;
+}
+main #content #newPost #createPostElement #formSubject {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+main #content #newPost #createPostElement #formSubject input {
+  width: 100%;
+  height: 50px;
+  max-width: 100%;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  font-family: "Nunito", sans-serif;
+  background-color: #1B1B1B;
+  border: 1px solid #2E2E2E;
+  color: white;
+}
+main #content #newPost #createPostElement #formSubject input:focus {
   outline: none;
 }
 main #content #newPost #createPostElement button {
@@ -772,10 +790,10 @@ main #content .userContent .userPost .mainPost .userTraction .likeBtn:hover {
   }
 }
 main #content .userContent .userPost .postInteractionSection {
-  background-color: #131212;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
   border-radius: 1rem;
   padding: 1rem;
-  border: 1px solid #2E2E2E;
+  border: 0.5px solid #2E2E2E;
 }
 main #content .userContent .userPost .postInteractionSection .postDetails {
   display: flex;
@@ -854,7 +872,11 @@ main #content .userContent .userPost .postInteractionSection .postLC .commentBtn
 }
 #commentInterface #commentSection #exitBtnRow {
   display: flex;
-  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+#commentInterface #commentSection #exitBtnRow i {
+  color: #d43737;
 }
 #commentInterface #commentSection #indicators {
   margin-top: 4rem;
@@ -926,6 +948,7 @@ main #content .userContent .userPost .postInteractionSection .postLC .commentBtn
     height: 100%;
     border-radius: 0;
     border: 1px solid #2E2E2E;
+    background-color: #131212;
     transition: 100ms;
     padding: 1rem;
   }
@@ -1185,6 +1208,7 @@ HOME COMPONENT MEDIA QUERIES
     width: 100%;
     padding: 2rem;
     gap: 2rem;
+    border-radius: 0rem;
     /* #feedbackMessage {
 
     } */
@@ -1195,11 +1219,11 @@ HOME COMPONENT MEDIA QUERIES
   }
   main #content #newPost #createPostElement button {
     width: 100%;
-    font-size: 1.5rem;
+    font-size: 1rem;
   }
   main #content .userContent {
     margin: 0;
-    gap: 3rem;
+    gap: 0rem;
   }
   main #content .userContent .userPost {
     gap: 0;
@@ -1212,8 +1236,7 @@ HOME COMPONENT MEDIA QUERIES
   }
   main #content .userContent .userPost .mainPost {
     border: none;
-    border-top: 1px solid #2E2E2E;
-    border-bottom: 1px solid #2E2E2E;
+    border-top: 0.5px solid #2E2E2E;
     border-radius: 0rem;
     gap: 1.5rem;
     background: none;
@@ -1226,8 +1249,8 @@ HOME COMPONENT MEDIA QUERIES
     border-radius: 0;
     padding: 1rem;
     border: none;
-    border-top: 1px solid #2E2E2E;
-    border-bottom: 1px solid #2E2E2E;
+    border-bottom: 0.5px solid #2E2E2E;
+    box-shadow: none;
   }
   main #content .userContent .userPost .postInteractionSection .postDetails {
     display: flex;
