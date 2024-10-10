@@ -910,8 +910,6 @@ main {
             }
 
             #formSubject {
-               display: flex;
-               align-items: center;
                gap: 0.5rem;
 
                input {
@@ -1172,7 +1170,7 @@ main {
    color: white;
    background-color: #181818;
    border: 2px solid $cardBorder;
-   border-radius: 1rem;
+   border-radius: 0.5rem;
    padding: 2rem;
    transition: 150ms;
    font-family: $ff-heading;
@@ -1186,10 +1184,16 @@ main {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      color: turquoise;
+      color: white;
+
+      #fromWho {
+         h5 {
+            color: grey;
+         }
+      }
 
       #exitCommentBtn {
-         color: $subTitle;
+         color: $primary;
          font-family: $ff-heading;
          cursor: pointer;
          border-radius: 0.5rem;
@@ -1286,13 +1290,13 @@ main {
          background-color: $cardBG;
          border: 1px solid $cardBorder;
          padding: 1rem;
-         border-radius: 1rem;
+         border-radius: 0.5rem;
 
          h3 {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 1rem;
-            color: turquoise;
+            margin-bottom: 0.5rem;
+            color: white;
 
             span {
                color: rgb(153, 153, 153);
@@ -1652,10 +1656,10 @@ HOME COMPONENT MEDIA QUERIES
 
             // moodle for creating a new post
             #createPostElement {
-               width: 100%;
+               width: 95%;
                padding: 2rem;
-               gap: 2rem;
-               border-radius: 0rem;
+               gap: 1.5rem;
+               // border-radius: 0rem;
 
                // header for the moodle
                #createNewPostHeader {

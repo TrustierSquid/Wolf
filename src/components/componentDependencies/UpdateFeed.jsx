@@ -269,7 +269,7 @@ export default function UpdateFeed(props) {
     setPostLikesCount(postLikesCount)
     setPostComments(postComments.reverse())
     setCommentsCount(postComments.length)
-
+    setErrorMessage('')
 
     /*
       When invoked, the interface has these states relative to the post selected
@@ -438,7 +438,13 @@ export default function UpdateFeed(props) {
 
       <div id="commentInterface" ref={commentInterface}>
 
-        <h3 id="topDiv">{poster}<span id="exitCommentBtn" onClick={()=> {removeEffect(), props.removeBGEffect()}}><i className="fa-solid fa-x"></i></span></h3>
+        <h3 id="topDiv">
+          <div id="fromWho">
+            <h5>Post from:</h5>
+            <h3>{poster}</h3>
+          </div>
+          <span id="exitCommentBtn" onClick={()=> {removeEffect(), props.removeBGEffect()}}><i className="fa-solid fa-x"></i></span>
+        </h3>
 
 
         <section id="commentSection">

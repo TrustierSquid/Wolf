@@ -644,8 +644,6 @@ main #content #newPost #createPostElement #formBody input:focus {
   outline: none;
 }
 main #content #newPost #createPostElement #formSubject {
-  display: flex;
-  align-items: center;
   gap: 0.5rem;
 }
 main #content #newPost #createPostElement #formSubject input {
@@ -838,7 +836,7 @@ main #content .userContent .userPost .postInteractionSection .postLC .commentBtn
   color: white;
   background-color: #181818;
   border: 2px solid #2E2E2E;
-  border-radius: 1rem;
+  border-radius: 0.5rem;
   padding: 2rem;
   transition: 150ms;
   font-family: "Nunito", sans-serif;
@@ -852,10 +850,13 @@ main #content .userContent .userPost .postInteractionSection .postLC .commentBtn
   display: flex;
   align-items: center;
   justify-content: space-between;
-  color: turquoise;
+  color: white;
+}
+#commentInterface #topDiv #fromWho h5 {
+  color: grey;
 }
 #commentInterface #topDiv #exitCommentBtn {
-  color: #ff7b00;
+  color: #d43737;
   font-family: "Nunito", sans-serif;
   cursor: pointer;
   border-radius: 0.5rem;
@@ -930,13 +931,13 @@ main #content .userContent .userPost .postInteractionSection .postLC .commentBtn
   background-color: #131212;
   border: 1px solid #2E2E2E;
   padding: 1rem;
-  border-radius: 1rem;
+  border-radius: 0.5rem;
 }
 #commentInterface .commentContainer .comment h3 {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 1rem;
-  color: turquoise;
+  margin-bottom: 0.5rem;
+  color: white;
 }
 #commentInterface .commentContainer .comment h3 span {
   color: rgb(153, 153, 153);
@@ -1205,10 +1206,9 @@ HOME COMPONENT MEDIA QUERIES
     background-color: #d43737;
   }
   main #content #newPost #createPostElement {
-    width: 100%;
+    width: 95%;
     padding: 2rem;
-    gap: 2rem;
-    border-radius: 0rem;
+    gap: 1.5rem;
     /* #feedbackMessage {
 
     } */
