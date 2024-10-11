@@ -1,7 +1,7 @@
 // ligher BG
 
 $uiBG: #2b2b2b;
-$cardBG: #131212;
+$cardBG: #222;
 $cardInteractionSection: #181818;
 $cardBorder: #2E2E2E;
 $moodleBG: #181818;
@@ -79,7 +79,7 @@ html {
 }
 
 body {
-   background-color: #0D1012;
+   background-color: #0b0b0b;
 }
 
 .noPostsMessage {
@@ -983,8 +983,9 @@ main {
                gap: 1rem;
                padding: 1.5rem;
                border-radius: 1rem;
-               background: $cardBG;
-               border: $cardBorder 1px solid;
+               background: #111;
+               border: $cardBG 1px solid;
+               box-shadow: 0 1px 6px -1px rgba(0,0,0,.1);
                color: white;
                transition: 250ms;
 
@@ -1098,7 +1099,7 @@ main {
 
             .postInteractionSection {
                // background-color: $cardBG;
-               box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
+               box-shadow: rgba(64, 64, 71, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
                border-radius: 1rem;
                padding: 1rem;
                border: 0.5px solid $cardBorder;
@@ -1382,10 +1383,10 @@ main {
 // Profile Component
 
 #mainProfile {
-   width: 60%;
+   width: 80%;
    display: flex;
    flex-direction: column;
-   gap: 5rem;
+   gap: 1rem;
    margin: 2% auto;
    color: white;
    padding: 1rem;
@@ -1397,10 +1398,12 @@ main {
 
 
    .profileAnalytics:nth-of-type(1) {
-      border-radius: 1rem;
+      background-color: $cardBG;
+      box-shadow: 0 1px 6px -1px rgba(0,0,0,.1);
+      border-radius: 0.5rem;
       width: 100%;
       display: flex;
-      align-items: start;
+      align-items: center;
       justify-content: space-between;
       gap: 2rem;
 
@@ -1408,20 +1411,28 @@ main {
          border-radius: 1rem;
          padding: 1.5rem;
          font-family: $ff-heading;
-         margin-bottom: 2rem;
       }
 
       // Displaying name and user status
       .profileSectionInfo:nth-of-type(1){
          display: flex;
-         flex-direction: column;
          justify-content: center;
-         width: 40%;
-         gap: 0.5rem;
-         font-size: 1.7rem;
+         flex-direction: column;
+         // gap: 0.5rem;
+         font-size: 1.5rem;
+
+         #iconAndUsername {
+            .fa-user {
+               font-size: 3rem;
+            }
+
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+
+         }
 
          .profileUserTypeHeader {
-            font-size: 16px;
          }
 
          .followUserBtn {
@@ -1447,10 +1458,9 @@ main {
       // displays how many followers the current user has
       .profileSectionInfo:nth-of-type(2){
          display: flex;
-         flex-direction: column;
-         justify-content: space-around;
+         align-items: center;
          gap: 1rem;
-         width: 30%;
+         // width: 30%;
 
          #showUserStats {
             display: flex;
@@ -1480,74 +1490,131 @@ main {
 
    }
 
-   .profileAnalytics:nth-of-type(2){
-      // background-color: red;
+   #profileInformation {
       display: flex;
-      flex-direction: column;
-      gap: 2rem;
-      width: 100%;
-      margin: 0 auto;
-      font-family: $ff-body;
+      gap: 1rem;
 
-      .profHeaders {
+
+      #displayFollowing {
+         width: 50%;
+         padding: 1rem;
+         padding-top: 0.5rem;
+         background-color: $cardBG;
+         border-radius: 0.5rem;
          display: flex;
-         justify-content: space-between;
-         align-items: center;
+         flex-direction: column;
+         gap: 1rem;
 
-         form {
+
+         #followingNav {
             display: flex;
-            justify-content: end;
-            gap: 1rem;
-            align-items: center;
-            cursor: pointer;
+            gap: 2rem;
+            font-family: $ff-heading;
+            border-bottom: 0.5px solid grey;
+            justify-content: left;
+            padding: 0.5rem;
 
-            select {
-               background-color: $cardBG;
-               color: white;
-               padding: 0.5rem;
-               border-radius: 0.5rem;
-               border: 0.5px solid $cardBorder;
+            h3 {
                cursor: pointer;
+               padding: 0.5rem;
+               border-radius: 1rem;
 
-               option {
-                  color: white;
-                  cursor: pointer;
+               &:hover {
+                  background-color: rgba(128, 128, 128, 0.376);
                }
             }
+
          }
+
+         .followDisplayBtns {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.5rem;
+            font-family: $ff-body;
+
+            .followCheckText {
+               color: grey;
+            }
+
+         }
+
       }
 
 
-      .existingPost {
-         background-color: #1D1C1C;
-         border: 1px solid $cardBorder;
-         padding: 2rem;
-         border-radius: 1rem;
+      .profileAnalytics:nth-of-type(2){
+         // background-color: red;
          display: flex;
          flex-direction: column;
          gap: 2rem;
-         justify-content: space-between;
-         transition: 150ms;
-         cursor: pointer;
+         width: 100%;
+         margin: 0 auto;
+         font-family: $ff-body;
+         padding: 0.5rem;
 
-         .profilePostSubject {
+         .profHeaders {
             display: flex;
             justify-content: space-between;
-            gap: 1rem;
-         }
-
-         .profilePostAnalytics {
-            display: flex;
             align-items: center;
-            gap: 1rem;
+
+            form {
+               display: flex;
+               justify-content: end;
+               gap: 1rem;
+               align-items: center;
+               cursor: pointer;
+
+               select {
+                  background-color: $cardBG;
+                  color: white;
+                  padding: 0.5rem;
+                  border-radius: 0.5rem;
+                  border: 0.5px solid $cardBorder;
+                  cursor: pointer;
+
+                  option {
+                     color: white;
+                     cursor: pointer;
+                  }
+               }
+            }
          }
 
-         &:hover {
-            transform: translateY(-5px);
+
+         .existingPost {
+            background-color: #1D1C1C;
+            border: 1px solid $cardBorder;
+            padding: 2rem;
+            border-radius: 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            justify-content: space-between;
+            transition: 150ms;
+            cursor: pointer;
+
+            .profilePostSubject {
+               display: flex;
+               justify-content: space-between;
+               gap: 1rem;
+            }
+
+            .profilePostAnalytics {
+               display: flex;
+               align-items: center;
+               gap: 1rem;
+            }
+
+            &:hover {
+               transform: translateY(-5px);
+            }
          }
+
+
       }
 
    }
+
 
 }
 

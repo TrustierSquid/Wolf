@@ -45,6 +45,7 @@ export default function Profile(props){
          setFollowerCount(homeData.followerCount.length)
 
 
+
       }
 
       getUserData()
@@ -62,7 +63,11 @@ export default function Profile(props){
 
 
 
-
+   /*
+      Gets User information based on what user is selected from the query string
+      On the main feed page, the user can be selected by post click or seeing them in the
+      members moodle for a particular community
+    */
    async function getUserProfilePosts(feedView = 'mainFeed') {
       try {
          const response = await fetch(`/profileData?user=${userSearched}&feed=${feedView}`, {
@@ -152,33 +157,59 @@ export default function Profile(props){
 
 
 
+   const [displayFollowing, setDisplayFollowing] = useState(false)
+
+   const displayFollow = (bool)=> {
+      setDisplayFollowing(bool)
+   }
+
+
    function checkUserType(){
       switch (dynamicUsername) {
          // For developers
          case 'Samuel':
             return (
                <>
-                  <h2>{dynamicUsername}</h2>
-                  <h5 className="profileUserTypeHeader"
-                  style={{color: "#00b3ff"}}>
-                     Developer <i className="fa-solid fa-code"></i></h5>
+                  <div id="iconAndUsername">
+                     <i className="fa-solid fa-user"></i>
+                     <div>
+                        <h2>{dynamicUsername}</h2>
+                        <h5 style={{color: "#404040"}}>UID: {userSearched}</h5>
+                        <h5 className="profileUserTypeHeader"
+                        style={{color: "#00b3ff"}}>
+                           Developer <i className="fa-solid fa-code"></i></h5>
+                     </div>
+                  </div>
                </>
             )
             // for recruiters
          case 'DemoUser':
             return (
                <>
-                  <h1>{dynamicUsername}</h1>
-                  <h5 className="profileUserTypeHeader" style={{color: "#73ff00"}}>Recruiter <i className="fa-solid fa-clipboard"></i></h5>
+                  <div id="iconAndUsername">
+                     <i className="fa-solid fa-user"></i>
+                     <div>
+                        <h1>{dynamicUsername}</h1>
+                        <h5 style={{color: "#404040"}}>UID: {userSearched}</h5>
+                        <h5 className="profileUserTypeHeader" style={{color: "#73ff00"}}>Recruiter <i className="fa-solid fa-clipboard"></i></h5>
+                     </div>
+                  </div>
                </>
             )
          // For regular users
          default:
             return (
                <>
-                  <h1>{dynamicUsername}</h1>
-                  <h5 className="profileUserTypeHeader"
-                  style={{color: "grey"}}>User <i className="fa-solid fa-user"> </i></h5>
+                  <div id="iconAndUsername">
+                     <i className="fa-solid fa-user"></i>
+                     <div>
+                        <h1>{dynamicUsername}</h1>
+                        <h5 style={{color: "#404040"}}>UID: {userSearched}</h5>
+                        <h4 className="profileUserTypeHeader"
+                        style={{color: "darkgrey"}}>User</h4>
+                     </div>
+                  </div>
+
                </>
             )
 
@@ -217,54 +248,96 @@ export default function Profile(props){
 
 
 
-            <div className="profileAnalytics">
-               <section className="profHeaders">
-                  <h2>{dynamicUsername}'s Posts</h2>
-                  <form>
-                     <label>Posts From {dynamicUsername}'s Topics: </label>
+            <div id="profileInformation">
 
-                     {/* The topics that the user is currently apart of  */}
-                     {userProfileData?.topics?.length > 0 && (
-                        <select className="topicDisplaySelection">
-                           <option onClick={()=> getUserProfilePosts("mainFeed")}>Home Feed</option>
+               {/* Displays the followees and followers that the user has */}
+               <div id="displayFollowing">
+                  <nav id="followingNav">
+                     {/*
+                        both buttons will send a boolean to the function
+                        And that the logic in that function decides if followees or followers are displayed
+                     */}
+                     <h3 onClick={()=> displayFollow(false)}>Following</h3>
+                     <h3 onClick={()=> displayFollow(true)}>Followers</h3>
+                  </nav>
 
-                           {userProfileData.topics.map((topic, index) => (
-                              <option key={index} onClick={()=> getUserProfilePosts(topic + "Feed")}>{topic} Feed</option>
-                           ))}
+                  {/* conditional rendering: if the value is false then display following. If not, followers */}
+                  {!displayFollowing ? (
+                     userProfileData.following?.map((followee)=> {
+                        return (
+                           <>
+                              <section className="followDisplayBtns">
+                                 <h3>{followee}</h3>
+                                 <h4>Following</h4>
+                              </section>
+                           </>
+                        )
+                     })
+                  ) : (
+                     userProfileData.followers?.map((follower)=> {
+                        return (
+                           <>
+                              <section className="followDisplayBtns">
+                                 <h3>{follower}</h3>
+                                 <h4 className="followCheckText">Follows you</h4>
+                              </section>
+                           </>
+                        )
+                     })
+                  )}
 
-                        </select>
-                     )}
+               </div>
 
-                  </form>
-               </section>
-               {profilePostData?.length > 0 ? (
-                  profilePostData.map((post, index)=> {
-                     return (
-                        <>
-                           <article key={index} className="existingPost">
-                              <h2 className="profilePostSubject">
-                                 <span>
-                                    <i style={{color: 'crimson'}} className="fa-solid fa-bolt"></i>
-                                    {" " + post.subject}
-                                 </span>
-                                 <div className="profilePostAnalytics">
-                                    <h5><i style={{color: "grey"}} className="fa-solid fa-heart"></i> {post.likes.length}</h5>
-                                    <h5 style={{color: "grey"}}><i style={{color: "grey"}} className="fa-solid fa-comments"></i> {post.comments.length}</h5>
-                                 </div>
-                              </h2>
-                              <h3 className="profilePostSubject">{post.body}</h3>
+               <div className="profileAnalytics">
+                  <section className="profHeaders">
+                     <form>
+                        <h2>Posts From {dynamicUsername}'s Topics: </h2>
 
-                           </article>
-                        </>
-                     )
-                  })
-               ) : (
-                  <div className="noPostsMessage">
-                     <h3>{dynamicUsername} hasn't posted anything here yet!</h3>
-                     <p>Get them to share something! 😃</p>
-                  </div>
-               )}
+                        {/* The topics that the user is currently apart of  */}
+                        {userProfileData?.topics?.length > 0 && (
+                           <select className="topicDisplaySelection">
+                              <option onClick={()=> getUserProfilePosts("mainFeed")}>Home Feed</option>
+
+                              {userProfileData.topics.map((topic, index) => (
+                                 <option key={index} onClick={()=> getUserProfilePosts(topic + "Feed")}>{topic} Feed</option>
+                              ))}
+
+                           </select>
+                        )}
+
+                     </form>
+                  </section>
+                  {profilePostData?.length > 0 ? (
+                     profilePostData.map((post, index)=> {
+                        return (
+                           <>
+                              <article key={index} className="existingPost">
+                                 <h2 className="profilePostSubject">
+                                    <span>
+                                       <i style={{color: 'crimson'}} className="fa-solid fa-square"></i>
+                                       {" " + post.subject}
+                                    </span>
+                                    <div className="profilePostAnalytics">
+                                       <h5><i style={{color: "grey"}} className="fa-solid fa-heart"></i> {post.likes.length}</h5>
+                                       <h5 style={{color: "grey"}}><i style={{color: "grey"}} className="fa-solid fa-comments"></i> {post.comments.length}</h5>
+                                    </div>
+                                 </h2>
+                                 <h3 className="profilePostSubject">{post.body}</h3>
+
+                              </article>
+                           </>
+                        )
+                     })
+                  ) : (
+                     <div className="noPostsMessage">
+                        <h3>{dynamicUsername} hasn't posted anything here yet!</h3>
+                        <p>Get them to share something! 😃</p>
+                     </div>
+                  )}
+               </div>
             </div>
+
+
 
 
 
