@@ -118,7 +118,7 @@ export default function Home(){
    async function createNewPost(){
       let subject = subjectPostElement.current.value
       let body = bodyPostElement.current.value
-      let img = imageRef.current.files[0]
+      // let img = imageRef.current.files[0]
 
       const queryString = window.location.search;
       const urlParams = new URLSearchParams(queryString)
@@ -135,9 +135,16 @@ export default function Home(){
       formData.append('postSubject', subject)
       formData.append('whoPosted', username)
       formData.append('postBody', body);
-      formData.append('file', img); // Append the file to the form data
+      // formData.append('file', img); // Append the file to the form data
 
       setErrorMessage('Posting..')
+      setTimeout(()=> {
+         errorMessageElement.current.style.color = 'lime'
+         bodyPostElement.current.value = ''
+         subjectPostElement.current.value = ''
+         imageRef.current.value = ''
+         setErrorMessage('Posted!')
+      }, 900)
 
       // If the query string is empty then the post will get sent to the home page
       if (!queryString) {

@@ -173,8 +173,8 @@ export default function Profile(props){
                   <div id="iconAndUsername">
                      <i className="fa-solid fa-user"></i>
                      <div>
-                        <h2>{dynamicUsername}</h2>
-                        <h5 style={{color: "#404040"}}>UID: {userSearched}</h5>
+                        <h3>{dynamicUsername}</h3>
+                        <p style={{color: "#505050", fontSize: '1rem'}}>#: {userSearched}</p>
                         <h5 className="profileUserTypeHeader"
                         style={{color: "#00b3ff"}}>
                            Developer <i className="fa-solid fa-code"></i></h5>
@@ -257,8 +257,8 @@ export default function Profile(props){
                         both buttons will send a boolean to the function
                         And that the logic in that function decides if followees or followers are displayed
                      */}
-                     <h3 onClick={()=> displayFollow(false)}>Following</h3>
-                     <h3 onClick={()=> displayFollow(true)}>Followers</h3>
+                     <p onClick={()=> displayFollow(false)}>Following</p>
+                     <p onClick={()=> displayFollow(true)}>Followers</p>
                   </nav>
 
                   {/* conditional rendering: if the value is false then display following. If not, followers */}
@@ -267,23 +267,35 @@ export default function Profile(props){
                         return (
                            <>
                               <section className="followDisplayBtns">
-                                 <h3>{followee}</h3>
-                                 <h4>Following</h4>
+                                 {/* grouped together in a flex container so all of the imforation is inline */}
+                                 <section>
+                                    <i className="fa-solid fa-user"></i>
+                                    <p className="goToUser"> {followee}</p>
+                                 </section>
+                                 <p className="followCheckText">Following</p>
                               </section>
                            </>
                         )
                      })
                   ) : (
-                     userProfileData.followers?.map((follower)=> {
-                        return (
-                           <>
-                              <section className="followDisplayBtns">
-                                 <h3>{follower}</h3>
-                                 <h4 className="followCheckText">Follows you</h4>
-                              </section>
-                           </>
-                        )
-                     })
+                     userProfileData.followers.length > 0 ? (
+                        userProfileData.followers?.map((follower)=> {
+                           return (
+                              <>
+                                 <section className="followDisplayBtns">
+                                    {/* grouped together in a flex container so all of the imforation is inline */}
+                                    <section>
+                                       <i className="fa-solid fa-user"></i>
+                                       <p className="goToUser">{follower}</p>
+                                    </section>
+                                    <p className="followCheckText">Follower</p>
+                                 </section>
+                              </>
+                           )
+                        })
+                     ) : (
+                        <p className="noFollowersCheck">No followers</p>
+                     )
                   )}
 
                </div>

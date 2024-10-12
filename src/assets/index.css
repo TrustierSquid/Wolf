@@ -1076,29 +1076,27 @@ main #content .userContent .userPost .postInteractionSection .postLC .commentBtn
   gap: 1rem;
 }
 #mainProfile #profileInformation #displayFollowing {
+  height: 400px;
   width: 50%;
   padding: 1rem;
-  padding-top: 0.5rem;
   background-color: #222;
   border-radius: 0.5rem;
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 0.5rem;
 }
 #mainProfile #profileInformation #displayFollowing #followingNav {
   display: flex;
   gap: 2rem;
   font-family: "Nunito", sans-serif;
-  border-bottom: 0.5px solid grey;
   justify-content: left;
-  padding: 0.5rem;
 }
-#mainProfile #profileInformation #displayFollowing #followingNav h3 {
+#mainProfile #profileInformation #displayFollowing #followingNav p {
   cursor: pointer;
   padding: 0.5rem;
   border-radius: 1rem;
 }
-#mainProfile #profileInformation #displayFollowing #followingNav h3:hover {
+#mainProfile #profileInformation #displayFollowing #followingNav p:hover {
   background-color: rgba(128, 128, 128, 0.376);
 }
 #mainProfile #profileInformation #displayFollowing .followDisplayBtns {
@@ -1107,18 +1105,36 @@ main #content .userContent .userPost .postInteractionSection .postLC .commentBtn
   justify-content: space-between;
   padding: 0.5rem;
   font-family: "roboto", sans-serif;
+  cursor: pointer;
+}
+#mainProfile #profileInformation #displayFollowing .followDisplayBtns section {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
 }
 #mainProfile #profileInformation #displayFollowing .followDisplayBtns .followCheckText {
-  color: grey;
+  color: rgb(84, 84, 84);
+}
+#mainProfile #profileInformation #displayFollowing .followDisplayBtns .goToUser {
+  color: rgb(0, 110, 255);
+}
+#mainProfile #profileInformation #displayFollowing .followDisplayBtns .noFollowersCheck {
+  font-family: "Nunito", sans-serif;
+}
+#mainProfile #profileInformation #displayFollowing .followDisplayBtns:hover {
+  background-color: #2E2E2E;
+  border-radius: 0.5rem;
 }
 #mainProfile #profileInformation .profileAnalytics:nth-of-type(2) {
   display: flex;
   flex-direction: column;
   gap: 2rem;
+  height: 500px;
   width: 100%;
   margin: 0 auto;
   font-family: "roboto", sans-serif;
   padding: 0.5rem;
+  overflow: scroll;
 }
 #mainProfile #profileInformation .profileAnalytics:nth-of-type(2) .profHeaders {
   display: flex;
@@ -1154,7 +1170,7 @@ main #content .userContent .userPost .postInteractionSection .postLC .commentBtn
   gap: 2rem;
   justify-content: space-between;
   transition: 150ms;
-  cursor: pointer;
+  cursor: pointerprofileInfor;
 }
 #mainProfile #profileInformation .profileAnalytics:nth-of-type(2) .existingPost .profilePostSubject {
   display: flex;
@@ -1167,7 +1183,7 @@ main #content .userContent .userPost .postInteractionSection .postLC .commentBtn
   gap: 1rem;
 }
 #mainProfile #profileInformation .profileAnalytics:nth-of-type(2) .existingPost:hover {
-  transform: translateY(-5px);
+  transform: translateY(-3px);
 }
 
 /*
@@ -1367,5 +1383,10 @@ HOME COMPONENT MEDIA QUERIES
   }
   #mainProfile .profileAnalytics:nth-of-type(2) .existingPost .profilePostSubject {
     font-size: 1.3rem;
+  }
+  #profileInformation {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
   }
 }/*# sourceMappingURL=index.css.map */
