@@ -54,7 +54,7 @@ export default function UpdateFeed(props) {
     })
 
     const data = await response.json()
-
+    // The data returns the fetched user uid
     window.location.href = `/profile?user=${data.userUID}`;
     /* setTimeout(() => {
     }, 500); */
@@ -389,6 +389,7 @@ export default function UpdateFeed(props) {
               <div key={key} className="userPost">
                 <main className="mainPost">
                   <div className="postAnalytics">
+                    {/* flex container */}
                     <section className="userAction">
                       {/* checking for whos posting */}
                       {checkAdmin(post.poster)}
@@ -441,7 +442,7 @@ export default function UpdateFeed(props) {
         <h3 id="topDiv">
           <div id="fromWho">
             <h5>Post from:</h5>
-            <h3>{poster}</h3>
+            <h3 onClick={()=> navigateToProfile(poster)}>{poster}</h3>
           </div>
           <span id="exitCommentBtn" onClick={()=> {removeEffect(), props.removeBGEffect()}}><i className="fa-solid fa-x"></i></span>
         </h3>
@@ -472,7 +473,7 @@ export default function UpdateFeed(props) {
               return (
                 <>
                   <div className='comment'>
-                    <h3>{comment.from} <span>{showPostDate(comment.timePosted)}</span></h3>
+                    <h3 onClick={()=> navigateToProfile(comment.from)}>{comment.from} <span>{showPostDate(comment.timePosted)}</span></h3>
                     <p>{comment.comment}</p>
                   </div>
                 </>

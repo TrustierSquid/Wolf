@@ -189,7 +189,7 @@ export default function Profile(props){
                   <div id="iconAndUsername">
                      <i className="fa-solid fa-user"></i>
                      <div>
-                        <h1>{dynamicUsername}</h1>
+                        <h3>{dynamicUsername}</h3>
                         <h5 style={{color: "#404040"}}>UID: {userSearched}</h5>
                         <h5 className="profileUserTypeHeader" style={{color: "#73ff00"}}>Recruiter <i className="fa-solid fa-clipboard"></i></h5>
                      </div>
@@ -203,10 +203,10 @@ export default function Profile(props){
                   <div id="iconAndUsername">
                      <i className="fa-solid fa-user"></i>
                      <div>
-                        <h1>{dynamicUsername}</h1>
-                        <h5 style={{color: "#404040"}}>UID: {userSearched}</h5>
-                        <h4 className="profileUserTypeHeader"
-                        style={{color: "darkgrey"}}>User</h4>
+                        <h3>{dynamicUsername}</h3>
+                        <p style={{color: "#404040", fontSize: '1rem'}}>#: {userSearched}</p>
+                        {/* <h5 className="profileUserTypeHeader"
+                        style={{color: "darkgrey"}}></h5> */}
                      </div>
                   </div>
 
@@ -214,6 +214,24 @@ export default function Profile(props){
             )
 
       }
+   }
+
+
+   // poster is used to find the corresponding profile for the poster
+  async function navigateToProfile(user) {
+      const response = await fetch(`/profileData/getID?poster=${user}`, {
+      method: "GET",
+      headers: {
+         'Content-Type': 'application/json'
+      }
+      })
+
+      const data = await response.json()
+
+      // The data returns the fetched user uid
+      window.location.href = `/profile?user=${data.userUID}`;
+      /* setTimeout(() => {
+      }, 500); */
    }
 
 
@@ -266,7 +284,9 @@ export default function Profile(props){
                      userProfileData.following?.map((followee)=> {
                         return (
                            <>
-                              <section className="followDisplayBtns">
+                              {/* Following catagory */}
+
+                              <section onClick={()=> navigateToProfile(followee)} className="followDisplayBtns">
                                  {/* grouped together in a flex container so all of the imforation is inline */}
                                  <section>
                                     <i className="fa-solid fa-user"></i>
@@ -278,11 +298,14 @@ export default function Profile(props){
                         )
                      })
                   ) : (
+
                      userProfileData.followers.length > 0 ? (
                         userProfileData.followers?.map((follower)=> {
                            return (
                               <>
-                                 <section className="followDisplayBtns">
+                                 {/* Follower catagory */}
+
+                                 <section onClick={()=> navigateToProfile(follower)} className="followDisplayBtns">
                                     {/* grouped together in a flex container so all of the imforation is inline */}
                                     <section>
                                        <i className="fa-solid fa-user"></i>

@@ -843,7 +843,7 @@ main {
             width: 50%;
             margin-left: 1rem;
             position: fixed;
-            background-color: $cardBG;
+            background-color: $moodleBG;
             padding: 3rem;
             top: 50%;
             right: 50%;
@@ -1099,7 +1099,6 @@ main {
 
             .postInteractionSection {
                // background-color: $cardBG;
-               box-shadow: rgba(64, 64, 71, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
                border-radius: 1rem;
                padding: 1rem;
                border: 0.5px solid $cardBorder;
@@ -1169,7 +1168,7 @@ main {
    right: 50%;
    transform: translate(50%, -50%);
    color: white;
-   background-color: #181818;
+   background-color: $moodleBG;
    border: 2px solid $cardBorder;
    border-radius: 0.5rem;
    padding: 2rem;
@@ -1190,6 +1189,14 @@ main {
       #fromWho {
          h5 {
             color: grey;
+         }
+
+         // poster
+         h3 {
+            cursor: pointer;
+            &:hover {
+               text-decoration: underline;
+            }
          }
       }
 
@@ -1212,6 +1219,7 @@ main {
    #commentSection {
       display: flex;
       flex-direction: column;
+      gap: 0.5rem;
 
 
       #exitBtnRow {
@@ -1295,12 +1303,21 @@ main {
 
          h3 {
             display: flex;
-            justify-content: space-between;
+            justify-content: start;
+            align-items: center;
+            gap: 0.5rem;
             margin-bottom: 0.5rem;
             color: white;
+            cursor: pointer;
+
+            &:hover {
+               text-decoration: underline;
+            }
 
             span {
-               color: rgb(153, 153, 153);
+               color: rgb(101, 101, 101);
+               font-size: $fs-paragraph;
+
             }
          }
 

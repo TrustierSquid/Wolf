@@ -588,7 +588,7 @@ main #content #newPost #createPostElement {
   width: 50%;
   margin-left: 1rem;
   position: fixed;
-  background-color: #222;
+  background-color: #181818;
   padding: 3rem;
   top: 50%;
   right: 50%;
@@ -789,7 +789,6 @@ main #content .userContent .userPost .mainPost .userTraction .likeBtn:hover {
   }
 }
 main #content .userContent .userPost .postInteractionSection {
-  box-shadow: rgba(64, 64, 71, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
   border-radius: 1rem;
   padding: 1rem;
   border: 0.5px solid #2E2E2E;
@@ -856,6 +855,12 @@ main #content .userContent .userPost .postInteractionSection .postLC .commentBtn
 #commentInterface #topDiv #fromWho h5 {
   color: grey;
 }
+#commentInterface #topDiv #fromWho h3 {
+  cursor: pointer;
+}
+#commentInterface #topDiv #fromWho h3:hover {
+  text-decoration: underline;
+}
 #commentInterface #topDiv #exitCommentBtn {
   color: #d43737;
   font-family: "Nunito", sans-serif;
@@ -871,6 +876,7 @@ main #content .userContent .userPost .postInteractionSection .postLC .commentBtn
 #commentInterface #commentSection {
   display: flex;
   flex-direction: column;
+  gap: 0.5rem;
 }
 #commentInterface #commentSection #exitBtnRow {
   display: flex;
@@ -936,12 +942,19 @@ main #content .userContent .userPost .postInteractionSection .postLC .commentBtn
 }
 #commentInterface .commentContainer .comment h3 {
   display: flex;
-  justify-content: space-between;
+  justify-content: start;
+  align-items: center;
+  gap: 0.5rem;
   margin-bottom: 0.5rem;
   color: white;
+  cursor: pointer;
+}
+#commentInterface .commentContainer .comment h3:hover {
+  text-decoration: underline;
 }
 #commentInterface .commentContainer .comment h3 span {
-  color: rgb(153, 153, 153);
+  color: rgb(101, 101, 101);
+  font-size: 1rem;
 }
 
 @media (max-width: 1050px) {
