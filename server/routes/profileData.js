@@ -36,6 +36,11 @@ router.get("/", async (req, res) => {
   });
 });
 
+/*
+  This is for when the user travels to a users profile
+  The appropriate UID is grabbed and used to search for the profile
+  that the user is looking for
+ */
 router.get("/getID", async (req, res) => {
   const { poster } = req.query;
 
