@@ -278,6 +278,7 @@ export default function Profile(props){
                      <p onClick={()=> displayFollow(false)}>Following</p>
                      <p onClick={()=> displayFollow(true)}>Followers</p>
                   </nav>
+                  <hr />
 
                   {/* conditional rendering: if the value is false then display following. If not, followers */}
                   {!displayFollowing ? (
@@ -286,14 +287,14 @@ export default function Profile(props){
                            <>
                               {/* Following catagory */}
 
-                              <section onClick={()=> navigateToProfile(followee)} className="followDisplayBtns">
+                              <a onClick={()=> navigateToProfile(followee)} className="followDisplayBtns">
                                  {/* grouped together in a flex container so all of the imforation is inline */}
                                  <section>
                                     <i className="fa-solid fa-user"></i>
                                     <p className="goToUser"> {followee}</p>
                                  </section>
                                  <p className="followCheckText">Following</p>
-                              </section>
+                              </a>
                            </>
                         )
                      })
@@ -305,14 +306,14 @@ export default function Profile(props){
                               <>
                                  {/* Follower catagory */}
 
-                                 <section onClick={()=> navigateToProfile(follower)} className="followDisplayBtns">
+                                 <a onClick={()=> navigateToProfile(follower)} className="followDisplayBtns">
                                     {/* grouped together in a flex container so all of the imforation is inline */}
                                     <section>
                                        <i className="fa-solid fa-user"></i>
                                        <p className="goToUser">{follower}</p>
                                     </section>
                                     <p className="followCheckText">Follower</p>
-                                 </section>
+                                 </a>
                               </>
                            )
                         })
@@ -325,10 +326,10 @@ export default function Profile(props){
 
                <div className="profileAnalytics">
                   <section className="profHeaders">
+                     <h2>{dynamicUsername}'s Posts </h2>
                      <form>
-                        <h2>Posts From {dynamicUsername}'s Topics: </h2>
-
-                        {/* The topics that the user is currently apart of  */}
+                        <h3>Community Feed:</h3>
+                        {/* The dropdown selection menu that displays topics that the user is currently apart of  */}
                         {userProfileData?.topics?.length > 0 && (
                            <select className="topicDisplaySelection">
                               <option onClick={()=> getUserProfilePosts("mainFeed")}>Home Feed</option>
@@ -342,6 +343,8 @@ export default function Profile(props){
 
                      </form>
                   </section>
+                  {/* CONDITIONAL RENDERING */}
+                  {/* Showing profile post data for each post the current user has made on the corresponding community feed */}
                   {profilePostData?.length > 0 ? (
                      profilePostData.map((post, index)=> {
                         return (
@@ -364,6 +367,7 @@ export default function Profile(props){
                         )
                      })
                   ) : (
+                     // if there is no posts made by the user in question in that specific comminui
                      <div className="noPostsMessage">
                         <h3>{dynamicUsername} hasn't posted anything here yet!</h3>
                         <p>Get them to share something! 😃</p>

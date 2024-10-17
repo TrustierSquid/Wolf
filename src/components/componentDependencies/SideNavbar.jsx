@@ -43,7 +43,7 @@ const SideNavBar = forwardRef(({
                <button onClick={()=> navigateToHome()}>Home Feed <i className="fa-solid fa-house"></i></button>
                <button onClick={()=> navigateToTopicSelection()}>Join a Topic <i className="fa-solid fa-users"></i></button>
 
-               <h4 className="subTitle">JOINED TOPICS</h4>
+               <h4 className="subTitle">JOINED COMMUNITIES</h4>
 
                {/* mapping out the selected topics that the user selected */}
                <div id="selectedTopicsBtns">

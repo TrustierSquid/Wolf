@@ -83,8 +83,8 @@ export default function Navbar() {
       navDropdownElement.style.opacity = "1";
     } else {
       navDropdownElement.style.transform = "translateY(0px)";
-      navDropdownElement.style.opacity = "0";
       navDropdownElement.style.pointerEvents = "none";
+      navDropdownElement.style.opacity = "0";
     }
   };
 
@@ -103,6 +103,7 @@ export default function Navbar() {
       document.body.style.overflow = 'auto';
       navBtn.target.style.color = 'white'
       mobileNavMenu.current.style.opacity = '0'
+      mobileNavMenu.current.pointerEvents = 'none'
 
     }
   }
@@ -150,7 +151,7 @@ export default function Navbar() {
 
       <section id="mobileNavMenu" ref={mobileNavMenu} >
         <div className='mobileNavProfileSection' onClick={()=> navigateProfile()}>
-          <h5 className="subTitle">View Profile</h5>
+          <h5 style={{color: '#ff7b00'}}>VIEW PROFILE</h5>
           <h2>{username}</h2>
           <h3>{determineUserType(username)}</h3>
         </div>
@@ -159,7 +160,8 @@ export default function Navbar() {
         <h4 className="mobileNavMainBtns" onClick={()=> navigateLogOut()}>Log Out <i className="fa-solid fa-right-from-bracket"></i></h4>
         <h4 className="mobileNavMainBtns" onClick={()=> navigateBackToHome()}>Home Feed <i className="fa-solid fa-house"></i></h4>
         <h4 className="mobileNavMainBtns" onClick={()=> navigateToTopics()}>Join a Topic <i className="fa-solid fa-users"></i></h4>
-        <h4 className="subTitle">JOINED TOPICS</h4>
+        <h4 className="subTitle">JOINED COMMUNITIES</h4>
+        {/* Displays the communities that the user has joined */}
         {userTopicList?.length > 0 ? (
           userTopicList.map((topic, key)=> {
             return (
@@ -167,7 +169,7 @@ export default function Navbar() {
                 <h4 className="mobileNavTopicBtns"
                  key={key}
                  onClick={()=> navigateToFeed(topic + 'Feed')}
-                 > View {topic} Feed <i className="fa-solid fa-arrow-right"></i></h4>
+                 >  {topic} Feed <i className="fa-solid fa-arrow-right"></i></h4>
               </>
             )
           })
