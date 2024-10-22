@@ -30,6 +30,7 @@ import topics from "./json/topics.json" assert { type: "json" };
 
 // A fact that comes with each topic
 import topicFacts from "./json/facts.json" assert { type: "json" };
+import { connect } from "http2";
 // import { connect } from "http2";
 
 const __filename = fileURLToPath(import.meta.url);
@@ -143,67 +144,19 @@ app.get('/file/:id', async (req, res)=> {
 
 
 // WHEN THE USER CREATES A NEW POST
-app.post("/newPost", upload.single('file'), async (req, res) => {
-  const { feed = 'mainFeed'} = req.query;
+app.post("/newPost", async (req, res) => {
+  const { feed } = req.query;
+  const { whoPosted, postSubject, postBody} = req.body;
 
   // if no feed is selected, post will default to mainFeed
-  if (feed === "mainFeed") {
+  if (feed === "Home") {
     // retrieving the username, and post details (subject, body)
-    const { whoPosted, postSubject, postBody} = req.body;
 
     // Updating the poster's post count
     let database = await connectMongo();
     const users = database.collection("Users");
-    const mainFeed = database.collection("mainFeed");
+    const mainfeed = database.collection("mainFeed");
 
-
-
-    // if the user uploaded an image
-    if (req.file) {
-      // Prepare post details for sending it to the database
-      const postDetails = {
-        poster: whoPosted,
-        subject: postSubject,
-        body: postBody,
-        likes: [],
-        postCreationDate: new Date(),
-        comments: []
-      };
-
-      // initializing gridFs instance for file storing
-      const bucket = new GridFSBucket(database, {bucketName: 'uploads'})
-
-      // Creating upload stream to store the file in the 'uploads' bucket
-      const uploadStream = bucket.openUploadStream(req.file.originalname)
-
-      // Creating readable stream from the uploaded file buffer
-      const stream = Readable.from(req.file.buffer)
-
-      // Pipe the file stream to the gridFs upload steam
-      // Connecting these two together, we will be able upload the files to the bucket
-      stream.pipe(uploadStream)
-        .on('error', async (error) => {
-          // Handling the error during file upload
-          console.error('Error uploading file:', error);
-          res.status(500).json({error: 'File upload failed'})
-        })
-        .on('finish', async () => {
-
-          // Create the post details with the file ID
-          // On successful upload, store the file ID (uploadStream.id) in the post details
-          postDetails.img = uploadStream.id
-
-          await mainFeed.insertOne(postDetails)
-          console.log({
-            whoPosted,
-            postSubject,
-            postBody
-          })
-          console.log('File uploaded successfully!');
-        });
-
-      return
-    }
 
     // Fetching the poster of the new post
     const filter = { user: whoPosted };
@@ -219,8 +172,8 @@ app.post("/newPost", upload.single('file'), async (req, res) => {
     // This just increments the number of posts that is displayed a users document
     const updatePosts = await users.updateOne(filter, updateDoc);
 
-    // adding the post to the DB
-    const newPost = mainFeed.insertOne({
+    // adding the post to the DB to the respective feed
+    const newPost = mainfeed.insertOne({
       poster: whoPosted,
       subject: postSubject,
       body: postBody,
@@ -234,14 +187,14 @@ app.post("/newPost", upload.single('file'), async (req, res) => {
 
 
   } else {
-    // retrieving the username, and post details (subject, body)
-    const { whoPosted, postSubject, postBody } = req.body;
 
 
     // Updating the poster's post count
     let database = await connectMongo();
     const users = database.collection("Users");
-    const selectedFeed = database.collection(feed);
+    const selectedFeed = database.collection(feed + 'Feed');
+
+    console.log(`selected feed posted to is ${feed} \n ${req.body}`)
 
     // poster
     const filter = { user: whoPosted };
@@ -489,6 +442,21 @@ app.get('/topicsAdd', async (req, res)=> {
 
     res.sendStatus(200)
   }
+
+})
+
+app.put('/removeCommunity/:community/:UID', async (req, res)=> {
+  const { community, UID } = req.params
+
+  const database = await connectMongo()
+  const usersCollection = database.collection('Users')
+
+  usersCollection.updateOne(
+    {UID: UID},
+    {$pull: {'topics': community}}
+  )
+
+  res.json({success: 200})
 
 })
 

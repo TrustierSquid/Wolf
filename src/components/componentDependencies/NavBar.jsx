@@ -1,7 +1,7 @@
 import { forwardRef, useRef, useState, useEffect } from "react";
 import logo from "/src/assets/wolfLogo.png";
 
-export default function Navbar() {
+export default function Navbar(props) {
   const [loggedInUID, setLoggedInUID] = useState(null);
   const [username, setUsername] = useState(null);
   const [userTopicList, setUserTopicList] = useState([])
@@ -133,9 +133,19 @@ export default function Navbar() {
     <>
       <nav id="nav">
         {/* For Desktop */}
-        <div id="logoContainer" onClick={() => navigateBackToHome()}>
+        <div id="logoContainer">
           <img id="logo" src={logo} alt="" />
           <h1>WOLF</h1>
+          <button onClick={()=> navigateBackToHome()}><i className="fa-solid fa-house"></i> Home</button>
+          {/* Button becomes disabled after visting any other page that isnt of the home sub domain */}
+          {window.location.pathname === '/home' ? (
+              <button onClick={()=> props.appearEffect()}><i className="fa-solid fa-square-plus"></i> Post</button>
+            ) : (
+              <>
+                <button style={{display: 'none'}}></button>
+              </>
+            )}
+          {/* Was trying to conditional render this button based on the subdirectory they user is visiting. */}
         </div>
         <div id="profileContainer" onClick={(element) => navHelper(element)}>
           <h1 id="dropdownBtn">
@@ -162,7 +172,7 @@ export default function Navbar() {
         <h4 className="mobileNavMainBtns" onClick={()=> navigateToTopics()}>Join a Topic <i className="fa-solid fa-users"></i></h4>
         <h4 className="subTitle">JOINED COMMUNITIES</h4>
         {/* Displays the communities that the user has joined */}
-        {userTopicList?.length > 0 ? (
+        {/* {userTopicList?.length > 0 ? (
           userTopicList.map((topic, key)=> {
             return (
               <>
@@ -178,7 +188,7 @@ export default function Navbar() {
             <h3>No Topics Available</h3>
             <p>Start joining topics to see them here.</p>
           </div>
-        )}
+        )} */}
       </section>
 
       <section id="navDropdown" ref={navDropdown}>

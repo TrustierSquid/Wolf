@@ -171,7 +171,7 @@ export default function Profile(props){
             return (
                <>
                   <div id="iconAndUsername">
-                     <i className="fa-solid fa-user"></i>
+                     {/* <i className="fa-solid fa-user"></i> */}
                      <div>
                         <h3>{dynamicUsername}</h3>
                         <p style={{color: "#505050", fontSize: '1rem'}}>#: {userSearched}</p>
@@ -234,10 +234,52 @@ export default function Profile(props){
       }, 500); */
    }
 
+   const currentDate = new Date();
+
+  // Configuration for posts's creation data
+  function showPostDate(postCreationDate) {
+    // Get the difference in milliseconds
+    const startDate = new Date(postCreationDate);
+    const timeDifference = currentDate - startDate;
+    // console.log(postCreationDate)
+
+    // Covert the difference from milliseconds to day and hours
+    const millisecondsInOneDay = 24 * 60 * 60 * 1000;
+    const millisecondsInOneHour = 60 * 60 * 1000;
+    const millisecondsInOneMinute = 60 * 1000;
+
+    // Calculate days and hours
+    const daysPassed = Math.floor(timeDifference / millisecondsInOneDay);
+    const hoursPassed = Math.floor(
+      (timeDifference % millisecondsInOneDay) / millisecondsInOneHour
+    );
+    const minutesPassed = Math.floor(
+      (timeDifference % millisecondsInOneHour) / millisecondsInOneMinute
+    );
+
+
+    // Display time passed
+    if (daysPassed >= 1) {
+      return <h4 className="postData">{`${daysPassed}d ago`}</h4>;
+    }
+
+    if (hoursPassed > 0) {
+      return <h4 className="postData">{`${hoursPassed}hr ago`}</h4>;
+    }
+
+    if (minutesPassed > 0) {
+      return <h4 className="postData">{`${minutesPassed}m ago`}</h4>;
+    }
+
+    return <h4 className="postData">Just now</h4>;
+
+
+  }
+
 
    return (
       <>
-         <Navbar/>
+         <Navbar />
          <main id="mainProfile">
             {/* <h2 className="profHeaders">Profile Overview</h2> */}
             <div className="profileAnalytics">
@@ -249,7 +291,7 @@ export default function Profile(props){
                   {addFollower(userSearched)}
 
                </section>
-               <section className="profileSectionInfo">
+               {/* <section className="profileSectionInfo">
                   <br />
                   <div id="showUserStats">
                      <span>
@@ -261,7 +303,7 @@ export default function Profile(props){
                         <p>Following</p>
                      </span>
                   </div>
-               </section>
+               </section> */}
             </div>
 
 
@@ -278,7 +320,7 @@ export default function Profile(props){
                      <p onClick={()=> displayFollow(false)}>Following</p>
                      <p onClick={()=> displayFollow(true)}>Followers</p>
                   </nav>
-                  <hr />
+                  {/* <hr /> */}
 
                   {/* conditional rendering: if the value is false then display following. If not, followers */}
                   {!displayFollowing ? (
@@ -324,56 +366,57 @@ export default function Profile(props){
 
                </div>
 
-               <div className="profileAnalytics">
-                  <section className="profHeaders">
-                     <h2>{dynamicUsername}'s Posts </h2>
-                     <form>
-                        <h3>Community Feed:</h3>
-                        {/* The dropdown selection menu that displays topics that the user is currently apart of  */}
-                        {userProfileData?.topics?.length > 0 && (
-                           <select className="topicDisplaySelection">
-                              <option onClick={()=> getUserProfilePosts("mainFeed")}>Home Feed</option>
+            </div>
+            <div className="totalPosts">
+               <section className="profHeaders">
+                  <h2>{dynamicUsername}'s Posts </h2>
+                  <form>
+                     <h3>Community Feed:</h3>
+                     {/* The dropdown selection menu that displays topics that the user is currently apart of  */}
+                     {userProfileData?.topics?.length > 0 && (
+                        <select className="topicDisplaySelection">
+                           <option onClick={()=> getUserProfilePosts("mainFeed")}>Home Feed</option>
 
-                              {userProfileData.topics.map((topic, index) => (
-                                 <option key={index} onClick={()=> getUserProfilePosts(topic + "Feed")}>{topic} Feed</option>
-                              ))}
+                           {userProfileData.topics.map((topic, index) => (
+                              <option key={index} onClick={()=> getUserProfilePosts(topic + "Feed")}>{topic} Feed</option>
+                           ))}
 
-                           </select>
-                        )}
+                        </select>
+                     )}
 
-                     </form>
-                  </section>
-                  {/* CONDITIONAL RENDERING */}
-                  {/* Showing profile post data for each post the current user has made on the corresponding community feed */}
-                  {profilePostData?.length > 0 ? (
-                     profilePostData.map((post, index)=> {
-                        return (
-                           <>
-                              <article key={index} className="existingPost">
-                                 <h2 className="profilePostSubject">
-                                    <span>
-                                       <i style={{color: 'crimson'}} className="fa-solid fa-square"></i>
-                                       {" " + post.subject}
-                                    </span>
-                                    <div className="profilePostAnalytics">
-                                       <h5><i style={{color: "grey"}} className="fa-solid fa-heart"></i> {post.likes.length}</h5>
-                                       <h5 style={{color: "grey"}}><i style={{color: "grey"}} className="fa-solid fa-comments"></i> {post.comments.length}</h5>
-                                    </div>
-                                 </h2>
-                                 <h3 className="profilePostSubject">{post.body}</h3>
+                  </form>
+               </section>
+               {/* CONDITIONAL RENDERING */}
+               {/* Showing profile post data for each post the current user has made on the corresponding community feed */}
+               {profilePostData?.length > 0 ? (
+                  profilePostData.map((post, index)=> {
+                     return (
+                        <>
+                           <article key={index} className="existingPost">
+                              <h2 className="profilePostSubject">
+                                 <span>
+                                    <i style={{color: 'crimson'}} className="fa-solid fa-square"></i>
+                                    {" " + post.subject}
+                                    <h5 style={{color: 'grey'}}>{showPostDate(post.postCreationDate)}</h5>
+                                 </span>
+                                 <div className="profilePostAnalytics">
+                                    <h5><i style={{color: "grey"}} className="fa-solid fa-heart"></i> {post.likes.length}</h5>
+                                    <h5 style={{color: "grey"}}><i style={{color: "grey"}} className="fa-solid fa-comments"></i> {post.comments.length}</h5>
+                                 </div>
+                              </h2>
+                              <h3 className="profilePostSubject">{post.body}</h3>
 
-                              </article>
-                           </>
-                        )
-                     })
-                  ) : (
-                     // if there is no posts made by the user in question in that specific comminui
-                     <div className="noPostsMessage">
-                        <h3>{dynamicUsername} hasn't posted anything here yet!</h3>
-                        <p>Get them to share something! 😃</p>
-                     </div>
-                  )}
-               </div>
+                           </article>
+                        </>
+                     )
+                  })
+               ) : (
+                  // if there is no posts made by the user in question in that specific comminui
+                  <div className="noPostsMessage">
+                     <h3>{dynamicUsername} hasn't posted anything here yet!</h3>
+                     <p>Get them to share something! 😃</p>
+                  </div>
+               )}
             </div>
 
 

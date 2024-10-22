@@ -5,6 +5,13 @@ import UpdateFeed from "../componentDependencies/UpdateFeed"
 import Navbar from "../componentDependencies/NavBar"
 import SideNavBar from "../componentDependencies/SideNavbar"
 
+/*
+- For getting the query string
+const queryString = window.location.search;
+const urlParams = new URLSearchParams(queryString)
+const userSearched = urlParams.get('topicFeed')
+ */
+
 
 export default function Home(){
    // Each topic that the user selected displayed in the sideNav as individual elements
@@ -58,6 +65,7 @@ export default function Home(){
          const homeData = await response.json()
          // console.log(homeData.followingCount.length)
          // setting the user info needed as glob vars
+         // console.log(homeData.topicArr)
 
          // the topics the current user selected
          setUserData(homeData.topicArr)
@@ -77,6 +85,7 @@ export default function Home(){
       getUserData()
 
    }, [])
+
 
    // RETRIEVING THE DESCRIPTION THAT COMES WITH EACH TOPIC
    useEffect(()=> {
@@ -98,6 +107,16 @@ export default function Home(){
       fetchTopicData()
    }, [])
 
+   const [communityStatePost, setCommunityStatePost] = useState('Home')
+
+
+   let postToCommunity = (communityToPostTo) => {
+      /*
+         When the user selects a comunity to post to,
+         the state variable will change to the respective community
+       */
+      setCommunityStatePost(communityToPostTo)
+   }
 
 
    // WHEN THE USER CREATES A NEW POST
@@ -118,11 +137,6 @@ export default function Home(){
    async function createNewPost(){
       let subject = subjectPostElement.current.value
       let body = bodyPostElement.current.value
-      // let img = imageRef.current.files[0]
-
-      const queryString = window.location.search;
-      const urlParams = new URLSearchParams(queryString)
-      const userSearched = urlParams.get('topicFeed')
 
       // handling to see if either input field is empty
       if (!subject || !body) {
@@ -130,72 +144,38 @@ export default function Home(){
          return
       }
 
-      // Caching the form data for the created post
-      const formData = new FormData()
-      formData.append('postSubject', subject)
-      formData.append('whoPosted', username)
-      formData.append('postBody', body);
-      // formData.append('file', img); // Append the file to the form data
+      // checking to see what community the user is posting to
+      console.log(
+         {
+            community: communityStatePost,
+            subject: subject,
+            body: body,
+            sender: username
+         }
+      )
 
-      setErrorMessage('Posting..')
+
+      // Sending post to db...
+      const responseForPost = await fetch(`/newPost?feed=${communityStatePost}`, {
+         method: 'POST',
+         headers: {
+            'Content-Type': 'application/json'
+          },
+         body: JSON.stringify({whoPosted: username, postSubject: subject, postBody: body})
+      })
+
+      if (!responseForPost.ok) {
+         throw new Error(`Error posting.. ${responseForPost.status}`)
+      }
+
+      // Message to confirm that the post has been to the respective feed
       setTimeout(()=> {
          errorMessageElement.current.style.color = 'lime'
          bodyPostElement.current.value = ''
          subjectPostElement.current.value = ''
-         imageRef.current.value = ''
-         setErrorMessage('Posted!')
+         setErrorMessage(`Posted to ${communityStatePost}`)
       }, 900)
 
-      // If the query string is empty then the post will get sent to the home page
-      if (!queryString) {
-
-         // Sending post to db...
-         const responseForPost = await fetch(`/newPost?feed=mainFeed`, {
-            method: 'POST',
-            body: formData
-         })
-
-         if (!responseForPost.ok) {
-            throw new Error(`Error posting.. ${response.status}`)
-         }
-
-         setTimeout(()=> {
-            errorMessageElement.current.style.color = 'lime'
-            bodyPostElement.current.value = ''
-            subjectPostElement.current.value = ''
-            imageRef.current.value = ''
-            setErrorMessage('Posted!')
-         }, 900)
-
-      } else {
-         // the post will go to whatever the query string is
-
-         // Sending post to db...
-         const response = await fetch(`/newPost?feed=${userSearched}`, {
-            method: 'POST',
-            headers: {
-               'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({whoPosted: username, postSubject: subject, postBody: body,})
-         })
-
-         if (!response.ok) {
-            throw new Error(`Error posting.. ${response.status}`)
-         }
-
-         setTimeout(()=> {
-            errorMessageElement.current.style.color = 'lime'
-            bodyPostElement.current.value = ''
-            subjectPostElement.current.value = ''
-            setErrorMessage('Posted!')
-         }, 900)
-
-         setTimeout(() => {
-            // setErrorMessage('')
-            window.location.reload()
-         }, 1000);
-
-      }
 
    }
 
@@ -339,11 +319,12 @@ export default function Home(){
       return  <><h4><i class="fa-solid fa-plus"></i></h4> </>
    }
 
+
    return (
       <>
 
       {/* NAVBAR */}
-      <Navbar {...navbarProps}/>
+      <Navbar {...navbarProps} appearEffect={appearEffect}/>
       <SideNavBar {...sidebarProps} ref={sidebarRefs}/>
 
       {/* MAIN CONTENT */}
@@ -366,14 +347,29 @@ export default function Home(){
                         <input maxLength={40} required placeholder="What's it about?" onsubmit="return false" ref={subjectPostElement}></input><br />
                      </div>
                      <div id="formBody">
-                        <input required placeholder='Say Something..' onsubmit="return false" ref={bodyPostElement}type="text"></input>
+                        <input required placeholder='Tell us more..' onsubmit="return false" ref={bodyPostElement}type="text"></input>
+                     </div>
+                     <div id="selectCommunity">
+                        <h2>Community:</h2>
+                        <form>
+                           <select>
+                              <option onClick={()=> postToCommunity('Home')}>Home</option>
+                              {userData.map((community, index) => {
+                                 return (
+                                    <>
+                                       <option value={community} onClick={()=> postToCommunity(community)}>{community}</option>
+                                    </>
+                                 )
+                              })}
+                           </select>
+                        </form>
                      </div>
                      {/* <div id="upload">
                         <label>Upload a picture</label><br />
                         <input accept="image/*" ref={imageRef} type="file" />
                      </div> */}
                      <h4 id="feedbackMessage" ref={errorMessageElement}>{errorMessage}</h4>
-                     <button  type='button' onClick={()=> createNewPost()}>Post <i className="fa-solid fa-paper-plane"></i></button>
+                     <button  type='button' onClick={()=> createNewPost()}>Post</button>
                   </form>
                </div>
 

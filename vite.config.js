@@ -162,6 +162,12 @@ export default defineConfig({
         secure: false,
         ws: true,
       },
+      '/removeCommunity': {
+        target: 'http://localhost:3000',
+        changeOrigin: true,
+        secure: false,
+        ws: true,
+      },
 
 
 
@@ -174,7 +180,8 @@ export default defineConfig({
         main: 'index.html',
         topics: 'topics.html',
         home: 'home.html',
-        profile: 'profile.html'
+        profile: 'profile.html',
+        communities: 'communities.html'
       }
     }
   },

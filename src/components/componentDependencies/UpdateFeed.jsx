@@ -405,10 +405,7 @@ export default function UpdateFeed(props) {
                   <br />
                 </main>
                 <nav className='postInteractionSection'>
-                  <div className="postDetails">
-                    <span><i className="fa-regular fa-heart"></i> {post.likes.length}</span>
-                    <span><i className="fa-regular fa-comment"></i> {post.comments.length}</span>
-                  </div>
+
                   <div className="postLC">
                     <span
                       ref={(el) => (likeBtn.current[key] = el)}
@@ -416,14 +413,19 @@ export default function UpdateFeed(props) {
                       onClick={() => addLike(post._id, key)}
                     >
                       <i className="fa-solid fa-heart"></i>
-                      <span style={{ color: "grey" }}> Like</span>
+                      <span style={{ color: "white" }}> Like</span>
                     </span>
                     <span className="commentBtn"
                     onClick={()=> {commentInterfaceAppear(post.subject, post.body, post.poster, post.postcreationDate, post._id, key, post.likes.length, post.comments), props.bgEffect()}}>
                       <i className="fa-solid fa-comments"></i>{" "}
-                      <span style={{ color: "grey" }}
+                      <span style={{ color: "white" }}
                       > Comment</span>
                     </span>
+                  </div>
+
+                  <div className="postDetails">
+                    <span><i className="fa-regular fa-heart"></i> {post.likes.length}</span>
+                    <span><i className="fa-regular fa-comment"></i> {post.comments.length}</span>
                   </div>
                 </nav>
               </div>

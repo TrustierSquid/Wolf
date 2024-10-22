@@ -209,7 +209,7 @@ TOPICS COMPONENT
   background: none;
   min-height: 600px;
   max-width: 75%;
-  margin: 4rem auto;
+  margin: 0rem auto;
   border-radius: 2rem;
   display: flex;
   flex-direction: column;
@@ -308,7 +308,10 @@ DEFAULT PAGE
 #nav {
   display: flex;
   padding: 0.5rem;
-  justify-content: space-around;
+  padding-right: 2.5rem;
+  padding-left: 2.5rem;
+  justify-content: space-between;
+  align-items: center;
   gap: 15rem;
   position: sticky;
   top: 0;
@@ -331,6 +334,30 @@ DEFAULT PAGE
   -o-object-fit: cover;
      object-fit: cover;
   cursor: pointer;
+}
+#nav #logoContainer button {
+  padding: 0.8rem;
+  border-radius: 2rem;
+  border: none;
+  color: white;
+  background-color: rgba(119, 119, 119, 0.2431372549);
+  cursor: pointer;
+  transition: 150ms;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1rem;
+}
+#nav #logoContainer button .fa-house {
+  color: #d43737;
+  font-size: 1.5rem;
+}
+#nav #logoContainer button .fa-square-plus {
+  color: #d43737;
+  font-size: 1.5rem;
+}
+#nav #logoContainer button:hover {
+  background-color: #4c4c4c;
 }
 #nav #profileContainer {
   display: flex;
@@ -477,7 +504,7 @@ DEFAULT PAGE
 .sideNav {
   height: 94.2vh;
   position: fixed;
-  width: 275px;
+  width: 250px;
   color: white;
   background-color: #121010;
   border-right: 1px solid #2E2E2E;
@@ -497,12 +524,13 @@ DEFAULT PAGE
 .sideNav .topicSelectionElement {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 1.5rem;
+  padding: 0.5rem;
 }
 .sideNav .topicSelectionElement button {
   display: flex;
-  align-items: center;
-  gap: 0.5rem;
+  justify-content: start;
+  gap: 1rem;
   background: none;
   border: none;
   padding: 1rem;
@@ -511,8 +539,6 @@ DEFAULT PAGE
   border-radius: 0.5rem;
   cursor: pointer;
   transition: 150ms;
-  display: flex;
-  justify-content: space-between;
   font-family: "roboto", sans-serif;
 }
 .sideNav .topicSelectionElement button:hover {
@@ -545,14 +571,15 @@ main #content {
 }
 main #content #newPostBtn {
   width: 100%;
-  color: rgb(151, 151, 151);
-  background-color: #222;
+  color: white;
+  background-color: #111;
   border: 1px solid #2E2E2E;
   border-radius: 1rem;
   padding: 1rem;
   cursor: pointer;
   font-size: 1.5rem;
   font-family: "Nunito", sans-serif;
+  transition: 150ms;
 }
 main #content #newPostBtn:hover {
   background-color: #2E2E2E;
@@ -598,20 +625,27 @@ main #content #newPost #createPostElement #createNewPostHeader {
   font-weight: bold;
   align-self: left;
   font-size: 2rem;
-  font-family: "roboto", sans-serif;
+  font-family: "Nunito", sans-serif;
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 main #content #newPost #createPostElement #createNewPostHeader span {
   font-size: 1.3rem;
+  width: 60px;
+  height: 60px;
   padding: 1rem;
-  border-radius: 1rem;
-  color: #d43737;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
   cursor: pointer;
+  background-color: rgba(87, 87, 87, 0.3960784314);
+  transition: 150ms;
 }
 main #content #newPost #createPostElement #createNewPostHeader span:hover {
-  background-color: rgba(87, 87, 87, 0.3960784314);
+  background-color: grey;
 }
 main #content #newPost #createPostElement #formBody {
   gap: 0.2rem;
@@ -653,20 +687,35 @@ main #content #newPost #createPostElement #formSubject input:focus {
   outline: none;
 }
 main #content #newPost #createPostElement button {
-  padding: 0.5rem;
+  padding: 1rem;
   color: white;
   background-color: #d43737;
   border: none;
-  border-radius: 0.5rem;
-  font-size: 1rem;
-  width: 30%;
+  border-radius: 1rem;
+  width: 20%;
   max-width: 100%;
   align-self: end;
   cursor: pointer;
   transition: 150ms;
+  font-size: 1.2rem;
+  font-family: "Nunito", sans-serif;
+  font-weight: bold;
 }
 main #content #newPost #createPostElement button:hover {
   background-color: #510917;
+}
+main #content #newPost #createPostElement #selectCommunity {
+  font-family: "Nunito", sans-serif;
+  display: flex;
+  gap: 2rem;
+}
+main #content #newPost #createPostElement #selectCommunity form select {
+  background-color: #111;
+  color: white;
+  border: none;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
 }
 main #content #newPost #createPostElement #feedbackMessage {
   color: #d43737;
@@ -693,8 +742,6 @@ main #content .userContent .userPost .mainPost {
   padding: 1.5rem;
   border-radius: 1rem;
   background: #111;
-  border: #222 1px solid;
-  box-shadow: 0 1px 6px -1px rgba(0, 0, 0, 0.1);
   color: white;
   transition: 250ms;
 }
@@ -779,39 +826,44 @@ main #content .userContent .userPost .mainPost .userTraction .likeBtn:hover {
   }
 }
 main #content .userContent .userPost .postInteractionSection {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   border-radius: 1rem;
   padding: 1rem;
-  border: 0.5px solid #2E2E2E;
+  background-color: #111;
 }
 main #content .userContent .userPost .postInteractionSection .postDetails {
   display: flex;
-  gap: 1rem;
+  gap: 0.5rem;
   font-family: "Nunito", sans-serif;
 }
 main #content .userContent .userPost .postInteractionSection .postDetails span {
   padding: 0.5rem;
   color: white;
+  font-size: 1.2rem;
 }
 main #content .userContent .userPost .postInteractionSection .postLC {
   display: flex;
-  gap: 3rem;
+  gap: 1rem;
 }
 main #content .userContent .userPost .postInteractionSection .postLC .likeBtn, main #content .userContent .userPost .postInteractionSection .postLC .commentBtn {
   font-size: 1.2rem;
   cursor: pointer;
-  padding: 0.5rem;
-  border-radius: 1rem;
+  padding: 1rem;
+  border-radius: 2rem;
   font-family: "roboto", sans-serif;
   transition: 150ms;
+  background-color: rgba(62, 62, 62, 0.6666666667);
 }
 main #content .userContent .userPost .postInteractionSection .postLC .likeBtn:hover {
-  background-color: rgba(62, 62, 62, 0.5333333333);
+  background-color: #444;
 }
 main #content .userContent .userPost .postInteractionSection .postLC .commentBtn {
   color: rgb(46, 176, 128);
 }
 main #content .userContent .userPost .postInteractionSection .postLC .commentBtn:hover {
-  background-color: rgba(62, 62, 62, 0.5333333333);
+  background-color: #444;
 }
 
 #commentInterface {
@@ -852,16 +904,22 @@ main #content .userContent .userPost .postInteractionSection .postLC .commentBtn
   text-decoration: underline;
 }
 #commentInterface #topDiv #exitCommentBtn {
-  color: #d43737;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
   font-family: "Nunito", sans-serif;
   cursor: pointer;
-  border-radius: 0.5rem;
   padding: 0.5rem;
   transition: 150ms;
   font-size: 1.3rem;
+  background-color: rgba(87, 87, 87, 0.398);
 }
 #commentInterface #topDiv #exitCommentBtn:hover {
-  background-color: rgba(87, 87, 87, 0.398);
+  background-color: grey;
 }
 #commentInterface #commentSection {
   display: flex;
@@ -995,40 +1053,45 @@ main #content .userContent .userPost .postInteractionSection .postLC .commentBtn
 }
 #mainProfile {
   width: 80%;
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: 1fr;
   gap: 1rem;
   margin: 2% auto;
   color: white;
-  padding: 1rem;
+  padding: 2rem;
   border-radius: 1.5rem;
+  background-color: rgba(224, 24, 24, 0.0156862745);
 }
 #mainProfile .profHeaders {
   font-family: "Nunito", sans-serif;
 }
 #mainProfile .profileAnalytics:nth-of-type(1) {
-  background-color: #222;
+  background-color: #111;
   box-shadow: 0 1px 6px -1px rgba(0, 0, 0, 0.1);
-  border-radius: 0.5rem;
   width: 100%;
   display: flex;
-  align-items: center;
-  justify-content: space-between;
+  align-items: start;
+  text-align: start;
+  margin: 0 auto;
   gap: 2rem;
+  border-radius: 1rem;
 }
 #mainProfile .profileAnalytics:nth-of-type(1) .profileSectionInfo {
-  border-radius: 1rem;
   padding: 1.5rem;
+  width: 100%;
   font-family: "Nunito", sans-serif;
+  border-radius: 2rem;
 }
 #mainProfile .profileAnalytics:nth-of-type(1) .profileSectionInfo:nth-of-type(1) {
   display: flex;
   justify-content: center;
   flex-direction: column;
   font-size: 1.5rem;
+  border-radius: 0rem;
 }
 #mainProfile .profileAnalytics:nth-of-type(1) .profileSectionInfo:nth-of-type(1) #iconAndUsername {
   display: flex;
+  justify-content: start;
   align-items: center;
   gap: 2rem;
 }
@@ -1055,6 +1118,7 @@ main #content .userContent .userPost .postInteractionSection .postLC .commentBtn
   display: flex;
   align-items: center;
   gap: 1rem;
+  border-radius: 0rem;
 }
 #mainProfile .profileAnalytics:nth-of-type(1) .profileSectionInfo:nth-of-type(2) #showUserStats {
   display: flex;
@@ -1076,13 +1140,15 @@ main #content .userContent .userPost .postInteractionSection .postLC .commentBtn
 #mainProfile #profileInformation {
   display: flex;
   gap: 1rem;
+  grid-column: 1/2;
 }
 #mainProfile #profileInformation #displayFollowing {
   height: 650px;
-  width: 50%;
+  width: 100%;
+  margin: 0 auto;
   padding: 1rem;
-  background-color: #222;
-  border-radius: 0.5rem;
+  background-color: #111;
+  border-radius: 1rem;
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
@@ -1105,9 +1171,11 @@ main #content .userContent .userPost .postInteractionSection .postLC .commentBtn
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0.5rem;
+  padding: 1rem;
   font-family: "roboto", sans-serif;
   cursor: pointer;
+  transition: 150ms;
+  border-bottom: 1px solid #2E2E2E;
 }
 #mainProfile #profileInformation #displayFollowing .followDisplayBtns section {
   display: flex;
@@ -1118,38 +1186,42 @@ main #content .userContent .userPost .postInteractionSection .postLC .commentBtn
   color: rgb(84, 84, 84);
 }
 #mainProfile #profileInformation #displayFollowing .followDisplayBtns .goToUser {
-  color: rgb(0, 110, 255);
+  color: white;
 }
 #mainProfile #profileInformation #displayFollowing .followDisplayBtns .noFollowersCheck {
   font-family: "Nunito", sans-serif;
 }
 #mainProfile #profileInformation #displayFollowing .followDisplayBtns:hover {
   background-color: #2E2E2E;
-  border-radius: 0.5rem;
+  border-radius: 0.9rem;
+  border: none;
 }
-#mainProfile #profileInformation .profileAnalytics:nth-of-type(2) {
+#mainProfile .totalPosts {
   display: flex;
   flex-direction: column;
-  gap: 2rem;
-  width: 100%;
+  gap: 1rem;
   margin: 0 auto;
+  width: 55vw;
   font-family: "roboto", sans-serif;
-  padding: 1.5rem;
-  overflow: scroll;
+  grid-column: 2;
+  grid-row: 1/3;
+  padding: 2rem;
+  background-color: #111;
+  border-radius: 1rem;
 }
-#mainProfile #profileInformation .profileAnalytics:nth-of-type(2) .profHeaders {
+#mainProfile .totalPosts .profHeaders {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
-#mainProfile #profileInformation .profileAnalytics:nth-of-type(2) .profHeaders form {
+#mainProfile .totalPosts .profHeaders form {
   display: flex;
   justify-content: space-between;
   gap: 1rem;
   align-items: center;
   cursor: pointer;
 }
-#mainProfile #profileInformation .profileAnalytics:nth-of-type(2) .profHeaders form select {
+#mainProfile .totalPosts .profHeaders form select {
   background-color: #222;
   color: white;
   padding: 0.5rem;
@@ -1157,15 +1229,13 @@ main #content .userContent .userPost .postInteractionSection .postLC .commentBtn
   border: 0.5px solid #2E2E2E;
   cursor: pointer;
 }
-#mainProfile #profileInformation .profileAnalytics:nth-of-type(2) .profHeaders form select option {
+#mainProfile .totalPosts .profHeaders form select option {
   color: white;
   cursor: pointer;
 }
-#mainProfile #profileInformation .profileAnalytics:nth-of-type(2) .existingPost {
-  background-color: #1D1C1C;
-  border: 1px solid #2E2E2E;
+#mainProfile .totalPosts .existingPost {
+  border-bottom: 1px solid #2E2E2E;
   padding: 2rem;
-  border-radius: 1rem;
   display: flex;
   flex-direction: column;
   gap: 1rem;
@@ -1173,18 +1243,23 @@ main #content .userContent .userPost .postInteractionSection .postLC .commentBtn
   transition: 150ms;
   cursor: pointer;
 }
-#mainProfile #profileInformation .profileAnalytics:nth-of-type(2) .existingPost .profilePostSubject {
+#mainProfile .totalPosts .existingPost .profilePostSubject {
   display: flex;
   justify-content: space-between;
   gap: 1rem;
 }
-#mainProfile #profileInformation .profileAnalytics:nth-of-type(2) .existingPost .profilePostAnalytics {
+#mainProfile .totalPosts .existingPost .profilePostSubject span {
+  display: flex;
+  gap: 0.5rem;
+}
+#mainProfile .totalPosts .existingPost .profilePostAnalytics {
   display: flex;
   align-items: center;
   gap: 1rem;
 }
-#mainProfile #profileInformation .profileAnalytics:nth-of-type(2) .existingPost:hover {
+#mainProfile .totalPosts .existingPost:hover {
   background-color: #2E2E2E;
+  border-radius: 1rem;
 }
 
 /*
@@ -1310,7 +1385,7 @@ HOME COMPONENT MEDIA QUERIES
     border-radius: 0;
     padding: 1rem;
     border: none;
-    border-bottom: 0.5px solid #2E2E2E;
+    border-bottom: 1px solid #2E2E2E;
     box-shadow: none;
   }
   main #content .userContent .userPost .postInteractionSection .postDetails {

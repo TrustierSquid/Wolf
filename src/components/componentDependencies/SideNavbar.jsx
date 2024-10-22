@@ -40,29 +40,31 @@ const SideNavBar = forwardRef(({
          <nav className="sideNav" ref={sideNav}>
             <br />
             <section className="topicSelectionElement">
-               <button onClick={()=> navigateToHome()}>Home Feed <i className="fa-solid fa-house"></i></button>
-               <button onClick={()=> navigateToTopicSelection()}>Join a Topic <i className="fa-solid fa-users"></i></button>
+               <button onClick={()=> window.location.href = '/communities'}><i className="fa-solid fa-border-all"></i> Your Communities </button>
+               <button onClick={()=> window.location.href = '/topics'}><i className="fa-solid fa-plus"></i> Join a Community</button>
+               <button><i className="fa-regular fa-user"></i> Profile</button>
+               <button><i className="fa-solid fa-right-from-bracket"></i>Logout</button>
 
-               <h4 className="subTitle">JOINED COMMUNITIES</h4>
+               {/* <h4 className="subTitle">JOINED COMMUNITIES</h4> */}
 
                {/* mapping out the selected topics that the user selected */}
-               <div id="selectedTopicsBtns">
+               {/* <div id="selectedTopicsBtns">
                   {userData?.length > 0 ? (
                      userData.map((topic, key) => {
                         return (
                            <>
-                              <button key={key} ref={topicBtn} onClick={()=> navigateToFeed(topic)}>{topic}<i className="fa-solid fa-person-walking-arrow-right"></i></button>
+                              <button key={key} ref={topicBtn} onClick={()=> navigateToFeed(topic)}><i className="fa-solid fa-person-walking-arrow-right"></i>{topic}</button>
                            </>
                         );
                      })
 
                   ) : (
-                  <div className="noTopicsMessage">
-                     <h3>No Topics Available</h3>
-                     <p>Start joining topics to see them here.</p>
-                  </div>
-               )}
-               </div>
+                     <div className="noTopicsMessage">
+                        <h3>No Topics Available</h3>
+                        <p>Start joining topics to see them here.</p>
+                     </div>
+                  )}
+               </div> */}
             </section>
 
 
