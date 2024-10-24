@@ -1,6 +1,7 @@
 import { forwardRef, useRef, useState, useEffect} from "react"
 import { useLocation } from "react-router-dom"
 import Navbar from "../componentDependencies/NavBar"
+import SideNavBar from "../componentDependencies/SideNavbar"
 
 export default function Profile(props){
    const [followerCount, setFollowerCount] = useState([])
@@ -11,6 +12,7 @@ export default function Profile(props){
 
    // the an array of the topics that the user selected
    const [userData, setUserData] = useState([])
+
 
 
    // Data for the user logged in
@@ -60,7 +62,10 @@ export default function Profile(props){
    const userSearched = urlParams.get('user')
 
    const [dynamicUsername, setDynamicUsername] = useState(null)
-
+   const [dynamicFollowingArr, setDynamicFollowingArr] = useState(null)
+   const [dynamicFollowerArr, setDynamicFollowerArr] = useState(null)
+   const [dynamicUID, setDynamicUID] = useState(null)
+   const [dynamicBio, setDynamicBio] = useState(null)
 
 
    /*
@@ -79,12 +84,20 @@ export default function Profile(props){
 
          // Sending back post data for the searched user
          const postData = await response.json()
+         console.log(postData)
          setProfilePostData(postData.profilePostData.reverse() || [])
          // sending back the userdata for the searched user
 
+         // The userData that gets returned based on the UID
          setUserProfileData(postData.userData || [])
 
+         setDynamicFollowerArr(postData.userData.followers)
+         setDynamicFollowingArr(postData.userData.following)
+
+         // The username that the UID has in store
          setDynamicUsername(postData.userData.user)
+         setDynamicUID(postData.userData.UID)
+         setDynamicBio(postData.userData.userBio)
 
 
       } catch {
@@ -103,57 +116,10 @@ export default function Profile(props){
 
 // queryStringUser is the user looked up via query string
 // and comparing it to the uuid of the logged in user
-   function addFollower(queryStringUser){
-
-      /*
-         * hashed querystring that contains the username that the backend will search for
-         * once found, it will display the respective profile page
-         * If the queryString matches the loggedIn users name it will know that it is looking
-         at the logged in users own page. Therefore, no followbtn will be rendered
-       */
-
-      if (queryStringUser === props.loggedInUID) {
-         return
-      }
-
-      // uses the queryString to find the user and add the logged in user to the current list of followers
-      async function followUser(queryStringUser){
-
-         const response = await fetch('/addFollowingUser', {
-            method: 'POST',
-            headers: {
-               "Content-Type": "application/json"
-            },
-            // both are UUIDs
-            body: JSON.stringify({followee: queryStringUser, loggedInUser: props.loggedInUID})
-         })
-
-         if (response.ok){
-            if (followBtnRef.current.innerHTML === 'Following') {
-               followBtnRef.current.innerHTML = 'Follow'
-               followBtnRef.current.style.background = 'none'
-            } else {
-               followBtnRef.current.innerHTML = 'Following'
-               followBtnRef.current.style.backgroundColor = '#0067e4'
-            }
-         }
-
-      }
 
 
-      function checkFollowing(){
 
-        if (userProfileData.followers?.includes(username)) {
-         return <button ref={followBtnRef} className="followUserBtn" onClick={(element)=> followUser(queryStringUser)}>Following</button>
-        }
 
-        return <button ref={followBtnRef} className="followUserBtn" onClick={(element)=> followUser(queryStringUser)}>Follow</button>
-
-      }
-
-      return checkFollowing()
-
-   }
 
 
 
@@ -174,12 +140,24 @@ export default function Profile(props){
                      {/* <i className="fa-solid fa-user"></i> */}
                      <div>
                         <h3>{dynamicUsername}</h3>
-                        <p style={{color: "#505050", fontSize: '1rem'}}>#: {userSearched}</p>
                         <h5 className="profileUserTypeHeader"
                         style={{color: "#00b3ff"}}>
                            Developer <i className="fa-solid fa-code"></i></h5>
                      </div>
+
+                     <div id="followTracking">
+                        <section>
+                           <h3>{dynamicFollowerArr?.length}</h3>
+                           <p>Followers</p>
+                        </section>
+                        <section>
+                           <h3>{dynamicFollowingArr?.length}</h3>
+                           <p>Following</p>
+                        </section>
+                     </div>
+
                   </div>
+
                </>
             )
             // for recruiters
@@ -190,8 +168,18 @@ export default function Profile(props){
                      <i className="fa-solid fa-user"></i>
                      <div>
                         <h3>{dynamicUsername}</h3>
-                        <h5 style={{color: "#404040"}}>UID: {userSearched}</h5>
                         <h5 className="profileUserTypeHeader" style={{color: "#73ff00"}}>Recruiter <i className="fa-solid fa-clipboard"></i></h5>
+                     </div>
+
+                     <div id="followTracking">
+                        <section>
+                           <h3>{dynamicFollowerArr?.length}</h3>
+                           <p>Followers</p>
+                        </section>
+                        <section>
+                           <h3>{dynamicFollowingArr?.length}</h3>
+                           <p>Following</p>
+                        </section>
                      </div>
                   </div>
                </>
@@ -201,13 +189,23 @@ export default function Profile(props){
             return (
                <>
                   <div id="iconAndUsername">
-                     <i className="fa-solid fa-user"></i>
                      <div>
                         <h3>{dynamicUsername}</h3>
-                        <p style={{color: "#404040", fontSize: '1rem'}}>#: {userSearched}</p>
-                        {/* <h5 className="profileUserTypeHeader"
-                        style={{color: "darkgrey"}}></h5> */}
+                        <h5 className="profileUserTypeHeader"
+                        style={{color: "darkgrey"}}>User</h5>
                      </div>
+
+                     <div id="followTracking">
+                        <section>
+                           <h3>{dynamicFollowerArr?.length}</h3>
+                           <p>Followers</p>
+                        </section>
+                        <section>
+                           <h3>{dynamicFollowingArr?.length}</h3>
+                           <p>Following</p>
+                        </section>
+                     </div>
+
                   </div>
 
                </>
@@ -230,8 +228,7 @@ export default function Profile(props){
 
       // The data returns the fetched user uid
       window.location.href = `/profile?user=${data.userUID}`;
-      /* setTimeout(() => {
-      }, 500); */
+
    }
 
    const currentDate = new Date();
@@ -257,8 +254,21 @@ export default function Profile(props){
       (timeDifference % millisecondsInOneHour) / millisecondsInOneMinute
     );
 
+    // Calculate months using the date object
+    const monthsPassed =
+    currentDate.getMonth() -
+    startDate.getMonth() +
+    12 * (currentDate.getFullYear() - startDate.getFullYear());
+
+
+
 
     // Display time passed
+    if (monthsPassed >= 1) {
+      return <h4 className="postData">{`${monthsPassed}Mth ago`}</h4>;
+    }
+
+
     if (daysPassed >= 1) {
       return <h4 className="postData">{`${daysPassed}d ago`}</h4>;
     }
@@ -276,155 +286,248 @@ export default function Profile(props){
 
   }
 
+  /*
+   queryStringUser === props.loggedInUID
+
+   this is what determines wether or not the visited profile is the profile that belongs to the logged in user
+
+   */
+
+   const bioElementDisplay = useRef()
+   const bioElementEnter = useRef()
+   const bioEnter = useRef()
+   const updateBioBtn = useRef()
+   const changeBioBtn = useRef()
+
+
+
+   //  Styling helper function to change the appearance
+   const switchToEnter = ()=> {
+      // Styling changes
+      bioElementDisplay.current.style.display = 'none'
+      bioElementEnter.current.style.display = 'block'
+      bioElementEnter.current.value = dynamicBio
+      changeBioBtn.current.style.display = 'none'
+      updateBioBtn.current.style.display = 'block'
+
+   }
+
+
+  async function addProfileBio(){
+   // Value of the profile bio
+   let bioDisplay = bioElementDisplay.current.value
+
+
+   // Server calls
+   let response = await fetch(`/updateBio/${dynamicUID}`, {
+      method: 'POST',
+      headers: {
+         'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({newBio: bioEnter.current.value})
+   })
+
+   if(!response.ok) {
+      throw new Error("Could not change bio");
+   }
+
+   // Styling changes
+   changeBioBtn.current.style.display = 'block'
+   updateBioBtn.current.style.display = 'none'
+   bioElementDisplay.current.style.display = 'block'
+   bioElementEnter.current.style.display = 'none'
+
+   // Updating the values in the user data
+   getUserProfilePosts()
+
+  }
+
+  /*
+     * hashed querystring that contains the username that the backend will search for
+     * once found, it will display the respective profile page
+     * If the queryString matches the loggedIn UID it will know that it is looking
+     at the logged in users own page. Therefore, no followbtn will be rendered
+  */
+
+   const followBtn = useRef()
+   const unfollowBtn = useRef()
+   const [isFollowing, setIsFollowing] = useState(false)
+
+   // Checks to see if the loggedInUser is already following the target user
+   function checkFollowing(){
+      if (userProfileData?.followers?.includes(username)) {
+         followBtn.current.style.display = 'none'
+         unfollowBtn.current.style.display = 'block'
+      }
+   }
+
+   async function followSystem() {
+
+
+      let response = await fetch('/addFollowingUser', {
+         method: 'POST',
+         headers: {
+            'Content-Type': 'application/json'
+         },
+         body: JSON.stringify({followee: userSearched, loggedInUser: props.loggedInUID})
+      })
+
+      // updating the profile data
+      getUserProfilePosts()
+
+      followBtn.current.style.display = 'block'
+      unfollowBtn.current.style.display = 'none'
+
+   }
+
+   checkFollowing()
+
+   const sidebarProps = {
+      username: username,
+      followings: followingCount,
+      followers: followerCount,
+   }
+
+
 
    return (
       <>
          <Navbar />
-         <main id="mainProfile">
-            {/* <h2 className="profHeaders">Profile Overview</h2> */}
-            <div className="profileAnalytics">
-               <section className="profileSectionInfo">
-
+         <div id="contentContainer">
+            <SideNavBar {...sidebarProps}/>
+            <main id="mainProfile">
+               {/* <h2 className="profHeaders">Profile Overview</h2> */}
+               <div className="profileAnalytics">
                   {/* Checks for the type of user is being displayed */}
                   {checkUserType()}
 
-                  {addFollower(userSearched)}
+                  <section id="followBtnPair">
 
-               </section>
-               {/* <section className="profileSectionInfo">
-                  <br />
-                  <div id="showUserStats">
-                     <span>
-                        <h1>{userProfileData.followers?.length || 0}</h1>
-                        <p>Followers</p>
-                     </span>
-                     <span>
-                        <h1>{userProfileData.following?.length || 0}</h1>
-                        <p>Following</p>
-                     </span>
-                  </div>
-               </section> */}
-            </div>
-
-
-
-            <div id="profileInformation">
-
-               {/* Displays the followees and followers that the user has */}
-               <div id="displayFollowing">
-                  <nav id="followingNav">
-                     {/*
-                        both buttons will send a boolean to the function
-                        And that the logic in that function decides if followees or followers are displayed
-                     */}
-                     <p onClick={()=> displayFollow(false)}>Following</p>
-                     <p onClick={()=> displayFollow(true)}>Followers</p>
-                  </nav>
-                  {/* <hr /> */}
-
-                  {/* conditional rendering: if the value is false then display following. If not, followers */}
-                  {!displayFollowing ? (
-                     userProfileData.following?.map((followee)=> {
-                        return (
+                     {
+                        // checking to see if the user is on the same profile as the loggedIn user
+                        (userSearched === props.loggedInUID) ? (
                            <>
-                              {/* Following catagory */}
-
-                              <a onClick={()=> navigateToProfile(followee)} className="followDisplayBtns">
-                                 {/* grouped together in a flex container so all of the imforation is inline */}
-                                 <section>
-                                    <i className="fa-solid fa-user"></i>
-                                    <p className="goToUser"> {followee}</p>
-                                 </section>
-                                 <p className="followCheckText">Following</p>
-                              </a>
+                              <span></span>
+                           </>
+                        ) : (
+                           <>
+                              <button id="followBtn" ref={followBtn} onClick={()=> followSystem()}>Follow </button>
+                              {/*Initialy disabled*/} <button id="unfollowBtn" ref={unfollowBtn} onClick={()=> followSystem()}>UnFollow</button>
                            </>
                         )
-                     })
-                  ) : (
+                     }
 
-                     userProfileData.followers.length > 0 ? (
-                        userProfileData.followers?.map((follower)=> {
-                           return (
+                  </section>
+
+                  <div id="bioPair">
+                     <div id="bioTitle">
+                        <h3>Bio</h3>
+                        {/* Bio edit shows up for the user logged in and not on other profile */}
+                        {
+                           (userSearched === props.loggedInUID) ? (
                               <>
-                                 {/* Follower catagory */}
-
-                                 <a onClick={()=> navigateToProfile(follower)} className="followDisplayBtns">
-                                    {/* grouped together in a flex container so all of the imforation is inline */}
-                                    <section>
-                                       <i className="fa-solid fa-user"></i>
-                                       <p className="goToUser">{follower}</p>
-                                    </section>
-                                    <p className="followCheckText">Follower</p>
-                                 </a>
+                                 <i className="fa-solid fa-pencil" onClick={()=> switchToEnter()} ref={changeBioBtn}></i>
+                              </>
+                           ) : (
+                              <>
+                                 <span></span>
                               </>
                            )
-                        })
-                     ) : (
-                        <p className="noFollowersCheck">No followers</p>
-                     )
-                  )}
+                        }
+                        <button id="updateBioBtn" ref={updateBioBtn} onClick={()=> addProfileBio()}>Update Bio</button>
+                     </div>
+                     <br />
+
+                     {/* This is the version on the bio is for when the user enters a new or edited bio */}
+                     <span id="userEnterBio" ref={bioElementEnter}>
+                        <textarea ref={bioEnter} maxLength={300} placeholder={dynamicBio}>{dynamicBio}</textarea>
+                     </span>
+
+                     {/* This is the version on the bio is is strictly for display  */}
+                     <span id="profileBio" ref={bioElementDisplay}>
+                        {dynamicBio}
+                     </span>
+
+                  </div>
+
 
                </div>
 
-            </div>
-            <div className="totalPosts">
-               <section className="profHeaders">
-                  <h2>{dynamicUsername}'s Posts </h2>
-                  <form>
-                     <h3>Community Feed:</h3>
-                     {/* The dropdown selection menu that displays topics that the user is currently apart of  */}
-                     {userProfileData?.topics?.length > 0 && (
-                        <select className="topicDisplaySelection">
-                           <option onClick={()=> getUserProfilePosts("mainFeed")}>Home Feed</option>
+               <div className="totalPosts">
+                  <section className="profHeaders">
+                     <h2>{dynamicUsername}'s Posts </h2>
+                     <form>
+                        <h3>Community Feed:</h3>
+                        {/* The dropdown selection menu that displays topics that the user is currently apart of  */}
+                        {userProfileData?.topics?.length > 0 && (
+                           <select className="topicDisplaySelection">
+                              <option onClick={()=> getUserProfilePosts("mainFeed")}>Home Feed</option>
 
-                           {userProfileData.topics.map((topic, index) => (
-                              <option key={index} onClick={()=> getUserProfilePosts(topic + "Feed")}>{topic} Feed</option>
-                           ))}
+                              {userProfileData.topics.map((topic, index) => (
+                                 <option key={index} onClick={()=> getUserProfilePosts(topic + "Feed")}>{topic} Feed</option>
+                              ))}
 
-                        </select>
-                     )}
+                           </select>
+                        )}
 
-                  </form>
-               </section>
-               {/* CONDITIONAL RENDERING */}
-               {/* Showing profile post data for each post the current user has made on the corresponding community feed */}
-               {profilePostData?.length > 0 ? (
-                  profilePostData.map((post, index)=> {
-                     return (
-                        <>
-                           <article key={index} className="existingPost">
-                              <h2 className="profilePostSubject">
-                                 <span>
-                                    <i style={{color: 'crimson'}} className="fa-solid fa-square"></i>
-                                    {" " + post.subject}
-                                    <h5 style={{color: 'grey'}}>{showPostDate(post.postCreationDate)}</h5>
-                                 </span>
+                     </form>
+                  </section>
+                  {/* CONDITIONAL RENDERING */}
+                  {/* Showing profile post data for each post the current user has made on the corresponding community feed */}
+                  {profilePostData?.length > 0 ? (
+                     profilePostData.map((post, index)=> {
+                        return (
+                           <>
+                              <article key={index} className="existingPost">
+                                 <div className="existingPostTitle">
+                                    {dynamicUsername}
+                                    {/* If the profile post user is the developer or anyone else then display accordingly */}
+                                    {
+                                       (dynamicUsername === 'Samuel') ? (
+                                          <>
+                                             <span className="developerStatus">Developer</span>
+                                          </>
+                                       ) : (
+                                          <>
+                                             <span className='userStatus'>User</span>
+                                          </>
+                                       )
+                                    }
+                                    <p style={{color: 'grey'}}>{showPostDate(post.postCreationDate)}</p>
+                                 </div>
+                                 <h2 className="profilePostSubject">
+                                    <span>
+
+                                       {" " + post.subject}
+
+                                    </span>
+                                 </h2>
+                                 <p className="profilePostBody">{post.body}</p>
                                  <div className="profilePostAnalytics">
                                     <h5><i style={{color: "grey"}} className="fa-solid fa-heart"></i> {post.likes.length}</h5>
                                     <h5 style={{color: "grey"}}><i style={{color: "grey"}} className="fa-solid fa-comments"></i> {post.comments.length}</h5>
                                  </div>
-                              </h2>
-                              <h3 className="profilePostSubject">{post.body}</h3>
 
-                           </article>
-                        </>
-                     )
-                  })
-               ) : (
-                  // if there is no posts made by the user in question in that specific comminui
-                  <div className="noPostsMessage">
-                     <h3>{dynamicUsername} hasn't posted anything here yet!</h3>
-                     <p>Get them to share something! 😃</p>
-                  </div>
-               )}
-            </div>
+                              </article>
+                           </>
+                        )
+                     })
+                  ) : (
+                     // if there is no posts made by the user in question in that specific comminui
+                     <div className="noPostsMessage">
+                        <h3>{dynamicUsername} hasn't posted anything here yet!</h3>
+                        <p>Get them to share something! 😃</p>
+                     </div>
+                  )}
+               </div>
 
 
 
 
 
 
-         </main>
+            </main>
+         </div>
       </>
    )
 }

@@ -73,20 +73,7 @@ export default function Navbar(props) {
     }
   }
 
-  const navHelper = (element) => {
 
-    setIsNavOpen((prevState) => !prevState);
-
-    if (isNavOpen) {
-      navDropdownElement.style.transform = "translateY(10px)";
-      navDropdownElement.style.pointerEvents = "all";
-      navDropdownElement.style.opacity = "1";
-    } else {
-      navDropdownElement.style.transform = "translateY(0px)";
-      navDropdownElement.style.pointerEvents = "none";
-      navDropdownElement.style.opacity = "0";
-    }
-  };
 
   function openMobileNavMenu(navBtn){
     setIsMobileNavMenuOpen(prevState => !prevState)
@@ -134,8 +121,10 @@ export default function Navbar(props) {
       <nav id="nav">
         {/* For Desktop */}
         <div id="logoContainer">
-          <img id="logo" src={logo} alt="" />
-          <h1>WOLF</h1>
+          <div id="titleAndLogo">
+            <img id="logo" src={logo} alt="" />
+            <h1>WOLF</h1>
+          </div>
           <button onClick={()=> navigateBackToHome()}><i className="fa-solid fa-house"></i> Home</button>
           {/* Button becomes disabled after visting any other page that isnt of the home sub domain */}
           {window.location.pathname === '/home' ? (
@@ -147,10 +136,11 @@ export default function Navbar(props) {
             )}
           {/* Was trying to conditional render this button based on the subdirectory they user is visiting. */}
         </div>
-        <div id="profileContainer" onClick={(element) => navHelper(element)}>
-          <h1 id="dropdownBtn">
-            {username} <i className="fa-solid fa-fire"></i>
-          </h1>
+        <div id="profileContainer">
+          {/* In place for a profile picture */}
+          <span id="dropdownBtn" onClick={()=> navigateProfile()}>
+            {/* {username} */}
+          </span>
         </div>
 
         {/* Mobile Navs */}
@@ -191,31 +181,7 @@ export default function Navbar(props) {
         )} */}
       </section>
 
-      <section id="navDropdown" ref={navDropdown}>
-        {/* view profile button */}
-        <div
-          className="navDropdownItemProfile"
-          onClick={() => navigateProfile()}
-        >
-          <span>
-            <h1>
-              <i className="fa-solid fa-user-large"></i>
-            </h1>
-          </span>
-          <div>
-            <h4>See Profile</h4>
-            <h3 id="navUsername">{username}</h3>
-          </div>
-        </div>
 
-        <div className="navDropdownItem"></div>
-
-        <div className="navDropdownItem"></div>
-
-        <div className="navDropdownItem" onClick={() => navigateLogOut()}>
-          <i className="fa-solid fa-right-from-bracket"></i> Log out
-        </div>
-      </section>
     </>
   );
 }

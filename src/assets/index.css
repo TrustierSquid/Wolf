@@ -21,6 +21,9 @@ body {
 
 .noPostsMessage {
   color: white;
+  background-color: rgba(17, 17, 17, 0.9098039216);
+  padding: 1rem;
+  border-radius: 1rem;
   font-family: "Nunito", sans-serif;
   text-align: center;
   margin-top: 2rem;
@@ -306,30 +309,33 @@ DEFAULT PAGE
 
  */
 #nav {
+  top: 0;
+  border-bottom: 1px solid #7A0B31;
   display: flex;
   padding: 0.5rem;
   padding-right: 2.5rem;
   padding-left: 2.5rem;
   justify-content: space-between;
   align-items: center;
-  gap: 15rem;
   position: sticky;
-  top: 0;
   background-color: #121010;
-  border-top: 1px solid #2E2E2E;
-  border-bottom: 1px solid #2E2E2E;
-  z-index: 7;
+  z-index: 11;
 }
 #nav #logoContainer {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 1.5rem;
 }
-#nav #logoContainer h1 {
+#nav #logoContainer #titleAndLogo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+#nav #logoContainer #titleAndLogo h1 {
   font-family: comfortaa;
   color: white;
 }
-#nav #logoContainer #logo {
+#nav #logoContainer #titleAndLogo #logo {
   height: 50px;
   -o-object-fit: cover;
      object-fit: cover;
@@ -368,9 +374,11 @@ DEFAULT PAGE
   color: white;
   cursor: pointer;
   transition: 150ms;
-}
-#nav #profileContainer #dropdownBtn:focus {
-  color: #d43737;
+  background: blue;
+  border: 1px solid grey;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
 }
 #nav #profileContainer #dropdownBtn:hover {
   color: #d43737;
@@ -399,7 +407,7 @@ DEFAULT PAGE
 #mobileNavMenu .mobileNavProfileSection {
   display: flex;
   flex-direction: column;
-  background-color: rgba(85, 85, 85, 0.262745098);
+  background-color: rgba(30, 0, 0, 0.9725490196);
   gap: 0.5rem;
   cursor: pointer;
   transition: 150ms;
@@ -437,7 +445,7 @@ DEFAULT PAGE
   justify-content: space-between;
 }
 #mobileNavMenu .mobileNavTopicBtns:hover {
-  background-color: rgba(85, 85, 85, 0.262745098);
+  background-color: rgba(30, 0, 0, 0.9725490196);
 }
 
 @keyframes shake {
@@ -454,77 +462,63 @@ DEFAULT PAGE
     transform: translateX(-10px);
   }
 }
-#navDropdown {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  background-color: #222;
-  border: 1px solid #2E2E2E;
-  font-family: "Nunito", sans-serif;
-  padding: 2rem;
-  color: rgba(255, 255, 255, 0.818);
-  height: 150px;
-  width: 300px;
-  position: fixed;
-  right: 11%;
-  z-index: 3;
-  border-radius: 1rem;
-  transform: translateY(0px);
-  transition: 150ms;
-  opacity: 0;
-  pointer-events: none;
-}
-#navDropdown .navDropdownItem {
-  padding-bottom: 0.5rem;
-  padding-top: 0.5rem;
-  display: flex;
-  gap: 1rem;
-  padding-left: 0.5rem;
-  cursor: pointer;
-}
-#navDropdown .navDropdownItem:hover {
-  color: white;
-}
-#navDropdown .navDropdownItemProfile {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  cursor: pointer;
-}
-#navDropdown .navDropdownItemProfile h4 {
-  color: grey;
-}
-#navDropdown .navDropdownItemProfile #navUsername {
-  color: white;
-}
-#navDropdown .navDropdownItemProfile:hover #navUsername {
-  color: #d43737;
-}
-
 .sideNav {
-  height: 94.2vh;
-  position: fixed;
-  width: 250px;
+  height: 50vh;
+  top: 10%;
+  width: 500px;
+  height: 450px;
   color: white;
-  background-color: #121010;
-  border-right: 1px solid #2E2E2E;
-  padding: 1rem;
+  background: rgb(59, 1, 36);
+  background: linear-gradient(326deg, rgb(59, 1, 36) 0%, rgb(203, 0, 57) 100%);
+  border-radius: 2rem;
+  border: none;
+  padding: 1.5rem;
   display: flex;
   flex-direction: column;
   font-family: "roboto", sans-serif;
-  overflow-y: auto;
+  z-index: 0;
 }
-.sideNav .subTitle {
+.sideNav #subTitle {
   font-family: "roboto", sans-serif;
   font-weight: lighter;
-  letter-spacing: 2px;
   padding: 1rem;
-  color: #ff7b00;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+.sideNav #subTitle #sidebarUsername {
+  background-color: rgba(17, 17, 17, 0.9098039216);
+  padding: 1rem;
+  border-radius: 1rem;
+  width: 100%;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+.sideNav #subTitle #followingCountContainer {
+  display: flex;
+  gap: 0.5rem;
+  width: 100%;
+}
+.sideNav #subTitle #followingCountContainer .followingContainerItem {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  background-color: rgba(17, 17, 17, 0.9098039216);
+  padding: 1rem;
+  width: 100%;
+  border-radius: 1rem;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+.sideNav #subTitle #followingCountContainer .followingContainerItem:nth-of-type(2) {
+  align-items: start;
 }
 .sideNav .topicSelectionElement {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: 1rem;
   padding: 0.5rem;
 }
 .sideNav .topicSelectionElement button {
@@ -534,6 +528,7 @@ DEFAULT PAGE
   background: none;
   border: none;
   padding: 1rem;
+  text-wrap: nowrap;
   font-size: 1rem;
   color: white;
   border-radius: 0.5rem;
@@ -562,12 +557,17 @@ DEFAULT PAGE
 main {
   display: flex;
   justify-content: center;
+  gap: 2rem;
+  padding: 2rem;
 }
 main #content {
-  width: 50%;
+  width: 55%;
   padding: 2rem;
   display: flex;
   flex-direction: column;
+  background: rgb(122, 11, 49);
+  background: linear-gradient(180deg, rgb(122, 11, 49) 0%, rgb(46, 0, 28) 100%);
+  border-radius: 1rem;
 }
 main #content #newPostBtn {
   width: 100%;
@@ -618,7 +618,8 @@ main #content #newPost #createPostElement {
   transition: 250ms;
   display: flex;
   flex-direction: column;
-  z-index: 8;
+  z-index: 9;
+  border: 1px solid #532C2C;
 }
 main #content #newPost #createPostElement #createNewPostHeader {
   color: white;
@@ -726,14 +727,16 @@ main #content .userContent {
   display: flex;
   margin-top: 1rem;
   flex-direction: column;
-  gap: 4rem;
+  gap: 1rem;
 }
 main #content .userContent .userPost {
   transition: 150ms;
   max-width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  background-color: rgba(17, 17, 17, 0.9098039216);
+  border-radius: 1rem;
+  box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
 }
 main #content .userContent .userPost .mainPost {
   flex-direction: column;
@@ -741,7 +744,6 @@ main #content .userContent .userPost .mainPost {
   gap: 1rem;
   padding: 1.5rem;
   border-radius: 1rem;
-  background: #111;
   color: white;
   transition: 250ms;
 }
@@ -784,7 +786,9 @@ main #content .userContent .userPost .mainPost .postAnalytics .postCaption {
   font-weight: bold;
   color: white;
   display: flex;
-  gap: 0.5rem;
+  padding: 0.5rem;
+  padding-left: 0rem;
+  border-bottom: 1px dotted #2E2E2E;
 }
 main #content .userContent .userPost .mainPost .postAnalytics .postCaption i {
   color: #d43737;
@@ -829,9 +833,7 @@ main #content .userContent .userPost .postInteractionSection {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-radius: 1rem;
   padding: 1rem;
-  background-color: #111;
 }
 main #content .userContent .userPost .postInteractionSection .postDetails {
   display: flex;
@@ -877,7 +879,7 @@ main #content .userContent .userPost .postInteractionSection .postLC .commentBtn
   transform: translate(50%, -50%);
   color: white;
   background-color: #181818;
-  border: 2px solid #2E2E2E;
+  border: 1px solid #532C2C;
   border-radius: 0.5rem;
   padding: 2rem;
   transition: 150ms;
@@ -1051,177 +1053,228 @@ main #content .userContent .userPost .postInteractionSection .postLC .commentBtn
     line-height: 1.5;
   }
 }
-#mainProfile {
-  width: 80%;
-  display: grid;
-  grid-template-columns: 1fr;
+#contentContainer {
+  display: flex;
+  justify-content: center;
+  padding: 2rem;
+  gap: 2rem;
+}
+#contentContainer #mainProfile {
+  width: 55%;
+  display: flex;
+  flex-direction: column;
   gap: 1rem;
-  margin: 2% auto;
   color: white;
   padding: 2rem;
   border-radius: 1.5rem;
-  background-color: rgba(224, 24, 24, 0.0156862745);
+  background: rgb(122, 11, 49);
+  background: linear-gradient(180deg, rgb(122, 11, 49) 0%, rgb(25, 0, 41) 100%);
 }
-#mainProfile .profHeaders {
+#contentContainer #mainProfile .profHeaders {
   font-family: "Nunito", sans-serif;
 }
-#mainProfile .profileAnalytics:nth-of-type(1) {
+#contentContainer #mainProfile .profileAnalytics:nth-of-type(1) {
   background-color: #111;
   box-shadow: 0 1px 6px -1px rgba(0, 0, 0, 0.1);
   width: 100%;
   display: flex;
+  flex-direction: column;
   align-items: start;
   text-align: start;
   margin: 0 auto;
-  gap: 2rem;
+  gap: 0.5rem;
   border-radius: 1rem;
+  font-size: 1.5rem;
+  padding: 1rem;
+  /* #profileCustomize {
+     .fa-pencil {
+        cursor: pointer;
+        color: $primary;
+        background-color: $cardBG;
+        padding: 1rem;
+        border-radius: 50%;
+        &:hover {
+           background-color: #444;
+        }
+     }
+  } */
 }
-#mainProfile .profileAnalytics:nth-of-type(1) .profileSectionInfo {
-  padding: 1.5rem;
+#contentContainer #mainProfile .profileAnalytics:nth-of-type(1) #iconAndUsername {
   width: 100%;
   font-family: "Nunito", sans-serif;
-  border-radius: 2rem;
-}
-#mainProfile .profileAnalytics:nth-of-type(1) .profileSectionInfo:nth-of-type(1) {
   display: flex;
-  justify-content: center;
-  flex-direction: column;
-  font-size: 1.5rem;
-  border-radius: 0rem;
-}
-#mainProfile .profileAnalytics:nth-of-type(1) .profileSectionInfo:nth-of-type(1) #iconAndUsername {
-  display: flex;
-  justify-content: start;
+  justify-content: space-between;
   align-items: center;
-  gap: 2rem;
+  padding: 1rem;
 }
-#mainProfile .profileAnalytics:nth-of-type(1) .profileSectionInfo:nth-of-type(1) #iconAndUsername .fa-user {
-  font-size: 3rem;
+#contentContainer #mainProfile .profileAnalytics:nth-of-type(1) #iconAndUsername #followTracking {
+  display: flex;
+  gap: 3rem;
 }
-#mainProfile .profileAnalytics:nth-of-type(1) .profileSectionInfo:nth-of-type(1) .followUserBtn {
-  align-self: start;
-  width: 40%;
+#contentContainer #mainProfile .profileAnalytics:nth-of-type(1) #iconAndUsername #followTracking section {
+  display: flex;
+  align-items: center;
+}
+#contentContainer #mainProfile .profileAnalytics:nth-of-type(1) #iconAndUsername #followTracking section p {
+  font-size: 1rem;
+  padding: 0.4rem;
+}
+#contentContainer #mainProfile .profileAnalytics:nth-of-type(1) #iconAndUsername #followTracking section h3 {
+  width: 100%;
+  border-right: 1px solid #d43737;
+  padding: 0.4rem;
+}
+#contentContainer #mainProfile .profileAnalytics:nth-of-type(1) #followBtnPair {
+  width: 100%;
+  display: flex;
+  justify-content: end;
+}
+#contentContainer #mainProfile .profileAnalytics:nth-of-type(1) #followBtnPair #followBtn, #contentContainer #mainProfile .profileAnalytics:nth-of-type(1) #followBtnPair #unfollowBtn {
+  background: none;
   padding: 0.5rem;
   color: white;
-  background: none;
-  border: 2px solid #0067e4;
   border-radius: 0.5rem;
+  border: none;
   cursor: pointer;
   transition: 150ms;
-  font-family: "Nunito", sans-serif;
-  margin-top: 1rem;
+  width: 150px;
 }
-#mainProfile .profileAnalytics:nth-of-type(1) .profileSectionInfo:nth-of-type(1) .followUserBtn:hover {
-  background-color: rgba(0, 108, 180, 0.479);
+#contentContainer #mainProfile .profileAnalytics:nth-of-type(1) #followBtnPair #followBtn {
+  border: 1px solid teal;
+  color: turquoise;
 }
-#mainProfile .profileAnalytics:nth-of-type(1) .profileSectionInfo:nth-of-type(2) {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  border-radius: 0rem;
+#contentContainer #mainProfile .profileAnalytics:nth-of-type(1) #followBtnPair #followBtn:hover {
+  background-color: teal;
+  color: white;
 }
-#mainProfile .profileAnalytics:nth-of-type(1) .profileSectionInfo:nth-of-type(2) #showUserStats {
-  display: flex;
-  gap: 1rem;
+#contentContainer #mainProfile .profileAnalytics:nth-of-type(1) #followBtnPair #unfollowBtn {
+  display: none;
+  border: 1px solid #d43737;
+  color: #d43737;
 }
-#mainProfile .profileAnalytics:nth-of-type(1) .profileSectionInfo:nth-of-type(2) #showUserStats span {
-  width: 50%;
-  padding: 0.5rem;
-  border-radius: 0.5rem;
-  transition: 100ms;
-  text-align: center;
+#contentContainer #mainProfile .profileAnalytics:nth-of-type(1) #followBtnPair #unfollowBtn:hover {
+  background-color: #d43737;
+  color: white;
 }
-#mainProfile .profileAnalytics:nth-of-type(1) .profileSectionInfo:nth-of-type(2) #showUserStats span h1 {
-  font-size: 2rem;
-}
-#mainProfile .profileAnalytics:nth-of-type(1) .profileSectionInfo:nth-of-type(2) #showUserStats span p {
-  font-size: 1rem;
-}
-#mainProfile #profileInformation {
-  display: flex;
-  gap: 1rem;
-  grid-column: 1/2;
-}
-#mainProfile #profileInformation #displayFollowing {
-  height: 650px;
-  width: 100%;
-  margin: 0 auto;
-  padding: 1rem;
-  background-color: #111;
-  border-radius: 1rem;
+#contentContainer #mainProfile .profileAnalytics:nth-of-type(1) #bioPair {
   display: flex;
   flex-direction: column;
+  width: 100%;
+  padding: 1rem;
   gap: 0.5rem;
 }
-#mainProfile #profileInformation #displayFollowing #followingNav {
+#contentContainer #mainProfile .profileAnalytics:nth-of-type(1) #bioPair #bioTitle {
   display: flex;
-  gap: 2rem;
-  font-family: "Nunito", sans-serif;
-  justify-content: left;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
 }
-#mainProfile #profileInformation #displayFollowing #followingNav p {
-  cursor: pointer;
+#contentContainer #mainProfile .profileAnalytics:nth-of-type(1) #bioPair #bioTitle #updateBioBtn {
+  display: none;
   padding: 0.5rem;
-  border-radius: 1rem;
+  background: none;
+  color: white;
+  border: none;
+  background-color: teal;
+  border-radius: 0.5rem;
+  transition: 150ms;
+  cursor: pointer;
 }
-#mainProfile #profileInformation #displayFollowing #followingNav p:hover {
-  background-color: rgba(128, 128, 128, 0.376);
+#contentContainer #mainProfile .profileAnalytics:nth-of-type(1) #bioPair #bioTitle #updateBioBtn:hover {
+  background-color: rgba(1, 70, 70, 0.658);
 }
-#mainProfile #profileInformation #displayFollowing .followDisplayBtns {
+#contentContainer #mainProfile .profileAnalytics:nth-of-type(1) #bioPair #bioTitle h3 {
+  font-family: "Nunito", sans-serif;
+  border-bottom: 1px solid #d43737;
+  width: 200px;
   display: flex;
   align-items: center;
   justify-content: space-between;
+}
+#contentContainer #mainProfile .profileAnalytics:nth-of-type(1) #bioPair #bioTitle .fa-pencil {
+  color: #d43737;
+  font-size: 2rem;
+  cursor: pointer;
+}
+#contentContainer #mainProfile .profileAnalytics:nth-of-type(1) #bioPair #bioTitle .fa-pencil:hover {
+  color: #7A0B31;
+}
+#contentContainer #mainProfile .profileAnalytics:nth-of-type(1) #bioPair #profileBio, #contentContainer #mainProfile .profileAnalytics:nth-of-type(1) #bioPair #userEnterBio {
+  background-color: #222;
+  color: white;
+  width: 100%;
+  min-height: 100px;
+  border-radius: 1rem;
+  align-self: center;
   padding: 1rem;
   font-family: "roboto", sans-serif;
-  cursor: pointer;
-  transition: 150ms;
-  border-bottom: 1px solid #2E2E2E;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  text-wrap: wrap;
 }
-#mainProfile #profileInformation #displayFollowing .followDisplayBtns section {
-  display: flex;
-  gap: 0.5rem;
-  align-items: center;
+#contentContainer #mainProfile .profileAnalytics:nth-of-type(1) #bioPair #userEnterBio {
+  display: none;
+  background-color: rgb(0, 0, 127);
+  padding: 0rem;
 }
-#mainProfile #profileInformation #displayFollowing .followDisplayBtns .followCheckText {
-  color: rgb(84, 84, 84);
-}
-#mainProfile #profileInformation #displayFollowing .followDisplayBtns .goToUser {
+#contentContainer #mainProfile .profileAnalytics:nth-of-type(1) #bioPair #userEnterBio textarea {
+  min-height: 100px;
+  width: 100%;
+  border-radius: 1rem;
+  padding: 1rem;
+  border: 1px solid teal;
+  resize: none;
+  background-color: #222;
   color: white;
+  font-size: 1rem;
+  font-family: "roboto", sans-serif;
 }
-#mainProfile #profileInformation #displayFollowing .followDisplayBtns .noFollowersCheck {
-  font-family: "Nunito", sans-serif;
+#contentContainer #mainProfile .profileAnalytics:nth-of-type(1) #bioPair #profileBio {
+  font-size: 1rem;
+  word-wrap: break-word;
 }
-#mainProfile #profileInformation #displayFollowing .followDisplayBtns:hover {
-  background-color: #2E2E2E;
-  border-radius: 0.9rem;
+#contentContainer #mainProfile .followUserBtn {
+  width: 200px;
+  padding: 0.5rem;
+  cursor: pointer;
+  background-color: teal;
+  border-radius: 0.5rem;
   border: none;
+  color: white;
+  transition: 150ms;
 }
-#mainProfile .totalPosts {
+#contentContainer #mainProfile .followUserBtn:hover {
+  background-color: rgba(0, 128, 128, 0.474);
+}
+#contentContainer #mainProfile #profileInformation {
+  display: flex;
+  gap: 1rem;
+}
+#contentContainer #mainProfile .totalPosts {
   display: flex;
   flex-direction: column;
   gap: 1rem;
   margin: 0 auto;
-  width: 55vw;
   font-family: "roboto", sans-serif;
   grid-column: 2;
-  grid-row: 1/3;
-  padding: 2rem;
-  background-color: #111;
   border-radius: 1rem;
+  grid-column: 1/3;
+  width: 100%;
 }
-#mainProfile .totalPosts .profHeaders {
+#contentContainer #mainProfile .totalPosts .profHeaders {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  background-color: rgba(17, 17, 17, 0.9098039216);
+  padding: 1rem;
+  border-radius: 1rem;
 }
-#mainProfile .totalPosts .profHeaders form {
+#contentContainer #mainProfile .totalPosts .profHeaders form {
   display: flex;
   justify-content: space-between;
   gap: 1rem;
   align-items: center;
-  cursor: pointer;
 }
-#mainProfile .totalPosts .profHeaders form select {
+#contentContainer #mainProfile .totalPosts .profHeaders form select {
   background-color: #222;
   color: white;
   padding: 0.5rem;
@@ -1229,35 +1282,54 @@ main #content .userContent .userPost .postInteractionSection .postLC .commentBtn
   border: 0.5px solid #2E2E2E;
   cursor: pointer;
 }
-#mainProfile .totalPosts .profHeaders form select option {
+#contentContainer #mainProfile .totalPosts .profHeaders form select option {
   color: white;
   cursor: pointer;
 }
-#mainProfile .totalPosts .existingPost {
-  border-bottom: 1px solid #2E2E2E;
-  padding: 2rem;
+#contentContainer #mainProfile .totalPosts .existingPost {
+  padding: 1.5rem;
   display: flex;
   flex-direction: column;
-  gap: 1rem;
-  justify-content: space-between;
+  justify-content: space-around;
   transition: 150ms;
+  background-color: rgba(17, 17, 17, 0.9098039216);
   cursor: pointer;
+  border-radius: 1rem;
+  height: 285px;
 }
-#mainProfile .totalPosts .existingPost .profilePostSubject {
+#contentContainer #mainProfile .totalPosts .existingPost .existingPostTitle {
+  display: flex;
+  flex-direction: column;
+}
+#contentContainer #mainProfile .totalPosts .existingPost .existingPostTitle .developerStatus {
+  color: turquoise;
+  font-family: "Nunito", sans-serif;
+}
+#contentContainer #mainProfile .totalPosts .existingPost .profilePostSubject {
   display: flex;
   justify-content: space-between;
   gap: 1rem;
+  font-size: 1.2rem;
+  padding: 0.5rem;
+  padding-left: 0rem;
+  border-bottom: 1px dotted #2E2E2E;
 }
-#mainProfile .totalPosts .existingPost .profilePostSubject span {
+#contentContainer #mainProfile .totalPosts .existingPost .profilePostSubject span {
   display: flex;
-  gap: 0.5rem;
+  align-items: center;
+  font-size: 1.3rem;
 }
-#mainProfile .totalPosts .existingPost .profilePostAnalytics {
+#contentContainer #mainProfile .totalPosts .existingPost .profilePostBody {
+  font-size: 1.2rem;
+}
+#contentContainer #mainProfile .totalPosts .existingPost .profilePostAnalytics {
   display: flex;
   align-items: center;
   gap: 1rem;
+  font-size: 1.5rem;
+  margin-top: 2rem;
 }
-#mainProfile .totalPosts .existingPost:hover {
+#contentContainer #mainProfile .totalPosts .existingPost:hover {
   background-color: #2E2E2E;
   border-radius: 1rem;
 }

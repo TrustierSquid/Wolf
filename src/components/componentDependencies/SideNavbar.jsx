@@ -1,9 +1,11 @@
 import { forwardRef, useEffect, useRef } from "react"
 
 const SideNavBar = forwardRef(({
-   userData,
-   displayAbout
-}, ref) => {
+   // loggedIn topics
+   username,
+   followers,
+   followings
+}, props, ref) => {
    const {sideNav, topicBtn} = ref || {}
 
 
@@ -35,14 +37,40 @@ const SideNavBar = forwardRef(({
    }
 
 
+
    return (
       <>
          <nav className="sideNav" ref={sideNav}>
+            <section id="subTitle">
+               <h3 id="sidebarUsername">
+                  {username}
+                  {
+                     (username === 'Samuel') ? (
+                        <>
+                           <span style={{color: 'turquoise'}}>Developer</span>
+                        </>
+                     ) : (
+                        <>
+                           <span>User</span>
+                        </>
+                     )
+                  }
+               </h3>
+               <div id="followingCountContainer">
+                  <div className='followingContainerItem'>
+                     <h2>{followings}</h2>
+                     <p>Following</p>
+                  </div>
+                  <div className='followingContainerItem'>
+                     <h2>{followers}</h2>
+                     <p>Followers</p>
+                  </div>
+               </div>
+            </section>
             <br />
             <section className="topicSelectionElement">
-               <button onClick={()=> window.location.href = '/communities'}><i className="fa-solid fa-border-all"></i> Your Communities </button>
+               <button onClick={()=> window.location.href = '/communities'}><i className="fa-solid fa-border-all"></i> My Communities </button>
                <button onClick={()=> window.location.href = '/topics'}><i className="fa-solid fa-plus"></i> Join a Community</button>
-               <button><i className="fa-regular fa-user"></i> Profile</button>
                <button><i className="fa-solid fa-right-from-bracket"></i>Logout</button>
 
                {/* <h4 className="subTitle">JOINED COMMUNITIES</h4> */}

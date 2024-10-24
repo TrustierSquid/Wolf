@@ -302,6 +302,9 @@ export default function Home(){
    // sidebar functionality
    const sidebarProps = {
       userData: userData,
+      username: username,
+      followings: followingCount,
+      followers: followerCount,
       displayAbout: ()=> displayAbout()
    }
 
@@ -325,11 +328,11 @@ export default function Home(){
 
       {/* NAVBAR */}
       <Navbar {...navbarProps} appearEffect={appearEffect}/>
-      <SideNavBar {...sidebarProps} ref={sidebarRefs}/>
 
       {/* MAIN CONTENT */}
 
          <main>
+            <SideNavBar {...sidebarProps} ref={sidebarRefs}/>
             <span ref={darkBG} id="darkBG"></span>
             <section id="content">
 

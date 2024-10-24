@@ -1,21 +1,19 @@
-#communityContainer {
-  background-color: rgba(94, 93, 93, 0.1450980392);
-  width: 70%;
-  margin: 3rem auto;
+#contentContainer #communityContainer {
+  background-color: #111;
+  width: 55%;
   border-radius: 1.5rem;
-  position: relative;
-  left: 7%;
   display: flex;
   flex-direction: column;
+  justify-content: start;
   gap: 2rem;
   padding: 2rem;
   color: white;
   font-family: "Nunito", sans-serif;
 }
-#communityContainer #titleDiv h4 {
+#contentContainer #communityContainer #titleDiv h4 {
   color: grey;
 }
-#communityContainer ul {
+#contentContainer #communityContainer ul {
   list-style-type: none;
   font-family: "roboto", sans-serif;
   border-radius: 1.5rem;
@@ -24,12 +22,12 @@
   flex-direction: column;
   gap: 0.5rem;
 }
-#communityContainer ul h3 {
+#contentContainer #communityContainer ul h3 {
   padding: 1.5rem;
   background-color: #111;
   border-radius: 1rem;
 }
-#communityContainer ul li {
+#contentContainer #communityContainer ul li {
   padding: 0.5rem;
   padding-left: 2rem;
   padding-right: 2rem;
@@ -38,22 +36,22 @@
   align-items: center;
   justify-content: space-between;
   gap: 4rem;
-  background-color: #111;
+  background-color: #1B1B1B;
   border-radius: 1rem;
 }
-#communityContainer ul li .communityInformation {
+#contentContainer #communityContainer ul li .communityInformation {
   display: flex;
   gap: 0.5rem;
   align-items: center;
 }
-#communityContainer ul li .communityInformation img {
+#contentContainer #communityContainer ul li .communityInformation img {
   width: 40px;
 }
-#communityContainer ul li .interactionBtns {
+#contentContainer #communityContainer ul li .interactionBtns {
   display: flex;
   gap: 1rem;
 }
-#communityContainer ul li .interactionBtns button {
+#contentContainer #communityContainer ul li .interactionBtns button {
   padding: 0.5rem;
   background: none;
   color: white;
@@ -62,20 +60,20 @@
   border-radius: 0.5rem;
   transition: 150ms;
 }
-#communityContainer ul li .interactionBtns .viewCommunityPostsBtn {
+#contentContainer #communityContainer ul li .interactionBtns .viewCommunityPostsBtn {
   color: turquoise;
   border: 1px solid teal;
 }
-#communityContainer ul li .interactionBtns .viewCommunityPostsBtn:hover {
+#contentContainer #communityContainer ul li .interactionBtns .viewCommunityPostsBtn:hover {
   color: white;
   background-color: teal;
   border: none;
 }
-#communityContainer ul li .interactionBtns .leaveCommunityBtn {
+#contentContainer #communityContainer ul li .interactionBtns .leaveCommunityBtn {
   color: crimson;
   border: 1px solid crimson;
 }
-#communityContainer ul li .interactionBtns .leaveCommunityBtn:hover {
+#contentContainer #communityContainer ul li .interactionBtns .leaveCommunityBtn:hover {
   color: white;
   background-color: crimson;
   border: none;

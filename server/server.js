@@ -451,12 +451,30 @@ app.put('/removeCommunity/:community/:UID', async (req, res)=> {
   const database = await connectMongo()
   const usersCollection = database.collection('Users')
 
-  usersCollection.updateOne(
+  await usersCollection.updateOne(
     {UID: UID},
     {$pull: {'topics': community}}
   )
 
   res.json({success: 200})
+
+})
+
+app.post('/updateBio/:UID', async (req, res)=> {
+  const { UID } = req.params
+  const { newBio } = req.body
+
+  // connect to DB
+  const database = await connectMongo()
+  const usersCollection = database.collection('Users')
+
+  await usersCollection.updateOne(
+    {UID: UID},
+    {$set: {userBio: newBio}}
+  )
+
+  res.sendStatus(200)
+
 
 })
 

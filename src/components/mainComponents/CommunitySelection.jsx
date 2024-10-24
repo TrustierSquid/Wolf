@@ -37,43 +37,46 @@ export default function CommunitySelection(props){
    return (
       <>
          <Navbar/>
-         <SideNavBar/>
 
-         <main id="communityContainer">
-            <div id="titleDiv">
-               <h1>Your Joined Communities </h1>
-               <h4>Communities that you have joined</h4>
-            </div>
+         <div id="contentContainer">
+            <SideNavBar/>
+            <main id="communityContainer">
+               <div id="titleDiv">
+                  <h1>Your Joined Communities </h1>
+                  <h4>Communities that you have joined</h4>
+               </div>
 
-            <ul>
-               {userLoggedInTopics?.length > 0 ? (
-                  userLoggedInTopics?.map((community)=> {
-                     return (
-                        <>
-                           <li>
-                              <section className="communityInformation">
-                                 <img src={logo} alt="" />
-                                 <h4>{community}</h4>
-                              </section>
+               <ul>
+                  {userLoggedInTopics?.length > 0 ? (
+                     userLoggedInTopics?.map((community)=> {
+                        return (
+                           <>
+                              <li>
+                                 <section className="communityInformation">
+                                    <img src={logo} alt="" />
+                                    <h4>{community}</h4>
+                                 </section>
 
-                              <section className="interactionBtns">
-                                 <button className="viewCommunityPostsBtn" onClick={()=> window.location.href = `/home?topicFeed=${community + 'Feed'}`}>View Posts</button>
-                                 <button className="leaveCommunityBtn" onClick={()=> leaveCommunity(community)}>Leave Community</button>
-                              </section>
+                                 <section className="interactionBtns">
+                                    <button className="viewCommunityPostsBtn" onClick={()=> window.location.href = `/home?topicFeed=${community + 'Feed'}`}>View Posts</button>
+                                    <button className="leaveCommunityBtn" onClick={()=> leaveCommunity(community)}>Leave Community</button>
+                                 </section>
 
-                           </li>
-                        </>
-                     )
-                  })
+                              </li>
+                           </>
+                        )
+                     })
 
-               ) : (
-                  <div className="noPostsMessage">
-                     <h3>You have not joined any <a href="/topics" style={{color: 'crimson'}}>communities</a> yet!  </h3>
-                  </div>
-               )}
+                  ) : (
+                     <div className="noPostsMessage">
+                        <h3>You have not joined any <a href="/topics" style={{color: 'crimson'}}>communities</a> yet!  </h3>
+                     </div>
+                  )}
 
-            </ul>
-         </main>
+               </ul>
+            </main>
+         </div>
+
       </>
    )
 }

@@ -2,6 +2,7 @@
 
 $uiBG: #2b2b2b;
 $cardBG: #222;
+$postBG: #111111e8;
 $cardInteractionSection: #181818;
 $cardBorder: #2E2E2E;
 $moodleBG: #181818;
@@ -28,7 +29,7 @@ $sc-error: #F96E36;
 $sc-info: #00a1b6;
 
 $subTitle: #ff7b00;
-$onHover: #55555543;
+$onHover: #1e0000f8;
 
 $fs-h1: 2.3rem;
 $fs-h2: 2rem;
@@ -78,6 +79,9 @@ body {
 
 .noPostsMessage {
    color: white;
+   background-color: $postBG;
+   padding: 1rem;
+   border-radius: 1rem;
    font-family: $ff-heading;
    text-align: center;
    margin-top: 2rem;
@@ -479,36 +483,46 @@ DEFAULT PAGE
 // Navbar
 
 #nav {
+   top: 0;
+   // margin: 1rem;
+   // border-radius: 1rem;
+   border-bottom: 1px solid $buttonHover;
    display: flex;
    padding: 0.5rem;
    padding-right: 2.5rem;
    padding-left: 2.5rem;
    justify-content: space-between;
    align-items: center;
-   gap: 15rem;
    position: sticky;
-   top: 0;
    background-color: $subBackground;
-   border-top: 1px solid $cardBorder;
-   border-bottom: 1px solid $cardBorder;
-   z-index: 7;
+   z-index: 11;
 
 
 
    #logoContainer {
       display: flex;
       align-items: center;
-      gap: 1rem;
-      h1 {
-         font-family: comfortaa;
-         color: white;
+      gap: 1.5rem;
+
+      #titleAndLogo {
+         display: flex;
+         align-items: center;
+         gap: 0.5rem;
+         h1 {
+            font-family: comfortaa;
+            color: white;
+         }
+
+         #logo  {
+            height: 50px;
+            object-fit: cover;
+            cursor: pointer;
+         }
+
       }
 
-      #logo  {
-         height: 50px;
-         object-fit: cover;
-         cursor: pointer;
-      }
+
+
 
       button {
          padding: 0.8rem;
@@ -550,11 +564,11 @@ DEFAULT PAGE
          color: white;
          cursor:pointer;
          transition: 150ms;
-
-         &:focus {
-            color: $primary;
-         }
-
+         background: blue;
+         border: 1px solid grey;
+         width: 50px;
+         height: 50px;
+         border-radius: 50%;
 
          &:hover {
             color: $primary;
@@ -668,89 +682,69 @@ DEFAULT PAGE
 }
 
 
-// Dropdown in the navbar
-
-#navDropdown {
-   display: flex;
-   flex-direction: column;
-   justify-content: center;
-   background-color: $cardBG;
-   border: 1px solid $cardBorder;
-   font-family: $ff-heading;
-   padding: 2rem;
-   color: rgba(255, 255, 255, 0.818);
-   height: 150px;
-   width: 300px;
-   position: fixed;
-   right: 11%;
-   z-index: 3;
-   border-radius: 1rem;
-   transform: translateY(0px);
-   transition: 150ms;
-   opacity: 0;
-   pointer-events: none;
-
-   .navDropdownItem {
-      padding-bottom: 0.5rem;
-      padding-top: 0.5rem;
-      display: flex;
-      gap: 1rem;
-      padding-left: 0.5rem;
-      cursor: pointer;
-      &:hover {
-         color: white;
-      }
-   }
-
-   .navDropdownItemProfile {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      cursor: pointer;
-
-      h4 {
-         color: grey;
-      }
-
-      #navUsername {
-         color: white;
-      }
-
-      &:hover {
-         #navUsername {
-            color: $primary;
-         }
-      }
-   }
-
-
-}
-
 
 // side nav bar
 
 .sideNav {
-   height: 94.2vh;
-   position: fixed;
-   width: 250px;
+   height: 50vh;
+   top: 10%;
+   width: 500px;
+   height: 450px;
    color: white;
-   background-color: $subBackground;
-   border-right: 1px solid $cardBorder;
-   padding: 1rem;
+   background: rgb(59,1,36);
+background: linear-gradient(326deg, rgba(59,1,36,1) 0%, rgba(203,0,57,1) 100%);
+   border-radius: 2rem;
+   border: none;
+   padding: 1.5rem;
    display: flex;
    flex-direction: column;
-   // gap: 2rem;
    font-family: $ff-body;
-   // margin: 2rem;
-   overflow-y: auto;
+   z-index: 0;
 
-   .subTitle {
+   #subTitle {
       font-family: $ff-body;
       font-weight: lighter;
-      letter-spacing: 2px;
       padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
       // font-size: 1.3rem;
-      color: $subTitle;
+
+      #sidebarUsername {
+         background-color: $postBG;
+         padding: 1rem;
+         border-radius: 1rem;
+         width: 100%;
+         text-align: left;
+         display: flex;
+         flex-direction: column;
+         box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+      }
+
+
+      #followingCountContainer {
+         display: flex;
+         gap: 0.5rem;
+         width: 100%;
+
+         .followingContainerItem {
+            display: flex;
+            flex-direction: column;
+            align-items: start;
+            background-color: $postBG;
+            padding: 1rem;
+            width: 100%;
+            border-radius: 1rem;
+            box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+         }
+
+         .followingContainerItem:nth-of-type(2) {
+            align-items: start;
+         }
+
+      }
+
    }
 
 
@@ -758,7 +752,7 @@ DEFAULT PAGE
       // font-family: 'roboto';
       display: flex;
       flex-direction: column;
-      gap: 1.5rem;
+      gap: 1rem;
       padding: 0.5rem;
 
 
@@ -769,6 +763,7 @@ DEFAULT PAGE
          background: none;
          border: none;
          padding: 1rem;
+         text-wrap: nowrap;
          font-size: 1rem;
          color: white;
          border-radius: 0.5rem;
@@ -810,13 +805,20 @@ DEFAULT PAGE
 main {
    display: flex;
    justify-content: center;
+   gap: 2rem;
+   padding: 2rem;
 
    #content {
       // height: 90vh;
-      width: 50%;
+      width: 55%;
       padding: 2rem;
       display: flex;
       flex-direction: column;
+      // background-color: rgba(34, 17, 17, 0.251);
+      background: rgb(122,11,49);
+      background: linear-gradient(180deg, rgba(122,11,49,1) 0%, rgba(46,0,28,1) 100%);
+      border-radius: 1rem;
+
 
       #newPostBtn {
          width: 100%;
@@ -881,7 +883,8 @@ main {
             transition: 250ms;
             display: flex;
             flex-direction: column;
-            z-index: 8;
+            z-index: 9;
+            border: 1px solid $darkenPrimary;
 
             #createNewPostHeader {
               color: white;
@@ -892,6 +895,7 @@ main {
                display: flex;
                align-items: center;
                justify-content: space-between;
+
 
                span {
                   font-size: 1.3rem;
@@ -1018,7 +1022,7 @@ main {
          display: flex;
          margin-top: 1rem;
          flex-direction: column;
-         gap: 4rem;
+         gap: 1rem;
 
          // each individual post
          .userPost {
@@ -1026,7 +1030,9 @@ main {
             max-width: 100%;
             display: flex;
             flex-direction: column;
-            gap: 0.5rem;
+            background-color: $postBG;
+            border-radius: 1rem;
+            box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
 
             .mainPost {
                flex-direction: column;
@@ -1034,9 +1040,9 @@ main {
                gap: 1rem;
                padding: 1.5rem;
                border-radius: 1rem;
-               background: #111;
                color: white;
                transition: 250ms;
+
 
 
                //  header for each post (post author, type of user, time ago posted)
@@ -1087,7 +1093,9 @@ main {
                      font-weight: bold;
                      color: white;
                      display: flex;
-                     gap: 0.5rem;
+                     padding: 0.5rem;
+                     padding-left: 0rem;
+                     border-bottom: 1px dotted $cardBorder;
 
                      i {
                         color: $primary;
@@ -1151,9 +1159,7 @@ main {
                display: flex;
                align-items: center;
                justify-content: space-between;
-               border-radius: 1rem;
                padding: 1rem;
-               background-color: #111;
 
                .postDetails {
                   display: flex;
@@ -1224,7 +1230,7 @@ main {
    transform: translate(50%, -50%);
    color: white;
    background-color: $moodleBG;
-   border: 2px solid $cardBorder;
+   border: 1px solid $darkenPrimary;
    border-radius: 0.5rem;
    padding: 2rem;
    transition: 150ms;
@@ -1459,280 +1465,370 @@ main {
 
 // Profile Component
 
-#mainProfile {
-   width: 80%;
-   display: grid;
-   grid-template-columns: 1fr;
-   gap: 1rem;
-   margin: 2% auto;
-   color: white;
+#contentContainer {
+   display: flex;
+   justify-content: center;
    padding: 2rem;
-   border-radius: 1.5rem;
-   background-color: #e0181804;
-
-   .profHeaders {
-      font-family: $ff-heading;
-   }
+   gap: 2rem;
 
 
-   .profileAnalytics:nth-of-type(1) {
-      background-color: #111;
-      box-shadow: 0 1px 6px -1px rgba(0,0,0,.1);
-      width: 100%;
+   #mainProfile {
+      width: 55%;
       display: flex;
-      align-items: start;
-      text-align: start;
-      margin: 0 auto;
-      gap: 2rem;
-      // height: 500px;
-      border-radius: 1rem;
+      flex-direction: column;
+      gap: 1rem;
+      color: white;
+      padding: 2rem;
+      border-radius: 1.5rem;
+      // background-color: $onHover;
+      background: rgb(122,11,49);
+      background: linear-gradient(180deg, rgba(122,11,49,1) 0%, rgba(25,0,41,1) 100%);
 
-      .profileSectionInfo {
-         padding: 1.5rem;
-         width: 100%;
+
+      .profHeaders {
          font-family: $ff-heading;
-         border-radius: 2rem;
       }
 
-      // Displaying name and user status
-      .profileSectionInfo:nth-of-type(1){
+
+      .profileAnalytics:nth-of-type(1) {
+         background-color: #111;
+         box-shadow: 0 1px 6px -1px rgba(0,0,0,.1);
+         width: 100%;
          display: flex;
-         justify-content: center;
          flex-direction: column;
-         // gap: 0.5rem;
-         font-size: 1.5rem;
-         border-radius: 0rem;
+         align-items: start;
+         text-align: start;
+         margin: 0 auto;
+         gap: 0.5rem;
+         border-radius: 1rem;
+         font-size: $fs-h3;
+         padding: 1rem;
 
          #iconAndUsername {
-            .fa-user {
-               font-size: 3rem;
-            }
-
-            display: flex;
-            justify-content: start;
-            align-items: center;
-            gap: 2rem;
-
-         }
-
-         .profileUserTypeHeader {
-         }
-
-         .followUserBtn {
-            align-self: start;
-            width: 40%;
-            padding: 0.5rem;
-            color: white;
-            background: none;
-            border: 2px solid #0067e4;
-            border-radius: 0.5rem;
-            cursor: pointer;
-            transition: 150ms;
+            width: 100%;
             font-family: $ff-heading;
-            margin-top: 1rem;
-
-            &:hover {
-               background-color: rgba(0, 108, 180, 0.479);
-            }
-         }
-
-      }
-
-      // displays how many followers the current user has
-      .profileSectionInfo:nth-of-type(2){
-         display: flex;
-         align-items: center;
-         gap: 1rem;
-         border-radius: 0rem;
-
-         #showUserStats {
             display: flex;
-            gap: 1rem;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
 
-            span {
-               width: 50%;
+            // THe id for tracking who follows who
+            #followTracking {
+               display: flex;
+               gap: 3rem;
+
+               section {
+                  display: flex;
+                  align-items: center;
+
+                  p {
+                     font-size: 1rem;
+                     padding: 0.4rem;
+                  }
+
+                  h3 {
+                     width: 100%;
+                     border-right: 1px solid $primary;
+                     padding: 0.4rem;
+                  }
+               }
+
+            }
+
+         }
+
+         #followBtnPair {
+            width: 100%;
+            display: flex;
+            justify-content: end;
+
+            #followBtn,  #unfollowBtn {
+               background: none;
                padding: 0.5rem;
+               color: white;
                border-radius: 0.5rem;
-               transition: 100ms;
-               text-align: center;
-               h1 {
-                  font-size: 2rem;
+               border: none;
+               cursor: pointer;
+               transition: 150ms;
+               width: 150px;
+            }
+
+
+            #followBtn {
+               border: 1px solid teal;
+               color: turquoise;
+               &:hover {
+                  background-color: teal;
+                  color: white;
+               }
+            }
+
+            #unfollowBtn {
+               display: none;
+               border: 1px solid $primary;
+               color: $primary;
+               &:hover {
+                  background-color: $primary;
+                  color: white;
+               }
+            }
+
+         }
+
+
+
+         #bioPair {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            padding: 1rem;
+            gap: 0.5rem;
+
+            // cointains the bio icon
+            #bioTitle {
+               display: flex;
+               justify-content: space-between;
+               align-items: center;
+               width: 100%;
+
+               #updateBioBtn {
+                  display: none;
+                  padding: 0.5rem;
+                  background: none;
+                  color: white;
+                  border: none;
+                  background-color: teal;
+                  border-radius: 0.5rem;
+                  transition: 150ms;
+                  cursor: pointer;
+
+                  &:hover {
+                     background-color: rgba(1, 70, 70, 0.658);
+                  }
                }
 
-               p {
-                  font-size: 1rem;
+               h3 {
+                  font-family: $ff-heading;
+                  border-bottom: 1px solid $primary;
+                  width: 200px;
+                  display: flex;
+                  align-items: center;
+                  justify-content: space-between;
                }
+
+               .fa-pencil {
+                  color: $primary;
+                  // border-bottom: 1px solid $primary;
+                  font-size: 2rem;
+                  cursor: pointer;
+                  &:hover {
+                     color: $buttonHover;
+                  }
+               }
+
 
 
             }
+
+
+
+
+
+            #profileBio, #userEnterBio {
+               background-color: #222;
+               color: white;
+               width: 100%;
+               min-height: 100px;
+               border-radius: 1rem;
+               align-self: center;
+               padding: 1rem;
+               font-family: $ff-body;
+               box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+               text-wrap: wrap;
+            }
+
+            // the field that the user can enter or edit a bio
+            #userEnterBio {
+               display: none;
+               background-color: rgb(0, 0, 127);
+               padding: 0rem;
+
+               textarea {
+                  min-height: 100px;
+                  width: 100%;
+                  border-radius: 1rem;
+                  padding: 1rem;
+                  border: 1px solid teal;
+                  resize: none;
+                  background-color: #222;
+                  color: white;
+                  font-size: 1rem;
+                  font-family: $ff-body;
+               }
+            }
+
+             // bio on display
+             #profileBio {
+               font-size: 1rem;
+               word-wrap: break-word;
+             }
+
+
          }
+
+
+
+         /* #profileCustomize {
+            .fa-pencil {
+               cursor: pointer;
+               color: $primary;
+               background-color: $cardBG;
+               padding: 1rem;
+               border-radius: 50%;
+               &:hover {
+                  background-color: #444;
+               }
+            }
+         } */
+
       }
 
+      .followUserBtn {
+         width: 200px;
+         padding: 0.5rem;
+         cursor: pointer;
+         background-color: teal;
+         border-radius: 0.5rem;
+         border: none;
+         color: white;
+         transition: 150ms;
 
+         &:hover {
+            background-color: rgba(0, 128, 128, 0.474);
+         }
 
-   }
+      }
 
-   #profileInformation {
-      display: flex;
-      gap: 1rem;
-      grid-column: 1 / 2;
+      #profileInformation {
+         display: flex;
+         gap: 1rem;
+      }
 
-
-      #displayFollowing {
-         height: 650px;
-         width: 100%;
-         margin: 0 auto;
-         padding: 1rem;
-         background-color: #111;
-         border-radius: 1rem;
+      .totalPosts{
          display: flex;
          flex-direction: column;
-         gap: 0.5rem;
+         gap: 1rem;
+         margin: 0 auto;
+         font-family: $ff-body;
+         grid-column: 2;
+         border-radius: 1rem;
+         grid-column: 1 / 3;
+         width: 100%;
 
 
-         #followingNav {
+         .profHeaders {
             display: flex;
-            gap: 2rem;
-            font-family: $ff-heading;
-            // border-bottom: 0.5px solid grey;
-            justify-content: left;
+            justify-content: space-between;
+            align-items: center;
+            background-color: $postBG;
+            padding: 1rem;
+            border-radius: 1rem;
 
-            p {
-               cursor: pointer;
+            form {
+               display: flex;
+               justify-content: space-between;
+               gap: 1rem;
+               align-items: center;
+
+               select {
+                  background-color: $cardBG;
+                  color: white;
+                  padding: 0.5rem;
+                  border-radius: 0.5rem;
+                  border: 0.5px solid $cardBorder;
+                  cursor: pointer;
+
+                  option {
+                     color: white;
+                     cursor: pointer;
+                  }
+               }
+            }
+         }
+
+
+         .existingPost {
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            transition: 150ms;
+            background-color: $postBG;
+            cursor: pointer;
+            border-radius: 1rem;
+            height: 285px;
+
+            .existingPostTitle {
+               display: flex;
+               flex-direction: column;
+
+
+               .developerStatus {
+                  color: turquoise;
+                  font-family: $ff-heading;
+               }
+
+               .userStatus {
+
+               }
+
+            }
+
+
+
+            .profilePostSubject {
+               display: flex;
+               justify-content: space-between;
+               gap: 1rem;
+               font-size: 1.2rem;
                padding: 0.5rem;
-               border-radius: 1rem;
+               padding-left: 0rem;
+               border-bottom: 1px dotted $cardBorder;
 
-               &:hover {
-                  background-color: rgba(128, 128, 128, 0.376);
+               span {
+                  display: flex;
+                  align-items: center;
+                  font-size: 1.3rem;
                }
             }
 
-         }
+            .profilePostBody {
+               font-size: 1.2rem;
 
-         .followDisplayBtns {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 1rem;
-            font-family: $ff-body;
-            cursor: pointer;
-            transition: 150ms;
-            border-bottom: 1px solid $cardBorder;
+            }
 
-            section {
+            .profilePostAnalytics {
                display: flex;
-               gap: 0.5rem;
                align-items: center;
-            }
-
-            .followCheckText {
-               color: rgb(84, 84, 84);
-            }
-
-            .goToUser {
-               color: white;
-            }
-
-            .noFollowersCheck {
-               font-family: $ff-heading;
+               gap: 1rem;
+               font-size: $fs-h3;
+               margin-top: 2rem;
             }
 
             &:hover {
                background-color: $cardBorder;
-               border-radius: .9rem;
-               border: none;
+               border-radius: 1rem;
             }
+
 
          }
 
+
       }
-
-
 
    }
-
-   .totalPosts{
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-      margin: 0 auto;
-      width: 55vw;
-      font-family: $ff-body;
-      grid-column: 2;
-      grid-row: 1 / 3;
-      padding: 2rem;
-      background-color: #111;
-      border-radius: 1rem;
-
-
-      .profHeaders {
-         display: flex;
-         justify-content: space-between;
-         align-items: center;
-
-         form {
-            display: flex;
-            justify-content: space-between;
-            gap: 1rem;
-            align-items: center;
-            cursor: pointer;
-
-            select {
-               background-color: $cardBG;
-               color: white;
-               padding: 0.5rem;
-               border-radius: 0.5rem;
-               border: 0.5px solid $cardBorder;
-               cursor: pointer;
-
-               option {
-                  color: white;
-                  cursor: pointer;
-               }
-            }
-         }
-      }
-
-
-      .existingPost {
-         border-bottom: 1px solid $cardBorder;
-         padding: 2rem;
-         display: flex;
-         flex-direction: column;
-         gap: 1rem;
-         justify-content: space-between;
-         transition: 150ms;
-         cursor: pointer;
-
-         .profilePostSubject {
-            display: flex;
-            justify-content: space-between;
-            gap: 1rem;
-
-            span {
-               display: flex;
-               gap: 0.5rem;
-            }
-         }
-
-         .profilePostAnalytics {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-         }
-
-         &:hover {
-            background-color: $cardBorder;
-            border-radius: 1rem;
-         }
-
-
-      }
-
-
-   }
-
 }
+
 
 
 

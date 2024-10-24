@@ -68,9 +68,7 @@ export default function UpdateFeed(props) {
           <>
             <h2 className="poster" onClick={() => navigateToProfile(poster)}>
               {poster}{" "}
-              <span style={{ color: "#00b3ff" }}>
-                Developer <i className="fa-solid fa-code"></i>
-              </span>
+              <p style={{ color: "turquoise" }}>Developer</p>
             </h2>
           </>
         );
@@ -90,9 +88,7 @@ export default function UpdateFeed(props) {
           <>
             <h2 className="poster" onClick={() => navigateToProfile(poster)}>
               {poster}{" "}
-              <span style={{ color: "grey" }}>
-                User <i className="fa-solid fa-user"></i>
-              </span>
+              <p style={{ color: "grey" }}>User</p>
             </h2>
           </>
         );
@@ -358,8 +354,20 @@ export default function UpdateFeed(props) {
       (timeDifference % millisecondsInOneHour) / millisecondsInOneMinute
     );
 
+    // Calculate months using the date object
+    const monthsPassed =
+    currentDate.getMonth() -
+    startDate.getMonth() +
+    12 * (currentDate.getFullYear() - startDate.getFullYear());
+
+
+
 
     // Display time passed
+    if (monthsPassed >= 1) {
+      return <h4 className="postData">{`${monthsPassed}Mth ago`}</h4>;
+    }
+
     if (daysPassed >= 1) {
       return <h4 className="postData">{`${daysPassed}d ago`}</h4>;
     }
@@ -396,7 +404,6 @@ export default function UpdateFeed(props) {
                       {showPostDate(post.postCreationDate)}
                     </section>
                     <p className="postCaption">
-                      <i className="fa-solid fa-square"></i>
                       {post.subject}
                     </p>
                   </div>
