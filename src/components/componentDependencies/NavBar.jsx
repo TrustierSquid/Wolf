@@ -2,6 +2,12 @@ import { forwardRef, useRef, useState, useEffect } from "react";
 import logo from "/src/assets/wolfLogo.png";
 
 export default function Navbar(props) {
+
+  const queryString = window.location.search;
+  const urlParams = new URLSearchParams(queryString);
+  const whatCommunity = urlParams.get("topicFeed");
+
+
   const [loggedInUID, setLoggedInUID] = useState(null);
   const [username, setUsername] = useState(null);
   const [userTopicList, setUserTopicList] = useState([])
@@ -17,6 +23,7 @@ export default function Navbar(props) {
 
   const mobileNavMenu = useRef(null)
   const [isMobileNavMenuOpen, setIsMobileNavMenuOpen] = useState(true)
+  const [loggedInProfilePic, setLoggedInProfilePic] = useState(null)
 
   // GETTING USER INFORMATION AND DISPLYING IT ON THE HOME PAGE SPECIFIC TO THE USER LOGGED IN
   useEffect(() => {
@@ -40,6 +47,8 @@ export default function Navbar(props) {
       setLoggedInUID(homeData.UID);
       setUsername(homeData.userName);
       setUserTopicList(homeData.topicArr || [])
+      setLoggedInProfilePic(homeData.profilePic)
+
     }
 
 
@@ -83,10 +92,12 @@ export default function Navbar(props) {
       mobileNavMenu.current.style.opacity = '1'
       // document.body.style.overflow = 'hidden';
       navBtn.target.style.color = 'red'
-      window.scrollTo(-10, -10);
+      // window.scrollTo(-10, -10);
+      mobileNavMenu.current.style.width = '80%'
 
     } else {
       mobileNavMenu.current.style.left = '-50%'
+      mobileNavMenu.current.style.width = '0px'
       document.body.style.overflow = 'auto';
       navBtn.target.style.color = 'white'
       mobileNavMenu.current.style.opacity = '0'
@@ -125,10 +136,25 @@ export default function Navbar(props) {
             <img id="logo" src={logo} alt="" />
             <h1>WOLF</h1>
           </div>
-          <button onClick={()=> navigateBackToHome()}><i className="fa-solid fa-house"></i> Home</button>
+          <button onClick={()=> navigateBackToHome()}><i className="fa-solid fa-house"></i></button>
           {/* Button becomes disabled after visting any other page that isnt of the home sub domain */}
           {window.location.pathname === '/home' ? (
-              <button onClick={()=> props.appearEffect()}><i className="fa-solid fa-square-plus"></i> Post</button>
+              <>
+                <button onClick={()=> props.appearEffect()}><i className="fa-solid fa-square-plus"></i> Post</button>
+                <h3>
+                  {
+                    (whatCommunity === null) ? (
+                      <>
+                        <h3>Home</h3>
+                      </>
+                    ) : (
+                      <>
+                        <h3>{whatCommunity.split('Feed')}</h3>
+                      </>
+                    )
+                  }
+                  </h3>
+              </>
             ) : (
               <>
                 <button style={{display: 'none'}}></button>
@@ -136,11 +162,11 @@ export default function Navbar(props) {
             )}
           {/* Was trying to conditional render this button based on the subdirectory they user is visiting. */}
         </div>
+
         <div id="profileContainer">
           {/* In place for a profile picture */}
-          <span id="dropdownBtn" onClick={()=> navigateProfile()}>
-            {/* {username} */}
-          </span>
+
+          <img id='dropdownBtn' onClick={()=> navigateProfile()} src={loggedInProfilePic} alt="" />
         </div>
 
         {/* Mobile Navs */}
@@ -151,16 +177,19 @@ export default function Navbar(props) {
 
       <section id="mobileNavMenu" ref={mobileNavMenu} >
         <div className='mobileNavProfileSection' onClick={()=> navigateProfile()}>
-          <h5 style={{color: '#ff7b00'}}>VIEW PROFILE</h5>
-          <h2>{username}</h2>
-          <h3>{determineUserType(username)}</h3>
+          <img src={loggedInProfilePic} alt="" />
+          <section id="mobileWhoAmI">
+            <h5 style={{color: '#ff7b00'}}>VIEW PROFILE</h5>
+            <h2>{username}</h2>
+            <h3>{determineUserType(username)}</h3>
+          </section>
         </div>
 
         {/* <hr /> */}
         <h4 className="mobileNavMainBtns" onClick={()=> navigateLogOut()}>Log Out <i className="fa-solid fa-right-from-bracket"></i></h4>
         <h4 className="mobileNavMainBtns" onClick={()=> navigateBackToHome()}>Home Feed <i className="fa-solid fa-house"></i></h4>
-        <h4 className="mobileNavMainBtns" onClick={()=> navigateToTopics()}>Join a Topic <i className="fa-solid fa-users"></i></h4>
-        <h4 className="subTitle">JOINED COMMUNITIES</h4>
+        <h4 className="mobileNavMainBtns" onClick={()=> navigateToTopics()}>Join a Topic <i class="fa-solid fa-user-plus"></i></h4>
+        <h4 className="mobileNavMainBtns" onClick={()=> window.location.href = '/communities'} >My Communities <i className="fa-solid fa-users"></i></h4>
         {/* Displays the communities that the user has joined */}
         {/* {userTopicList?.length > 0 ? (
           userTopicList.map((topic, key)=> {

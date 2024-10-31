@@ -44,6 +44,7 @@ export default function Home(){
 
    const [followerCount, setFollowerCount] = useState([])
    const [followingCount, setFollowingCount] = useState([])
+   const [loggedInUID, setLoggedInUID] = useState(null)
 
 
    // GETTING USER INFORMATION AND DISPLYING IT ON THE HOME PAGE SPECIFIC TO THE USER LOGGED IN
@@ -72,6 +73,8 @@ export default function Home(){
 
          // the current user logged in
          setUsername(homeData.userName)
+
+         setLoggedInUID(homeData.UID);
 
          //  the current users following count
          setFollowingCount(homeData.followingCount.length)
@@ -132,6 +135,8 @@ export default function Home(){
 
    // image upload element
    const imageRef = useRef(null)
+   const [image, setImage] = useState(null)
+
 
    //  Creating a new post and sending it to the db so it can be displayed
    async function createNewPost(){
@@ -145,24 +150,26 @@ export default function Home(){
       }
 
       // checking to see what community the user is posting to
-      console.log(
-         {
-            community: communityStatePost,
-            subject: subject,
-            body: body,
-            sender: username
-         }
-      )
+
+      const imageFile = imageRef.current.files[0];
+      const formData = new FormData()
+      formData.append('whoPosted', username);
+      formData.append('postSubject', subject);
+      formData.append('postBody', body);
+      formData.append('image', imageFile);
+
+
 
 
       // Sending post to db...
       const responseForPost = await fetch(`/newPost?feed=${communityStatePost}`, {
          method: 'POST',
-         headers: {
-            'Content-Type': 'application/json'
-          },
-         body: JSON.stringify({whoPosted: username, postSubject: subject, postBody: body})
+         body: formData
+
       })
+
+      const  result = await responseForPost.json()
+
 
       if (!responseForPost.ok) {
          throw new Error(`Error posting.. ${responseForPost.status}`)
@@ -240,8 +247,6 @@ export default function Home(){
          bodyPostElement.current.value = ''
          subjectPostElement.current.value = ''
          document.body.style.overflow = 'hidden';
-         newPostBtnMobile.current.style.opacity = '0'
-         newPostBtnMobile.current.style.pointerEvents = 'none'
       }
    }
 
@@ -253,8 +258,6 @@ export default function Home(){
       bodyPostElement.current.value = ''
       subjectPostElement.current.value = ''
       document.body.style.overflow = 'auto';
-      newPostBtnMobile.current.style.opacity = '1'
-      newPostBtnMobile.current.style.pointerEvents = 'all'
 
    }
 
@@ -305,6 +308,7 @@ export default function Home(){
       username: username,
       followings: followingCount,
       followers: followerCount,
+      UID: loggedInUID,
       displayAbout: ()=> displayAbout()
    }
 
@@ -340,17 +344,20 @@ export default function Home(){
                <span id="newPostBtn" ref={newPostBtn} onClick={()=> appearEffect()}>Express yourself.</span>
                <div id="newPost">
 
-                  {/* New Post button for mobile will always show a plus */}
-                  <span id="newPostBtnMobile" ref={newPostBtnMobile} onClick={()=> appearEffect()}><h4><i class="fa-solid fa-plus"></i></h4></span>
+
 
                   {/* Floating prompt for creating a new post */}
                   <form enctype="multipart/form-data" ref={createPostElement} id="createPostElement" >
                      <h2 id="createNewPostHeader">What's on your mind? <span onClick={()=> dissappearEffect()}><i className="fa-solid fa-x"></i></span></h2>
                      <div id="formSubject">
-                        <input maxLength={40} required placeholder="What's it about?" onsubmit="return false" ref={subjectPostElement}></input><br />
+                        <input maxLength={40} required placeholder="What's it about?" onsubmit="return false" ref={subjectPostElement} ></input><br />
                      </div>
                      <div id="formBody">
                         <input required placeholder='Tell us more..' onsubmit="return false" ref={bodyPostElement}type="text"></input>
+                     </div>
+                     <div id="upload">
+                        Upload a picture
+                        <input accept="image/*" ref={imageRef} type="file" />
                      </div>
                      <div id="selectCommunity">
                         <h2>Community:</h2>
@@ -367,10 +374,7 @@ export default function Home(){
                            </select>
                         </form>
                      </div>
-                     {/* <div id="upload">
-                        <label>Upload a picture</label><br />
-                        <input accept="image/*" ref={imageRef} type="file" />
-                     </div> */}
+
                      <h4 id="feedbackMessage" ref={errorMessageElement}>{errorMessage}</h4>
                      <button  type='button' onClick={()=> createNewPost()}>Post</button>
                   </form>
@@ -379,7 +383,7 @@ export default function Home(){
                {/* what shows up based on what topics the user selected */}
                <article className="userContent">
                   {/* changingFeed will be the dependant topic of the user feed*/}
-                  <UpdateFeed currentActiveUser={username} selectedfeed={grippedFeed} topicDisplay={grippedTopic} bgEffect={appearEffectComments} removeBGEffect={removeEffect} />   {/*  Updating the feed with the newest posts*/}
+                  <UpdateFeed currentActiveUser={username} selectedfeed={grippedFeed} topicDisplay={grippedTopic} bgEffect={appearEffectComments} removeBGEffect={removeEffect} image={image} />   {/*  Updating the feed with the newest posts*/}
                </article>
             </section>
          </main>

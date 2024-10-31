@@ -14,7 +14,7 @@ export default function UpdateFeed(props) {
 
     // if there is no query string fetching for a different feed, then the main feed will be returned
     if (!queryString) {
-      const response = await fetch("/update", {
+      const response = await fetch(`/update`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -27,6 +27,16 @@ export default function UpdateFeed(props) {
 
       const allPosts = await response.json();
       setAllPosts(allPosts.reversedPosts);
+
+      /* localStorage.setItem('cachedPosts', JSON.stringify(allPosts.reversedPosts))
+
+      const cachedPosts = localStorage.getItem('cachedPosts');
+      if (cachedPosts) {
+        setAllPosts(JSON.parse(cachedPosts));
+      } else {
+        fetchPosts();
+      } */
+
     } else {
       const response = await fetch(`/loadTopicFeed?topicFeed=${userSearched}`, {
         method: "GET",
@@ -41,8 +51,21 @@ export default function UpdateFeed(props) {
 
       const allPosts = await response.json();
       setAllPosts(allPosts.reversedPosts);
+
+      /* localStorage.setItem('cachedPosts', JSON.stringify(allPosts.reversedPosts))
+
+      const cachedPosts = localStorage.getItem('cachedPosts');
+      if (cachedPosts) {
+        setAllPosts(JSON.parse(cachedPosts));
+      } else {
+        fetchPosts();
+      } */
+
     }
+
+
   }
+
 
   // poster is used to find the corresponding profile for the poster
   async function navigateToProfile(poster) {
@@ -60,13 +83,36 @@ export default function UpdateFeed(props) {
     }, 500); */
   }
 
+  const [profilePictureFeed, setProfilePictureFeed] = useState(null)
+
+  async function fetchProfilePicture(poster){
+    try {
+      let response = await fetch(`/profileData/getProfileImage/${poster}`)
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+
+      let imageData = await response.json()
+      setProfilePictureFeed(imageData.profilePic)
+
+    } catch (error) {
+      console.error('Error fetching profile picture:', error);
+      setProfilePictureFeed(null); // Set to null or a default image if desired
+    }
+
+
+
+  }
+
   // Checks to see if certain users are admin or special
   function checkAdmin(poster) {
     switch (poster) {
       case "Samuel":
+        // fetchProfilePicture(poster)
         return (
           <>
             <h2 className="poster" onClick={() => navigateToProfile(poster)}>
+              {/* <img id="feedProfilePic" src={profilePictureFeed} alt="" /> */}
               {poster}{" "}
               <p style={{ color: "turquoise" }}>Developer</p>
             </h2>
@@ -149,70 +195,6 @@ export default function UpdateFeed(props) {
     }
   }
 
-  /* const [imageUrls, setImageUrls] = useState({});
-
-  // For each url of an image on the page, tie them to a state variable
-  useEffect(()=> {
-    const fetchImages = async ()=> {
-      const  urls = {}
-      for (const post of allPosts) {
-        const imageUrl = await handleImages(post.img)
-        if (imageUrl) {
-          urls[post._id] = imageUrl
-        }
-      }
-
-      setImageUrls(urls)
-    }
-
-    fetchImages()
-
-    return () => {
-      Object.values(imageUrls).forEach((url) => URL.revokeObjectURL(url));
-    };
-
-  }, [allPosts])
-
-  const [imgSrc, setImgSrc] = useState()
-
-// HANDLING WHEN IMAGES ARE POSTED
-  async function handleImages(postImageID){
-    // Getting current query string
-    const queryString = window.location.search;
-    const urlParams = new URLSearchParams(queryString);
-    const userSearched = urlParams.get("topicFeed");
-
-    if (!postImageID) return
-
-    try {
-
-      const response = await fetch(`/file/${postImageID}`, {
-        method: 'GET',
-      })
-
-      // handle response errors
-      if(!response.ok) {
-        throw new Error('Network response was not okay')
-      }
-
-
-      const blob = await response.blob()
-      console.log(blob)
-
-      const imageUrl = URL.createObjectURL(blob)
-
-      setImgSrc(imageUrl)
-
-
-
-
-
-      // const url = URL.createObjectURL(blob)
-      // return url
-    } catch (err) {
-       console.error('Error fetching image', err)
-    }
-  } */
 
   // Checks and shows if a user is already liking a post or not
   // all dependent on when the feed gets updated
@@ -251,10 +233,11 @@ export default function UpdateFeed(props) {
   const [errorMessage, setErrorMessage] = useState('')
   const commentValue = useRef(null)
   const [postComments, setPostComments] = useState([])
+  const [postImage, setPostImage] = useState(null)
 
   // Getting the information for the post selected when the interface appears.
   async function commentInterfaceAppear(postSubject, postBody, poster, creationDate, postID, keyOfPost,
-     postLikesCount, postComments, ){
+     postLikesCount, postComments, image){
 
     setPostSubject(postSubject)
     setPostBody(postBody)
@@ -265,6 +248,8 @@ export default function UpdateFeed(props) {
     setPostLikesCount(postLikesCount)
     setPostComments(postComments.reverse())
     setCommentsCount(postComments.length)
+    setPostImage(image)
+
     setErrorMessage('')
 
     /*
@@ -394,7 +379,7 @@ export default function UpdateFeed(props) {
         allPosts.map((post, key) => {
           return (
             <>
-              <div key={key} className="userPost">
+              <div key={post._id} className="userPost">
                 <main className="mainPost">
                   <div className="postAnalytics">
                     {/* flex container */}
@@ -407,7 +392,13 @@ export default function UpdateFeed(props) {
                       {post.subject}
                     </p>
                   </div>
-                  {/* <img alt="post"/> */}
+
+                  {post.image ? (
+                    <img id="postIMG" src={post.image} alt='Postimage' />
+                  ) : (
+                    <div style={{display: 'none'}}></div> // Optional: add a placeholder or leave it empty
+                  )}
+
                   <h2 className="postBody">{post.body}</h2>
                   <br />
                 </main>
@@ -423,7 +414,7 @@ export default function UpdateFeed(props) {
                       <span style={{ color: "white" }}> Like</span>
                     </span>
                     <span className="commentBtn"
-                    onClick={()=> {commentInterfaceAppear(post.subject, post.body, post.poster, post.postcreationDate, post._id, key, post.likes.length, post.comments), props.bgEffect()}}>
+                    onClick={()=> {commentInterfaceAppear(post.subject, post.body, post.poster, post.postcreationDate, post._id, key, post.likes.length, post.comments, post.image), props.bgEffect()}}>
                       <i className="fa-solid fa-comments"></i>{" "}
                       <span style={{ color: "white" }}
                       > Comment</span>
@@ -458,7 +449,13 @@ export default function UpdateFeed(props) {
 
 
         <section id="commentSection">
-          <h2 id="exitBtnRow"><i className="fa-solid fa-square"></i> {postSubject}</h2>
+          <h2 id="exitBtnRow">{postSubject}</h2>
+          {postImage ? (
+            <img src={postImage} alt='Postimage' />
+          ) : (
+            <div style={{display: 'none'}}></div> // Optional: add a placeholder or leave it empty
+          )}
+
           <p>{postBody}</p>
 
           <div id="indicators">
@@ -470,7 +467,7 @@ export default function UpdateFeed(props) {
         <section id="commentSection2">
           <form id="commentInput">
             <input ref={commentValue} required type="text" placeholder="Add a comment.."/>
-            <button type="button" onClick={()=> addComment(commentValue.current.value, postID, )}><i className="fa-solid fa-paper-plane"></i></button>
+            <button type="button" onClick={()=> addComment(commentValue.current.value, postID)}>Comment</button>
           </form>
           <br />
           <h4 style={{color: 'lime'}}>{errorMessage}</h4>

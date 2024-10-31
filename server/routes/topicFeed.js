@@ -16,7 +16,20 @@ router.get('/', async (req, res)=> {
 
    // console.log(posts)
 
-   res.json({reversedPosts: posts.reverse()})
+   const responsePost = posts.map(post => ({
+      _id: post._id,
+      poster: post.poster,
+      subject: post.subject,
+      body: post.body,
+      likes: post.likes,
+      postCreationDate: post.postCreationDate,
+      comments: post.comments,
+      image: post.image ? `data:${post.image.contentType};base64,${post.image.data.toString('base64')}` : null
+    }))
+
+    // res.json({ reversedPosts: posts.reverse() });
+    res.json({ reversedPosts: responsePost.reverse() });
+
 })
 
 

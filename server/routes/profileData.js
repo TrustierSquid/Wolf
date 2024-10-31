@@ -23,18 +23,77 @@ router.get("/", async (req, res) => {
   // finds the user based of their uid
   const userData = await usersCollection.findOne({ UID: user });
 
+  if (!userData) {
+    // Handle the case where no user is found
+    return res.status(404).json({ message: 'User not found' });
+  }
+
+  const userDataModified = {
+    user: userData.user,
+    password: userData.password,
+    UID: userData.UID,
+    followers: userData.followers,
+    following: userData.following,
+    posts: userData.posts,
+    topics: userData.topics,
+    created: userData.created,
+    userBio: userData.userBio,
+    profilePic: userData.profilePic ? `data:${userData.profilePic.contentType};base64,${userData.profilePic.data.toString('base64')}` : null
+  }
+
+
+
   // finds the posts of the selected user
   const userPosts = await feedCollection.find({ poster: userData.user }).toArray();
 
+  // modifyed so that if there are images they are included in the response
+  const userPostModified = userPosts.map(post => ({
+    _id: post._id,
+    poster: post.poster,
+    subject: post.subject,
+    body: post.body,
+    likes: post.likes,
+    postCreationDate: post.postCreationDate,
+    comments: post.comments,
+    image: post.image ? `data:${post.image.contentType};base64,${post.image.data.toString('base64')}` : null
+  }))
 
+  // res.json({ reversedPosts: posts.reverse() });
   res.json({
     // posts from the mainfeed
-    profilePostData: userPosts,
+    profilePostData: userPostModified,
 
     // profile data based on the query string
-    userData: userData,
+    userData: userDataModified,
   });
+
 });
+
+// for getting profile images for feeds
+router.get('/getProfileImage/:poster', async (req, res)=> {
+  const {poster} = req.params
+  const database = await connectMongo();
+  const usersCollection = database.collection("Users");
+
+  const user = await usersCollection.findOne({user: poster})
+
+  if (!user) {
+    return res.status(404).json({ message: 'User not found' });
+  }
+
+
+  if (!user.profilePic) {
+    // user.profilePic = 'src/assets/defaultUser.jpg'
+    return
+  }
+
+  res.json({
+    profilePic: user.profilePic ? `data:${user.profilePic.contentType};base64,${user.profilePic.data.toString('base64')}` : null
+  })
+
+
+})
+
 
 /*
   This is for when the user travels to a users profile

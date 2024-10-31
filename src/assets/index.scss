@@ -338,136 +338,179 @@ TOPICS COMPONENT
 */
 
 
-#topics {
+#topicsContainer {
    background: #161616;
    background: none;
    min-height: 600px;
-   max-width: 75%;
-   // max-width: 1000px;
-   // margin: 5rem auto;
+   max-width: 100%;
    margin: 0rem auto;
-   border-radius: 2rem;
    display: flex;
-   flex-direction: column;
-   justify-content: space-between;
-   align-items: center;
-   // gap: 2rem;
-   padding: 3rem;
    color: white;
 
+   main {
+      // header
+      display: flex;
+      flex-direction: column;
+      background: rgb(59,1,36);
+      background: linear-gradient(135deg, rgba(59,1,36,1) 0%, rgba(203,0,57,1) 100%);
+      border-radius: 2rem;
+      width: 60%;
+      padding: 3rem;
 
-
-   // header
-   #pageHeader {
-      // font-weight: lighter;
-      font-family: $ff-heading;
-      font-size: min(2rem, 4rem);
-      // width: 90%;
-      align-self: start;
-      color: white;
-
-      span {
-         color: $primary;
-      }
-
-   }
-
-   #pageSubHeader {
-      font-family: $ff-heading;
-      font-size: min(1.5rem, 2rem);
-      align-self: start;
-      color: grey;
-   }
-
-
-   #topicSelect {
-      display: grid;
-      // grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      grid-template-columns: 1fr 1fr 1fr;
-      justify-content: center;
-      align-items: center;
-      border-radius: 1rem;
-      margin-top: 2rem;
-      gap: 1rem;
-
-
-
-
-      .topicSelectionBtn {
-         font-weight: 500;
-         padding: 1.5rem;
-         height: 250px;
-         border-radius: 1rem;
+      #pageHeader {
+         // font-weight: lighter;
          font-family: $ff-heading;
-         border: none;
-         background: $cardBG;
+         font-size: min(2rem, 4rem);
+         // width: 90%;
+         align-self: start;
          color: white;
-         // padding: 1rem;
-         text-wrap: wrap;
-         transition: 150ms;
-         font-size: clamp(0.6rem, 1rem, 1.8rem);
-         display: flex;
-         flex-direction: column;
-         border: 2px solid $cardBorder;
-         justify-content: space-between;
 
-         .topicHeader {
-            display: flex;
-            justify-content: space-between;
-
-            .memberCount {
-               color: lightgrey;
-               font-size: 0.9rem;
-            }
-         }
-
-         .communityJoinBtn {
-            cursor: pointer;
-            padding: 0.5rem;
-            width: 75px;
-            align-self: end;
-            background-color: $primary;
-            border: none;
-            border-radius: 0.5rem;
-            color: white;
-            transition: 150ms;
-
-            &:hover {
-               background-color: $buttonHover;
-            }
+         span {
+            color: turquoise;
          }
 
       }
 
+      #topicSelect {
+         // justify-content: center;
+         // align-items: center;
 
-      .topicSelectionBtn:nth-child(even) {
-         background-color: $inputField;
+
+         #communityGridContainer {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+
+            .topicSelectionBtn {
+               padding: 1.5rem;
+               height: 300px;
+               border-radius: 1rem;
+               font-family: $ff-heading;
+               border: none;
+               background: $cardBG;
+               color: white;
+               // padding: 1rem;
+               text-wrap: wrap;
+               transition: 150ms;
+               font-size: clamp(0.6rem, 1rem, 1.8rem);
+               display: flex;
+               flex-direction: column;
+               justify-content: space-between;
+               box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+
+
+               .topicHeader {
+                  display: flex;
+                  justify-content: space-between;
+
+                  .communityTitle {
+                     display: flex;
+                     align-items: center;
+                     gap: 0.3rem;
+                     margin-bottom: 1rem;
+
+                     img {
+                        height: 45px;
+                        width: 45px;
+                        object-fit: cover;
+                        border-radius: 50%;
+                     }
+
+                     h3 {
+
+                     }
+                  }
+
+
+                  .memberCount {
+                     color: lightgrey;
+                     font-size: 0.9rem;
+                  }
+               }
+
+               .communityJoinBtn {
+                  cursor: pointer;
+                  padding: 0.5rem;
+                  width: 75px;
+                  align-self: end;
+                  background-color: $primary;
+                  border: none;
+                  border-radius: 0.5rem;
+                  color: white;
+                  transition: 150ms;
+
+                  &:hover {
+                     background-color: $buttonHover;
+                  }
+               }
+
+            }
+
+            .topicSelectionBtn:nth-child(even) {
+               background: $cardInteractionSection;
+               border: none;
+            }
+
+            .topicSelectionBtn:nth-child(odd) {
+               background-color: $cardInteractionSection;
+               border: none;
+            }
+         }
+
+
+
+
+
       }
-
-
    }
+
+
+
 }
 
 // Media query for topics component
 
 @media (max-width: 1050px) {
 
-   #topics {
+   #topicsContainer {
       max-width: 100%;
+      justify-content: center;
 
-      #pageHeader, #pageSubHeader {
-         text-align: center;
-         align-self: center;
+
+      main {
+         width: 100%;
+         padding: 2rem;
+         background: none;
+         border-radius: 0rem;
+
+         #pageHeader, #pageSubHeader {
+            text-align: center;
+            align-self: center;
+         }
+
+         #topicSelect {
+            // grid-template-columns: 1fr 1fr;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+
+            #communityGridContainer {
+               gap: 1rem;
+
+               .topicSelectionBtn {
+                  height: 250px;
+                  line-height: 1.5;
+                  box-shadow: none;
+                  border-radius: 0;
+                  border-bottom: 1px solid white;
+               }
+            }
+         }
       }
 
-      #topicSelect {
-         // grid-template-columns: 1fr 1fr;
-         grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      }
+
    }
 
    #loginContainer {
-      margin: 1;
+
    }
 
 
@@ -519,6 +562,7 @@ DEFAULT PAGE
             cursor: pointer;
          }
 
+
       }
 
 
@@ -552,6 +596,11 @@ DEFAULT PAGE
             background-color: #4c4c4c;
          }
       }
+
+      h3 {
+         color: white;
+         font-family: $ff-heading;
+      }
    }
 
    #profileContainer {
@@ -564,7 +613,7 @@ DEFAULT PAGE
          color: white;
          cursor:pointer;
          transition: 150ms;
-         background: blue;
+         object-fit: cover;
          border: 1px solid grey;
          width: 50px;
          height: 50px;
@@ -593,13 +642,16 @@ DEFAULT PAGE
 
 #mobileNavMenu {
    // height: 130%;
-   width: 60%;
+   // width: 60%;
+   display: none;
    position: absolute;
    z-index: 2;
    left: -100%;
    transition: 150ms;
    opacity: 0;
-   background-color: #201e1e;
+   background-color: #111;
+   height: 100vh;
+   position: fixed;
    color: white;
    font-family: $ff-body;
    display: flex;
@@ -611,13 +663,25 @@ DEFAULT PAGE
 
    .mobileNavProfileSection {
       display: flex;
-      flex-direction: column;
-      background-color: $onHover;
-      gap: 0.5rem;
+      // flex-direction: column;
+      background-color: #222;
+      gap: 1rem;
       cursor: pointer;
       transition: 150ms;
       padding: 1.5rem;
       border-radius: 1rem;
+
+      img {
+         height: 75px;
+         object-fit: cover;
+         width: 75px;
+         border-radius: 50%;
+      }
+
+      #mobileWhoAmI {
+         display: flex;
+         flex-direction: column;
+      }
 
       &:hover {
          background-color: $cardBorder;
@@ -692,13 +756,14 @@ DEFAULT PAGE
    height: 450px;
    color: white;
    background: rgb(59,1,36);
-background: linear-gradient(326deg, rgba(59,1,36,1) 0%, rgba(203,0,57,1) 100%);
+   background: linear-gradient(158deg, rgba(59,1,36,1) 0%, rgba(203,0,57,1) 80%, rgba(203,0,0,1) 100%);
    border-radius: 2rem;
    border: none;
    padding: 1.5rem;
    display: flex;
    flex-direction: column;
    font-family: $ff-body;
+   // position: sticky;
    z-index: 0;
 
    #subTitle {
@@ -737,6 +802,13 @@ background: linear-gradient(326deg, rgba(59,1,36,1) 0%, rgba(203,0,57,1) 100%);
             width: 100%;
             border-radius: 1rem;
             box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+            cursor: pointer;
+            transition: 150ms;
+            // font-weight: 100;
+
+            &:hover {
+               background-color: $cardBorder;
+            }
          }
 
          .followingContainerItem:nth-of-type(2) {
@@ -883,7 +955,7 @@ main {
             transition: 250ms;
             display: flex;
             flex-direction: column;
-            z-index: 9;
+            z-index: 12;
             border: 1px solid $darkenPrimary;
 
             #createNewPostHeader {
@@ -968,6 +1040,18 @@ main {
                }
             }
 
+            #upload {
+               background-color: $inputField;
+               padding: 1rem;
+               display: flex;
+               flex-direction: column;
+               gap: 1rem;
+               border-radius: 1rem;
+               font-family: $ff-heading;
+               input {
+               }
+            }
+
             // Post button inside the newPost moodle
             button {
                padding: 1rem;
@@ -995,6 +1079,8 @@ main {
                gap: 2rem;
 
                form {
+                  background-color: #111;
+
                   select {
                      background-color: #111;
                      color: white;
@@ -1037,7 +1123,7 @@ main {
             .mainPost {
                flex-direction: column;
                max-height: 100%;
-               gap: 1rem;
+               gap: 0.5rem;
                padding: 1.5rem;
                border-radius: 1rem;
                color: white;
@@ -1069,6 +1155,12 @@ main {
                         font-size: 1rem;
                         cursor: pointer;
 
+                        #feedProfilePic {
+                           height: 50px;
+                           width: 50px;
+                           object-fit: cover;
+                        }
+
                         p {
                            font-size: 1rem;
                         }
@@ -1095,7 +1187,7 @@ main {
                      display: flex;
                      padding: 0.5rem;
                      padding-left: 0rem;
-                     border-bottom: 1px dotted $cardBorder;
+                     // border-bottom: 1px dotted $cardBorder;
 
                      i {
                         color: $primary;
@@ -1105,11 +1197,18 @@ main {
 
                }
 
+               #postIMG {
+                  height: 300px;
+                  object-fit: contain;
+                  background-color: #222;
+               }
+
                .postBody {
                   font-size: 1.2rem;
                   font-family: $ff-body;
                   color: rgba(255, 255, 255, 0.911);
                   font-weight: lighter;
+                  line-height: 1.5;
                   word-wrap: break-word;
                }
 
@@ -1229,7 +1328,7 @@ main {
    right: 50%;
    transform: translate(50%, -50%);
    color: white;
-   background-color: $moodleBG;
+   background-color: #111;
    border: 1px solid $darkenPrimary;
    border-radius: 0.5rem;
    padding: 2rem;
@@ -1299,6 +1398,12 @@ main {
 
       }
 
+      img {
+         height: 300px;
+         object-fit: contain;
+         background-color: #222;
+      }
+
       #indicators {
          margin-top: 4rem;
          margin-bottom: 1rem;
@@ -1311,6 +1416,11 @@ main {
             color: #8c8c8c;
          }
 
+      }
+
+      p {
+         word-wrap: break-word;
+         line-height: 1.5;
       }
 
    }
@@ -1334,18 +1444,19 @@ main {
          }
 
          button {
-            width: 10%;
+            // width: 10%;
             padding: 0.5rem;
             border-radius: 0.5rem;
-            background-color: crimson;
-            color: white;
-            border: none;
+            background: none;
+            border: 1px solid teal;
+            color: turquoise;
             cursor: pointer;
             transition: 150ms;
             font-size: 1rem;
 
             &:hover {
-               background-color: $buttonHover;
+               background-color: teal;
+               color: white;
             }
          }
 
@@ -1362,10 +1473,11 @@ main {
       gap: 1rem;
 
       .comment {
-         background-color: $cardBG;
+         background-color: #111111e8;
          border: 1px solid $cardBorder;
          padding: 1rem;
          border-radius: 0.5rem;
+         word-wrap: break-word;
 
          h3 {
             display: flex;
@@ -1402,7 +1514,7 @@ main {
       height: 100%;
       border-radius: 0;
       border: 1px solid $cardBorder;
-      background-color: $cardBG;
+      background-color: #111;
       transition: 100ms;
       padding: 1rem;
 
@@ -1422,14 +1534,19 @@ main {
       }
 
       #commentSection2 {
+
+
          #commentInput {
+            flex-direction: column;
+
 
             input {
                font-size: $fs-paragraph;
+               width: auto;
             }
 
             button {
-               width: 20%;
+               // width: 20%;
             }
          }
 
@@ -1464,14 +1581,20 @@ main {
 
 
 // Profile Component
+#overlayProfile {
+   display: none;
+   background-color: #0000008e;
+   position: fixed;
+   height: 100%;
+   width: 100%;
+   z-index: 10;
+}
 
 #contentContainer {
    display: flex;
    justify-content: center;
    padding: 2rem;
    gap: 2rem;
-
-
    #mainProfile {
       width: 55%;
       display: flex;
@@ -1491,8 +1614,8 @@ main {
 
 
       .profileAnalytics:nth-of-type(1) {
-         background-color: #111;
-         box-shadow: 0 1px 6px -1px rgba(0,0,0,.1);
+         background-color: $postBG;
+         box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
          width: 100%;
          display: flex;
          flex-direction: column;
@@ -1504,22 +1627,95 @@ main {
          font-size: $fs-h3;
          padding: 1rem;
 
+
+
+
          #iconAndUsername {
             width: 100%;
             font-family: $ff-heading;
             display: flex;
             justify-content: space-between;
+            gap: 1rem;
             align-items: center;
             padding: 1rem;
+
+            #picContainer {
+               display: flex;
+               align-items: center;
+               gap: 1rem;
+
+               #profilePicture {
+                  background: none;
+                  border: 2px solid purple;
+                  border-radius: 50%;
+                  height: 100px;
+                  width: 100px;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  // cursor: pointer;
+                  object-fit: cover;
+
+               }
+               #whoAmI {
+
+                  #changeOverlay {
+                     background: none;
+                     border: 1px solid teal;
+                     border-radius: 0.5rem;
+                     margin-top: 1rem;
+                     padding: 1rem;
+                     position: relative;
+                     display: flex;
+                     align-items: center;
+                     height: 50px;
+                     width: 150px;
+
+                     p {
+                        font-size: $fs-paragraph;
+                        color: turquoise;
+                     }
+
+                     &:hover {
+                        p {
+                           color: white;
+                        }
+
+                        background-color: teal;
+                        color: white;
+                     }
+
+                     input {
+                        // opacity: 0;
+                        cursor: pointer;
+                        width: 100%;
+                        height: 100%;
+                        border: 1px solid red;
+                        opacity: 0;
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                     }
+
+                  }
+               }
+            }
+
+
 
             // THe id for tracking who follows who
             #followTracking {
                display: flex;
-               gap: 3rem;
+               gap: 1rem;
 
                section {
                   display: flex;
+                  flex-direction: column;
                   align-items: center;
+                  // background-color: #222;
+                  border-radius: 1rem;
+                  padding: 0.5rem;
+
 
                   p {
                      font-size: 1rem;
@@ -1528,8 +1724,8 @@ main {
 
                   h3 {
                      width: 100%;
-                     border-right: 1px solid $primary;
                      padding: 0.4rem;
+                     text-align: center;
                   }
                }
 
@@ -1616,13 +1812,13 @@ main {
                   justify-content: space-between;
                }
 
-               .fa-pencil {
-                  color: $primary;
+               .fa-pen-to-square {
+                  color: turquoise;
                   // border-bottom: 1px solid $primary;
                   font-size: 2rem;
                   cursor: pointer;
                   &:hover {
-                     color: $buttonHover;
+                     color: teal;
                   }
                }
 
@@ -1714,6 +1910,231 @@ main {
          gap: 1rem;
       }
 
+
+
+      #moodleContainer {
+         position: fixed;
+         top: 10%;
+         left: 10%;
+         width: 80%;
+         height: 600px;
+         display: flex;
+         gap: 5rem;
+         align-items: center;
+         justify-content: center;
+         display: none;
+         pointer-events: none;
+         z-index: 11;
+
+
+         #postMoodle1, #postMoodle2 {
+            height: 100%;
+            width: 100%;
+            background-color: #111;
+            border: 1px solid $buttonHover;
+            border-radius: 1rem;
+            // box-shadow: rgba(15, 8, 8, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
+         }
+
+         #postMoodle1 {
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            height: auto;
+            gap: 2rem;
+            font-family: $ff-body;
+
+            #moodleTitle {
+               font-family: $ff-heading;
+               h4 {
+                  color: grey;
+               }
+
+               h1 {
+                  display: flex;
+                  justify-content: space-between;
+
+                  #backBtn {
+                     width: 40px;
+                     height: 40px;
+                     cursor: pointer;
+                     background: none;
+                     color: white;
+                     border: none;
+                     background-color: #333;
+                     border-radius: 3rem;
+                     &:hover {
+                        background-color: #444;
+                     }
+                  }
+               }
+
+
+
+            }
+
+            #moodleContent {
+               display: flex;
+               flex-direction: column;
+               gap: 0.5rem;
+
+               h2 {
+                  border-bottom: 1px dotted rgba(128, 128, 128, 0.341);
+                  padding: 0.5rem;
+                  padding-left: 0;
+               }
+
+               p {
+                  word-wrap: break-word;
+                  line-height: 1.5;
+                  overflow: auto;
+               }
+
+               img {
+                  height: 200px;
+                  object-fit: contain;
+               }
+
+            }
+
+            #moodleInteraction {
+               display: flex;
+               gap: 1rem;
+               align-items: center;
+               // border: 1px solid red;
+               padding: 1rem;
+               padding-left: 0rem;
+               width: 100%;
+
+               #profileBtnLikeBtn {
+                  display: flex;
+                  align-items: center;
+                  gap: 0.2rem;
+                  padding: 0.5rem;
+                  border: none;
+                  background: #333;
+                  color: white;
+                  cursor: pointer;
+                  border-radius: 1rem;
+                  &:hover {
+                     background-color: #444;
+                  }
+
+               }
+            }
+
+         }
+
+         #postMoodle2 {
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            gap: 1rem;
+            font-family: $ff-body;
+
+
+            #backBtnContainer {
+               display: flex;
+               justify-content: space-between;
+               align-items: center;
+
+            }
+
+
+
+
+            #commentSection {
+               display: flex;
+               flex-direction: column;
+               gap: 2rem;
+               overflow: scroll;
+               height: 100%;
+
+               .commentContainer {
+                  display: flex;
+                  flex-direction: column;
+                  gap: 0.5rem;
+                  // padding: 0.5rem;
+                  // border-bottom: 1px dotted grey;
+
+                  .commentTitle {
+
+                  }
+
+
+                  span {
+                     display: flex;
+                     gap: 1rem;
+                     align-items: center;
+
+                     p {
+                        font-size: 0.9rem;
+                        color: grey;
+                     }
+
+                  }
+
+                  // comment
+                  p {
+                     word-wrap: break-word;
+                     line-height: 1.5;
+                  }
+               }
+            }
+
+
+            #profileCommentInputField {
+               height: 40px;
+               display: flex;
+               gap: 0.5rem;
+
+               // button
+               #postProfileComment {
+                  padding: 0.5rem;
+                  cursor: pointer;
+                  background: none;
+                  color: turquoise;
+                  border: 1px solid teal;
+                  border-radius: 0.5rem;
+                  width: 20%;
+                  transition: 150ms;
+
+                  &:hover {
+                     background-color: teal;
+                     color: white;
+                  }
+               }
+
+
+               textarea {
+                  width: 80%;
+                  border-radius: 0.5rem;
+                  border: none;
+                  background-color: #222;
+                  padding: 0.5rem;
+                  color: white;
+                  resize: none;
+                  font-family: $ff-body;
+                  font-size: 1rem;
+                  min-height: 40px;
+                  line-height: 1.5;
+
+                  &:focus {
+                     outline: none;
+                  }
+
+               }
+            }
+
+
+
+         }
+      }
+
+
+
+
       .totalPosts{
          display: flex;
          flex-direction: column;
@@ -1733,6 +2154,7 @@ main {
             background-color: $postBG;
             padding: 1rem;
             border-radius: 1rem;
+            box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
 
             form {
                display: flex;
@@ -1766,7 +2188,8 @@ main {
             background-color: $postBG;
             cursor: pointer;
             border-radius: 1rem;
-            height: 285px;
+            // height: 285px;
+            box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
 
             .existingPostTitle {
                display: flex;
@@ -1782,6 +2205,12 @@ main {
 
                }
 
+            }
+
+            img {
+               height: 300px;
+               object-fit: contain;
+               background-color: #222;
             }
 
 
@@ -1804,7 +2233,7 @@ main {
 
             .profilePostBody {
                font-size: 1.2rem;
-
+               word-wrap: break-word;
             }
 
             .profilePostAnalytics {
@@ -1813,6 +2242,7 @@ main {
                gap: 1rem;
                font-size: $fs-h3;
                margin-top: 2rem;
+
             }
 
             &:hover {
@@ -1827,6 +2257,41 @@ main {
       }
 
    }
+}
+
+@media (max-width: 1050px) {
+   #contentContainer {
+      padding: 0rem;
+
+      #mainProfile {
+         width: 100%;
+         border-radius: 0rem;
+         padding: 0.5rem;
+
+         .profileAnalytics:nth-of-type(1) {
+            #iconAndUsername {
+               flex-direction: column;
+               align-items: start;
+               gap: 1rem;
+            }
+         }
+
+         .totalPosts {
+
+            .profHeaders {
+               flex-direction: column;
+               align-items: start;
+               font-size: 1rem;
+               gap: 0.5rem;
+            }
+
+         }
+      }
+
+   }
+
+
+
 }
 
 
@@ -1844,14 +2309,16 @@ HOME COMPONENT MEDIA QUERIES
    // navbar component
 
    #nav {
-      justify-content: space-between;
-      margin-inline: 0;
-      padding-inline: 2rem;
       z-index: 3;
-      background-color: $subBackground;;
+      padding: 0.7rem;
+      justify-content: space-between;
+      background-color: $subBackground;
 
       #logoContainer {
          height: 40px;
+         justify-content: left;
+         gap: 0.5rem;
+
 
          h1 {
             display: none;
@@ -1880,7 +2347,7 @@ HOME COMPONENT MEDIA QUERIES
 
    // for sidebar functionality
    .sideNav {
-      left: -400px;
+      display: none;
       transition: 350ms;
       border-radius: 0.5rem;
       z-index: 1;
@@ -1894,11 +2361,13 @@ HOME COMPONENT MEDIA QUERIES
 
    main {
       justify-content: center;
+      padding: 0;
 
       #content {
          padding: 0rem;
          margin-left: 0;
          width: 100%;
+         background: none;
 
          #newPostBtn {
             display: none;
@@ -1997,6 +2466,8 @@ HOME COMPONENT MEDIA QUERIES
             // each post
             .userPost {
                gap: 0;
+               background-color: #000;
+               border-radius: 0rem;
 
                .postAnalytics {
                   display: flex;
@@ -2023,6 +2494,7 @@ HOME COMPONENT MEDIA QUERIES
 
                .postInteractionSection {
                   border-radius: 0;
+
                   padding: 1rem;
                   border: none;
                   border-bottom: 1px solid $cardBorder;
@@ -2043,13 +2515,13 @@ HOME COMPONENT MEDIA QUERIES
                   // container for liking and commenting on a post.
                   .postLC {
                      display: flex;
-                     gap: 3rem;
+                     gap: 1rem;
 
                      .likeBtn, .commentBtn {
-                        font-size: 1.2rem;
+                        font-size: 1rem;
                         cursor: pointer;
                         padding: 0.5rem;
-                        border-radius: 1rem;
+                        border-radius: 0.5rem;
                         font-family: $ff-body;
                         transition: 150ms;
 
@@ -2078,80 +2550,154 @@ HOME COMPONENT MEDIA QUERIES
    }
 
 
+   #contentContainer {
+      #mainProfile {
+         width: 100%;
+         gap: 1rem;
 
-   #mainProfile {
-      width: 100%;
-      gap: 1rem;
+         .profileAnalytics {
+            article{
+               .profilePostAnalytics {
 
-      .profileAnalytics {
-         article{
-            .profilePostAnalytics {
-
+               }
             }
-         }
 
-         .profHeaders {
-            flex-direction: column;
-            gap: 0.5rem;
-
-            form {
+            .profHeaders {
                flex-direction: column;
+               gap: 0.5rem;
+
+               form {
+                  flex-direction: column;
+               }
             }
+
          }
 
-      }
+         .profileAnalytics:nth-of-type(1){
+            flex-direction: column;
+            justify-content: start;
+            align-items: start;
 
-      .profileAnalytics:nth-of-type(1){
-         flex-direction: column;
-         justify-content: start;
-         align-items: start;
+            .profileSectionInfo:nth-of-type(1), .profileSectionInfo:nth-of-type(2) {
+               width: 100%;
+            }
 
-         .profileSectionInfo:nth-of-type(1), .profileSectionInfo:nth-of-type(2) {
-            width: 100%;
-         }
+            .profileSectionInfo:nth-of-type(1){
+               align-items: center;
+               margin-bottom: 0rem;
 
-         .profileSectionInfo:nth-of-type(1){
-            align-items: center;
-            margin-bottom: 0rem;
+               .followUserBtn {
+                  align-self: center;
+                  font-size: 1.2rem;
+                  width: 80%;
+               }
+            }
 
-            .followUserBtn {
+            .profileSectionInfo:nth-of-type(2) {
                align-self: center;
-               font-size: 1.2rem;
-               width: 80%;
-            }
-         }
+               width: 90%;
+               margin-bottom: 0rem;
 
-         .profileSectionInfo:nth-of-type(2) {
-            align-self: center;
-            width: 90%;
-            margin-bottom: 0rem;
+               #showUserStats {
+                  padding: 1.5rem;
+               }
 
-            #showUserStats {
-               padding: 1.5rem;
             }
 
+
          }
+
+         .totalPosts {
+            .existingPost {
+
+
+               .profilePostSubject {
+                  border: none;
+               }
+
+               .profilePostBody {
+                  font-size: 1rem;
+                  line-height: 1.5;
+               }
+
+            }
+
+         }
+
+
+
+
+         #moodleContainer {
+            height: 100vh;
+            top: 0%;
+            left: 0;
+            flex-direction: column;
+            width: 100%;
+            padding: 1rem;
+            gap: 0.1rem;
+
+
+
+
+            #postMoodle1, #postMoodle2 {
+               height: 50%;
+               border-radius: 1rem;
+               border: none;
+               overflow: scroll;
+               background-color: $cardBorder;
+            }
+
+            #postMoodle1 {
+               overflow: unset;
+               height: 60%;
+
+               #moodleContent {
+                  overflow: scroll;
+
+                  img {
+                     height: 300px;
+                     object-fit: contain;
+                  }
+
+                  p {
+                     overflow: auto;
+                  }
+               }
+            }
+
+
+            #postMoodle2 {
+
+               #profileCommentInputField {
+                  textarea {
+                     width: 70%;
+                  }
+
+                  #postProfileComment {
+                     width: 30%;
+                  }
+               }
+
+            }
+
+
+
+
+         }
+
 
 
       }
-
-      .profileAnalytics:nth-of-type(2) {
-
-         .existingPost {
-            .profilePostSubject {
-               font-size: 1.3rem;
-            }
-            font-size: 1rem;
-         }
-      }
-
-
    }
+
 
    #profileInformation {
       flex-direction: column;
       justify-content: center;
       align-items: center;
    }
+
+
+
 
 }

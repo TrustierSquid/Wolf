@@ -1,0 +1,108 @@
+$uiBG: #2b2b2b;
+$postBG: #111111e8;
+$cardBG: #222;
+$cardInteractionSection: #181818;
+$cardBorder: #2E2E2E;
+$moodleBG: #181818;
+
+// darker BG
+$subBackground: #121010;
+
+// navbarBG
+$navBG: #510917;
+
+$primary: #d43737;
+$darkenPrimary: #532C2C;
+$inputField: #1B1B1B;
+$buttonHover: #7A0B31;
+
+// fonts
+$ff-heading: "Nunito", sans-serif;
+$ff-body: "roboto", sans-serif;
+
+// standard color protocal
+$sc-success: #86DB1E;
+$sc-warning: #FFD507;
+$sc-error: #F96E36;
+$sc-info: #00a1b6;
+
+$subTitle: #ff7b00;
+$onHover: #55555543;
+
+$fs-h1: 2.3rem;
+$fs-h2: 2rem;
+$fs-h3: 1.5rem;
+
+$fs-paragraph: 1rem;
+
+$lightBG: #5e5d5d25;
+
+#followPageContainer {
+   color: white;
+
+   #displayFollowingContainer {
+      font-family: $ff-body;
+      width: 60%;
+      background: rgb(59,1,36);
+      background: linear-gradient(146deg, rgba(59,1,36,1) 0%, rgba(203,0,57,1) 30%, rgba(203,0,0,1) 100%);
+      border-radius: 2rem;
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+
+      .followee {
+         padding: 1rem;
+         border-radius: 1rem;
+         background-color: $postBG;
+         box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+         transition: 100ms;
+         display: flex;
+         align-items: center;
+         justify-content: space-between;
+
+         h4 {
+            cursor: pointer;
+            border-bottom: 1px solid white;
+            &:hover {
+               color: $primary;
+
+            }
+         }
+
+
+         #unfollowBtn {
+            background: none;
+            border: $primary 1px solid;
+            color: $primary;
+            padding: 0.5rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+
+            &:hover {
+               background: $primary;
+               color: white;
+            }
+         }
+
+      }
+
+   }
+}
+
+
+@media (max-width: 1050px) {
+   #followPageContainer {
+      #displayFollowingContainer {
+         width: 100%;
+         background: $cardInteractionSection;
+         margin: 1rem;
+
+         .followee {
+
+         }
+
+      }
+
+   }
+}

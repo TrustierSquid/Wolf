@@ -16,8 +16,30 @@ export default function CommunitySelection(props){
    const userLoggedInTopics = props.userTopics
    const updateData = props.updateUserData
 
+   const [totalMembers, setTotalMembers] = useState(null)
+
+  async function checkMembers() {
+    let response = await fetch('/community/checkMembers', {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({currentlyJoinedTopics: userLoggedInTopics})
+    })
+
+    const memberData = await response.json()
+
+    setTotalMembers(memberData)
+
+  }
+  useEffect(() => {
+     checkMembers()
+   }, [])
+
+   // console.log(totalMembers)
+
    async function leaveCommunity(communityToLeave){
-      let response = await fetch(`/removeCommunity/${communityToLeave}/${userLoggedInUID}`, {
+      let response = await fetch(`/removeCommunity/${communityToLeave}/${userLoggedInUID}/${props.username}`, {
          headers: {
             'Content-Type': 'application/json'
          },
@@ -30,25 +52,34 @@ export default function CommunitySelection(props){
 
       updateData()
 
+   }
+
+   function displayMembers(){
+      // checking specific member counts
+
+
+
+
 
    }
 
+   // displayMembers()
 
    return (
       <>
          <Navbar/>
 
          <div id="contentContainer">
-            <SideNavBar/>
+            <SideNavBar {...props.sidebarItems}/>
             <main id="communityContainer">
                <div id="titleDiv">
-                  <h1>Your Joined Communities </h1>
-                  <h4>Communities that you have joined</h4>
+                  <h1>Your Communities </h1>
+                  <h4>Communities that you are apart of</h4>
                </div>
 
                <ul>
                   {userLoggedInTopics?.length > 0 ? (
-                     userLoggedInTopics?.map((community)=> {
+                     userLoggedInTopics?.map((community, key)=> {
                         return (
                            <>
                               <li>
@@ -69,7 +100,7 @@ export default function CommunitySelection(props){
 
                   ) : (
                      <div className="noPostsMessage">
-                        <h3>You have not joined any <a href="/topics" style={{color: 'crimson'}}>communities</a> yet!  </h3>
+                        <h3>You have not Joined any <a href="/topics" style={{color: 'crimson'}}>communities!</a>  </h3>
                      </div>
                   )}
 

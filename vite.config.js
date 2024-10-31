@@ -107,6 +107,12 @@ export default defineConfig({
         secure: false,
         ws: true,
       },
+      '/uploadProfilePicture': {
+        target: 'http://localhost:3000',
+        changeOrigin: true,
+        secure: false,
+        ws: true,
+      },
 
       '/userInteraction': {
         target: 'http://localhost:3000',
@@ -174,6 +180,30 @@ export default defineConfig({
         secure: false,
         ws: true,
       },
+      '/community': {
+        target: 'http://localhost:3000',
+        changeOrigin: true,
+        secure: false,
+        ws: true,
+      },
+      '/dynamic': {
+        target: 'http://localhost:3000',
+        changeOrigin: true,
+        secure: false,
+        ws: true,
+      },
+      '/image': {
+        target: 'http://localhost:3000',
+        changeOrigin: true,
+        secure: false,
+        ws: true,
+      },
+      '/getProfileImage': {
+        target: 'http://localhost:3000',
+        changeOrigin: true,
+        secure: false,
+        ws: true,
+      },
 
 
 
@@ -189,7 +219,8 @@ export default defineConfig({
         topics: 'topics.html',
         home: 'home.html',
         profile: 'profile.html',
-        communities: 'communities.html'
+        communities: 'communities.html',
+        followerPage: 'followerPage.html'
       }
     }
   },

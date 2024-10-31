@@ -12,7 +12,7 @@ export default function Profile(props){
 
    // the an array of the topics that the user selected
    const [userData, setUserData] = useState([])
-
+   const [loggedInUID, setLoggedInUID] = useState(null)
 
 
    // Data for the user logged in
@@ -46,6 +46,8 @@ export default function Profile(props){
          // the current users follower count
          setFollowerCount(homeData.followerCount.length)
 
+         setLoggedInUID(homeData.UID);
+
 
 
       }
@@ -66,6 +68,7 @@ export default function Profile(props){
    const [dynamicFollowerArr, setDynamicFollowerArr] = useState(null)
    const [dynamicUID, setDynamicUID] = useState(null)
    const [dynamicBio, setDynamicBio] = useState(null)
+   const [dynamicProfilePic, setDynamicProfilePic] = useState(null)
 
 
    /*
@@ -84,18 +87,20 @@ export default function Profile(props){
 
          // Sending back post data for the searched user
          const postData = await response.json()
-         console.log(postData)
          setProfilePostData(postData.profilePostData.reverse() || [])
          // sending back the userdata for the searched user
 
          // The userData that gets returned based on the UID
+         // all based on whos profile the user is looking at
          setUserProfileData(postData.userData || [])
-
+         setDynamicProfilePic(postData.userData.profilePic)
          setDynamicFollowerArr(postData.userData.followers)
          setDynamicFollowingArr(postData.userData.following)
+         setDynamicProfileFeed(feedView)
 
          // The username that the UID has in store
          setDynamicUsername(postData.userData.user)
+
          setDynamicUID(postData.userData.UID)
          setDynamicBio(postData.userData.userBio)
 
@@ -130,89 +135,7 @@ export default function Profile(props){
    }
 
 
-   function checkUserType(){
-      switch (dynamicUsername) {
-         // For developers
-         case 'Samuel':
-            return (
-               <>
-                  <div id="iconAndUsername">
-                     {/* <i className="fa-solid fa-user"></i> */}
-                     <div>
-                        <h3>{dynamicUsername}</h3>
-                        <h5 className="profileUserTypeHeader"
-                        style={{color: "#00b3ff"}}>
-                           Developer <i className="fa-solid fa-code"></i></h5>
-                     </div>
 
-                     <div id="followTracking">
-                        <section>
-                           <h3>{dynamicFollowerArr?.length}</h3>
-                           <p>Followers</p>
-                        </section>
-                        <section>
-                           <h3>{dynamicFollowingArr?.length}</h3>
-                           <p>Following</p>
-                        </section>
-                     </div>
-
-                  </div>
-
-               </>
-            )
-            // for recruiters
-         case 'DemoUser':
-            return (
-               <>
-                  <div id="iconAndUsername">
-                     <i className="fa-solid fa-user"></i>
-                     <div>
-                        <h3>{dynamicUsername}</h3>
-                        <h5 className="profileUserTypeHeader" style={{color: "#73ff00"}}>Recruiter <i className="fa-solid fa-clipboard"></i></h5>
-                     </div>
-
-                     <div id="followTracking">
-                        <section>
-                           <h3>{dynamicFollowerArr?.length}</h3>
-                           <p>Followers</p>
-                        </section>
-                        <section>
-                           <h3>{dynamicFollowingArr?.length}</h3>
-                           <p>Following</p>
-                        </section>
-                     </div>
-                  </div>
-               </>
-            )
-         // For regular users
-         default:
-            return (
-               <>
-                  <div id="iconAndUsername">
-                     <div>
-                        <h3>{dynamicUsername}</h3>
-                        <h5 className="profileUserTypeHeader"
-                        style={{color: "darkgrey"}}>User</h5>
-                     </div>
-
-                     <div id="followTracking">
-                        <section>
-                           <h3>{dynamicFollowerArr?.length}</h3>
-                           <p>Followers</p>
-                        </section>
-                        <section>
-                           <h3>{dynamicFollowingArr?.length}</h3>
-                           <p>Following</p>
-                        </section>
-                     </div>
-
-                  </div>
-
-               </>
-            )
-
-      }
-   }
 
 
    // poster is used to find the corresponding profile for the poster
@@ -293,8 +216,12 @@ export default function Profile(props){
 
    */
 
+   // The display for the profile bio
    const bioElementDisplay = useRef()
+
+   // The textarea for entering a new bio
    const bioElementEnter = useRef()
+
    const bioEnter = useRef()
    const updateBioBtn = useRef()
    const changeBioBtn = useRef()
@@ -315,7 +242,12 @@ export default function Profile(props){
 
   async function addProfileBio(){
    // Value of the profile bio
-   let bioDisplay = bioElementDisplay.current.value
+   // let bioDisplay = bioElementDisplay.current.value
+
+   if (bioEnter.current.value === '') {
+      bioElementDisplay.current.value = dynamicBio
+      return
+   }
 
 
    // Server calls
@@ -382,17 +314,256 @@ export default function Profile(props){
 
    checkFollowing()
 
+   //  User clicks and it brings up 2 moodles one with the comment section and another with the content
+
+   // All of the post information saved as state for each indiviual post depending on what the user clicks on
+   const [postPoster, setPostPoster] = useState(null)
+   const [postCreationDateState, setPostCreationDateState] = useState(null)
+   const [postSubjectState, setPostSubjectState] = useState(null)
+   const [postBodyState, setPostBodyState] = useState(null)
+   const [likesLength, setLikesLength] = useState(null)
+   const [commentsLength, setCommentsLength] = useState(null)
+   const [postComments, setPostComments] = useState(null)
+   const [profilePostID, setProfilePostID] = useState(null)
+   const [dynamicProfileFeed, setDynamicProfileFeed] = useState(null)
+   const [profilePostLikes, setProfilePostLikes] = useState(null)
+   const [postImage, setPostImage] = useState(null)
+
+
+   const moodleContainerRef = useRef()
+   const profilePostCommentRef = useRef()
+   const postCommentsLikeRef = useRef()
+   const overlay = useRef()
+   const feedback = useRef()
+
+   const showProfilePostDetails = (postID, poster, creationDate, subject, body, likesLength, commentsLength, comments, likes, image) => {
+      setPostPoster(poster)
+      setPostCreationDateState(creationDate)
+      setPostSubjectState(subject)
+      setPostBodyState(body)
+      setLikesLength(likesLength)
+      setCommentsLength(commentsLength)
+      setPostComments(comments)
+      setProfilePostID(postID)
+      setProfilePostLikes(likes)
+      setPostImage(image)
+
+
+      moodleContainerRef.current.style.display = 'flex'
+      moodleContainerRef.current.style.pointerEvents = 'all'
+      document.body.style.overflow = 'hidden';
+      overlay.current.style.display = 'block'
+      overlay.current.style.pointerEvents = 'all'
+
+      getUserProfilePosts()
+
+   }
+
+
+   async function profilePostComment(textareaValue) {
+      if (profilePostCommentRef.current.value === '') {
+         feedback.current.style.color = `red`
+         feedback.current.innerHTML = `Can't leave an empty comment!`
+
+         setTimeout(() => {
+            feedback.current.style.color = 'white'
+            feedback.current.innerHTML = ''
+         }, 2500);
+
+         return
+      }
+
+
+      let response = await fetch(`/addPostComment?postID=${profilePostID}&feed=${dynamicProfileFeed}&commentFrom=${username}`, {
+         method: 'POST',
+         headers: {
+            'Content-Type': 'application/json'
+         },
+         body: JSON.stringify({comment: textareaValue})
+      })
+
+      // giving feedback
+      profilePostCommentRef.current.value = ''
+      feedback.current.style.color = 'lime'
+      feedback.current.innerHTML = 'Posted Comment!'
+
+      setTimeout(() => {
+         feedback.current.style.color = 'white'
+         feedback.current.innerHTML = ''
+      }, 2500);
+
+      // refresh post data
+      getUserProfilePosts()
+      // showProfilePostDetails(postID, postPoster, postCreationDateState, postSubjectState, postBodyState, likesLength, commentsLength, postComments)
+
+
+   }
+
+   async function profileAddLike(profilePostID, likes){
+      if (postCommentsLikeRef.current.style.color === 'white') {
+         postCommentsLikeRef.current.style.color = 'red'
+      } else {
+         postCommentsLikeRef.current.style.color = 'white'
+      }
+
+
+      let response = await fetch(`/addLike?feed=${dynamicProfileFeed}`, {
+         method: 'POST',
+         headers: {
+            'Content-Type': 'application/json'
+         },
+         body: JSON.stringify({postID: profilePostID, loggedInUser: username})
+      })
+
+      getUserProfilePosts()
+
+
+   }
+
    const sidebarProps = {
       username: username,
       followings: followingCount,
       followers: followerCount,
+      UID: loggedInUID
    }
 
+   function backOut() {
+      moodleContainerRef.current.style.display = 'none'
+      moodleContainerRef.current.style.pointerEvents = 'none'
+      document.body.style.overflow = 'auto';
+      overlay.current.style.display = 'none'
+      overlay.current.style.pointerEvents = 'none'
+   }
+
+
+   function navigateToFollowingPage(){
+      window.location.href = `/followerPage?following=${userSearched}`
+   }
+
+   function navigateToFollowersPage() {
+      window.location.href = `/followerPage?followers=${userSearched}`
+   }
+
+   const imageRef = useRef()
+
+  async function changeProfilePicture(){
+      let imageFile = imageRef.current.files[0]
+      const formData = new FormData()
+      formData.append('image', imageFile)
+
+      let response = await fetch(`/uploadProfilePicture/${loggedInUID}`, {
+         method: "POST",
+         body: formData
+      })
+
+      // await getUserProfilePosts()
+
+      window.location.reload()
+
+   }
+
+   function checkUserType(){
+      switch (dynamicUsername) {
+         // For developers
+         case 'Samuel':
+            return (
+               <>
+                  <div id="iconAndUsername">
+                     {/* <i className="fa-solid fa-user"></i> */}
+                     <section id="picContainer">
+                        {
+                           (dynamicProfilePic) ? (
+                              <img id="profilePicture" src={dynamicProfilePic} alt="" />
+                           ) : (
+                              <img id='profilePicture' src='src/assets/defaultUser.jpg'/>
+                           )
+                        }
+                        <div id="whoAmI">
+                           <h5>{dynamicUsername}</h5>
+                           <h6 className="profileUserTypeHeader" style={{color: "#00b3ff"}}>Developer <i className="fa-solid fa-code"></i></h6>
+                              {
+                                 (userSearched === loggedInUID) ? (
+                                    <div id="changeOverlay">
+                                       <p>Change Picture</p>
+                                       <input ref={imageRef} accept="image/*" type="file" onChange={changeProfilePicture}/>
+                                    </div>
+
+                                 ) : (
+                                    <span></span>
+                                 )
+                              }
+                        </div>
+                     </section>
+
+                     <div id="followTracking">
+                        <section>
+                           <h3>{dynamicFollowerArr?.length}</h3>
+                           <p>Followers</p>
+                        </section>
+                        <section>
+                           <h3>{dynamicFollowingArr?.length}</h3>
+                           <p>Following</p>
+                        </section>
+                     </div>
+
+                  </div>
+
+               </>
+            )
+         // For regular users
+         default:
+            return (
+               <>
+                  <div id="iconAndUsername">
+                     <section id="picContainer">
+                        {
+                           (dynamicProfilePic) ? (
+                              <img id="profilePicture" src={dynamicProfilePic} alt="" />
+                           ) : (
+                              <img id='profilePicture' src='src/assets/defaultUser.jpg'/>
+                           )
+                        }
+                        <div id="whoAmI">
+                           <h5>{dynamicUsername}</h5>
+                           <h6 className="profileUserTypeHeader" style={{color: "grey"}}>User</h6>
+                           {
+                              (userSearched === loggedInUID) ? (
+                                 <div id="changeOverlay">
+                                    <p>Change Picture</p>
+                                    <input ref={imageRef} accept="image/*" type="file" onChange={changeProfilePicture}/>
+                                 </div>
+
+                              ) : (
+                                 <span></span>
+                              )
+                           }
+                        </div>
+                     </section>
+
+                     <div id="followTracking">
+                        <section >
+                           <h3 >{dynamicFollowerArr?.length}</h3>
+                           <p>Followers</p>
+                        </section>
+                        <section>
+                           <h3>{dynamicFollowingArr?.length}</h3>
+                           <p>Following</p>
+                        </section>
+                     </div>
+
+                  </div>
+
+               </>
+            )
+
+      }
+   }
 
 
    return (
       <>
          <Navbar />
+         <span ref={overlay} id="overlayProfile" onClick={()=> backOut()}></span>
          <div id="contentContainer">
             <SideNavBar {...sidebarProps}/>
             <main id="mainProfile">
@@ -401,6 +572,7 @@ export default function Profile(props){
                   {/* Checks for the type of user is being displayed */}
                   {checkUserType()}
 
+                  {/*  FOLLOW SYSTEM */}
                   <section id="followBtnPair">
 
                      {
@@ -419,6 +591,7 @@ export default function Profile(props){
 
                   </section>
 
+                  {/* BIO SYSTEM */}
                   <div id="bioPair">
                      <div id="bioTitle">
                         <h3>Bio</h3>
@@ -426,7 +599,7 @@ export default function Profile(props){
                         {
                            (userSearched === props.loggedInUID) ? (
                               <>
-                                 <i className="fa-solid fa-pencil" onClick={()=> switchToEnter()} ref={changeBioBtn}></i>
+                                 <i className="fa-solid fa-pen-to-square" onClick={()=> switchToEnter()} ref={changeBioBtn}></i>
                               </>
                            ) : (
                               <>
@@ -453,32 +626,134 @@ export default function Profile(props){
 
                </div>
 
+               {/*PROFILE POST COMMNENT SYSTEM  */}
+               <article id="moodleContainer" ref={moodleContainerRef}>
+                  <span id="postMoodle1">
+                     <div id="moodleTitle">
+                        <h4>Post From:</h4>
+                        <h1>{postPoster}<button id="backBtn" onClick={()=> backOut()}><i class="fa-solid fa-x"></i></button></h1>
+                        {
+                           (postPoster === 'Samuel') ? (
+                              <p style={{color: 'turquoise'}}>Developer</p>
+                           ) : (
+                              <p>User</p>
+                           )
+                        }
+                        <p>{showPostDate(postCreationDateState)}</p>
+                     </div>
+
+                     <div id="moodleContent">
+                        <h2>{postSubjectState}</h2>
+                        {postImage ? (
+                        <img src={postImage} alt='Postimage' />
+                        ) : (
+                        <div style={{display: 'none'}}></div> // Optional: add a placeholder or leave it empty
+                        )}
+                        <p>{postBodyState}</p>
+                     </div>
+
+                     <div id="moodleInteraction">
+                        <button id="profileBtnLikeBtn"  onClick={()=> profileAddLike(profilePostID, profilePostLikes)}>
+                           {(profilePostLikes?.includes(username)) ? (
+                              <>
+                                 <i ref={postCommentsLikeRef} style={{color: 'red'}} className="fa-solid fa-heart"></i>
+                              </>
+                           ) : (
+                              <i ref={postCommentsLikeRef} style={{color: 'white'}} className="fa-solid fa-heart"></i>
+                           )}
+                           Like</button>
+                        <h4><i className="fa-regular fa-heart"></i> {likesLength}</h4>
+                     </div>
+
+
+                  </span>
+
+                  {/* For Comments */}
+                  <span id="postMoodle2">
+                     {/* <div id="backBtnContainer">
+                        <h3>Comments</h3>
+                        <button id="backBtn" onClick={()=> backOut()}><i class="fa-solid fa-x"></i></button>
+                     </div> */}
+
+                     {
+                        postComments?.length > 0 ? (
+                           <>
+                              <div id="commentSection">
+                                 {postComments?.map((comment)=> {
+                                    return (
+                                       <>
+                                          <div className="commentContainer">
+                                             <div className="commentTitle">
+                                                <span>{`${comment.from}`} <p>{showPostDate(comment.timePosted)}</p></span>
+                                                <p>
+                                                   {
+                                                      (comment.from === 'Samuel') ? (
+                                                         <p style={{color: 'turquoise'}}>Developer</p>
+                                                      ) : (
+                                                         <p style={{color: 'grey'}}>User</p>
+                                                      )
+                                                   }
+                                                </p>
+                                             </div>
+                                             <p>{comment.comment}</p>
+                                          </div>
+                                       </>
+                                    )
+                                 }).reverse()}
+                              </div>
+                           </>
+                        ) : (
+                           <div className="noPostsMessage">
+                              <h3>No comments available yet!</h3>
+                              <p>Be the first to leave a comment here! 🗣️</p>
+                           </div>
+                        )
+                     }
+
+
+                     <h4 ref={feedback} id="feedback"></h4>
+                     <div id="profileCommentInputField">
+                        <textarea ref={profilePostCommentRef} placeholder="Add a comment..."></textarea>
+                        <button id="postProfileComment" onClick={()=> profilePostComment(profilePostCommentRef.current.value)}>Comment</button>
+                     </div>
+                  </span>
+
+               </article>
+
+
                <div className="totalPosts">
                   <section className="profHeaders">
-                     <h2>{dynamicUsername}'s Posts </h2>
+                     <h3>Posts </h3>
                      <form>
-                        <h3>Community Feed:</h3>
                         {/* The dropdown selection menu that displays topics that the user is currently apart of  */}
-                        {userProfileData?.topics?.length > 0 && (
-                           <select className="topicDisplaySelection">
-                              <option onClick={()=> getUserProfilePosts("mainFeed")}>Home Feed</option>
-
+                        {(userProfileData.topics?.length > 0) ? (
+                           <select className="topicDisplaySelection" onChange={(e)=> getUserProfilePosts(e.target.value)}>
+                              <option onClick={()=> getUserProfilePosts("mainFeed")} value='mainFeed'>Home Feed</option>
                               {userProfileData.topics.map((topic, index) => (
-                                 <option key={index} onClick={()=> getUserProfilePosts(topic + "Feed")}>{topic} Feed</option>
+                                 <option key={index} onClick={()=> getUserProfilePosts(topic + "Feed")} value={`${topic}Feed`}>{topic} Feed</option>
                               ))}
 
                            </select>
-                        )}
+                        ) : (
+                           <select>
+                              <option onClick={()=> getUserProfilePosts("mainFeed")} value='mainFeed'>Home Feed</option>
+                           </select>
+                        )
+                     }
+
+
 
                      </form>
                   </section>
                   {/* CONDITIONAL RENDERING */}
                   {/* Showing profile post data for each post the current user has made on the corresponding community feed */}
+
                   {profilePostData?.length > 0 ? (
-                     profilePostData.map((post, index)=> {
+                     profilePostData?.map((post, index)=> {
                         return (
                            <>
-                              <article key={index} className="existingPost">
+                              <article key={index} className="existingPost" onClick={
+                                 ()=> showProfilePostDetails(post._id, dynamicUsername, post.postCreationDate, post.subject, post.body, post.likes.length, post.comments.length, post.comments, post.likes, post.image)}>
                                  <div className="existingPostTitle">
                                     {dynamicUsername}
                                     {/* If the profile post user is the developer or anyone else then display accordingly */}
@@ -502,8 +777,14 @@ export default function Profile(props){
 
                                     </span>
                                  </h2>
+                                 {post.image ? (
+                                 <img src={post.image} alt='Postimage' />
+                                 ) : (
+                                 <div style={{display: 'none'}}></div> // Optional: add a placeholder or leave it empty
+                                 )}
                                  <p className="profilePostBody">{post.body}</p>
                                  <div className="profilePostAnalytics">
+
                                     <h5><i style={{color: "grey"}} className="fa-solid fa-heart"></i> {post.likes.length}</h5>
                                     <h5 style={{color: "grey"}}><i style={{color: "grey"}} className="fa-solid fa-comments"></i> {post.comments.length}</h5>
                                  </div>

@@ -4,7 +4,8 @@ const SideNavBar = forwardRef(({
    // loggedIn topics
    username,
    followers,
-   followings
+   followings,
+   UID
 }, props, ref) => {
    const {sideNav, topicBtn} = ref || {}
 
@@ -37,6 +38,15 @@ const SideNavBar = forwardRef(({
    }
 
 
+   function navigateToFollowingPage(){
+      window.location.href = `/followerPage?following=${UID}`
+   }
+
+   function navigateToFollowersPage() {
+      window.location.href = `/followerPage?followers=${UID}`
+   }
+
+
 
    return (
       <>
@@ -57,11 +67,11 @@ const SideNavBar = forwardRef(({
                   }
                </h3>
                <div id="followingCountContainer">
-                  <div className='followingContainerItem'>
+                  <div className='followingContainerItem' onClick={()=> navigateToFollowingPage()}>
                      <h2>{followings}</h2>
                      <p>Following</p>
                   </div>
-                  <div className='followingContainerItem'>
+                  <div className='followingContainerItem' onClick={()=> navigateToFollowersPage()}>
                      <h2>{followers}</h2>
                      <p>Followers</p>
                   </div>
@@ -71,7 +81,7 @@ const SideNavBar = forwardRef(({
             <section className="topicSelectionElement">
                <button onClick={()=> window.location.href = '/communities'}><i className="fa-solid fa-border-all"></i> My Communities </button>
                <button onClick={()=> window.location.href = '/topics'}><i className="fa-solid fa-plus"></i> Join a Community</button>
-               <button><i className="fa-solid fa-right-from-bracket"></i>Logout</button>
+               <button onClick={()=> window.location.href = '/'}><i className="fa-solid fa-right-from-bracket"></i>Logout</button>
 
                {/* <h4 className="subTitle">JOINED COMMUNITIES</h4> */}
 

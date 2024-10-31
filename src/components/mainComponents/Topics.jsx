@@ -1,13 +1,9 @@
 import { useState, useEffect, useRef } from "react";
 import Navbar from "../componentDependencies/NavBar";
+import SideNavBar from "../componentDependencies/SideNavbar";
 
 export default function Topics(props) {
-  const [topicCounter, setTopicCounter] = useState(null);
   const [topics, setTopics] = useState([]);
-  const [topicsJoined, setTopicsJoined] = useState([])
-  const topicRefs = useRef({});
-  const plusIcon = useRef(null);
-  const checkIcon = useRef(null);
   const cardBtnRef = useRef([])
 
   async function getTopics(){
@@ -24,6 +20,9 @@ export default function Topics(props) {
       }
 
       const data = await response.json()
+
+
+
       setTopics(data.topics)
 
     } catch {
@@ -33,12 +32,13 @@ export default function Topics(props) {
 
 
   const [joinedTopicsState, setJoinedTopicsState] = useState([])
+  const [membersCount, setMembersCount] = useState(null)
 
   // toggles weather or not you join a topic or leave one
   async function joinTopic(topicName, key){
 
     try {
-      const response = await fetch(`/topicsAdd?loggedInUser=${props.loggedInUID}&topicToAdd=${topicName}`, {
+      const response = await fetch(`/topicsAdd?loggedInUser=${props.loggedInUID}&topicToAdd=${topicName}&username=${props.username}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json'
@@ -66,7 +66,7 @@ export default function Topics(props) {
 
   function checkCurrentlyJoin(){
     topics.map((topic, key)=> {
-      if (props.joinedTopics.includes(topic.name)) {
+      if (props.userTopics?.includes(topic.name)) {
         cardBtnRef.current[key].style.backgroundColor = 'green'
         cardBtnRef.current[key].innerHTML = 'Joined!'
       } else {
@@ -77,14 +77,41 @@ export default function Topics(props) {
     })
   }
 
+  const [totalMembers, setTotalMembers] = useState(null)
+
+  async function checkMembers() {
+    let response = await fetch('/community/checkMembers', {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({currentlyJoinedTopics: props.userTopics})
+    })
+
+    const memberData = await response.json()
+
+    setTotalMembers(memberData)
+
+  }
+
+
+
+
+
+
   useEffect(()=> {
     checkCurrentlyJoin()
+    checkMembers()
   }, [topics, props.loggedInUID])
+
+
 
   useEffect(()=> {
     getTopics()
   }, [])
 
+
+  console.log(totalMembers)
 
 
   // go to home page for user
@@ -95,38 +122,57 @@ export default function Topics(props) {
   return (
     <>
       <Navbar/>
-      <main id="topics">
-        <h1 id="pageHeader">Select a <span>topic</span> that interests you.</h1>
-        <p id="pageSubHeader">Browse and participate in these communities</p>
-        <div id="topicSelect">
-          {topics?.map((topic, key)=> {
+      <main id="topicsContainer">
 
-            return (
-              <>
-                <div key={topic.name} className="topicSelectionBtn">
+        <SideNavBar {...props.sidebarProps}/>
+        {/* <p id="pageSubHeader">Browse and participate in these communities</p> */}
 
-                  <div className='topicHeader'>
-                    <h3>{topic.name}</h3>
-                    {/* <p className='memberCount'>0 Participants</p> */}
-                  </div>
+        <main>
+          {/* <h1 id="pageHeader">Join a <span>community</span> that interests you.</h1> */}
+          <div id="topicSelect">
+            <section id="communityGridContainer">
+              {topics?.sort((a, b)=> a.name.localeCompare(b.name)).map((topic, key)=> {
 
-                  <p>{topic.fact1}</p>
-                  <button
-                   ref={(el) => (cardBtnRef.current[key] = el)}
-                   className='communityJoinBtn'
-                   onClick={()=> joinTopic(topic.name, key)}>
-                    join
-                   </button>
+                return (
+                  <>
+                    <div key={topic.name} className="topicSelectionBtn">
 
-                </div>
-              </>
-            )
-          })}
-        </div>
-        <br />
-        {/* <button id="continuteBtn" onClick={() => reDirectToHome()}>
-          Next <i className="fa-solid fa-right-long"></i>
-        </button> */}
+                      <div className='topicHeader'>
+                        <div className="communityTitle">
+                          <img src={topic.img2} alt="" />
+                          <h5>{topic.name}</h5>
+                        </div>
+
+                        <h4 style={{color: 'darkgrey'}}>
+
+                          {totalMembers?.[key]?.community != null ? (
+                            <h5 style={{ color: 'darkgrey' }}>{totalMembers[key].members.length} members</h5>
+                        ) : (
+                            <h5 style={{ color: 'darkgrey' }}>Loading members...</h5>
+                        )}
+
+
+                        </h4>
+
+                        {/* <p className='memberCount'>0 Participants</p> */}
+                      </div>
+
+                      <p>{topic.fact1}</p>
+                      <button
+                      ref={(el) => (cardBtnRef.current[key] = el)}
+                      className='communityJoinBtn'
+                      onClick={()=> joinTopic(topic.name, key)}>
+                        join
+                      </button>
+
+                    </div>
+                  </>
+                )
+              })}
+            </section>
+          </div>
+        </main>
+
       </main>
     </>
   );

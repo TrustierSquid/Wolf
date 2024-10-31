@@ -8,6 +8,9 @@ import { useState, useEffect } from 'react'
 function AcquireUserInfo(){
   const [loggedInUID, setLoggedInUID] = useState(null)
   const [userTopicArray, setUserTopicArray] = useState(null)
+  const [username, setUsername] = useState(null)
+  const [followingCount, setFollowingCount] = useState(null)
+  const [followerCount, setFollowerCount] = useState(null)
 
   async function getUserData() {
     const response = await fetch(`/users/homeFeed`, {
@@ -27,7 +30,36 @@ function AcquireUserInfo(){
     // setting the user info needed as glob vars
     setLoggedInUID(homeData.UID);
     setUserTopicArray(homeData.topicArr)
+
+    // the current user logged in
+    setUsername(homeData.userName)
+
+    //  the current users following count
+    setFollowingCount(homeData.followingCount.length)
+
+    // the current users follower count
+    setFollowerCount(homeData.followerCount.length)
   }
+
+  async function gettingCommunityNumbers() {
+    let response = await fetch(`/community`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({currentlyJoinedTopics: userTopicArray})
+    })
+  }
+
+  gettingCommunityNumbers()
+
+  const sidebarItems = {
+    username: username,
+    followings: followingCount,
+    followers: followerCount,
+    UID: loggedInUID
+  }
+
 
   useEffect(() => {
     getUserData();
@@ -35,7 +67,19 @@ function AcquireUserInfo(){
 
   return (
     <React.StrictMode>
-      <CommunitySelection loggedInUID={loggedInUID} userTopics={userTopicArray} updateUserData={getUserData}/>
+      {/*
+        User topics for displaying the communities that the user has joined
+        The loggedinUID
+        updateUserData for in case any data gets changed for the logged in user in the DB
+       */}
+      <CommunitySelection
+      loggedInUID={loggedInUID}
+      userTopics={userTopicArray}
+      updateUserData={getUserData}
+      sidebarItems={sidebarItems}
+      username={username}
+
+      />
     </React.StrictMode>
   )
 }
