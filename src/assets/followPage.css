@@ -1,0 +1,51 @@
+#followPageContainer {
+  color: white;
+}
+#followPageContainer #displayFollowingContainer {
+  font-family: "roboto", sans-serif;
+  width: 60%;
+  background: rgb(59, 1, 36);
+  background: linear-gradient(146deg, rgb(59, 1, 36) 0%, rgb(203, 0, 57) 30%, rgb(203, 0, 0) 100%);
+  border-radius: 2rem;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+#followPageContainer #displayFollowingContainer .followee {
+  padding: 1rem;
+  border-radius: 1rem;
+  background-color: rgba(17, 17, 17, 0.9098039216);
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+  transition: 100ms;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+#followPageContainer #displayFollowingContainer .followee h4 {
+  cursor: pointer;
+  border-bottom: 1px solid white;
+}
+#followPageContainer #displayFollowingContainer .followee h4:hover {
+  color: #d43737;
+}
+#followPageContainer #displayFollowingContainer .followee #unfollowBtn {
+  background: none;
+  border: #d43737 1px solid;
+  color: #d43737;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+}
+#followPageContainer #displayFollowingContainer .followee #unfollowBtn:hover {
+  background: #d43737;
+  color: white;
+}
+
+@media (max-width: 1050px) {
+  #followPageContainer #displayFollowingContainer {
+    width: 100%;
+    background: #181818;
+    margin: 1rem;
+  }
+}/*# sourceMappingURL=followPage.css.map */

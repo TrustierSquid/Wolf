@@ -1,16 +1,16 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import '/src/assets/index.css'
-import Topics from './components/mainComponents/Topics'
-import { useEffect, useState } from 'react'
+import '/src/assets/communities.css'
+import CommunitySelection from './components/mainComponents/CommunitySelection'
+import { useState, useEffect } from 'react'
 
-// grabbing the logged in user
-function App() {
+function AcquireUserInfo(){
   const [loggedInUID, setLoggedInUID] = useState(null)
   const [userTopicArray, setUserTopicArray] = useState(null)
-  const [followerCount, setFollowerCount] = useState(null)
-  const [followingCount, setFollowingCount] = useState(null)
   const [username, setUsername] = useState(null)
+  const [followingCount, setFollowingCount] = useState(null)
+  const [followerCount, setFollowerCount] = useState(null)
 
   async function getUserData() {
     const response = await fetch(`/users/homeFeed`, {
@@ -28,7 +28,6 @@ function App() {
 
     const homeData = await response.json();
     // setting the user info needed as glob vars
-    console.log(homeData)
     setLoggedInUID(homeData.UID);
     setUserTopicArray(homeData.topicArr)
 
@@ -42,13 +41,25 @@ function App() {
     setFollowerCount(homeData.followerCount.length)
   }
 
-  // sidebar functionality
-  const sidebarProps = {
+  async function gettingCommunityNumbers() {
+    let response = await fetch(`/community`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({currentlyJoinedTopics: userTopicArray})
+    })
+  }
+
+  gettingCommunityNumbers()
+
+  const sidebarItems = {
     username: username,
     followings: followingCount,
     followers: followerCount,
     UID: loggedInUID
- }
+  }
+
 
   useEffect(() => {
     getUserData();
@@ -56,9 +67,21 @@ function App() {
 
   return (
     <React.StrictMode>
-      <Topics loggedInUID={loggedInUID} userTopics={userTopicArray} username={username} sidebarProps={sidebarProps}/>
+      {/*
+        User topics for displaying the communities that the user has joined
+        The loggedinUID
+        updateUserData for in case any data gets changed for the logged in user in the DB
+       */}
+      <CommunitySelection
+      loggedInUID={loggedInUID}
+      userTopics={userTopicArray}
+      updateUserData={getUserData}
+      sidebarItems={sidebarItems}
+      username={username}
+
+      />
     </React.StrictMode>
-  );
+  )
 }
 
-ReactDOM.createRoot(document.getElementById('root')).render(<App />)
+ReactDOM.createRoot(document.getElementById('root')).render(<AcquireUserInfo/>)

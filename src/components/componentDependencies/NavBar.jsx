@@ -1,7 +1,13 @@
 import { forwardRef, useRef, useState, useEffect } from "react";
 import logo from "/src/assets/wolfLogo.png";
 
-export default function Navbar() {
+export default function Navbar(props) {
+
+  const queryString = window.location.search;
+  const urlParams = new URLSearchParams(queryString);
+  const whatCommunity = urlParams.get("topicFeed");
+
+
   const [loggedInUID, setLoggedInUID] = useState(null);
   const [username, setUsername] = useState(null);
   const [userTopicList, setUserTopicList] = useState([])
@@ -17,6 +23,7 @@ export default function Navbar() {
 
   const mobileNavMenu = useRef(null)
   const [isMobileNavMenuOpen, setIsMobileNavMenuOpen] = useState(true)
+  const [loggedInProfilePic, setLoggedInProfilePic] = useState(null)
 
   // GETTING USER INFORMATION AND DISPLYING IT ON THE HOME PAGE SPECIFIC TO THE USER LOGGED IN
   useEffect(() => {
@@ -40,6 +47,8 @@ export default function Navbar() {
       setLoggedInUID(homeData.UID);
       setUsername(homeData.userName);
       setUserTopicList(homeData.topicArr || [])
+      setLoggedInProfilePic(homeData.profilePic)
+
     }
 
 
@@ -73,20 +82,7 @@ export default function Navbar() {
     }
   }
 
-  const navHelper = (element) => {
 
-    setIsNavOpen((prevState) => !prevState);
-
-    if (isNavOpen) {
-      navDropdownElement.style.transform = "translateY(10px)";
-      navDropdownElement.style.pointerEvents = "all";
-      navDropdownElement.style.opacity = "1";
-    } else {
-      navDropdownElement.style.transform = "translateY(0px)";
-      navDropdownElement.style.opacity = "0";
-      navDropdownElement.style.pointerEvents = "none";
-    }
-  };
 
   function openMobileNavMenu(navBtn){
     setIsMobileNavMenuOpen(prevState => !prevState)
@@ -96,13 +92,16 @@ export default function Navbar() {
       mobileNavMenu.current.style.opacity = '1'
       // document.body.style.overflow = 'hidden';
       navBtn.target.style.color = 'red'
-      window.scrollTo(-10, -10);
+      // window.scrollTo(-10, -10);
+      mobileNavMenu.current.style.width = '80%'
 
     } else {
       mobileNavMenu.current.style.left = '-50%'
+      mobileNavMenu.current.style.width = '0px'
       document.body.style.overflow = 'auto';
       navBtn.target.style.color = 'white'
       mobileNavMenu.current.style.opacity = '0'
+      mobileNavMenu.current.pointerEvents = 'none'
 
     }
   }
@@ -132,14 +131,42 @@ export default function Navbar() {
     <>
       <nav id="nav">
         {/* For Desktop */}
-        <div id="logoContainer" onClick={() => navigateBackToHome()}>
-          <img id="logo" src={logo} alt="" />
-          <h1>WOLF</h1>
+        <div id="logoContainer">
+          <div id="titleAndLogo">
+            <img id="logo" src={logo} alt="" />
+            <h1>WOLF</h1>
+          </div>
+          <button onClick={()=> navigateBackToHome()}><i className="fa-solid fa-house"></i></button>
+          {/* Button becomes disabled after visting any other page that isnt of the home sub domain */}
+          {window.location.pathname === '/home' ? (
+              <>
+                <button onClick={()=> props.appearEffect()}><i className="fa-solid fa-square-plus"></i> Post</button>
+                <h3>
+                  {
+                    (whatCommunity === null) ? (
+                      <>
+                        <h3>Home</h3>
+                      </>
+                    ) : (
+                      <>
+                        <h3>{whatCommunity.split('Feed')}</h3>
+                      </>
+                    )
+                  }
+                  </h3>
+              </>
+            ) : (
+              <>
+                <button style={{display: 'none'}}></button>
+              </>
+            )}
+          {/* Was trying to conditional render this button based on the subdirectory they user is visiting. */}
         </div>
-        <div id="profileContainer" onClick={(element) => navHelper(element)}>
-          <h1 id="dropdownBtn">
-            {username} <i className="fa-solid fa-fire"></i>
-          </h1>
+
+        <div id="profileContainer">
+          {/* In place for a profile picture */}
+
+          <img id='dropdownBtn' onClick={()=> navigateProfile()} src={loggedInProfilePic} alt="" />
         </div>
 
         {/* Mobile Navs */}
@@ -150,24 +177,28 @@ export default function Navbar() {
 
       <section id="mobileNavMenu" ref={mobileNavMenu} >
         <div className='mobileNavProfileSection' onClick={()=> navigateProfile()}>
-          <h5 className="subTitle">View Profile</h5>
-          <h2>{username}</h2>
-          <h3>{determineUserType(username)}</h3>
+          <img src={loggedInProfilePic} alt="" />
+          <section id="mobileWhoAmI">
+            <h5 style={{color: '#ff7b00'}}>VIEW PROFILE</h5>
+            <h2>{username}</h2>
+            <h3>{determineUserType(username)}</h3>
+          </section>
         </div>
 
         {/* <hr /> */}
         <h4 className="mobileNavMainBtns" onClick={()=> navigateLogOut()}>Log Out <i className="fa-solid fa-right-from-bracket"></i></h4>
         <h4 className="mobileNavMainBtns" onClick={()=> navigateBackToHome()}>Home Feed <i className="fa-solid fa-house"></i></h4>
-        <h4 className="mobileNavMainBtns" onClick={()=> navigateToTopics()}>Join a Topic <i className="fa-solid fa-users"></i></h4>
-        <h4 className="subTitle">JOINED TOPICS</h4>
-        {userTopicList?.length > 0 ? (
+        <h4 className="mobileNavMainBtns" onClick={()=> navigateToTopics()}>Join a Topic <i class="fa-solid fa-user-plus"></i></h4>
+        <h4 className="mobileNavMainBtns" onClick={()=> window.location.href = '/communities'} >My Communities <i className="fa-solid fa-users"></i></h4>
+        {/* Displays the communities that the user has joined */}
+        {/* {userTopicList?.length > 0 ? (
           userTopicList.map((topic, key)=> {
             return (
               <>
                 <h4 className="mobileNavTopicBtns"
                  key={key}
                  onClick={()=> navigateToFeed(topic + 'Feed')}
-                 > View {topic} Feed <i className="fa-solid fa-arrow-right"></i></h4>
+                 >  {topic} Feed <i className="fa-solid fa-arrow-right"></i></h4>
               </>
             )
           })
@@ -176,34 +207,10 @@ export default function Navbar() {
             <h3>No Topics Available</h3>
             <p>Start joining topics to see them here.</p>
           </div>
-        )}
+        )} */}
       </section>
 
-      <section id="navDropdown" ref={navDropdown}>
-        {/* view profile button */}
-        <div
-          className="navDropdownItemProfile"
-          onClick={() => navigateProfile()}
-        >
-          <span>
-            <h1>
-              <i className="fa-solid fa-user-large"></i>
-            </h1>
-          </span>
-          <div>
-            <h4>See Profile</h4>
-            <h3 id="navUsername">{username}</h3>
-          </div>
-        </div>
 
-        <div className="navDropdownItem"></div>
-
-        <div className="navDropdownItem"></div>
-
-        <div className="navDropdownItem" onClick={() => navigateLogOut()}>
-          <i className="fa-solid fa-right-from-bracket"></i> Log out
-        </div>
-      </section>
     </>
   );
 }

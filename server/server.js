@@ -10,12 +10,21 @@ import cookieParser from "cookie-parser";
 import signinRoutes from "./routes/signin.js";
 import profileRoutes from "./routes/profileData.js";
 import topicFeedRoutes from "./routes/topicFeed.js";
+import handleImages from './routes/imageHandling.js'
+import handleCommunity from './routes/communities.js'
 
 // To check if the user has a token for accessing certain routes
 import requireAuth from "./middleware/authMiddleware.js";
 
 // MONGODB
-import { MongoClient, ServerApiVersion, ObjectId } from "mongodb";
+import { MongoClient, ServerApiVersion, ObjectId, GridFSBucket } from "mongodb";
+import multer from 'multer';
+import { Readable } from 'stream';
+
+import GridFsStorage from 'multer-gridfs-storage';
+/* import pkg from 'multer-gridfs-storage'
+const { GridFsStorage } = pkg */
+import crypto from 'crypto'
 
 // list of topics for the user to choose from
 import topics from "./json/topics.json" assert { type: "json" };
@@ -23,8 +32,7 @@ import topics from "./json/topics.json" assert { type: "json" };
 // A fact that comes with each topic
 import topicFacts from "./json/facts.json" assert { type: "json" };
 import { connect } from "http2";
-
-
+// import { connect } from "http2";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -44,14 +52,19 @@ app.use(express.static(path.join(__dirname,  "./dist")));
 app.use("/users", signinRoutes);
 app.use("/profileData", profileRoutes);
 app.use("/loadTopicFeed", topicFeedRoutes);
+app.use('/handleImage', handleImages)
+app.use('/community', handleCommunity)
 // app.use('/userInteraction', likesRoutes)
 
 // Creating new mongoClient instance
 const uri = process.env.DB_URI;
 const currentDate = new Date();
 
+
 // database configuration
 let database = null;
+// let gfs;
+
 const client = new MongoClient(uri, {
   serverApi: {
     version: ServerApiVersion.v1,
@@ -66,8 +79,11 @@ async function connectMongo() {
 
   try {
     await client.connect();
+    // let databaseAd = client.db('admin');
     database = client.db(process.env.DB_NAME);
-    console.log("Connected to MongoDB!");
+    let imagesCollection = database.collection('images')
+
+    console.log(`Connected to ${database.databaseName}`);
     return database;
   } catch (err) {
     console.log("Error connecting to MongoDB!");
@@ -76,133 +92,126 @@ async function connectMongo() {
 
 connectMongo();
 
-// if the user enters any file extension they will be redirected to login again
-// for prod
-app.get("/home.html", requireAuth, (req, res) => {
-  res.redirect("/");
-});
-
-app.get("/topics.html", requireAuth, (req, res) => {
-  res.redirect("/");
-});
-
-app.get("/index.html", requireAuth, (req, res) => {
-  res.redirect("/");
-});
-
-// on load Send user to login screen
-app.get("/", (req, res) => {
-  // for dev
-  // res.send('<h1>Login page</h1>')
-  res.sendFile(path.join(__dirname, "index.html"));
-});
-
-/* TOPICS PAGE*/
-
-// Retrieving the list of topics that the user can choose from
-app.get("/api/topics", (req, res) => {
-  res.json(topics);
-});
-
-// to get to the topics page!
-/* app.get("/topics", requireAuth, (req, res) => {
-  res.sendFile(path.join(__dirname, "/dist/topics.html"));
-}); */
-
-/* HOME FEED PAGE */
-
-app.get("/home", requireAuth, (req, res) => {
-  // for dev
-  res.sendFile(path.join(__dirname, "/dist/home.html"));
-});
-
-app.get("/topics", requireAuth, (req, res) => {
-  // for dev
-  res.sendFile(path.join(__dirname, "/dist/topics.html"));
-});
-
-app.get("/profile", requireAuth, (req, res) => {
-  // for dev
-  res.sendFile(path.join(__dirname, "/dist/profile.html"));
-});
-
-app.get("/viewProf", (req, res) => {
-  res.sendFile(path.join(__dirname, "../profile.html"));
-});
-
-app.get("/wolfTopics", (req, res) => {
-  res.json(topicFacts);
-});
-
-// ROUTE EXECUTES WHEN THE USER WANTS TO LOOK AT THEIR OWN PROFILE
-app.post("/profile", (req, res) => {
-  const { username } = req.body;
-});
-
-
+const storage = multer.memoryStorage(); // Store files in memory
+const upload = multer({ storage: storage });
 
 
 // Sends the current list of posts in the mainFeed
 app.get("/update", async (req, res) => {
+
   const database = await connectMongo();
   const mainFeedCollection = database.collection("mainFeed");
 
   const posts = await mainFeedCollection.find({}).toArray();
 
-  res.json({ reversedPosts: posts.reverse() });
+  const responsePost = posts.map(post => ({
+    _id: post._id,
+    poster: post.poster,
+    subject: post.subject,
+    body: post.body,
+    likes: post.likes,
+    postCreationDate: post.postCreationDate,
+    comments: post.comments,
+    image: post.image ? `data:${post.image.contentType};base64,${post.image.data.toString('base64')}` : null
+  }))
+
+  // res.json({ reversedPosts: posts.reverse() });
+  res.json({ reversedPosts: responsePost.reverse() });
 });
 
 
 
+/* // IMAGE HANDLING
+app.get('/image/:id', async (req, res)=> {
+  // by default feed will be mainFeed if empty string
+  const { id } = req.params
+  const database = await connectMongo();
+  const mainFeedCollection = database.collection("mainFeed");
 
-// ROUTE EXECUTES WHEN THE USER CREATES A NEW POST
-app.post("/newPost", async (req, res) => {
+  try {
+    const post = await mainFeedCollection.findOne({ _id: new ObjectId(id) });
+    if (!post || !post.image || !post.image.data) {
+      console.warn(`Image not found for post ID: ${id}`);
+      return res.status(404).json({ error: 'Image not found' });
+    }
+
+    // Set the content type based on the image data
+    res.set('Content-Type', post.image.contentType);
+    res.send(post.image.data); // Send the image data
+
+  } catch (error) {
+    console.error("Error fetching image:", error);
+    return res.status(500).json({ error: 'Internal server error' });
+  }
+
+}) */
+
+
+// WHEN THE USER CREATES A NEW POST
+app.post("/newPost", upload.single('image'), async (req, res) => {
   const { feed } = req.query;
+  const { whoPosted, postSubject, postBody} = req.body;
+  const imageFile = req.file
+
+  console.log(req.file)
+
 
   // if no feed is selected, post will default to mainFeed
-  if (feed === "mainFeed") {
+  if (feed === "Home") {
     // retrieving the username, and post details (subject, body)
-    const { whoPosted, postSubject, postBody } = req.body;
-
 
     // Updating the poster's post count
     let database = await connectMongo();
     const users = database.collection("Users");
-    const mainFeed = database.collection("mainFeed");
+    const mainfeed = database.collection("mainFeed");
 
-    // poster
+
+
+
+    // Fetching the poster of the new post
     const filter = { user: whoPosted };
+
+    // action for updating the document
     const updateDoc = {
       $inc: {
         posts: 1,
       },
     };
 
+    // document update for the user document in the user collection
+    // This just increments the number of posts that is displayed a users document
     const updatePosts = await users.updateOne(filter, updateDoc);
 
-    // adding the post to the DB
-    const newPost = mainFeed.insertOne({
+    // adding the post to the DB to the respective feed
+    const newPost = await mainfeed.insertOne({
       poster: whoPosted,
       subject: postSubject,
       body: postBody,
       likes: [],
       postCreationDate: new Date(),
-      comments: []
+      comments: [],
+      image: {
+        data: imageFile.buffer,
+        contentType: imageFile.mimetype,
+        filename: imageFile.originalname,
+      }
     });
 
+
+    res.status(201).json({ message: 'Post created successfully', id: newPost.insertedId});
+    console.log({ message: 'Post created successfully', id: newPost.insertedId})
     // Adding the post to the database will lead to a call to action on the frontend
     // The frontend will load this collection in the database to show the user feed
 
-    res.json({ message: "Posted Successfully" });
+
   } else {
-    // retrieving the username, and post details (subject, body)
-    const { whoPosted, postSubject, postBody } = req.body;
 
 
     // Updating the poster's post count
     let database = await connectMongo();
     const users = database.collection("Users");
-    const selectedFeed = database.collection(feed);
+    const selectedFeed = database.collection(feed + 'Feed');
+
 
     // poster
     const filter = { user: whoPosted };
@@ -221,15 +230,45 @@ app.post("/newPost", async (req, res) => {
       body: postBody,
       likes: [],
       postCreationDate: new Date(),
-      comments: []
+      comments: [],
+      image: {
+        data: imageFile.buffer,
+        contentType: imageFile.mimetype,
+        filename: imageFile.originalname,
+      }
     });
 
-    // Adding the post to the database will lead to a call to action on the frontend
-    // The frontend will load this collection in the database to show the user feed
+    res.status(201).json({ message: 'Post created successfully', id: newPost.insertedId});
+    console.log({ message: 'Post created successfully', id: newPost.insertedId})
 
-    res.json({ message: `Posted Successfully to ${feed}Feed` });
+
   }
 });
+
+app.post("/uploadProfilePicture/:loggedInUser", upload.single('image'), async (req, res)=> {
+  const imageFile = req.file
+  const {loggedInUser} = req.params
+
+  let database = await connectMongo();
+  const users = database.collection("Users");
+
+  const profilePic = {
+      data: imageFile.buffer,
+      contentType: imageFile.mimetype,
+      filename: imageFile.originalname,
+    }
+
+
+  let foundUser = await users.updateOne(
+    {UID: loggedInUser},
+    {$set: {profilePic}}
+  )
+
+
+  // res.status(201).json({ message: 'Post created successfully', id: imageToPost.insertedId});
+  // console.log({ message: 'Post created successfully', id: imageToPost.insertedId})
+
+})
 
 
 
@@ -417,27 +456,44 @@ app.post("/addFollowingUser", async (req, res) => {
 
 app.get('/topicsAdd', async (req, res)=> {
   const {topicToAdd} = req.query
+  const {username} = req.query
 
   // by UID
   const {loggedInUser} = req.query
 
+
   const database = await connectMongo()
   const users = database.collection('Users')
+
+  let dynamicCollection = database.collection(topicToAdd + 'Info')
+
 
   // checking to see if it exists in the topics array
   let findTopic = await users.findOne(
     {UID: loggedInUser,
     topics: {$in: [topicToAdd]} }
   )
+  // making sure the loggedInUser is not counted as a member
+  let findMember = await dynamicCollection.findOne(
+    {communityName: topicToAdd,
+    members: {$in: [username]}}
+  )
 
-  /* let user = await users.findOne(
-    {UID: loggedInUser}
-  ) */
 
-  if (!findTopic) {
+
+  if (!findTopic && !findMember) {
+    // if both are false then the user gets added
+
+    // adding the topic to the loggedIn user's document
     await users.updateOne(
       {UID: loggedInUser},
       {$addToSet: {topics: topicToAdd}}
+    )
+
+    // add the loggedin user to the member
+    await dynamicCollection.updateOne(
+      {communityName: topicToAdd},
+      {$push: {members: username}}
     )
 
     res.sendStatus(200)
@@ -448,8 +504,54 @@ app.get('/topicsAdd', async (req, res)=> {
       {$pull: {topics: topicToAdd}}
     )
 
+    await dynamicCollection.updateOne(
+      {communityName: topicToAdd},
+      {$pull: {members: username}}
+    )
+
     res.sendStatus(200)
   }
+
+})
+
+app.put('/removeCommunity/:community/:UID/:username', async (req, res)=> {
+  const { community, UID, username } = req.params
+
+  const database = await connectMongo()
+  const usersCollection = database.collection('Users')
+
+  const dynamicCollection = database.collection(community + 'Info')
+
+
+  await usersCollection.updateOne(
+    {UID: UID},
+    {$pull: {'topics': community}}
+  )
+
+  await dynamicCollection.updateOne(
+    {communityName: community},
+    {$pull: {members: username}}
+  )
+
+  res.json({success: 200})
+
+})
+
+app.post('/updateBio/:UID', async (req, res)=> {
+  const { UID } = req.params
+  const { newBio } = req.body
+
+  // connect to DB
+  const database = await connectMongo()
+  const usersCollection = database.collection('Users')
+
+  await usersCollection.updateOne(
+    {UID: UID},
+    {$set: {userBio: newBio}}
+  )
+
+  res.sendStatus(200)
+
 
 })
 
@@ -460,10 +562,8 @@ app.post('/addPostComment', async (req, res)=> {
   const {commentFrom} = req.query
   const {comment} = req.body
 
+
   const database = await connectMongo()
-
-  // for posts in the homepage
-
   const collection = database.collection(feed)
 
   // the comment to push to the database
@@ -483,6 +583,103 @@ app.post('/addPostComment', async (req, res)=> {
 })
 
 
+app.get('/dynamic/:username', async (req, res)=> {
+  const {username} = req.params
+
+  const database = await connectMongo()
+  const usersCollection = database.collection('Users')
+
+
+  let searchedUser = await usersCollection.findOne({user: username})
+
+
+  res.json({
+    dynamicUID: searchedUser.UID,
+  })
+
+})
+
+
+
+
+
+
+
+
+// if the user enters any file extension they will be redirected to login again
+// for prod
+app.get("/home.html", requireAuth, (req, res) => {
+  res.redirect("/");
+});
+
+app.get("/topics.html", requireAuth, (req, res) => {
+  res.redirect("/");
+});
+
+app.get("/index.html", requireAuth, (req, res) => {
+  res.redirect("/");
+});
+
+app.get("/followerPage.html", requireAuth, (req, res) => {
+  res.redirect("/");
+});
+
+app.get("/communities.html", requireAuth, (req, res) => {
+  res.redirect("/");
+});
+
+// on load Send user to login screen
+app.get("/", (req, res) => {
+  // for dev
+  // res.send('<h1>Login page</h1>')
+  res.sendFile(path.join(__dirname, "index.html"));
+});
+
+/* TOPICS PAGE*/
+
+// Retrieving the list of topics that the user can choose from
+app.get("/api/topics", (req, res) => {
+  res.json(topics);
+});
+
+
+/* HOME FEED PAGE */
+
+app.get("/home", requireAuth, (req, res) => {
+  // for dev
+  res.sendFile(path.join(__dirname, "/dist/home.html"));
+});
+
+app.get("/topics", requireAuth, (req, res) => {
+  // for dev
+  res.sendFile(path.join(__dirname, "/dist/topics.html"));
+});
+
+app.get("/profile", requireAuth, (req, res) => {
+  // for dev
+  res.sendFile(path.join(__dirname, "/dist/profile.html"));
+});
+app.get("/followerPage", requireAuth, (req, res) => {
+  // for dev
+  res.sendFile(path.join(__dirname, "/dist/followerPage.html"));
+});
+app.get("/communities", requireAuth, (req, res) => {
+  // for dev
+  res.sendFile(path.join(__dirname, "/dist/communities.html"));
+});
+
+app.get("/viewProf", (req, res) => {
+  res.sendFile(path.join(__dirname, "../profile.html"));
+});
+
+app.get("/wolfTopics", (req, res) => {
+  res.json(topicFacts);
+});
+
+// ROUTE EXECUTES WHEN THE USER WANTS TO LOOK AT THEIR OWN PROFILE
+app.post("/profile", (req, res) => {
+  const { username } = req.body;
+});
 
 
 app.listen(port, () => {

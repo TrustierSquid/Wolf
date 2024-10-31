@@ -14,7 +14,7 @@ export default function UpdateFeed(props) {
 
     // if there is no query string fetching for a different feed, then the main feed will be returned
     if (!queryString) {
-      const response = await fetch("/update", {
+      const response = await fetch(`/update`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -27,6 +27,16 @@ export default function UpdateFeed(props) {
 
       const allPosts = await response.json();
       setAllPosts(allPosts.reversedPosts);
+
+      /* localStorage.setItem('cachedPosts', JSON.stringify(allPosts.reversedPosts))
+
+      const cachedPosts = localStorage.getItem('cachedPosts');
+      if (cachedPosts) {
+        setAllPosts(JSON.parse(cachedPosts));
+      } else {
+        fetchPosts();
+      } */
+
     } else {
       const response = await fetch(`/loadTopicFeed?topicFeed=${userSearched}`, {
         method: "GET",
@@ -41,8 +51,21 @@ export default function UpdateFeed(props) {
 
       const allPosts = await response.json();
       setAllPosts(allPosts.reversedPosts);
+
+      /* localStorage.setItem('cachedPosts', JSON.stringify(allPosts.reversedPosts))
+
+      const cachedPosts = localStorage.getItem('cachedPosts');
+      if (cachedPosts) {
+        setAllPosts(JSON.parse(cachedPosts));
+      } else {
+        fetchPosts();
+      } */
+
     }
+
+
   }
+
 
   // poster is used to find the corresponding profile for the poster
   async function navigateToProfile(poster) {
@@ -54,23 +77,44 @@ export default function UpdateFeed(props) {
     })
 
     const data = await response.json()
-
+    // The data returns the fetched user uid
     window.location.href = `/profile?user=${data.userUID}`;
     /* setTimeout(() => {
     }, 500); */
+  }
+
+  const [profilePictureFeed, setProfilePictureFeed] = useState(null)
+
+  async function fetchProfilePicture(poster){
+    try {
+      let response = await fetch(`/profileData/getProfileImage/${poster}`)
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+
+      let imageData = await response.json()
+      setProfilePictureFeed(imageData.profilePic)
+
+    } catch (error) {
+      console.error('Error fetching profile picture:', error);
+      setProfilePictureFeed(null); // Set to null or a default image if desired
+    }
+
+
+
   }
 
   // Checks to see if certain users are admin or special
   function checkAdmin(poster) {
     switch (poster) {
       case "Samuel":
+        // fetchProfilePicture(poster)
         return (
           <>
             <h2 className="poster" onClick={() => navigateToProfile(poster)}>
+              {/* <img id="feedProfilePic" src={profilePictureFeed} alt="" /> */}
               {poster}{" "}
-              <span style={{ color: "#00b3ff" }}>
-                Developer <i className="fa-solid fa-code"></i>
-              </span>
+              <p style={{ color: "turquoise" }}>Developer</p>
             </h2>
           </>
         );
@@ -90,9 +134,7 @@ export default function UpdateFeed(props) {
           <>
             <h2 className="poster" onClick={() => navigateToProfile(poster)}>
               {poster}{" "}
-              <span style={{ color: "grey" }}>
-                User <i className="fa-solid fa-user"></i>
-              </span>
+              <p style={{ color: "grey" }}>User</p>
             </h2>
           </>
         );
@@ -153,7 +195,6 @@ export default function UpdateFeed(props) {
     }
   }
 
-  // 3332 dads rooom num
 
   // Checks and shows if a user is already liking a post or not
   // all dependent on when the feed gets updated
@@ -167,10 +208,12 @@ export default function UpdateFeed(props) {
     });
   }
 
+
   // ran on component mount. Dependent on the the allPosts array
   useEffect(() => {
     checkCurrentlyLiked();
   }, [allPosts, currentUser]);
+
 
   // ran on component mount
   useEffect(() => {
@@ -190,9 +233,11 @@ export default function UpdateFeed(props) {
   const [errorMessage, setErrorMessage] = useState('')
   const commentValue = useRef(null)
   const [postComments, setPostComments] = useState([])
+  const [postImage, setPostImage] = useState(null)
 
+  // Getting the information for the post selected when the interface appears.
   async function commentInterfaceAppear(postSubject, postBody, poster, creationDate, postID, keyOfPost,
-     postLikesCount, postComments, ){
+     postLikesCount, postComments, image){
 
     setPostSubject(postSubject)
     setPostBody(postBody)
@@ -203,12 +248,17 @@ export default function UpdateFeed(props) {
     setPostLikesCount(postLikesCount)
     setPostComments(postComments.reverse())
     setCommentsCount(postComments.length)
+    setPostImage(image)
 
+    setErrorMessage('')
 
-    // styling
+    /*
+      When invoked, the interface has these states relative to the post selected
+      The opacity is changed and the pointer events are enabled
+     */
     commentInterface.current.style.opacity = '1'
     commentInterface.current.style.pointerEvents = 'all'
-
+    // props.bgEffect also gets envoked from the home component
 
   }
 
@@ -219,6 +269,7 @@ export default function UpdateFeed(props) {
 
   // for processing comments for posts
   async function addComment(comment, postID) {
+    // Grabbing the query key and string
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
     const userSearched = urlParams.get("topicFeed");
@@ -237,7 +288,7 @@ export default function UpdateFeed(props) {
         })
 
         if (!response.ok) {
-          throw new Error("That shit didnt go through");
+          throw new Error("That didnt go through");
         }
         await updateMainFeed()
       }, 500);
@@ -254,7 +305,7 @@ export default function UpdateFeed(props) {
       })
 
       if (!response.ok) {
-        throw new Error("That shit didnt go through");
+        throw new Error("That didnt go through");
       }
 
       setErrorMessage('Added Comment!')
@@ -288,21 +339,33 @@ export default function UpdateFeed(props) {
       (timeDifference % millisecondsInOneHour) / millisecondsInOneMinute
     );
 
+    // Calculate months using the date object
+    const monthsPassed =
+    currentDate.getMonth() -
+    startDate.getMonth() +
+    12 * (currentDate.getFullYear() - startDate.getFullYear());
+
+
+
 
     // Display time passed
+    if (monthsPassed >= 1) {
+      return <h4 className="postData">{`${monthsPassed}Mth ago`}</h4>;
+    }
+
     if (daysPassed >= 1) {
-      return <h1 className="postData">{`${daysPassed}d ago`}</h1>;
+      return <h4 className="postData">{`${daysPassed}d ago`}</h4>;
     }
 
     if (hoursPassed > 0) {
-      return <h1 className="postData">{`${hoursPassed}hr ago`}</h1>;
+      return <h4 className="postData">{`${hoursPassed}hr ago`}</h4>;
     }
 
     if (minutesPassed > 0) {
-      return <h1 className="postData">{`${minutesPassed}m ago`}</h1>;
+      return <h4 className="postData">{`${minutesPassed}m ago`}</h4>;
     }
 
-    return <h1 className="postData">Just now</h1>;
+    return <h4 className="postData">Just now</h4>;
 
 
   }
@@ -316,21 +379,31 @@ export default function UpdateFeed(props) {
         allPosts.map((post, key) => {
           return (
             <>
-              <div key={key} className="userPost">
-                <br />
+              <div key={post._id} className="userPost">
                 <main className="mainPost">
                   <div className="postAnalytics">
+                    {/* flex container */}
                     <section className="userAction">
                       {/* checking for whos posting */}
                       {checkAdmin(post.poster)}
                       {showPostDate(post.postCreationDate)}
                     </section>
                     <p className="postCaption">
-                      <i className="fa-solid fa-bolt"></i>
                       {post.subject}
                     </p>
                   </div>
+
+                  {post.image ? (
+                    <img id="postIMG" src={post.image} alt='Postimage' />
+                  ) : (
+                    <div style={{display: 'none'}}></div> // Optional: add a placeholder or leave it empty
+                  )}
+
                   <h2 className="postBody">{post.body}</h2>
+                  <br />
+                </main>
+                <nav className='postInteractionSection'>
+
                   <div className="postLC">
                     <span
                       ref={(el) => (likeBtn.current[key] = el)}
@@ -338,17 +411,21 @@ export default function UpdateFeed(props) {
                       onClick={() => addLike(post._id, key)}
                     >
                       <i className="fa-solid fa-heart"></i>
-                      <span style={{ color: "grey" }}> {post.likes.length}</span>
+                      <span style={{ color: "white" }}> Like</span>
                     </span>
                     <span className="commentBtn"
-                     onClick={()=> {commentInterfaceAppear(post.subject, post.body, post.poster, post.postcreationDate, post._id, key, post.likes.length, post.comments), props.bgEffect()}}>
+                    onClick={()=> {commentInterfaceAppear(post.subject, post.body, post.poster, post.postcreationDate, post._id, key, post.likes.length, post.comments, post.image), props.bgEffect()}}>
                       <i className="fa-solid fa-comments"></i>{" "}
-                      <span style={{ color: "grey" }}
-                      > {post.comments.length}</span>
+                      <span style={{ color: "white" }}
+                      > Comment</span>
                     </span>
-
                   </div>
-                </main>
+
+                  <div className="postDetails">
+                    <span><i className="fa-regular fa-heart"></i> {post.likes.length}</span>
+                    <span><i className="fa-regular fa-comment"></i> {post.comments.length}</span>
+                  </div>
+                </nav>
               </div>
             </>
           );
@@ -362,12 +439,23 @@ export default function UpdateFeed(props) {
 
       <div id="commentInterface" ref={commentInterface}>
 
-        <h3 id="topDiv">{poster} <span id="exitCommentBtn" onClick={()=> {removeEffect(), props.removeBGEffect()}}><i className="fa-solid fa-arrow-right"></i></span></h3>
-
+        <h3 id="topDiv">
+          <div id="fromWho">
+            <h5>Post from:</h5>
+            <h3 onClick={()=> navigateToProfile(poster)}>{poster}</h3>
+          </div>
+          <span id="exitCommentBtn" onClick={()=> {removeEffect(), props.removeBGEffect()}}><i className="fa-solid fa-x"></i></span>
+        </h3>
 
 
         <section id="commentSection">
           <h2 id="exitBtnRow">{postSubject}</h2>
+          {postImage ? (
+            <img src={postImage} alt='Postimage' />
+          ) : (
+            <div style={{display: 'none'}}></div> // Optional: add a placeholder or leave it empty
+          )}
+
           <p>{postBody}</p>
 
           <div id="indicators">
@@ -379,31 +467,31 @@ export default function UpdateFeed(props) {
         <section id="commentSection2">
           <form id="commentInput">
             <input ref={commentValue} required type="text" placeholder="Add a comment.."/>
-            <button type="button" onClick={()=> addComment(commentValue.current.value, postID, )}>Comment +</button>
+            <button type="button" onClick={()=> addComment(commentValue.current.value, postID)}>Comment</button>
           </form>
           <br />
           <h4 style={{color: 'lime'}}>{errorMessage}</h4>
-          <article>
-            {postComments?.length > 0 ? (
-              postComments?.map((comment)=> {
-                return (
-                  <>
-                    <div className='comment'>
-                      <h3>{comment.from} <span>{showPostDate(comment.timePosted)}</span></h3>
-                      <p>{comment.comment}</p>
-                    </div>
-                  </>
-                )
-              })
-            ) : (
-              <div className="noPostsMessage">
-                <h3>No comments available yet!</h3>
-                <p>Be the first to leave a comment here! 🗣️</p>
-              </div>
-            )}
-          </article>
         </section>
 
+        <article className='commentContainer'>
+          {postComments?.length > 0 ? (
+            postComments?.map((comment)=> {
+              return (
+                <>
+                  <div className='comment'>
+                    <h3 onClick={()=> navigateToProfile(comment.from)}>{comment.from} <span>{showPostDate(comment.timePosted)}</span></h3>
+                    <p>{comment.comment}</p>
+                  </div>
+                </>
+              )
+            })
+          ) : (
+            <div className="noPostsMessage">
+              <h3>No comments available yet!</h3>
+              <p>Be the first to leave a comment here! 🗣️</p>
+            </div>
+          )}
+        </article>
       </div>
     </>
   );

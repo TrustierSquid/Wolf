@@ -1,9 +1,12 @@
 import { forwardRef, useEffect, useRef } from "react"
 
 const SideNavBar = forwardRef(({
-   userData,
-   displayAbout
-}, ref) => {
+   // loggedIn topics
+   username,
+   followers,
+   followings,
+   UID
+}, props, ref) => {
    const {sideNav, topicBtn} = ref || {}
 
 
@@ -35,34 +38,71 @@ const SideNavBar = forwardRef(({
    }
 
 
+   function navigateToFollowingPage(){
+      window.location.href = `/followerPage?following=${UID}`
+   }
+
+   function navigateToFollowersPage() {
+      window.location.href = `/followerPage?followers=${UID}`
+   }
+
+
+
    return (
       <>
          <nav className="sideNav" ref={sideNav}>
+            <section id="subTitle">
+               <h3 id="sidebarUsername">
+                  {username}
+                  {
+                     (username === 'Samuel') ? (
+                        <>
+                           <span style={{color: 'turquoise'}}>Developer</span>
+                        </>
+                     ) : (
+                        <>
+                           <span>User</span>
+                        </>
+                     )
+                  }
+               </h3>
+               <div id="followingCountContainer">
+                  <div className='followingContainerItem' onClick={()=> navigateToFollowingPage()}>
+                     <h2>{followings}</h2>
+                     <p>Following</p>
+                  </div>
+                  <div className='followingContainerItem' onClick={()=> navigateToFollowersPage()}>
+                     <h2>{followers}</h2>
+                     <p>Followers</p>
+                  </div>
+               </div>
+            </section>
             <br />
             <section className="topicSelectionElement">
-               <button onClick={()=> navigateToHome()}>Home Feed <i className="fa-solid fa-house"></i></button>
-               <button onClick={()=> navigateToTopicSelection()}>Join a Topic <i className="fa-solid fa-users"></i></button>
+               <button onClick={()=> window.location.href = '/communities'}><i className="fa-solid fa-border-all"></i> My Communities </button>
+               <button onClick={()=> window.location.href = '/topics'}><i className="fa-solid fa-plus"></i> Join a Community</button>
+               <button onClick={()=> window.location.href = '/'}><i className="fa-solid fa-right-from-bracket"></i>Logout</button>
 
-               <h4 className="subTitle">JOINED TOPICS</h4>
+               {/* <h4 className="subTitle">JOINED COMMUNITIES</h4> */}
 
                {/* mapping out the selected topics that the user selected */}
-               <div id="selectedTopicsBtns">
+               {/* <div id="selectedTopicsBtns">
                   {userData?.length > 0 ? (
                      userData.map((topic, key) => {
                         return (
                            <>
-                              <button key={key} ref={topicBtn} onClick={()=> navigateToFeed(topic)}>{topic}<i className="fa-solid fa-person-walking-arrow-right"></i></button>
+                              <button key={key} ref={topicBtn} onClick={()=> navigateToFeed(topic)}><i className="fa-solid fa-person-walking-arrow-right"></i>{topic}</button>
                            </>
                         );
                      })
 
                   ) : (
-                  <div className="noTopicsMessage">
-                     <h3>No Topics Available</h3>
-                     <p>Start joining topics to see them here.</p>
-                  </div>
-               )}
-               </div>
+                     <div className="noTopicsMessage">
+                        <h3>No Topics Available</h3>
+                        <p>Start joining topics to see them here.</p>
+                     </div>
+                  )}
+               </div> */}
             </section>
 
 

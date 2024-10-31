@@ -1,7 +1,9 @@
 // ligher BG
 
 $uiBG: #2b2b2b;
-$cardBG: #131212;
+$cardBG: #222;
+$postBG: #111111e8;
+$cardInteractionSection: #181818;
 $cardBorder: #2E2E2E;
 $moodleBG: #181818;
 
@@ -27,13 +29,19 @@ $sc-error: #F96E36;
 $sc-info: #00a1b6;
 
 $subTitle: #ff7b00;
-$onHover: #55555543;
+$onHover: #1e0000f8;
 
 $fs-h1: 2.3rem;
 $fs-h2: 2rem;
 $fs-h3: 1.5rem;
 
 $fs-paragraph: 1rem;
+
+* {
+   margin: 0;
+   padding: 0;
+   box-sizing: border-box;
+}
 
 @mixin buttonGradient {
    background: rgb(255,60,60);
@@ -52,24 +60,13 @@ $fs-paragraph: 1rem;
 
 
 
-* {
-   margin: 0;
-   padding: 0;
-   box-sizing: border-box;
-}
-
-html {
-   // max-height: 100000px;
-   // min-height: 100vh;
-   scroll-behavior: smooth;
-}
 
 #darkBG {
    background-color: #000000a4;
-   position: absolute;
+   position: fixed;
    top: 0;
    left: 0;
-   height: 150vh;
+   height: 100vh;
    width: 100%;
    pointer-events: none;
    opacity: 0;
@@ -77,12 +74,14 @@ html {
 }
 
 body {
-   background-color: #0D1012;
-   // overflow-y: hidden;
+   background-color: #0b0b0b;
 }
 
 .noPostsMessage {
    color: white;
+   background-color: $postBG;
+   padding: 1rem;
+   border-radius: 1rem;
    font-family: $ff-heading;
    text-align: center;
    margin-top: 2rem;
@@ -97,11 +96,14 @@ body {
    color: grey;
 }
 
+
+
 /*
 
    LOGIN PAGE
 
  */
+
 
 #loginContainer {
    font-family: comfortaa;
@@ -115,7 +117,6 @@ body {
    gap: 1rem;
    width: 40%;
    position: absolute;
-   // min-height: 700px;
    left: 50%;
    top: 50%;
    transform: translate(-50%, -50%);
@@ -137,9 +138,9 @@ body {
          gap: 0.5rem;
       }
 
-      .titleSection:nth-of-type(2) {
+      /* .titleSection:nth-of-type(2) {
 
-      }
+      } */
 
    }
 
@@ -215,6 +216,7 @@ body {
    #extraInfo {
       display: flex;
       gap: 2rem;
+
       a {
          color: $primary;
          font-family: $ff-body;
@@ -261,168 +263,254 @@ body {
 }
 
 
+// Media query for login page
 
-// LOGIN PAGE MEDIA QUERY
 @media (max-width: 1050px) {
+
+   // login component
+
    #loginContainer {
+      background: none;
+      border: none;
       width: 95%;
+      padding: 1.5rem;
+      gap: 3rem;
 
       #optionalDecision {
          justify-content: center;
 
-         #signUpLink {
+         /* #signUpLink {
 
+         } */
+      }
+
+      #title {
+         .titleSection:nth-of-type(1) {
+            // logo
+            img {
+               height: 50px;
+            }
+
+            // Text
+            h1 {
+               font-size: $fs-paragraph;
+            }
          }
+
+         .titleSection:nth-of-type(2) {
+            // Text
+            h2 {
+               font-size: $fs-paragraph;
+            }
+         }
+
       }
 
       #loginBtns {
-
-
          button {
             width: 100%;
-            font-size: 1.2rem;
+            font-size: $fs-paragraph;
          }
       }
+
+
+
+      #inputField {
+         padding: 0;
+
+         div {
+            h3 {
+               font-size: $fs-paragraph;
+            }
+         }
+
+      }
    }
+
 }
 
 
 
 /*
 
-CHOOSING TOPICS COMPONENT
+TOPICS COMPONENT
 
 */
 
 
-#topics {
+#topicsContainer {
    background: #161616;
    background: none;
    min-height: 600px;
-   max-width: 70%;
-   // max-width: 1000px;
-   // margin: 5rem auto;
-   margin: 4rem auto;
-   border-radius: 2rem;
+   max-width: 100%;
+   margin: 0rem auto;
    display: flex;
-   flex-direction: column;
-   justify-content: space-between;
-   align-items: center;
-   // gap: 2rem;
-   padding: 3rem;
    color: white;
 
+   main {
+      // header
+      display: flex;
+      flex-direction: column;
+      background: rgb(59,1,36);
+      background: linear-gradient(135deg, rgba(59,1,36,1) 0%, rgba(203,0,57,1) 100%);
+      border-radius: 2rem;
+      width: 60%;
+      padding: 3rem;
 
-
-   // header
-   #pageHeader {
-      // font-weight: lighter;
-      font-family: $ff-heading;
-      font-size: min(2rem, 4rem);
-      // width: 90%;
-      align-self: start;
-      color: white;
-
-      span {
-         color: $primary;
-      }
-
-   }
-
-   #pageSubHeader {
-      font-family: $ff-heading;
-      font-size: min(1.5rem, 2rem);
-      align-self: start;
-      color: grey;
-   }
-
-
-   #topicSelect {
-      display: grid;
-      // grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      grid-template-columns: 1fr 1fr 1fr;
-      justify-content: center;
-      align-items: center;
-      border-radius: 1rem;
-      margin-top: 2rem;
-      gap: 1rem;
-
-
-
-
-      .topicSelectionBtn {
-         font-weight: 500;
-         padding: 1.5rem;
-         height: 250px;
-         border-radius: 1rem;
+      #pageHeader {
+         // font-weight: lighter;
          font-family: $ff-heading;
-         border: none;
-         background: $cardBG;
+         font-size: min(2rem, 4rem);
+         // width: 90%;
+         align-self: start;
          color: white;
-         // padding: 1rem;
-         text-wrap: wrap;
-         transition: 150ms;
-         font-size: clamp(0.6rem, 1rem, 1.8rem);
-         display: flex;
-         flex-direction: column;
-         border: 2px solid $cardBorder;
-         justify-content: space-between;
 
-         .topicHeader {
-            display: flex;
-            justify-content: space-between;
-
-            .memberCount {
-               color: lightgrey;
-               font-size: 0.9rem;
-            }
+         span {
+            color: turquoise;
          }
 
-         .communityJoinBtn {
-            cursor: pointer;
-            padding: 0.5rem;
-            width: 75px;
-            align-self: end;
-            background-color: $primary;
-            border: none;
-            border-radius: 0.5rem;
-            color: white;
-            transition: 150ms;
-
-            &:hover {
-               background-color: $buttonHover;
-            }
-         }
-
-      }
-
-
-      .topicSelectionBtn:nth-child(even) {
-         background-color: $inputField;
-      }
-
-
-   }
-}
-
-@media (max-width: 1050px) {
-
-   #topics {
-      max-width: 100%;
-
-      #pageHeader, #pageSubHeader {
-         text-align: center;
-         align-self: center;
       }
 
       #topicSelect {
-         // grid-template-columns: 1fr 1fr;
-         grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+         // justify-content: center;
+         // align-items: center;
+
+
+         #communityGridContainer {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+
+            .topicSelectionBtn {
+               padding: 1.5rem;
+               height: 300px;
+               border-radius: 1rem;
+               font-family: $ff-heading;
+               border: none;
+               background: $cardBG;
+               color: white;
+               // padding: 1rem;
+               text-wrap: wrap;
+               transition: 150ms;
+               font-size: clamp(0.6rem, 1rem, 1.8rem);
+               display: flex;
+               flex-direction: column;
+               justify-content: space-between;
+               box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+
+
+               .topicHeader {
+                  display: flex;
+                  justify-content: space-between;
+
+                  .communityTitle {
+                     display: flex;
+                     align-items: center;
+                     gap: 0.3rem;
+                     margin-bottom: 1rem;
+
+                     img {
+                        height: 45px;
+                        width: 45px;
+                        object-fit: cover;
+                        border-radius: 50%;
+                     }
+
+                     h3 {
+
+                     }
+                  }
+
+
+                  .memberCount {
+                     color: lightgrey;
+                     font-size: 0.9rem;
+                  }
+               }
+
+               .communityJoinBtn {
+                  cursor: pointer;
+                  padding: 0.5rem;
+                  width: 75px;
+                  align-self: end;
+                  background-color: $primary;
+                  border: none;
+                  border-radius: 0.5rem;
+                  color: white;
+                  transition: 150ms;
+
+                  &:hover {
+                     background-color: $buttonHover;
+                  }
+               }
+
+            }
+
+            .topicSelectionBtn:nth-child(even) {
+               background: $cardInteractionSection;
+               border: none;
+            }
+
+            .topicSelectionBtn:nth-child(odd) {
+               background-color: $cardInteractionSection;
+               border: none;
+            }
+         }
+
+
+
+
+
       }
    }
 
+
+
+}
+
+// Media query for topics component
+
+@media (max-width: 1050px) {
+
+   #topicsContainer {
+      max-width: 100%;
+      justify-content: center;
+
+
+      main {
+         width: 100%;
+         padding: 2rem;
+         background: none;
+         border-radius: 0rem;
+
+         #pageHeader, #pageSubHeader {
+            text-align: center;
+            align-self: center;
+         }
+
+         #topicSelect {
+            // grid-template-columns: 1fr 1fr;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+
+            #communityGridContainer {
+               gap: 1rem;
+
+               .topicSelectionBtn {
+                  height: 250px;
+                  line-height: 1.5;
+                  box-shadow: none;
+                  border-radius: 0;
+                  border-bottom: 1px solid white;
+               }
+            }
+         }
+      }
+
+
+   }
+
    #loginContainer {
-      margin: 1;
+
    }
 
 
@@ -430,46 +518,88 @@ CHOOSING TOPICS COMPONENT
 
 /*
 
-HOME PAGE
+DEFAULT PAGE
 
  */
 
-.profilePicture {
-   height: 50px;
-   width: 50px;
-   border-radius: 50%;
-   border: none;
-   object-fit: cover;
-   cursor: pointer;
-   background-color: grey;
-}
+
+// Navbar
 
 #nav {
-   // border-bottom: 1px solid $primary;
+   top: 0;
+   // margin: 1rem;
+   // border-radius: 1rem;
+   border-bottom: 1px solid $buttonHover;
    display: flex;
    padding: 0.5rem;
-   justify-content: space-around;
-   gap: 15rem;
+   padding-right: 2.5rem;
+   padding-left: 2.5rem;
+   justify-content: space-between;
+   align-items: center;
    position: sticky;
-   top: 0;
    background-color: $subBackground;
-   border-top: 1px solid $cardBorder;
-   border-bottom: 1px solid $cardBorder;
-   z-index: 7;
+   z-index: 11;
+
+
 
    #logoContainer {
       display: flex;
       align-items: center;
-      gap: 1rem;
-      h1 {
-         font-family: comfortaa;
-         color: white;
+      gap: 1.5rem;
+
+      #titleAndLogo {
+         display: flex;
+         align-items: center;
+         gap: 0.5rem;
+         h1 {
+            font-family: comfortaa;
+            color: white;
+         }
+
+         #logo  {
+            height: 50px;
+            object-fit: cover;
+            cursor: pointer;
+         }
+
+
       }
 
-      #logo  {
-         height: 50px;
-         object-fit: cover;
+
+
+
+      button {
+         padding: 0.8rem;
+         border-radius: 2rem;
+         border: none;
+         color: white;
+         background-color: #7777773e;
          cursor: pointer;
+         transition: 150ms;
+         display: flex;
+         align-items: center;
+         gap: 0.5rem;
+         font-size: 1rem;
+
+
+         .fa-house {
+            color: $primary;
+            font-size: 1.5rem;
+         }
+
+         .fa-square-plus {
+            color: $primary;
+            font-size: 1.5rem;
+         }
+
+         &:hover {
+            background-color: #4c4c4c;
+         }
+      }
+
+      h3 {
+         color: white;
+         font-family: $ff-heading;
       }
    }
 
@@ -483,11 +613,11 @@ HOME PAGE
          color: white;
          cursor:pointer;
          transition: 150ms;
-
-         &:focus {
-            color: $primary;
-         }
-
+         object-fit: cover;
+         border: 1px solid grey;
+         width: 50px;
+         height: 50px;
+         border-radius: 50%;
 
          &:hover {
             color: $primary;
@@ -508,36 +638,53 @@ HOME PAGE
 
 }
 
+// mobile Nav menu
+
 #mobileNavMenu {
-   height: 130%;
-   width: 90%;
-   background-color: darkblue;
+   // height: 130%;
+   // width: 60%;
+   display: none;
    position: absolute;
    z-index: 2;
    left: -100%;
    transition: 150ms;
    opacity: 0;
-   background-color: #0e0d0d;
+   background-color: #111;
+   height: 100vh;
+   position: fixed;
    color: white;
    font-family: $ff-body;
    display: flex;
    flex-direction: column;
    padding: 1rem;
-   gap: 1rem;
-   overflow: scroll;
+   gap: 0.5rem;
+   overflow: auto;
 
 
    .mobileNavProfileSection {
       display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
+      // flex-direction: column;
+      background-color: #222;
+      gap: 1rem;
       cursor: pointer;
       transition: 150ms;
-      padding: 1rem;
+      padding: 1.5rem;
       border-radius: 1rem;
 
+      img {
+         height: 75px;
+         object-fit: cover;
+         width: 75px;
+         border-radius: 50%;
+      }
+
+      #mobileWhoAmI {
+         display: flex;
+         flex-direction: column;
+      }
+
       &:hover {
-         background-color: $onHover;
+         background-color: $cardBorder;
       }
    }
 
@@ -545,10 +692,11 @@ HOME PAGE
       color: #ff7b00;
       font-weight: lighter;
       letter-spacing: 2px;
+      padding: 0.5rem;
    }
 
    .mobileNavMainBtns {
-      padding: 1.5rem;
+      padding: 1rem;
       padding-left: 0.8rem;
       transition: 100ms;
       border-radius: 1rem;
@@ -557,7 +705,7 @@ HOME PAGE
       justify-content: space-between;
 
       &:hover {
-         background-color: $onHover;
+         background-color: $cardBorder;
       }
    }
 
@@ -580,7 +728,6 @@ HOME PAGE
 }
 
 
-
 @keyframes shake {
    0%{
       transform: translateX(10px)
@@ -599,87 +746,77 @@ HOME PAGE
 }
 
 
-#navDropdown {
-   display: flex;
-   flex-direction: column;
-   justify-content: center;
-   background-color: $cardBG;
-   border: 1px solid $cardBorder;
-   font-family: $ff-heading;
-   padding: 2rem;
-   color: rgba(255, 255, 255, 0.818);
-   height: 150px;
-   width: 300px;
-   position: fixed;
-   right: 11%;
-   z-index: 3;
-   border-radius: 1rem;
-   transform: translateY(0px);
-   transition: 150ms;
-   opacity: 0;
-   pointer-events: none;
 
-   .navDropdownItem {
-      padding-bottom: 0.5rem;
-      padding-top: 0.5rem;
-      display: flex;
-      gap: 1rem;
-      padding-left: 0.5rem;
-      cursor: pointer;
-      &:hover {
-         color: white;
-      }
-   }
-
-   .navDropdownItemProfile {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      cursor: pointer;
-
-      h4 {
-         color: grey;
-      }
-
-      #navUsername {
-         color: white;
-      }
-
-      &:hover {
-         #navUsername {
-            color: $primary;
-         }
-      }
-   }
-
-
-}
-
-
-
+// side nav bar
 
 .sideNav {
-   height: 100vh;
-   width: 275px;
+   height: 50vh;
+   top: 10%;
+   width: 500px;
+   height: 450px;
    color: white;
-   background-color: $subBackground;
-   border-right: 1px solid $cardBorder;
-   padding: 1rem;
+   background: rgb(59,1,36);
+   background: linear-gradient(158deg, rgba(59,1,36,1) 0%, rgba(203,0,57,1) 80%, rgba(203,0,0,1) 100%);
+   border-radius: 2rem;
+   border: none;
+   padding: 1.5rem;
    display: flex;
    flex-direction: column;
-   // gap: 2rem;
    font-family: $ff-body;
-   // margin: 2rem;
-   position: fixed;
-   overflow-y: scroll;
+   // position: sticky;
+   z-index: 0;
 
-   .subTitle {
+   #subTitle {
       font-family: $ff-body;
       font-weight: lighter;
-      letter-spacing: 2px;
       padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
       // font-size: 1.3rem;
-      color: $subTitle;
+
+      #sidebarUsername {
+         background-color: $postBG;
+         padding: 1rem;
+         border-radius: 1rem;
+         width: 100%;
+         text-align: left;
+         display: flex;
+         flex-direction: column;
+         box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+      }
+
+
+      #followingCountContainer {
+         display: flex;
+         gap: 0.5rem;
+         width: 100%;
+
+         .followingContainerItem {
+            display: flex;
+            flex-direction: column;
+            align-items: start;
+            background-color: $postBG;
+            padding: 1rem;
+            width: 100%;
+            border-radius: 1rem;
+            box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+            cursor: pointer;
+            transition: 150ms;
+            // font-weight: 100;
+
+            &:hover {
+               background-color: $cardBorder;
+            }
+         }
+
+         .followingContainerItem:nth-of-type(2) {
+            align-items: start;
+         }
+
+      }
+
    }
 
 
@@ -687,24 +824,23 @@ HOME PAGE
       // font-family: 'roboto';
       display: flex;
       flex-direction: column;
-      gap: 1.5rem;
-
+      gap: 1rem;
+      padding: 0.5rem;
 
 
       button {
          display: flex;
-         align-items: center;
-         gap: 0.5rem;
+         justify-content: start;
+         gap: 1rem;
          background: none;
          border: none;
          padding: 1rem;
+         text-wrap: nowrap;
          font-size: 1rem;
          color: white;
          border-radius: 0.5rem;
          cursor: pointer;
          transition: 150ms;
-         display: flex;
-         justify-content: space-between;
          font-family: $ff-body;
 
          &:hover {
@@ -720,7 +856,7 @@ HOME PAGE
       #selectedTopicsBtns {
          display: flex;
          flex-direction: column;
-         gap: 1rem;
+         gap: 0.1rem;
       }
 
 
@@ -736,59 +872,50 @@ HOME PAGE
 
 }
 
+// Feed styles for the Home page
+
 main {
    display: flex;
+   justify-content: center;
+   gap: 2rem;
+   padding: 2rem;
 
    #content {
-      width: 50%;
+      // height: 90vh;
+      width: 55%;
       padding: 2rem;
       display: flex;
       flex-direction: column;
+      // background-color: rgba(34, 17, 17, 0.251);
+      background: rgb(122,11,49);
+      background: linear-gradient(180deg, rgba(122,11,49,1) 0%, rgba(46,0,28,1) 100%);
+      border-radius: 1rem;
 
-      // gap: 5rem;
-      margin-left: 30rem;
 
-      #whatsNew {
-         display: flex;
-         justify-content: end;
-         align-items: center;
-         letter-spacing: 1px;
+      #newPostBtn {
+         width: 100%;
+         color: white;
+         background-color: #111;
+         border: 1px solid $cardBorder;
+         border-radius: 1rem;
+         padding: 1rem;
+         cursor: pointer;
+         font-size: $fs-h3;
+         font-family: $ff-heading;
+         transition: 150ms;
 
-         h1{
-            font-size: 3vw;
-            background: rgb(251, 63, 63);
-            background: linear-gradient(90deg, rgba(251,63,63,1) 0%, rgba(255,85,120,1) 100%);
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-shadow: rgba(255,63,63,0.3) 0px 0px 39px;
-            font-family: $ff-heading;
-            font-weight: bolder;
-            transition: 250ms;
+         &:hover {
+            background-color: $cardBorder;
          }
-
-
-         #newPostBtn {
-            display: flex;
-            color: white;
-            padding: 0.5rem;
-            font-size: $fs-h3;
-            font-family: $ff-body;
-            border-radius: 0.5rem;
-            transition: 250ms;
-            cursor: pointer;
-            // width: 25%;
-            // position: fixed;
-            height: 50px;
-            display: flex;
+      }
+      // container for the new post Btn on the feed UI
+      #newPost {
+         // Btn for making new posts
+         #newPostBtnMobile {
+            display: none;
             align-items: center;
-            justify-content: space-between;
-            gap: 1rem;
-            transition: 150ms;
-            text-wrap: nowrap;
-            top: 5rem;
-            right: 1rem;
-            background-color: $primary;
+            justify-content: center;
+
 
             &:hover {
                background-color: $buttonHover;
@@ -809,7 +936,7 @@ main {
 
          }
 
-
+         // the moodle for making new posts
          #createPostElement {
             color: white;
             gap: 2.5rem;
@@ -828,46 +955,75 @@ main {
             transition: 250ms;
             display: flex;
             flex-direction: column;
-            z-index: 8;
+            z-index: 12;
+            border: 1px solid $darkenPrimary;
 
             #createNewPostHeader {
               color: white;
                font-weight: bold;
                align-self: left;
                font-size: 2rem;
-               font-family: $ff-body;
+               font-family: $ff-heading;
                display: flex;
                align-items: center;
                justify-content: space-between;
 
+
                span {
                   font-size: 1.3rem;
+                  width: 60px;
+                  height: 60px;
                   padding: 1rem;
-                  border-radius: 1rem;
-                  color: $subTitle;
+                  border-radius: 50%;
+                  display: flex;
+                  justify-content: center;
+                  align-items: center;
+                  color: white;
                   cursor: pointer;
+                  background-color: #57575765;
+                  transition: 150ms;
 
                   &:hover {
-                     background-color: #57575765;
+                     background-color: grey;
+
                   }
                }
 
             }
 
-
-
-
-            #formSubject, #formBody {
-               display: flex;
-               flex-direction: column;
+            // the subject and body containers of the new post moodle
+            #formBody {
                gap: 0.2rem;
 
+               // labeles for the containers
                label {
                   font-family: $ff-heading;
                }
 
-               input, textarea {
+               // input fields for both containers
+               input {
                  width: 100%;
+                 height: 60px;
+                 max-width: 100%;
+                 padding: 0.5rem;
+                 border-radius: 0.5rem;
+                 font-size: 1rem;
+                 font-family: $ff-heading;
+                 background-color: $inputField;
+                 border: 1px solid $cardBorder;
+                 color: white;
+
+                 &:focus {
+                  outline: none;
+                 }
+               }
+            }
+
+            #formSubject {
+               gap: 0.5rem;
+
+               input {
+                  width: 100%;
                  height: 50px;
                  max-width: 100%;
                  padding: 0.5rem;
@@ -875,42 +1031,68 @@ main {
                  font-size: 1rem;
                  font-family: $ff-heading;
                  background-color: $inputField;
-                 border: 2px solid $cardBorder;
+                 border: 1px solid $cardBorder;
                  color: white;
 
                  &:focus {
-                  // outline: none;
+                  outline: none;
                  }
                }
             }
 
-            #formSubject {
-
+            #upload {
+               background-color: $inputField;
+               padding: 1rem;
+               display: flex;
+               flex-direction: column;
+               gap: 1rem;
+               border-radius: 1rem;
+               font-family: $ff-heading;
+               input {
+               }
             }
 
-            #formBody {
-
-            }
-
+            // Post button inside the newPost moodle
             button {
-               padding: 0.5rem;
+               padding: 1rem;
                color: white;
                background-color: $primary;
                border: none;
-               border-radius: 0.5rem;
-               font-size: 1rem;
-               width: 30%;
+               border-radius: 1rem;
+               width: 20%;
                max-width: 100%;
                align-self: end;
                cursor: pointer;
                transition: 150ms;
+               font-size: 1.2rem;
+               font-family: $ff-heading;
+               font-weight: bold;
 
                &:hover {
                   background-color: #510917;
                }
             }
 
-            // Error Message
+            #selectCommunity {
+               font-family: $ff-heading;
+               display: flex;
+               gap: 2rem;
+
+               form {
+                  background-color: #111;
+
+                  select {
+                     background-color: #111;
+                     color: white;
+                     border: none;
+                     padding: 0.5rem;
+                     border-radius: 0.5rem;
+                     cursor: pointer;
+                  }
+               }
+            }
+
+            // The feed back message that is sent for validation
             #feedbackMessage {
                color: $primary;
                font-family: $ff-body;
@@ -921,31 +1103,35 @@ main {
 
       }
 
+      // container for each post that is mapped
       .userContent {
-         max-height: 1000px;
          display: flex;
          margin-top: 1rem;
          flex-direction: column;
-         gap: 0.5rem;
+         gap: 1rem;
 
-
+         // each individual post
          .userPost {
             transition: 150ms;
-            // max-width: 900px;
             max-width: 100%;
+            display: flex;
+            flex-direction: column;
+            background-color: $postBG;
+            border-radius: 1rem;
+            box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
 
             .mainPost {
                flex-direction: column;
-               // min-height: 300px;
                max-height: 100%;
-               gap: 1rem;
+               gap: 0.5rem;
                padding: 1.5rem;
                border-radius: 1rem;
-               background: $cardBG;
-               border: $cardBorder 1px solid;
                color: white;
                transition: 250ms;
 
+
+
+               //  header for each post (post author, type of user, time ago posted)
                .postAnalytics {
                   display: flex;
                   flex-direction: column;
@@ -969,6 +1155,12 @@ main {
                         font-size: 1rem;
                         cursor: pointer;
 
+                        #feedProfilePic {
+                           height: 50px;
+                           width: 50px;
+                           object-fit: cover;
+                        }
+
                         p {
                            font-size: 1rem;
                         }
@@ -991,13 +1183,11 @@ main {
                      font-size: 1.4rem;
                      font-family: $ff-body;
                      font-weight: bold;
-                     /* background: linear-gradient(to bottom right, #FF7979 18%, #FFAAAA 100%);
-                     -webkit-background-clip: text;
-                     background-clip: text;
-                     -webkit-text-fill-color: transparent; */
                      color: white;
                      display: flex;
-                     gap: 0.5rem;
+                     padding: 0.5rem;
+                     padding-left: 0rem;
+                     // border-bottom: 1px dotted $cardBorder;
 
                      i {
                         color: $primary;
@@ -1007,21 +1197,24 @@ main {
 
                }
 
-
-
+               #postIMG {
+                  height: 300px;
+                  object-fit: contain;
+                  background-color: #222;
+               }
 
                .postBody {
                   font-size: 1.2rem;
                   font-family: $ff-body;
                   color: rgba(255, 255, 255, 0.911);
                   font-weight: lighter;
+                  line-height: 1.5;
                   word-wrap: break-word;
                }
 
                .userTraction {
                   display: flex;
                   justify-content: right;
-
                   gap: 1rem;
 
                   button {
@@ -1057,24 +1250,49 @@ main {
                }
 
 
+            }
+
+
+            .postInteractionSection {
+               // background-color: $cardBG;
+               display: flex;
+               align-items: center;
+               justify-content: space-between;
+               padding: 1rem;
+
+               .postDetails {
+                  display: flex;
+                  gap: 0.5rem;
+                  font-family: $ff-heading;
+
+                  span {
+                     padding: 0.5rem;
+                     color: white;
+                     font-size: 1.2rem;
+                  }
+               }
+
+               // container for liking and commenting on a post.
                .postLC {
                   display: flex;
-                  gap: 3rem;
+                  gap: 1rem;
 
                   .likeBtn, .commentBtn {
                      font-size: 1.2rem;
                      cursor: pointer;
-                     padding: 0.5rem;
-                     border-radius: 1rem;
+                     padding: 1rem;
+                     border-radius: 2rem;
                      font-family: $ff-body;
                      transition: 150ms;
+                     background-color: #3e3e3eaa;
 
                   }
 
                   .likeBtn {
 
                      &:hover {
-                        background-color: #3e3e3e88;
+
+                        background-color: #444;
                      }
                   }
 
@@ -1082,14 +1300,11 @@ main {
                      color: rgb(46, 176, 128);
 
                      &:hover {
-                        background-color: #3e3e3e88;
+                        background-color: #444;
                      }
                   }
 
                }
-
-
-
             }
 
          }
@@ -1101,6 +1316,8 @@ main {
 
 }
 
+
+// Interfact for making a comment
 #commentInterface {
    opacity: 0;
    pointer-events: none;
@@ -1111,9 +1328,9 @@ main {
    right: 50%;
    transform: translate(50%, -50%);
    color: white;
-   background-color: #181818;
-   border: 2px solid $cardBorder;
-   border-radius: 1rem;
+   background-color: #111;
+   border: 1px solid $darkenPrimary;
+   border-radius: 0.5rem;
    padding: 2rem;
    transition: 150ms;
    font-family: $ff-heading;
@@ -1127,20 +1344,39 @@ main {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      color: turquoise;
+      color: white;
+
+      #fromWho {
+         h5 {
+            color: grey;
+         }
+
+         // poster
+         h3 {
+            cursor: pointer;
+            &:hover {
+               text-decoration: underline;
+            }
+         }
+      }
 
       #exitCommentBtn {
-         color: $subTitle;
+         width: 60px;
+         height: 60px;
+         border-radius: 50%;
+         display: flex;
+         align-items: center;
+         justify-content: center;
+         color: white;
          font-family: $ff-heading;
          cursor: pointer;
-         border-radius: 0.5rem;
          padding: 0.5rem;
          transition: 150ms;
          font-size: 1.3rem;
+         background-color: rgba(87, 87, 87, 0.398);
 
          &:hover {
-            background-color: rgba(87, 87, 87, 0.398);
-
+            background-color: grey;
          }
       }
    }
@@ -1148,12 +1384,24 @@ main {
    #commentSection {
       display: flex;
       flex-direction: column;
+      gap: 0.5rem;
 
 
       #exitBtnRow {
          display: flex;
-         justify-content: space-between;
+         align-items: center;
+         gap: 1rem;
 
+         i {
+            color: $primary;
+         }
+
+      }
+
+      img {
+         height: 300px;
+         object-fit: contain;
+         background-color: #222;
       }
 
       #indicators {
@@ -1170,6 +1418,11 @@ main {
 
       }
 
+      p {
+         word-wrap: break-word;
+         line-height: 1.5;
+      }
+
    }
 
    #commentSection2 {
@@ -1178,7 +1431,7 @@ main {
          gap: 1rem;
 
          input {
-            width: 80%;
+            width: 90%;
             padding: 0.5rem;
             border-radius: 0.5rem;
             background-color: $inputField;
@@ -1191,171 +1444,83 @@ main {
          }
 
          button {
-            width: 20%;
+            // width: 10%;
             padding: 0.5rem;
             border-radius: 0.5rem;
-            background-color: crimson;
-            color: white;
-            border: none;
+            background: none;
+            border: 1px solid teal;
+            color: turquoise;
             cursor: pointer;
             transition: 150ms;
             font-size: 1rem;
 
             &:hover {
-               background-color: $buttonHover;
+               background-color: teal;
+               color: white;
             }
          }
 
 
       }
 
-      article {
-         margin-top: 0.5rem;
-         display: flex;
-         flex-direction: column;
-         gap: 1rem;
+   }
 
-         .comment {
-            background-color: $cardBG;
-            border: 1px solid $cardBorder;
-            padding: 1rem;
-            border-radius: 1rem;
 
-            h3 {
-               display: flex;
-               justify-content: space-between;
-               margin-bottom: 1rem;
-               color: turquoise;
+   .commentContainer {
+      margin-top: 0.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
 
-               span {
-                  color: rgb(153, 153, 153);
-               }
+      .comment {
+         background-color: #111111e8;
+         border: 1px solid $cardBorder;
+         padding: 1rem;
+         border-radius: 0.5rem;
+         word-wrap: break-word;
+
+         h3 {
+            display: flex;
+            justify-content: start;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+            color: white;
+            cursor: pointer;
+
+            &:hover {
+               text-decoration: underline;
             }
 
+            span {
+               color: rgb(101, 101, 101);
+               font-size: $fs-paragraph;
+
+            }
          }
+
       }
    }
 
 }
 
 
-#introGrid {
-  color: white;
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  // grid-template-rows: 1fr 1fr;
-  // grid-template-columns: repeat(auto-fit, minmax(min(100%, 33%), 1fr));
-  gap: 1rem;
-  margin-bottom: 2rem;
-  min-height: 400px;
-  font-family: $ff-body;
-
-
-  .gridItem {
-    padding: 1.5rem;
-    border: px solid $subBackground;
-    border-radius: 0.5rem;
-    // height: 100px;
-   //  cursor: pointer;
-    transition: 150ms;
-
-    h3 {
-      font-family: $ff-heading;
-    }
-
-    p {
-      line-height: 1.5;
-    }
-
-    &:hover {
-      // opacity: 0.8;
-      // transform: translateY(-5px);
-      // border: 1px solid $primary;
-    }
-  }
-
-  .gridItem:nth-of-type(1) {
-    grid-column: 1 / span 2;
-  }
-  .gridItem:nth-of-type(2) {
-    grid-row: span 2;
-  }
-  /* .gridItem:nth-of-type(3) {
-
-   }
-   .gridItem:nth-of-type(4) {
-
-   } */
-}
+// Comment section media query
 
 @media (max-width: 1050px) {
 
-   #loginContainer {
-      background: none;
-      border: none;
-      width: 95%;
-      padding: 1.5rem;
-      gap: 3rem;
+   #commentInterface {
+      width: 100%;
+      height: 100%;
+      border-radius: 0;
+      border: 1px solid $cardBorder;
+      background-color: #111;
+      transition: 100ms;
+      padding: 1rem;
 
-      #title {
-         .titleSection:nth-of-type(1) {
-            // logo
-            img {
-               height: 50px;
-            }
-
-            // Text
-            h1 {
-               font-size: $fs-paragraph;
-            }
-         }
-
-         .titleSection:nth-of-type(2) {
-            // Text
-            h2 {
-               font-size: $fs-paragraph;
-            }
-         }
-
-      }
-
-      #loginBtns {
-         button {
-            font-size: $fs-paragraph;
-         }
-      }
-
-
-
-      #inputField {
-         padding: 0;
-
-         div {
-            h3 {
-               font-size: $fs-paragraph;
-            }
-         }
-
-      }
-   }
-
-
-
-
-  #introGrid {
-   // max-height: 500px;
-    grid-template-columns: 1fr 1fr;
-  }
-
-  #commentInterface {
-     width: 90%;
-     border-radius: 1rem;
-     border: 1px solid $cardBorder;
-
-     #commentSection {
-        #exitBtnRow {
+      #commentSection {
+         #exitBtnRow {
             font-size: $fs-h3;
-
          }
 
          #exitCommentBtn {
@@ -1366,227 +1531,769 @@ main {
             margin-top: 1rem;
             line-height: 1.5;
          }
-     }
+      }
 
-     #commentSection2 {
-        #commentInput {
-           flex-direction: column;
+      #commentSection2 {
 
-           input {
-              width: 100%;
-           }
 
-           button {
-              width: 100%;
-           }
-        }
+         #commentInput {
+            flex-direction: column;
 
-        article {
-         gap: 0rem;
 
-         .comment {
-            border: none;
-            border-top: 1px solid $cardBorder;
-            border-bottom: 1px solid $cardBorder;
-            border-radius: 0;
-            background: none;
-
-            // header for comment
-            h3 {
-
+            input {
+               font-size: $fs-paragraph;
+               width: auto;
             }
 
-
-            // paragraph for comment
-            p {
-               font-size: $fs-paragraph;
-               line-height: 1.5;
+            button {
+               // width: 20%;
             }
          }
-        }
-     }
-  }
+
+         article {
+            gap: 0rem;
+
+            .comment {
+               border: none;
+               border-top: 1px solid $cardBorder;
+               border-bottom: 1px solid $cardBorder;
+               border-radius: 0;
+               /* padding-right: 0;
+               padding-left: 0; */
+               background: none;
+
+               // header for comment
+               h3 {
+                  font-size: $fs-paragraph;
+               }
+
+
+               // paragraph for comment
+               p {
+                  font-size: $fs-paragraph;
+                  line-height: 1.5;
+               }
+            }
+         }
+      }
+   }
 }
 
 
-// Profile Page
-#mainProfile {
-   // background-color: #0a0c0efa;
-   width: 60%;
+// Profile Component
+#overlayProfile {
+   display: none;
+   background-color: #0000008e;
+   position: fixed;
+   height: 100%;
+   width: 100%;
+   z-index: 10;
+}
+
+#contentContainer {
    display: flex;
-   flex-direction: column;
-   gap: 5rem;
-   // height: 800px;
-   margin: 2% auto;
-   color: white;
-   padding: 1rem;
-   border-radius: 1.5rem;
-
-   .profHeaders {
-      font-family: $ff-heading;
-   }
-
-
-   .profileAnalytics:nth-of-type(1) {
-      // background-color: #0D1012;
-      // background-color: red;
-      border-radius: 1rem;
-      // height: 200px;
-      width: 100%;
-      display: flex;
-      align-items: start;
-      justify-content: space-between;
-      gap: 2rem;
-
-      .profileSectionInfo {
-         // background-color: #1e1e1e79;
-         border-radius: 1rem;
-         padding: 1.5rem;
-         font-family: $ff-heading;
-         margin-bottom: 2rem;
-      }
-
-      // Displaying name and user status
-      .profileSectionInfo:nth-of-type(1){
-         display: flex;
-         flex-direction: column;
-         justify-content: center;
-         width: 40%;
-         gap: 0.5rem;
-         font-size: 1.7rem;
-
-         .profileUserTypeHeader {
-            font-size: 16px;
-         }
-
-         .followUserBtn {
-            align-self: start;
-            width: 40%;
-            padding: 0.5rem;
-            color: white;
-            background: none;
-            border: 2px solid #0067e4;
-            border-radius: 0.5rem;
-            cursor: pointer;
-            transition: 150ms;
-            font-family: $ff-heading;
-            margin-top: 1rem;
-
-            &:hover {
-               background-color: rgba(0, 108, 180, 0.479);
-            }
-         }
-
-      }
-
-      // displays how many followers the current user has
-      .profileSectionInfo:nth-of-type(2){
-         display: flex;
-         flex-direction: column;
-         justify-content: space-around;
-         gap: 1rem;
-         width: 30%;
-
-         #showUserStats {
-            display: flex;
-            gap: 1rem;
-
-            span {
-               width: 50%;
-               // background-color: #0D1012;
-               padding: 0.5rem;
-               border-radius: 0.5rem;
-               transition: 100ms;
-               cursor: pointer;
-               text-align: center;
-               // following/follower number
-               h1 {
-                  font-size: 2rem;
-               }
-
-               p {
-                  font-size: 1rem;
-               }
-
-
-            }
-         }
-      }
-
-
-
-   }
-
-   .profileAnalytics:nth-of-type(2){
-      // background-color: red;
+   justify-content: center;
+   padding: 2rem;
+   gap: 2rem;
+   #mainProfile {
+      width: 55%;
       display: flex;
       flex-direction: column;
-      gap: 2rem;
-      width: 100%;
-      margin: 0 auto;
-      font-family: $ff-body;
+      gap: 1rem;
+      color: white;
+      padding: 2rem;
+      border-radius: 1.5rem;
+      // background-color: $onHover;
+      background: rgb(122,11,49);
+      background: linear-gradient(180deg, rgba(122,11,49,1) 0%, rgba(25,0,41,1) 100%);
+
 
       .profHeaders {
-         display: flex;
-         justify-content: space-between;
-         align-items: center;
-
-         form {
-            display: flex;
-            justify-content: end;
-            gap: 1rem;
-            align-items: center;
-            cursor: pointer;
-
-            select {
-               background-color: $cardBG;
-               color: white;
-               padding: 0.5rem;
-               border-radius: 0.5rem;
-               border: 0.5px solid $cardBorder;
-               cursor: pointer;
-
-               option {
-                  color: white;
-                  cursor: pointer;
-               }
-            }
-         }
+         font-family: $ff-heading;
       }
 
 
-      .existingPost {
-         background-color: #1D1C1C;
-         border: 1px solid $cardBorder;
-         padding: 2rem;
-         border-radius: 1rem;
+      .profileAnalytics:nth-of-type(1) {
+         background-color: $postBG;
+         box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+         width: 100%;
          display: flex;
          flex-direction: column;
-         gap: 2rem;
-         justify-content: space-between;
-         transition: 150ms;
-         cursor: pointer;
+         align-items: start;
+         text-align: start;
+         margin: 0 auto;
+         gap: 0.5rem;
+         border-radius: 1rem;
+         font-size: $fs-h3;
+         padding: 1rem;
 
-         .profilePostSubject {
+
+
+
+         #iconAndUsername {
+            width: 100%;
+            font-family: $ff-heading;
             display: flex;
             justify-content: space-between;
             gap: 1rem;
+            align-items: center;
+            padding: 1rem;
+
+            #picContainer {
+               display: flex;
+               align-items: center;
+               gap: 1rem;
+
+               #profilePicture {
+                  background: none;
+                  border: 2px solid purple;
+                  border-radius: 50%;
+                  height: 100px;
+                  width: 100px;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  // cursor: pointer;
+                  object-fit: cover;
+
+               }
+               #whoAmI {
+
+                  #changeOverlay {
+                     background: none;
+                     border: 1px solid teal;
+                     border-radius: 0.5rem;
+                     margin-top: 1rem;
+                     padding: 1rem;
+                     position: relative;
+                     display: flex;
+                     align-items: center;
+                     height: 50px;
+                     width: 150px;
+
+                     p {
+                        font-size: $fs-paragraph;
+                        color: turquoise;
+                     }
+
+                     &:hover {
+                        p {
+                           color: white;
+                        }
+
+                        background-color: teal;
+                        color: white;
+                     }
+
+                     input {
+                        // opacity: 0;
+                        cursor: pointer;
+                        width: 100%;
+                        height: 100%;
+                        border: 1px solid red;
+                        opacity: 0;
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                     }
+
+                  }
+               }
+            }
+
+
+
+            // THe id for tracking who follows who
+            #followTracking {
+               display: flex;
+               gap: 1rem;
+
+               section {
+                  display: flex;
+                  flex-direction: column;
+                  align-items: center;
+                  // background-color: #222;
+                  border-radius: 1rem;
+                  padding: 0.5rem;
+
+
+                  p {
+                     font-size: 1rem;
+                     padding: 0.4rem;
+                  }
+
+                  h3 {
+                     width: 100%;
+                     padding: 0.4rem;
+                     text-align: center;
+                  }
+               }
+
+            }
+
          }
 
-         .profilePostAnalytics {
+         #followBtnPair {
+            width: 100%;
             display: flex;
-            align-items: center;
-            gap: 1rem;
+            justify-content: end;
+
+            #followBtn,  #unfollowBtn {
+               background: none;
+               padding: 0.5rem;
+               color: white;
+               border-radius: 0.5rem;
+               border: none;
+               cursor: pointer;
+               transition: 150ms;
+               width: 150px;
+            }
+
+
+            #followBtn {
+               border: 1px solid teal;
+               color: turquoise;
+               &:hover {
+                  background-color: teal;
+                  color: white;
+               }
+            }
+
+            #unfollowBtn {
+               display: none;
+               border: 1px solid $primary;
+               color: $primary;
+               &:hover {
+                  background-color: $primary;
+                  color: white;
+               }
+            }
+
          }
+
+
+
+         #bioPair {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            padding: 1rem;
+            gap: 0.5rem;
+
+            // cointains the bio icon
+            #bioTitle {
+               display: flex;
+               justify-content: space-between;
+               align-items: center;
+               width: 100%;
+
+               #updateBioBtn {
+                  display: none;
+                  padding: 0.5rem;
+                  background: none;
+                  color: white;
+                  border: none;
+                  background-color: teal;
+                  border-radius: 0.5rem;
+                  transition: 150ms;
+                  cursor: pointer;
+
+                  &:hover {
+                     background-color: rgba(1, 70, 70, 0.658);
+                  }
+               }
+
+               h3 {
+                  font-family: $ff-heading;
+                  border-bottom: 1px solid $primary;
+                  width: 200px;
+                  display: flex;
+                  align-items: center;
+                  justify-content: space-between;
+               }
+
+               .fa-pen-to-square {
+                  color: turquoise;
+                  // border-bottom: 1px solid $primary;
+                  font-size: 2rem;
+                  cursor: pointer;
+                  &:hover {
+                     color: teal;
+                  }
+               }
+
+
+
+            }
+
+
+
+
+
+            #profileBio, #userEnterBio {
+               background-color: #222;
+               color: white;
+               width: 100%;
+               min-height: 100px;
+               border-radius: 1rem;
+               align-self: center;
+               padding: 1rem;
+               font-family: $ff-body;
+               box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+               text-wrap: wrap;
+            }
+
+            // the field that the user can enter or edit a bio
+            #userEnterBio {
+               display: none;
+               background-color: rgb(0, 0, 127);
+               padding: 0rem;
+
+               textarea {
+                  min-height: 100px;
+                  width: 100%;
+                  border-radius: 1rem;
+                  padding: 1rem;
+                  border: 1px solid teal;
+                  resize: none;
+                  background-color: #222;
+                  color: white;
+                  font-size: 1rem;
+                  font-family: $ff-body;
+               }
+            }
+
+             // bio on display
+             #profileBio {
+               font-size: 1rem;
+               word-wrap: break-word;
+             }
+
+
+         }
+
+
+
+         /* #profileCustomize {
+            .fa-pencil {
+               cursor: pointer;
+               color: $primary;
+               background-color: $cardBG;
+               padding: 1rem;
+               border-radius: 50%;
+               &:hover {
+                  background-color: #444;
+               }
+            }
+         } */
+
+      }
+
+      .followUserBtn {
+         width: 200px;
+         padding: 0.5rem;
+         cursor: pointer;
+         background-color: teal;
+         border-radius: 0.5rem;
+         border: none;
+         color: white;
+         transition: 150ms;
 
          &:hover {
-            transform: translateY(-5px);
+            background-color: rgba(0, 128, 128, 0.474);
+         }
+
+      }
+
+      #profileInformation {
+         display: flex;
+         gap: 1rem;
+      }
+
+
+
+      #moodleContainer {
+         position: fixed;
+         top: 10%;
+         left: 10%;
+         width: 80%;
+         height: 600px;
+         display: flex;
+         gap: 5rem;
+         align-items: center;
+         justify-content: center;
+         display: none;
+         pointer-events: none;
+         z-index: 11;
+
+
+         #postMoodle1, #postMoodle2 {
+            height: 100%;
+            width: 100%;
+            background-color: #111;
+            border: 1px solid $buttonHover;
+            border-radius: 1rem;
+            // box-shadow: rgba(15, 8, 8, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
+         }
+
+         #postMoodle1 {
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            height: auto;
+            gap: 2rem;
+            font-family: $ff-body;
+
+            #moodleTitle {
+               font-family: $ff-heading;
+               h4 {
+                  color: grey;
+               }
+
+               h1 {
+                  display: flex;
+                  justify-content: space-between;
+
+                  #backBtn {
+                     width: 40px;
+                     height: 40px;
+                     cursor: pointer;
+                     background: none;
+                     color: white;
+                     border: none;
+                     background-color: #333;
+                     border-radius: 3rem;
+                     &:hover {
+                        background-color: #444;
+                     }
+                  }
+               }
+
+
+
+            }
+
+            #moodleContent {
+               display: flex;
+               flex-direction: column;
+               gap: 0.5rem;
+
+               h2 {
+                  border-bottom: 1px dotted rgba(128, 128, 128, 0.341);
+                  padding: 0.5rem;
+                  padding-left: 0;
+               }
+
+               p {
+                  word-wrap: break-word;
+                  line-height: 1.5;
+                  overflow: auto;
+               }
+
+               img {
+                  height: 200px;
+                  object-fit: contain;
+               }
+
+            }
+
+            #moodleInteraction {
+               display: flex;
+               gap: 1rem;
+               align-items: center;
+               // border: 1px solid red;
+               padding: 1rem;
+               padding-left: 0rem;
+               width: 100%;
+
+               #profileBtnLikeBtn {
+                  display: flex;
+                  align-items: center;
+                  gap: 0.2rem;
+                  padding: 0.5rem;
+                  border: none;
+                  background: #333;
+                  color: white;
+                  cursor: pointer;
+                  border-radius: 1rem;
+                  &:hover {
+                     background-color: #444;
+                  }
+
+               }
+            }
+
+         }
+
+         #postMoodle2 {
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            gap: 1rem;
+            font-family: $ff-body;
+
+
+            #backBtnContainer {
+               display: flex;
+               justify-content: space-between;
+               align-items: center;
+
+            }
+
+
+
+
+            #commentSection {
+               display: flex;
+               flex-direction: column;
+               gap: 2rem;
+               overflow: scroll;
+               height: 100%;
+
+               .commentContainer {
+                  display: flex;
+                  flex-direction: column;
+                  gap: 0.5rem;
+                  // padding: 0.5rem;
+                  // border-bottom: 1px dotted grey;
+
+                  .commentTitle {
+
+                  }
+
+
+                  span {
+                     display: flex;
+                     gap: 1rem;
+                     align-items: center;
+
+                     p {
+                        font-size: 0.9rem;
+                        color: grey;
+                     }
+
+                  }
+
+                  // comment
+                  p {
+                     word-wrap: break-word;
+                     line-height: 1.5;
+                  }
+               }
+            }
+
+
+            #profileCommentInputField {
+               height: 40px;
+               display: flex;
+               gap: 0.5rem;
+
+               // button
+               #postProfileComment {
+                  padding: 0.5rem;
+                  cursor: pointer;
+                  background: none;
+                  color: turquoise;
+                  border: 1px solid teal;
+                  border-radius: 0.5rem;
+                  width: 20%;
+                  transition: 150ms;
+
+                  &:hover {
+                     background-color: teal;
+                     color: white;
+                  }
+               }
+
+
+               textarea {
+                  width: 80%;
+                  border-radius: 0.5rem;
+                  border: none;
+                  background-color: #222;
+                  padding: 0.5rem;
+                  color: white;
+                  resize: none;
+                  font-family: $ff-body;
+                  font-size: 1rem;
+                  min-height: 40px;
+                  line-height: 1.5;
+
+                  &:focus {
+                     outline: none;
+                  }
+
+               }
+            }
+
+
+
+         }
+      }
+
+
+
+
+      .totalPosts{
+         display: flex;
+         flex-direction: column;
+         gap: 1rem;
+         margin: 0 auto;
+         font-family: $ff-body;
+         grid-column: 2;
+         border-radius: 1rem;
+         grid-column: 1 / 3;
+         width: 100%;
+
+
+         .profHeaders {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: $postBG;
+            padding: 1rem;
+            border-radius: 1rem;
+            box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+
+            form {
+               display: flex;
+               justify-content: space-between;
+               gap: 1rem;
+               align-items: center;
+
+               select {
+                  background-color: $cardBG;
+                  color: white;
+                  padding: 0.5rem;
+                  border-radius: 0.5rem;
+                  border: 0.5px solid $cardBorder;
+                  cursor: pointer;
+
+                  option {
+                     color: white;
+                     cursor: pointer;
+                  }
+               }
+            }
+         }
+
+
+         .existingPost {
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            transition: 150ms;
+            background-color: $postBG;
+            cursor: pointer;
+            border-radius: 1rem;
+            // height: 285px;
+            box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+
+            .existingPostTitle {
+               display: flex;
+               flex-direction: column;
+
+
+               .developerStatus {
+                  color: turquoise;
+                  font-family: $ff-heading;
+               }
+
+               .userStatus {
+
+               }
+
+            }
+
+            img {
+               height: 300px;
+               object-fit: contain;
+               background-color: #222;
+            }
+
+
+
+            .profilePostSubject {
+               display: flex;
+               justify-content: space-between;
+               gap: 1rem;
+               font-size: 1.2rem;
+               padding: 0.5rem;
+               padding-left: 0rem;
+               border-bottom: 1px dotted $cardBorder;
+
+               span {
+                  display: flex;
+                  align-items: center;
+                  font-size: 1.3rem;
+               }
+            }
+
+            .profilePostBody {
+               font-size: 1.2rem;
+               word-wrap: break-word;
+            }
+
+            .profilePostAnalytics {
+               display: flex;
+               align-items: center;
+               gap: 1rem;
+               font-size: $fs-h3;
+               margin-top: 2rem;
+
+            }
+
+            &:hover {
+               background-color: $cardBorder;
+               border-radius: 1rem;
+            }
+
+
+         }
+
+
+      }
+
+   }
+}
+
+@media (max-width: 1050px) {
+   #contentContainer {
+      padding: 0rem;
+
+      #mainProfile {
+         width: 100%;
+         border-radius: 0rem;
+         padding: 0.5rem;
+
+         .profileAnalytics:nth-of-type(1) {
+            #iconAndUsername {
+               flex-direction: column;
+               align-items: start;
+               gap: 1rem;
+            }
+         }
+
+         .totalPosts {
+
+            .profHeaders {
+               flex-direction: column;
+               align-items: start;
+               font-size: 1rem;
+               gap: 0.5rem;
+            }
+
          }
       }
 
    }
 
+
+
 }
+
 
 
 
@@ -1599,22 +2306,24 @@ HOME COMPONENT MEDIA QUERIES
 
 @media (max-width: 1050px) {
 
+   // navbar component
+
    #nav {
-      justify-content: space-between;
-      margin-inline: 0;
-      padding-inline: 2rem;
       z-index: 3;
-      background-color: $subBackground;;
+      padding: 0.7rem;
+      justify-content: space-between;
+      background-color: $subBackground;
 
       #logoContainer {
          height: 40px;
+         justify-content: left;
+         gap: 0.5rem;
+
 
          h1 {
             display: none;
          }
       }
-
-      // MOBILE NAV BTN APPEARS AND SIDE NAV DISSAPPEARS
 
       // username in the nav bar along with the icon
       #profileContainer {
@@ -1638,7 +2347,7 @@ HOME COMPONENT MEDIA QUERIES
 
    // for sidebar functionality
    .sideNav {
-      left: -400px;
+      display: none;
       transition: 350ms;
       border-radius: 0.5rem;
       z-index: 1;
@@ -1648,39 +2357,59 @@ HOME COMPONENT MEDIA QUERIES
       left: 0px;
    }
 
+   // Feed styles for the Home page
+
    main {
       justify-content: center;
+      padding: 0;
 
       #content {
          padding: 0rem;
          margin-left: 0;
          width: 100%;
+         background: none;
 
-
-         #whatsNew {
+         #newPostBtn {
+            display: none;
+         }
+         // container for the new post button
+         #newPost {
             position: fixed;
             bottom: 2.5rem;
             right: 2.5rem;
 
-            #newPostBtn {
+
+            #newPostBtnMobile {
+               display: flex;
+               align-items: center;
+               justify-content: center;
+               height: 80px;
+               width: 80px;
+               font-size: $fs-h3;
+               font-family: $ff-body;
                z-index: -1;
-               font-size: $fs-paragraph;
+               border-radius: 20%;
+               color: white;
+               padding: 0.8rem;
+               transition: 250ms;
+               cursor: pointer;
+               gap: 1rem;
+               border-radius: 50%;
+               transition: 150ms;
+               text-wrap: nowrap;
+               background-color: $primary;
+
                // width: 60%;
             }
 
-            h1 {
-               font-size: 6vw;
-               text-wrap: nowrap;
-            }
-
-            h2 {
-               align-self: center;
-            }
-
+            // moodle for creating a new post
             #createPostElement {
-               width: 90%;
+               width: 95%;
                padding: 2rem;
+               gap: 1.5rem;
+               // border-radius: 0rem;
 
+               // header for the moodle
                #createNewPostHeader {
                   font-size: 1.3rem;
                   width: 100%;
@@ -1689,7 +2418,7 @@ HOME COMPONENT MEDIA QUERIES
 
 
 
-               /* #formSubject, #formBody {
+               #formSubject, #formBody {
 
 
                   label {
@@ -1713,12 +2442,14 @@ HOME COMPONENT MEDIA QUERIES
                }
 
                button {
-
+                  width: 100%;
+                  font-size: $fs-paragraph;
 
                   &:hover {
+
                   }
                }
-               */
+
                // Error Message
                /* #feedbackMessage {
 
@@ -1730,28 +2461,26 @@ HOME COMPONENT MEDIA QUERIES
          // Container for posting content
          .userContent {
             margin: 0;
-            gap: 0;
+            gap: 0rem;
 
             // each post
             .userPost {
-
-
-               /* .mainPost {
-               } */
+               gap: 0;
+               background-color: #000;
+               border-radius: 0rem;
 
                .postAnalytics {
                   display: flex;
 
                   .userAction {
-                     font-size: 0.9rem;
+                     font-size: $fs-paragraph;
                   }
 
                }
                // message
                .mainPost {
                   border: none;
-                  border-top: 1px solid $cardBorder;
-                  border-bottom: 1px solid $cardBorder;
+                  border-top: 0.5px solid $cardBorder;
                   border-radius: 0rem;
                   gap: 1.5rem;
                   background: none;
@@ -1760,6 +2489,60 @@ HOME COMPONENT MEDIA QUERIES
                      font-size: $fs-paragraph;
                      line-height: 1.5;
                   }
+
+               }
+
+               .postInteractionSection {
+                  border-radius: 0;
+
+                  padding: 1rem;
+                  border: none;
+                  border-bottom: 1px solid $cardBorder;
+                  box-shadow: none;
+
+
+                  .postDetails {
+                     display: flex;
+                     gap: 1rem;
+                     font-family: $ff-heading;
+
+                     span {
+                        padding: 0.5rem;
+                        color: white;
+                     }
+                  }
+
+                  // container for liking and commenting on a post.
+                  .postLC {
+                     display: flex;
+                     gap: 1rem;
+
+                     .likeBtn, .commentBtn {
+                        font-size: 1rem;
+                        cursor: pointer;
+                        padding: 0.5rem;
+                        border-radius: 0.5rem;
+                        font-family: $ff-body;
+                        transition: 150ms;
+
+                     }
+
+                     .likeBtn {
+
+                        &:hover {
+                           background-color: #3e3e3e88;
+                        }
+                     }
+
+                     .commentBtn {
+                        color: rgb(46, 176, 128);
+
+                        &:hover {
+                           background-color: #3e3e3e88;
+                        }
+                     }
+
+                  }
                }
             }
          }
@@ -1767,74 +2550,154 @@ HOME COMPONENT MEDIA QUERIES
    }
 
 
+   #contentContainer {
+      #mainProfile {
+         width: 100%;
+         gap: 1rem;
 
-   #mainProfile {
-      width: 100%;
-      gap: 1rem;
+         .profileAnalytics {
+            article{
+               .profilePostAnalytics {
 
-      .profileAnalytics {
-         article{
-            .profilePostAnalytics {
-
+               }
             }
-         }
 
-         .profHeaders {
-            flex-direction: column;
-            gap: 0.5rem;
-
-            form {
+            .profHeaders {
                flex-direction: column;
+               gap: 0.5rem;
+
+               form {
+                  flex-direction: column;
+               }
             }
+
          }
 
-      }
+         .profileAnalytics:nth-of-type(1){
+            flex-direction: column;
+            justify-content: start;
+            align-items: start;
 
-      .profileAnalytics:nth-of-type(1){
-         flex-direction: column;
-         justify-content: start;
-         align-items: start;
+            .profileSectionInfo:nth-of-type(1), .profileSectionInfo:nth-of-type(2) {
+               width: 100%;
+            }
 
-         .profileSectionInfo:nth-of-type(1), .profileSectionInfo:nth-of-type(2) {
-            width: 100%;
-         }
+            .profileSectionInfo:nth-of-type(1){
+               align-items: center;
+               margin-bottom: 0rem;
 
-         .profileSectionInfo:nth-of-type(1){
-            align-items: center;
-            margin-bottom: 0rem;
+               .followUserBtn {
+                  align-self: center;
+                  font-size: 1.2rem;
+                  width: 80%;
+               }
+            }
 
-            .followUserBtn {
+            .profileSectionInfo:nth-of-type(2) {
                align-self: center;
-               font-size: 1.2rem;
-               width: 80%;
-            }
-         }
+               width: 90%;
+               margin-bottom: 0rem;
 
-         .profileSectionInfo:nth-of-type(2) {
-            align-self: center;
-            width: 90%;
-            margin-bottom: 0rem;
+               #showUserStats {
+                  padding: 1.5rem;
+               }
 
-            #showUserStats {
-               padding: 1.5rem;
             }
 
+
          }
+
+         .totalPosts {
+            .existingPost {
+
+
+               .profilePostSubject {
+                  border: none;
+               }
+
+               .profilePostBody {
+                  font-size: 1rem;
+                  line-height: 1.5;
+               }
+
+            }
+
+         }
+
+
+
+
+         #moodleContainer {
+            height: 100vh;
+            top: 0%;
+            left: 0;
+            flex-direction: column;
+            width: 100%;
+            padding: 1rem;
+            gap: 0.1rem;
+
+
+
+
+            #postMoodle1, #postMoodle2 {
+               height: 50%;
+               border-radius: 1rem;
+               border: none;
+               overflow: scroll;
+               background-color: $cardBorder;
+            }
+
+            #postMoodle1 {
+               overflow: unset;
+               height: 60%;
+
+               #moodleContent {
+                  overflow: scroll;
+
+                  img {
+                     height: 300px;
+                     object-fit: contain;
+                  }
+
+                  p {
+                     overflow: auto;
+                  }
+               }
+            }
+
+
+            #postMoodle2 {
+
+               #profileCommentInputField {
+                  textarea {
+                     width: 70%;
+                  }
+
+                  #postProfileComment {
+                     width: 30%;
+                  }
+               }
+
+            }
+
+
+
+
+         }
+
 
 
       }
-
-      .profileAnalytics:nth-of-type(2) {
-
-         .existingPost {
-            .profilePostSubject {
-               font-size: 1.3rem;
-            }
-            font-size: 1rem;
-         }
-      }
-
-
    }
+
+
+   #profileInformation {
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+   }
+
+
+
 
 }

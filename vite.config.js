@@ -107,6 +107,12 @@ export default defineConfig({
         secure: false,
         ws: true,
       },
+      '/uploadProfilePicture': {
+        target: 'http://localhost:3000',
+        changeOrigin: true,
+        secure: false,
+        ws: true,
+      },
 
       '/userInteraction': {
         target: 'http://localhost:3000',
@@ -143,6 +149,64 @@ export default defineConfig({
         ws: true,
       },
 
+      '/handleImage': {
+        target: 'http://localhost:3000',
+        changeOrigin: true,
+        secure: false,
+        ws: true,
+      },
+
+      '/uploadImage': {
+        target: 'http://localhost:3000',
+        changeOrigin: true,
+        secure: false,
+        ws: true,
+      },
+      '/upload': {
+        target: 'http://localhost:3000',
+        changeOrigin: true,
+        secure: false,
+        ws: true,
+      },
+      '/removeCommunity': {
+        target: 'http://localhost:3000',
+        changeOrigin: true,
+        secure: false,
+        ws: true,
+      },
+      '/updateBio': {
+        target: 'http://localhost:3000',
+        changeOrigin: true,
+        secure: false,
+        ws: true,
+      },
+      '/community': {
+        target: 'http://localhost:3000',
+        changeOrigin: true,
+        secure: false,
+        ws: true,
+      },
+      '/dynamic': {
+        target: 'http://localhost:3000',
+        changeOrigin: true,
+        secure: false,
+        ws: true,
+      },
+      '/image': {
+        target: 'http://localhost:3000',
+        changeOrigin: true,
+        secure: false,
+        ws: true,
+      },
+      '/getProfileImage': {
+        target: 'http://localhost:3000',
+        changeOrigin: true,
+        secure: false,
+        ws: true,
+      },
+
+
+
 
 
 
@@ -154,7 +218,9 @@ export default defineConfig({
         main: 'index.html',
         topics: 'topics.html',
         home: 'home.html',
-        profile: 'profile.html'
+        profile: 'profile.html',
+        communities: 'communities.html',
+        followerPage: 'followerPage.html'
       }
     }
   },

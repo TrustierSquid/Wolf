@@ -4,7 +4,13 @@ import AboutPost from "../componentDependencies/AboutPost"
 import UpdateFeed from "../componentDependencies/UpdateFeed"
 import Navbar from "../componentDependencies/NavBar"
 import SideNavBar from "../componentDependencies/SideNavbar"
-import FourTopics from "../componentDependencies/FourTopics"
+
+/*
+- For getting the query string
+const queryString = window.location.search;
+const urlParams = new URLSearchParams(queryString)
+const userSearched = urlParams.get('topicFeed')
+ */
 
 
 export default function Home(){
@@ -38,6 +44,7 @@ export default function Home(){
 
    const [followerCount, setFollowerCount] = useState([])
    const [followingCount, setFollowingCount] = useState([])
+   const [loggedInUID, setLoggedInUID] = useState(null)
 
 
    // GETTING USER INFORMATION AND DISPLYING IT ON THE HOME PAGE SPECIFIC TO THE USER LOGGED IN
@@ -59,12 +66,15 @@ export default function Home(){
          const homeData = await response.json()
          // console.log(homeData.followingCount.length)
          // setting the user info needed as glob vars
+         // console.log(homeData.topicArr)
 
          // the topics the current user selected
          setUserData(homeData.topicArr)
 
          // the current user logged in
          setUsername(homeData.userName)
+
+         setLoggedInUID(homeData.UID);
 
          //  the current users following count
          setFollowingCount(homeData.followingCount.length)
@@ -78,6 +88,7 @@ export default function Home(){
       getUserData()
 
    }, [])
+
 
    // RETRIEVING THE DESCRIPTION THAT COMES WITH EACH TOPIC
    useEffect(()=> {
@@ -99,6 +110,16 @@ export default function Home(){
       fetchTopicData()
    }, [])
 
+   const [communityStatePost, setCommunityStatePost] = useState('Home')
+
+
+   let postToCommunity = (communityToPostTo) => {
+      /*
+         When the user selects a comunity to post to,
+         the state variable will change to the respective community
+       */
+      setCommunityStatePost(communityToPostTo)
+   }
 
 
    // WHEN THE USER CREATES A NEW POST
@@ -112,81 +133,58 @@ export default function Home(){
    // selected topic will default to main
    const [grippedTopic, setGrippedTopic] = useState("Main")
 
+   // image upload element
+   const imageRef = useRef(null)
+   const [image, setImage] = useState(null)
+
+
    //  Creating a new post and sending it to the db so it can be displayed
    async function createNewPost(){
       let subject = subjectPostElement.current.value
       let body = bodyPostElement.current.value
 
-      const queryString = window.location.search;
-      const urlParams = new URLSearchParams(queryString)
-      const userSearched = urlParams.get('topicFeed')
-
-      // checking to see if either input field is empty
+      // handling to see if either input field is empty
       if (!subject || !body) {
          setErrorMessage('Please Enter a subject and body')
-         console.log(grippedTopic)
          return
       }
 
-      setErrorMessage('Posting..')
+      // checking to see what community the user is posting to
 
-      if (!queryString) {
-         // Sending post to db...
-         const response = await fetch(`/newPost?feed=mainFeed`, {
-            method: 'POST',
-            headers: {
-               'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({whoPosted: username, postSubject: subject, postBody: body})
-         })
+      const imageFile = imageRef.current.files[0];
+      const formData = new FormData()
+      formData.append('whoPosted', username);
+      formData.append('postSubject', subject);
+      formData.append('postBody', body);
+      formData.append('image', imageFile);
 
-         if (!response.ok) {
-            throw new Error(`Error posting.. ${response.status}`)
-         }
 
-         setTimeout(()=> {
-            errorMessageElement.current.style.color = 'lime'
-            bodyPostElement.current.value = ''
-            subjectPostElement.current.value = ''
-            setErrorMessage('Posted!')
-         }, 900)
 
-         setTimeout(() => {
-            // setErrorMessage('')
-            window.location.reload()
-         }, 3000);
 
-      } else {
+      // Sending post to db...
+      const responseForPost = await fetch(`/newPost?feed=${communityStatePost}`, {
+         method: 'POST',
+         body: formData
 
-         // Sending post to db...
-         const response = await fetch(`/newPost?feed=${userSearched}`, {
-            method: 'POST',
-            headers: {
-               'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({whoPosted: username, postSubject: subject, postBody: body})
-         })
+      })
 
-         if (!response.ok) {
-            throw new Error(`Error posting.. ${response.status}`)
-         }
+      const  result = await responseForPost.json()
 
-         setTimeout(()=> {
-            errorMessageElement.current.style.color = 'lime'
-            bodyPostElement.current.value = ''
-            subjectPostElement.current.value = ''
-            setErrorMessage('Posted!')
-         }, 900)
 
-         setTimeout(() => {
-            // setErrorMessage('')
-            window.location.reload()
-         }, 1000);
-
+      if (!responseForPost.ok) {
+         throw new Error(`Error posting.. ${responseForPost.status}`)
       }
 
-   }
+      // Message to confirm that the post has been to the respective feed
+      setTimeout(()=> {
+         errorMessageElement.current.style.color = 'lime'
+         bodyPostElement.current.value = ''
+         subjectPostElement.current.value = ''
+         setErrorMessage(`Posted to ${communityStatePost}`)
+      }, 900)
 
+
+   }
 
 
    // fourTopics inits this function
@@ -236,6 +234,7 @@ export default function Home(){
    const createPostElement = useRef(null)
    const darkBG = useRef(null)
    const newPostBtn = useRef(null)
+   const newPostBtnMobile = useRef(null)
 
    // FOR THE APPEARING AND DISAPPEARING POST CREATING SCREEN
    function appearEffect() {
@@ -248,8 +247,6 @@ export default function Home(){
          bodyPostElement.current.value = ''
          subjectPostElement.current.value = ''
          document.body.style.overflow = 'hidden';
-         newPostBtn.current.style.opacity = '0'
-         newPostBtn.current.style.pointerEvents = 'none'
       }
    }
 
@@ -261,8 +258,6 @@ export default function Home(){
       bodyPostElement.current.value = ''
       subjectPostElement.current.value = ''
       document.body.style.overflow = 'auto';
-      newPostBtn.current.style.opacity = '1'
-      newPostBtn.current.style.pointerEvents = 'all'
 
    }
 
@@ -279,8 +274,8 @@ export default function Home(){
       darkBG.current.style.opacity = '0'
       darkBG.current.style.pointerEvents = 'none'
       document.body.style.overflow = 'auto';
-      newPostBtn.current.style.opacity = '1'
-      newPostBtn.current.style.pointerEvents = 'all'
+      newPostBtnMobile.current.style.opacity = '1'
+      newPostBtnMobile.current.style.pointerEvents = 'all'
    }
 
    function clearOut() {
@@ -310,6 +305,10 @@ export default function Home(){
    // sidebar functionality
    const sidebarProps = {
       userData: userData,
+      username: username,
+      followings: followingCount,
+      followers: followerCount,
+      UID: loggedInUID,
       displayAbout: ()=> displayAbout()
    }
 
@@ -320,54 +319,71 @@ export default function Home(){
       const userSearched = urlParams.get("topicFeed");
 
       if (!queryString) {
-         return <><h4>{`Post to Home`} +</h4></>
+         return <><h4><i class="fa-solid fa-plus"></i></h4></>
       }
 
-      let splicedTopic = userSearched.split("Feed")
-      return  <><h4>{`Post to ${splicedTopic[0]}`} +</h4> </>
+      // let splicedTopic = userSearched.split("Feed")
+      return  <><h4><i class="fa-solid fa-plus"></i></h4> </>
    }
+
 
    return (
       <>
 
       {/* NAVBAR */}
-      <Navbar {...navbarProps}/>
-      <SideNavBar {...sidebarProps} ref={sidebarRefs}/>
+      <Navbar {...navbarProps} appearEffect={appearEffect}/>
 
       {/* MAIN CONTENT */}
 
          <main>
+            <SideNavBar {...sidebarProps} ref={sidebarRefs}/>
             <span ref={darkBG} id="darkBG"></span>
             <section id="content">
-               <FourTopics selectedTopics={userData} changeTopic={changeTopicFeed}/>
 
-               <div id="whatsNew">
+               {/* New post button for desktop with a message with it */}
+               <span id="newPostBtn" ref={newPostBtn} onClick={()=> appearEffect()}>Express yourself.</span>
+               <div id="newPost">
 
-                  <span id="newPostBtn" ref={newPostBtn} onClick={()=> appearEffect()}>{createPostMessage()}</span>
+
 
                   {/* Floating prompt for creating a new post */}
-                  <form ref={createPostElement} id="createPostElement" >
-                     <h2 id="createNewPostHeader">Create Post <span onClick={()=> dissappearEffect()}><i className="fa-solid fa-arrow-right"></i></span></h2>
+                  <form enctype="multipart/form-data" ref={createPostElement} id="createPostElement" >
+                     <h2 id="createNewPostHeader">What's on your mind? <span onClick={()=> dissappearEffect()}><i className="fa-solid fa-x"></i></span></h2>
                      <div id="formSubject">
-                        <label>Post Subject</label><br />
-                        <textarea maxLength={40} required placeholder='Enter a Post Subject' onsubmit="return false" ref={subjectPostElement}></textarea><br />
+                        <input maxLength={40} required placeholder="What's it about?" onsubmit="return false" ref={subjectPostElement} ></input><br />
                      </div>
-                     <br />
                      <div id="formBody">
-                        <label>Post Body</label><br />
-                        <textarea required placeholder='Enter a Post Body' onsubmit="return false" ref={bodyPostElement}type="text"></textarea>
+                        <input required placeholder='Tell us more..' onsubmit="return false" ref={bodyPostElement}type="text"></input>
                      </div>
-                     <br />
+                     <div id="upload">
+                        Upload a picture
+                        <input accept="image/*" ref={imageRef} type="file" />
+                     </div>
+                     <div id="selectCommunity">
+                        <h2>Community:</h2>
+                        <form>
+                           <select>
+                              <option onClick={()=> postToCommunity('Home')}>Home</option>
+                              {userData.map((community, index) => {
+                                 return (
+                                    <>
+                                       <option value={community} onClick={()=> postToCommunity(community)}>{community}</option>
+                                    </>
+                                 )
+                              })}
+                           </select>
+                        </form>
+                     </div>
+
                      <h4 id="feedbackMessage" ref={errorMessageElement}>{errorMessage}</h4>
-                     <button type='button' onClick={()=> createNewPost()}>Post</button>
+                     <button  type='button' onClick={()=> createNewPost()}>Post</button>
                   </form>
                </div>
 
                {/* what shows up based on what topics the user selected */}
                <article className="userContent">
                   {/* changingFeed will be the dependant topic of the user feed*/}
-                  <UpdateFeed currentActiveUser={username} selectedfeed={grippedFeed} topicDisplay={grippedTopic} bgEffect={appearEffectComments} removeBGEffect={removeEffect} />   {/*  Updating the feed with the newest posts*/}
-
+                  <UpdateFeed currentActiveUser={username} selectedfeed={grippedFeed} topicDisplay={grippedTopic} bgEffect={appearEffectComments} removeBGEffect={removeEffect} image={image} />   {/*  Updating the feed with the newest posts*/}
                </article>
             </section>
          </main>

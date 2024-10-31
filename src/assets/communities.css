@@ -1,0 +1,109 @@
+#contentContainer #communityContainer {
+  background: rgb(122, 11, 49);
+  background: linear-gradient(180deg, rgb(122, 11, 49) 0%, rgb(46, 0, 28) 100%);
+  width: 55%;
+  border-radius: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  padding: 2rem;
+  margin: 1rem;
+  color: white;
+  font-family: "Nunito", sans-serif;
+}
+#contentContainer #communityContainer #titleDiv {
+  /* h4 {
+     color: grey;
+  } */
+}
+#contentContainer #communityContainer ul {
+  list-style-type: none;
+  font-family: "roboto", sans-serif;
+  border-radius: 1.5rem;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+#contentContainer #communityContainer ul h3 {
+  padding: 1.5rem;
+  background-color: #111;
+  border-radius: 1rem;
+}
+#contentContainer #communityContainer ul li {
+  padding: 0.5rem;
+  padding-left: 2rem;
+  padding-right: 2rem;
+  transition: 150ms;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4rem;
+  background-color: rgba(17, 17, 17, 0.9098039216);
+  border-radius: 1rem;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+}
+#contentContainer #communityContainer ul li .communityInformation {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+#contentContainer #communityContainer ul li .communityInformation img {
+  width: 40px;
+}
+#contentContainer #communityContainer ul li .interactionBtns {
+  display: flex;
+  gap: 1rem;
+}
+#contentContainer #communityContainer ul li .interactionBtns button {
+  padding: 0.5rem;
+  background: none;
+  color: white;
+  cursor: pointer;
+  color: crimson;
+  border-radius: 0.5rem;
+  transition: 150ms;
+}
+#contentContainer #communityContainer ul li .interactionBtns .viewCommunityPostsBtn {
+  color: turquoise;
+  border: 1px solid teal;
+  text-wrap: nowrap;
+}
+#contentContainer #communityContainer ul li .interactionBtns .viewCommunityPostsBtn:hover {
+  color: white;
+  background-color: teal;
+  border: none;
+}
+#contentContainer #communityContainer ul li .interactionBtns .leaveCommunityBtn {
+  color: crimson;
+  border: 1px solid crimson;
+  text-wrap: nowrap;
+}
+#contentContainer #communityContainer ul li .interactionBtns .leaveCommunityBtn:hover {
+  color: white;
+  background-color: crimson;
+  border: none;
+}
+
+@media (max-width: 1050px) {
+  #contentContainer #communityContainer {
+    left: 0%;
+    width: 100%;
+    background: none;
+    padding: 0.5rem;
+  }
+  #contentContainer #communityContainer #titleDiv {
+    text-align: center;
+  }
+  #contentContainer #communityContainer ul {
+    padding: 0rem;
+    gap: 1rem;
+  }
+  #contentContainer #communityContainer ul li {
+    flex-direction: column;
+    align-items: start;
+    gap: 1rem;
+    justify-content: start;
+    padding: 1rem;
+  }
+}/*# sourceMappingURL=communities.css.map */
