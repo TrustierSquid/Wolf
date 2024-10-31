@@ -659,14 +659,14 @@ app.get("/profile", requireAuth, (req, res) => {
   // for dev
   res.sendFile(path.join(__dirname, "/dist/profile.html"));
 });
-/* app.get("/followerPage", requireAuth, (req, res) => {
+app.get("/followerPage", requireAuth, (req, res) => {
   // for dev
   res.sendFile(path.join(__dirname, "/dist/followerPage.html"));
 });
 app.get("/communities", requireAuth, (req, res) => {
   // for dev
   res.sendFile(path.join(__dirname, "/dist/communities.html"));
-}); */
+});
 
 app.get("/viewProf", (req, res) => {
   res.sendFile(path.join(__dirname, "../profile.html"));
