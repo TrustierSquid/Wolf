@@ -176,11 +176,12 @@ export default function Home(){
       }
 
       // Message to confirm that the post has been to the respective feed
+      setErrorMessage(`Posted to ${communityStatePost}`)
       setTimeout(()=> {
          errorMessageElement.current.style.color = 'lime'
          bodyPostElement.current.value = ''
          subjectPostElement.current.value = ''
-         setErrorMessage(`Posted to ${communityStatePost}`)
+         window.location.reload()
       }, 900)
 
 

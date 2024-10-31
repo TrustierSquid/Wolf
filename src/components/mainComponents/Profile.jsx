@@ -445,6 +445,7 @@ export default function Profile(props){
    }
 
    const imageRef = useRef()
+   const [updateMessage, setUpdateMessage] = useState(null)
 
   async function changeProfilePicture(){
       let imageFile = imageRef.current.files[0]
@@ -458,7 +459,6 @@ export default function Profile(props){
 
       // await getUserProfilePosts()
 
-      window.location.reload()
 
    }
 
@@ -485,13 +485,13 @@ export default function Profile(props){
                                  (userSearched === loggedInUID) ? (
                                     <div id="changeOverlay">
                                        <p>Change Picture</p>
-                                       <input ref={imageRef} accept="image/*" type="file" onChange={changeProfilePicture}/>
+                                       <input ref={imageRef} accept="image/*" type="file" onChange={()=> {changeProfilePicture(), setUpdateMessage('Changed Profile Picture!')}}/>
                                     </div>
-
                                  ) : (
                                     <span></span>
                                  )
                               }
+                              <p id="updateMessage">{updateMessage}</p>
                         </div>
                      </section>
 

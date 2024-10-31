@@ -120,33 +120,6 @@ app.get("/update", async (req, res) => {
 });
 
 
-
-/* // IMAGE HANDLING
-app.get('/image/:id', async (req, res)=> {
-  // by default feed will be mainFeed if empty string
-  const { id } = req.params
-  const database = await connectMongo();
-  const mainFeedCollection = database.collection("mainFeed");
-
-  try {
-    const post = await mainFeedCollection.findOne({ _id: new ObjectId(id) });
-    if (!post || !post.image || !post.image.data) {
-      console.warn(`Image not found for post ID: ${id}`);
-      return res.status(404).json({ error: 'Image not found' });
-    }
-
-    // Set the content type based on the image data
-    res.set('Content-Type', post.image.contentType);
-    res.send(post.image.data); // Send the image data
-
-  } catch (error) {
-    console.error("Error fetching image:", error);
-    return res.status(500).json({ error: 'Internal server error' });
-  }
-
-}) */
-
-
 // WHEN THE USER CREATES A NEW POST
 app.post("/newPost", upload.single('image'), async (req, res) => {
   const { feed } = req.query;
@@ -163,7 +136,7 @@ app.post("/newPost", upload.single('image'), async (req, res) => {
     // Updating the poster's post count
     let database = await connectMongo();
     const users = database.collection("Users");
-    const mainfeed = database.collection("mainFeed");
+    const mainFeed = database.collection("mainFeed");
 
 
 
@@ -183,19 +156,24 @@ app.post("/newPost", upload.single('image'), async (req, res) => {
     const updatePosts = await users.updateOne(filter, updateDoc);
 
     // adding the post to the DB to the respective feed
-    const newPost = await mainfeed.insertOne({
+    const newPostData = {
       poster: whoPosted,
       subject: postSubject,
       body: postBody,
       likes: [],
       postCreationDate: new Date(),
       comments: [],
-      image: {
+    };
+
+    if (imageFile) {
+      newPostData.image = {
         data: imageFile.buffer,
         contentType: imageFile.mimetype,
         filename: imageFile.originalname,
       }
-    });
+    }
+
+    const newPost = await mainFeed.insertOne(newPostData)
 
 
     res.status(201).json({ message: 'Post created successfully', id: newPost.insertedId});
@@ -223,20 +201,26 @@ app.post("/newPost", upload.single('image'), async (req, res) => {
 
     const updatePosts = await users.updateOne(filter, updateDoc);
 
-    // adding the post to the DB
-    const newPost = selectedFeed.insertOne({
+
+    // adding the post to the DB to the respective feed
+    const newPostData = {
       poster: whoPosted,
       subject: postSubject,
       body: postBody,
       likes: [],
       postCreationDate: new Date(),
       comments: [],
-      image: {
+    };
+
+    if (imageFile) {
+      newPostData.image = {
         data: imageFile.buffer,
         contentType: imageFile.mimetype,
         filename: imageFile.originalname,
       }
-    });
+    }
+
+    const newPost = await selectedFeed.insertOne(newPostData)
 
     res.status(201).json({ message: 'Post created successfully', id: newPost.insertedId});
     console.log({ message: 'Post created successfully', id: newPost.insertedId})

@@ -1250,6 +1250,11 @@ main #content .userContent .userPost .postInteractionSection .postLC .commentBtn
   top: 0;
   left: 0;
 }
+#contentContainer #mainProfile .profileAnalytics:nth-of-type(1) #iconAndUsername #picContainer #whoAmI #updateMessage {
+  font-size: 1rem;
+  margin-top: 1rem;
+  color: turquoise;
+}
 #contentContainer #mainProfile .profileAnalytics:nth-of-type(1) #iconAndUsername #followTracking {
   display: flex;
   gap: 1rem;

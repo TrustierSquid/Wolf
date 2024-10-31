@@ -1676,6 +1676,8 @@ main {
                         color: turquoise;
                      }
 
+
+
                      &:hover {
                         p {
                            color: white;
@@ -1697,6 +1699,11 @@ main {
                         left: 0;
                      }
 
+                  }
+                  #updateMessage{
+                     font-size: 1rem;
+                     margin-top: 1rem;
+                     color: turquoise;
                   }
                }
             }
