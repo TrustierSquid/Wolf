@@ -670,7 +670,7 @@ export default function Profile(props){
                      </div>
 
                      <div id="moodleContent">
-                        <h2>{postSubjectState}</h2>
+                        <h3>{postSubjectState}</h3>
                         {postImage ? (
                         <img src={postImage} alt='Postimage' />
                         ) : (
@@ -692,6 +692,50 @@ export default function Profile(props){
                         <h4><i className="fa-regular fa-heart"></i> {likesLength}</h4>
                      </div>
 
+                     <span id="mobilePostMoodle" >
+
+                        {
+                           postComments?.length > 0 ? (
+                              <>
+                                 <div id="commentSection">
+                                    {postComments?.map((comment)=> {
+                                       return (
+                                          <>
+                                             <div className="commentContainer">
+                                                <div className="commentTitle">
+                                                   <span>{`${comment.from}`} <p>{showPostDate(comment.timePosted)}</p></span>
+                                                   <p>
+                                                      {
+                                                         (comment.from === 'Samuel') ? (
+                                                            <p style={{color: 'turquoise'}}>Developer</p>
+                                                         ) : (
+                                                            <p style={{color: 'grey'}}>User</p>
+                                                         )
+                                                      }
+                                                   </p>
+                                                </div>
+                                                <p>{comment.comment}</p>
+                                             </div>
+                                          </>
+                                       )
+                                    }).reverse()}
+                                 </div>
+                              </>
+                           ) : (
+                              <div className="noPostsMessage">
+                                 <h3>No comments available yet!</h3>
+                                 <p>Be the first to leave a comment here! 🗣️</p>
+                              </div>
+                           )
+                        }
+
+
+                        <h4 ref={feedback} id="feedback"></h4>
+                        <div id="profileCommentInputField">
+                           <textarea ref={profilePostCommentRef} placeholder="Add a comment..."></textarea>
+                           <button id="postProfileComment" onClick={()=> profilePostComment(profilePostCommentRef.current.value)}>Comment</button>
+                        </div>
+                     </span>
 
                   </span>
 

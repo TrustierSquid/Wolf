@@ -1465,9 +1465,9 @@ main #content .userContent .userPost .postInteractionSection .postLC .commentBtn
   padding: 1.5rem;
   display: flex;
   flex-direction: column;
-  height: auto;
   gap: 2rem;
   font-family: "roboto", sans-serif;
+  overflow: scroll;
 }
 #contentContainer #mainProfile #moodleContainer #postMoodle1 #moodleTitle {
   font-family: "Nunito", sans-serif;
@@ -1607,6 +1607,79 @@ main #content .userContent .userPost .postInteractionSection .postLC .commentBtn
 #contentContainer #mainProfile #moodleContainer #postMoodle2 #profileCommentInputField textarea:focus {
   outline: none;
 }
+#contentContainer #mainProfile #moodleContainer #mobilePostMoodle {
+  padding: 1.5rem;
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 1rem;
+  font-family: "roboto", sans-serif;
+}
+#contentContainer #mainProfile #moodleContainer #mobilePostMoodle #backBtnContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+#contentContainer #mainProfile #moodleContainer #mobilePostMoodle #commentSection {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  overflow: scroll;
+  height: 100%;
+}
+#contentContainer #mainProfile #moodleContainer #mobilePostMoodle #commentSection .commentContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+#contentContainer #mainProfile #moodleContainer #mobilePostMoodle #commentSection .commentContainer span {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+#contentContainer #mainProfile #moodleContainer #mobilePostMoodle #commentSection .commentContainer span p {
+  font-size: 0.9rem;
+  color: grey;
+}
+#contentContainer #mainProfile #moodleContainer #mobilePostMoodle #commentSection .commentContainer p {
+  word-wrap: break-word;
+  line-height: 1.5;
+}
+#contentContainer #mainProfile #moodleContainer #mobilePostMoodle #profileCommentInputField {
+  height: 40px;
+  display: flex;
+  gap: 0.5rem;
+}
+#contentContainer #mainProfile #moodleContainer #mobilePostMoodle #profileCommentInputField #postProfileComment {
+  padding: 0.5rem;
+  cursor: pointer;
+  background: none;
+  color: turquoise;
+  border: 1px solid teal;
+  border-radius: 0.5rem;
+  width: 20%;
+  transition: 150ms;
+}
+#contentContainer #mainProfile #moodleContainer #mobilePostMoodle #profileCommentInputField #postProfileComment:hover {
+  background-color: teal;
+  color: white;
+}
+#contentContainer #mainProfile #moodleContainer #mobilePostMoodle #profileCommentInputField textarea {
+  width: 80%;
+  border-radius: 0.5rem;
+  border: none;
+  background-color: #222;
+  padding: 0.5rem;
+  color: white;
+  resize: none;
+  font-family: "roboto", sans-serif;
+  font-size: 1rem;
+  min-height: 40px;
+  line-height: 1.5;
+}
+#contentContainer #mainProfile #moodleContainer #mobilePostMoodle #profileCommentInputField textarea:focus {
+  outline: none;
+}
 #contentContainer #mainProfile .totalPosts {
   display: flex;
   flex-direction: column;
@@ -1665,6 +1738,7 @@ main #content .userContent .userPost .postInteractionSection .postLC .commentBtn
   font-family: "Nunito", sans-serif;
 }
 #contentContainer #mainProfile .totalPosts .existingPost img {
+  margin-bottom: 1rem;
   height: 300px;
   -o-object-fit: contain;
      object-fit: contain;
@@ -1931,30 +2005,39 @@ HOME COMPONENT MEDIA QUERIES
     left: 0;
     flex-direction: column;
     width: 100%;
-    padding: 1rem;
     gap: 0.1rem;
   }
   #contentContainer #mainProfile #moodleContainer #postMoodle1, #contentContainer #mainProfile #moodleContainer #postMoodle2 {
-    height: 50%;
-    border-radius: 1rem;
+    border-radius: 0rem;
     border: none;
     overflow: scroll;
     background-color: #2E2E2E;
   }
   #contentContainer #mainProfile #moodleContainer #postMoodle1 {
     overflow: unset;
-    height: 60%;
+    height: 100%;
+    overflow: auto;
+    gap: 0.5rem;
+  }
+  #contentContainer #mainProfile #moodleContainer #postMoodle1 #mobilePostMoodle {
+    display: flex;
+    padding: 0rem;
+    margin-top: 3rem;
   }
   #contentContainer #mainProfile #moodleContainer #postMoodle1 #moodleContent {
-    overflow: scroll;
+    height: 300px;
   }
   #contentContainer #mainProfile #moodleContainer #postMoodle1 #moodleContent img {
-    height: 300px;
+    height: 200px;
     -o-object-fit: contain;
        object-fit: contain;
   }
   #contentContainer #mainProfile #moodleContainer #postMoodle1 #moodleContent p {
     overflow: auto;
+  }
+  #contentContainer #mainProfile #moodleContainer #postMoodle2 {
+    display: none;
+    padding: 1rem;
   }
   #contentContainer #mainProfile #moodleContainer #postMoodle2 #profileCommentInputField textarea {
     width: 70%;
