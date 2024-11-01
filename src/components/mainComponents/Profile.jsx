@@ -13,7 +13,7 @@ export default function Profile(props){
    // the an array of the topics that the user selected
    const [userData, setUserData] = useState([])
    const [loggedInUID, setLoggedInUID] = useState(null)
-
+   const [profilePicture, setProfilePicture] = useState(null)
 
    // Data for the user logged in
    useEffect(()=> {
@@ -48,6 +48,7 @@ export default function Profile(props){
 
          setLoggedInUID(homeData.UID);
 
+         setProfilePicture(homeData.profilePic)
 
 
       }
@@ -56,7 +57,7 @@ export default function Profile(props){
 
    }, [])
 
-   const [profilePostData, setProfilePostData] = useState([])
+   const [profilePostData, setProfilePostData] = useState(null)
    const [userProfileData, setUserProfileData] = useState([])
 
    const queryString = window.location.search;
@@ -424,7 +425,8 @@ export default function Profile(props){
       username: username,
       followings: followingCount,
       followers: followerCount,
-      UID: loggedInUID
+      UID: loggedInUID,
+      profileImage: profilePicture,
    }
 
    function backOut() {
@@ -436,12 +438,12 @@ export default function Profile(props){
    }
 
 
-   function navigateToFollowingPage(){
-      window.location.href = `/followerPage?following=${userSearched}`
+   function navigateToFollowingPage(UID){
+      window.location.href = `/followerPage?following=${UID}`
    }
 
-   function navigateToFollowersPage() {
-      window.location.href = `/followerPage?followers=${userSearched}`
+   function navigateToFollowersPage(UID) {
+      window.location.href = `/followerPage?followers=${UID}`
    }
 
    const imageRef = useRef()
@@ -462,6 +464,7 @@ export default function Profile(props){
 
    }
 
+
    function checkUserType(){
       switch (dynamicUsername) {
          // For developers
@@ -471,13 +474,7 @@ export default function Profile(props){
                   <div id="iconAndUsername">
                      {/* <i className="fa-solid fa-user"></i> */}
                      <section id="picContainer">
-                        {
-                           (dynamicProfilePic) ? (
-                              <img id="profilePicture" src={dynamicProfilePic} alt="" />
-                           ) : (
-                              <img id='profilePicture' src='src/assets/defaultUser.jpg'/>
-                           )
-                        }
+                        <img src={dynamicProfilePic ? dynamicProfilePic : 'src/assets/defaultUser.jpg'} alt="" id="profilePicture" />
                         <div id="whoAmI">
                            <h5>{dynamicUsername}</h5>
                            <h6 className="profileUserTypeHeader" style={{color: "#00b3ff"}}>Developer <i className="fa-solid fa-code"></i></h6>
@@ -496,14 +493,33 @@ export default function Profile(props){
                      </section>
 
                      <div id="followTracking">
-                        <section>
-                           <h3>{dynamicFollowerArr?.length}</h3>
-                           <p>Followers</p>
-                        </section>
-                        <section>
-                           <h3>{dynamicFollowingArr?.length}</h3>
-                           <p>Following</p>
-                        </section>
+                        {
+                           (userSearched === loggedInUID) ? (
+                              <>
+                                 <section onClick={()=> navigateToFollowersPage(loggedInUID)}>
+                                    <h3>{dynamicFollowerArr?.length}</h3>
+                                    <p>Followers</p>
+                                 </section>
+                                 <section onClick={()=> navigateToFollowingPage(loggedInUID)}>
+                                    <h3>{dynamicFollowingArr?.length}</h3>
+                                    <p>Following</p>
+                                 </section>
+                              </>
+                           ) : (
+                              <>
+                                 <section onClick={()=> navigateToFollowersPage(dynamicUID)}>
+                                    <h3>{dynamicFollowerArr?.length}</h3>
+                                    <p>Followers</p>
+                                 </section>
+                                 <section onClick={()=> navigateToFollowingPage(dynamicUID)}>
+                                    <h3>{dynamicFollowingArr?.length}</h3>
+                                    <p>Following</p>
+                                 </section>
+                              </>
+                           )
+                        }
+
+
                      </div>
 
                   </div>
@@ -516,13 +532,7 @@ export default function Profile(props){
                <>
                   <div id="iconAndUsername">
                      <section id="picContainer">
-                        {
-                           (dynamicProfilePic) ? (
-                              <img id="profilePicture" src={dynamicProfilePic} alt="" />
-                           ) : (
-                              <img id='profilePicture' src='src/assets/defaultUser.jpg'/>
-                           )
-                        }
+                        <img src={dynamicProfilePic ? dynamicProfilePic : 'src/assets/defaultUser.jpg'} alt="" id="profilePicture" />
                         <div id="whoAmI">
                            <h5>{dynamicUsername}</h5>
                            <h6 className="profileUserTypeHeader" style={{color: "grey"}}>User</h6>
@@ -541,14 +551,31 @@ export default function Profile(props){
                      </section>
 
                      <div id="followTracking">
-                        <section >
-                           <h3 >{dynamicFollowerArr?.length}</h3>
-                           <p>Followers</p>
-                        </section>
-                        <section>
-                           <h3>{dynamicFollowingArr?.length}</h3>
-                           <p>Following</p>
-                        </section>
+                        {
+                           (userSearched === loggedInUID) ? (
+                              <>
+                                 <section onClick={()=> navigateToFollowersPage(loggedInUID)}>
+                                    <h3>{dynamicFollowerArr?.length}</h3>
+                                    <p>Followers</p>
+                                 </section>
+                                 <section onClick={()=> navigateToFollowingPage(loggedInUID)}>
+                                    <h3>{dynamicFollowingArr?.length}</h3>
+                                    <p>Following</p>
+                                 </section>
+                              </>
+                           ) : (
+                              <>
+                                 <section onClick={()=> navigateToFollowersPage(dynamicUID)}>
+                                    <h3>{dynamicFollowerArr?.length}</h3>
+                                    <p>Followers</p>
+                                 </section>
+                                 <section onClick={()=> navigateToFollowingPage(dynamicUID)}>
+                                    <h3>{dynamicFollowingArr?.length}</h3>
+                                    <p>Following</p>
+                                 </section>
+                              </>
+                           )
+                        }
                      </div>
 
                   </div>
@@ -748,58 +775,69 @@ export default function Profile(props){
                   {/* CONDITIONAL RENDERING */}
                   {/* Showing profile post data for each post the current user has made on the corresponding community feed */}
 
-                  {profilePostData?.length > 0 ? (
-                     profilePostData?.map((post, index)=> {
-                        return (
-                           <>
-                              <article key={index} className="existingPost" onClick={
-                                 ()=> showProfilePostDetails(post._id, dynamicUsername, post.postCreationDate, post.subject, post.body, post.likes.length, post.comments.length, post.comments, post.likes, post.image)}>
-                                 <div className="existingPostTitle">
-                                    {dynamicUsername}
-                                    {/* If the profile post user is the developer or anyone else then display accordingly */}
-                                    {
-                                       (dynamicUsername === 'Samuel') ? (
-                                          <>
-                                             <span className="developerStatus">Developer</span>
-                                          </>
-                                       ) : (
-                                          <>
-                                             <span className='userStatus'>User</span>
-                                          </>
-                                       )
-                                    }
-                                    <p style={{color: 'grey'}}>{showPostDate(post.postCreationDate)}</p>
-                                 </div>
-                                 <h2 className="profilePostSubject">
-                                    <span>
+                  {
+                     (profilePostData) ? (
+                        <>
+                           {profilePostData?.length > 0 ? (
+                              profilePostData?.map((post, index)=> {
+                                 return (
+                                    <>
+                                       <article key={index} className="existingPost" onClick={
+                                          ()=> showProfilePostDetails(post._id, dynamicUsername, post.postCreationDate, post.subject, post.body, post.likes.length, post.comments.length, post.comments, post.likes, post.image)}>
+                                          <div className="existingPostTitle">
+                                             {dynamicUsername}
+                                             {/* If the profile post user is the developer or anyone else then display accordingly */}
+                                             {
+                                                (dynamicUsername === 'Samuel') ? (
+                                                   <>
+                                                      <span className="developerStatus">Developer</span>
+                                                   </>
+                                                ) : (
+                                                   <>
+                                                      <span className='userStatus'>User</span>
+                                                   </>
+                                                )
+                                             }
+                                             <p style={{color: 'grey'}}>{showPostDate(post.postCreationDate)}</p>
+                                          </div>
+                                          <h2 className="profilePostSubject">
+                                             <span>
 
-                                       {" " + post.subject}
+                                                {" " + post.subject}
 
-                                    </span>
-                                 </h2>
-                                 {post.image ? (
-                                 <img src={post.image} alt='Postimage' />
-                                 ) : (
-                                 <div style={{display: 'none'}}></div> // Optional: add a placeholder or leave it empty
-                                 )}
-                                 <p className="profilePostBody">{post.body}</p>
-                                 <div className="profilePostAnalytics">
+                                             </span>
+                                          </h2>
+                                          {post.image ? (
+                                          <img src={post.image} alt='Postimage' />
+                                          ) : (
+                                          <div style={{display: 'none'}}></div> // Optional: add a placeholder or leave it empty
+                                          )}
+                                          <p className="profilePostBody">{post.body}</p>
+                                          <div className="profilePostAnalytics">
 
-                                    <h5><i style={{color: "grey"}} className="fa-solid fa-heart"></i> {post.likes.length}</h5>
-                                    <h5 style={{color: "grey"}}><i style={{color: "grey"}} className="fa-solid fa-comments"></i> {post.comments.length}</h5>
-                                 </div>
+                                             <h5><i style={{color: "grey"}} className="fa-solid fa-heart"></i> {post.likes.length}</h5>
+                                             <h5 style={{color: "grey"}}><i style={{color: "grey"}} className="fa-solid fa-comments"></i> {post.comments.length}</h5>
+                                          </div>
 
-                              </article>
-                           </>
-                        )
-                     })
-                  ) : (
-                     // if there is no posts made by the user in question in that specific comminui
-                     <div className="noPostsMessage">
-                        <h3>{dynamicUsername} hasn't posted anything here yet!</h3>
-                        <p>Get them to share something! 😃</p>
-                     </div>
-                  )}
+                                       </article>
+                                    </>
+                                 )
+                              })
+                           ) : (
+                              // if there is no posts made by the user in question in that specific comminui
+                              <div className="noPostsMessage">
+                                 <h3>{dynamicUsername} hasn't posted anything here yet!</h3>
+                                 <p>Get them to share something! 😃</p>
+                              </div>
+                           )}
+                        </>
+                     ) : (
+                        <div className="noPostsMessage">
+                           <div className=' loader '>
+                           </div>
+                        </div>
+                     )
+                  }
                </div>
 
 

@@ -45,6 +45,11 @@ export default function Home(){
    const [followerCount, setFollowerCount] = useState([])
    const [followingCount, setFollowingCount] = useState([])
    const [loggedInUID, setLoggedInUID] = useState(null)
+   const [profilePicture, setProfilePicture] = useState(null)
+
+   const queryString = window.location.search;
+   const urlParams = new URLSearchParams(queryString);
+   const userSearched = urlParams.get("topicFeed");
 
 
    // GETTING USER INFORMATION AND DISPLYING IT ON THE HOME PAGE SPECIFIC TO THE USER LOGGED IN
@@ -81,6 +86,10 @@ export default function Home(){
 
          // the current users follower count
          setFollowerCount(homeData.followerCount.length)
+
+
+
+         setProfilePicture(homeData.profilePic)
 
 
       }
@@ -248,6 +257,7 @@ export default function Home(){
          bodyPostElement.current.value = ''
          subjectPostElement.current.value = ''
          document.body.style.overflow = 'hidden';
+         postToCommunity(userSearched.split('Feed')[0])
       }
    }
 
@@ -310,6 +320,7 @@ export default function Home(){
       followings: followingCount,
       followers: followerCount,
       UID: loggedInUID,
+      profileImage: profilePicture,
       displayAbout: ()=> displayAbout()
    }
 
@@ -326,6 +337,8 @@ export default function Home(){
       // let splicedTopic = userSearched.split("Feed")
       return  <><h4><i class="fa-solid fa-plus"></i></h4> </>
    }
+
+
 
 
    return (
@@ -363,8 +376,8 @@ export default function Home(){
                      <div id="selectCommunity">
                         <h2>Community:</h2>
                         <form>
-                           <select>
-                              <option onClick={()=> postToCommunity('Home')}>Home</option>
+                           <select value={userSearched?.split('Feed')[0]}>
+                              <option value={'Home'} onClick={()=> postToCommunity('Home')}>Home</option>
                               {userData.map((community, index) => {
                                  return (
                                     <>

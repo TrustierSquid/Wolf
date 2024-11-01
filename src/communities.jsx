@@ -11,6 +11,7 @@ function AcquireUserInfo(){
   const [username, setUsername] = useState(null)
   const [followingCount, setFollowingCount] = useState(null)
   const [followerCount, setFollowerCount] = useState(null)
+  const [profilePicture, setProfilePicture] = useState(null)
 
   async function getUserData() {
     const response = await fetch(`/users/homeFeed`, {
@@ -39,6 +40,9 @@ function AcquireUserInfo(){
 
     // the current users follower count
     setFollowerCount(homeData.followerCount.length)
+
+    setProfilePicture(homeData.profilePic)
+
   }
 
   async function gettingCommunityNumbers() {
@@ -57,7 +61,8 @@ function AcquireUserInfo(){
     username: username,
     followings: followingCount,
     followers: followerCount,
-    UID: loggedInUID
+    UID: loggedInUID,
+    profileImage: profilePicture,
   }
 
 

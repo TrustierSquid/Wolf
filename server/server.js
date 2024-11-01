@@ -583,6 +583,25 @@ app.get('/dynamic/:username', async (req, res)=> {
 
 })
 
+app.get('/dynamicUID/:UID', async (req, res)=> {
+  const {UID} = req.params
+
+  const database = await connectMongo()
+  const usersCollection = database.collection('Users')
+
+
+  let searchedUser = await usersCollection.findOne({UID: UID})
+
+
+  res.json({
+    dynamicUID: searchedUser.UID,
+    dynamicFollowing: searchedUser.following,
+    dynamicFollowers: searchedUser.followers,
+    dynamicUsername: searchedUser.user
+  })
+
+})
+
 
 
 

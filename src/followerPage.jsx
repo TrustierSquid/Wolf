@@ -14,6 +14,7 @@ function FollowingPageComponentDep(){
 
    const [followers, setFollowers] = useState(null)
    const [following, setFollowing] = useState(null)
+   const [profilePicture, setProfilePicture] = useState(null)
 
    async function getUserData() {
      const response = await fetch(`/users/homeFeed`, {
@@ -47,6 +48,8 @@ function FollowingPageComponentDep(){
      // the current users follower count
      setFollowerCount(homeData.followerCount.length)
 
+     setProfilePicture(homeData.profilePic)
+
 
 
    }
@@ -68,7 +71,8 @@ function FollowingPageComponentDep(){
      username: username,
      followings: followingCount,
      followers: followerCount,
-     UID: loggedInUID
+     UID: loggedInUID,
+     profileImage: profilePicture,
     }
 
 

@@ -166,7 +166,7 @@ export default function Navbar(props) {
         <div id="profileContainer">
           {/* In place for a profile picture */}
 
-          <img id='dropdownBtn' onClick={()=> navigateProfile()} src={loggedInProfilePic} alt="" />
+          <img id='dropdownBtn' onClick={()=> navigateProfile()} src={loggedInProfilePic ? loggedInProfilePic : 'src/assets/defaultUser.jpg'} alt="" />
         </div>
 
         {/* Mobile Navs */}
@@ -177,7 +177,7 @@ export default function Navbar(props) {
 
       <section id="mobileNavMenu" ref={mobileNavMenu} >
         <div className='mobileNavProfileSection' onClick={()=> navigateProfile()}>
-          <img src={loggedInProfilePic} alt="" />
+          <img src={loggedInProfilePic ? loggedInProfilePic : 'src/assets/defaultUser.jpg'} alt="" />
           <section id="mobileWhoAmI">
             <h5 style={{color: '#ff7b00'}}>VIEW PROFILE</h5>
             <h2>{username}</h2>

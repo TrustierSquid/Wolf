@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef } from "react";
 
 export default function UpdateFeed(props) {
-  const [allPosts, setAllPosts] = useState([]);
+  const [allPosts, setAllPosts] = useState(null);
   const currentUser = props.currentActiveUser;
   // const darkBG = useRef(null)
   const commentInterface = useRef(null)
@@ -199,7 +199,7 @@ export default function UpdateFeed(props) {
   // Checks and shows if a user is already liking a post or not
   // all dependent on when the feed gets updated
   function checkCurrentlyLiked() {
-    allPosts.map((post, key) => {
+    allPosts?.map((post, key) => {
       if (post.likes.includes(currentUser)) {
         likeBtn.current[key].style.color = "red";
       } else {
@@ -375,67 +375,76 @@ export default function UpdateFeed(props) {
       {/* Mapping each post in reverse (newest first) */}
       {/* post.poster is the author of the post */}
       {/* {showTopic()} */}
-      {allPosts?.length > 0 ? (
-        allPosts.map((post, key) => {
-          return (
-            <>
-              <div key={post._id} className="userPost">
-                <main className="mainPost">
-                  <div className="postAnalytics">
-                    {/* flex container */}
-                    <section className="userAction">
-                      {/* checking for whos posting */}
-                      {checkAdmin(post.poster)}
-                      {showPostDate(post.postCreationDate)}
-                    </section>
-                    <p className="postCaption">
-                      {post.subject}
-                    </p>
-                  </div>
+      {(allPosts) ? (
+          <>
+            {allPosts?.length > 0 ? (
+              allPosts?.map((post, key) => {
+                return (
+                  <>
+                    <div key={post._id} className="userPost">
+                      <main className="mainPost">
+                        <div className="postAnalytics">
+                          {/* flex container */}
+                          <section className="userAction">
+                            {/* checking for whos posting */}
+                            {checkAdmin(post.poster)}
+                            {showPostDate(post.postCreationDate)}
+                          </section>
+                          <p className="postCaption">
+                            {post.subject}
+                          </p>
+                        </div>
 
-                  {post.image ? (
-                    <img id="postIMG" src={post.image} alt='Postimage' />
-                  ) : (
-                    <div style={{display: 'none'}}></div> // Optional: add a placeholder or leave it empty
-                  )}
+                        {post.image ? (
+                          <img id="postIMG" src={post.image} alt='Postimage' />
+                        ) : (
+                          <div style={{display: 'none'}}></div> // Optional: add a placeholder or leave it empty
+                        )}
 
-                  <h2 className="postBody">{post.body}</h2>
-                  <br />
-                </main>
-                <nav className='postInteractionSection'>
+                        <h2 className="postBody">{post.body}</h2>
+                        <br />
+                      </main>
+                      <nav className='postInteractionSection'>
 
-                  <div className="postLC">
-                    <span
-                      ref={(el) => (likeBtn.current[key] = el)}
-                      className="likeBtn"
-                      onClick={() => addLike(post._id, key)}
-                    >
-                      <i className="fa-solid fa-heart"></i>
-                      <span style={{ color: "white" }}> Like</span>
-                    </span>
-                    <span className="commentBtn"
-                    onClick={()=> {commentInterfaceAppear(post.subject, post.body, post.poster, post.postcreationDate, post._id, key, post.likes.length, post.comments, post.image), props.bgEffect()}}>
-                      <i className="fa-solid fa-comments"></i>{" "}
-                      <span style={{ color: "white" }}
-                      > Comment</span>
-                    </span>
-                  </div>
+                        <div className="postLC">
+                          <span
+                            ref={(el) => (likeBtn.current[key] = el)}
+                            className="likeBtn"
+                            onClick={() => addLike(post._id, key)}
+                          >
+                            <i className="fa-solid fa-heart"></i>
+                            <span style={{ color: "white" }}> Like</span>
+                          </span>
+                          <span className="commentBtn"
+                          onClick={()=> {commentInterfaceAppear(post.subject, post.body, post.poster, post.postcreationDate, post._id, key, post.likes.length, post.comments, post.image), props.bgEffect()}}>
+                            <i className="fa-solid fa-comments"></i>{" "}
+                            <span style={{ color: "white" }}
+                            > Comment</span>
+                          </span>
+                        </div>
 
-                  <div className="postDetails">
-                    <span><i className="fa-regular fa-heart"></i> {post.likes.length}</span>
-                    <span><i className="fa-regular fa-comment"></i> {post.comments.length}</span>
-                  </div>
-                </nav>
+                        <div className="postDetails">
+                          <span><i className="fa-regular fa-heart"></i> {post.likes.length}</span>
+                          <span><i className="fa-regular fa-comment"></i> {post.comments.length}</span>
+                        </div>
+                      </nav>
+                    </div>
+                  </>
+                );
+              })
+            ) : (
+              <div className="noPostsMessage">
+                <h2>No posts available</h2>
+                <p>Be the first to share something!</p>
               </div>
-            </>
-          );
-        })
-      ) : (
-        <div className="noPostsMessage">
-          <h2>No posts available</h2>
-          <p>Be the first to share something!</p>
-        </div>
-      )}
+            )}
+          </>
+        ) : (
+          <div className="noPostsMessage">
+            <div className=' loader '>
+            </div>
+          </div>
+        )}
 
       <div id="commentInterface" ref={commentInterface}>
 

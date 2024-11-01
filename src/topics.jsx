@@ -11,6 +11,7 @@ function App() {
   const [followerCount, setFollowerCount] = useState(null)
   const [followingCount, setFollowingCount] = useState(null)
   const [username, setUsername] = useState(null)
+  const [profilePicture, setProfilePicture] = useState(null)
 
   async function getUserData() {
     const response = await fetch(`/users/homeFeed`, {
@@ -40,6 +41,8 @@ function App() {
 
     // the current users follower count
     setFollowerCount(homeData.followerCount.length)
+
+    setProfilePicture(homeData.profilePic)
   }
 
   // sidebar functionality
@@ -47,7 +50,8 @@ function App() {
     username: username,
     followings: followingCount,
     followers: followerCount,
-    UID: loggedInUID
+    UID: loggedInUID,
+    profileImage: profilePicture,
  }
 
   useEffect(() => {

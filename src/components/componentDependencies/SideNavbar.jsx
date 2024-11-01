@@ -5,7 +5,8 @@ const SideNavBar = forwardRef(({
    username,
    followers,
    followings,
-   UID
+   UID,
+   profileImage
 }, props, ref) => {
    const {sideNav, topicBtn} = ref || {}
 
@@ -47,24 +48,26 @@ const SideNavBar = forwardRef(({
    }
 
 
-
    return (
       <>
          <nav className="sideNav" ref={sideNav}>
             <section id="subTitle">
                <h3 id="sidebarUsername">
-                  {username}
-                  {
-                     (username === 'Samuel') ? (
-                        <>
-                           <span style={{color: 'turquoise'}}>Developer</span>
-                        </>
-                     ) : (
-                        <>
-                           <span>User</span>
-                        </>
-                     )
-                  }
+                  <img id="sideBarProfileImage" src={profileImage ? profileImage : 'src/assets/defaultUser.jpg'} alt="" />
+                  <div id="nameAndInfo">
+                     {username}
+                     {
+                        (username === 'Samuel') ? (
+                           <>
+                              <span style={{color: 'turquoise'}}>Developer</span>
+                           </>
+                        ) : (
+                           <>
+                              <span>User</span>
+                           </>
+                        )
+                     }
+                  </div>
                </h3>
                <div id="followingCountContainer">
                   <div className='followingContainerItem' onClick={()=> navigateToFollowingPage()}>
