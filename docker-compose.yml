@@ -1,0 +1,13 @@
+services:
+  wolf:
+    image: wolf:latest
+    build: 
+      context: "."
+      dockerfile: "wolf.dockerfile"
+    environment:
+      DB_URI: ""
+      DB_NAME: ""
+      PORT: 3000
+    ports:
+      - "${PORT}:3000"
+    

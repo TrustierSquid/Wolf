@@ -39,7 +39,7 @@ const __dirname = path.dirname(__filename);
 
 // express server setup
 const app = express();
-const port = process.env.PORT;
+const port = 3000;
 
 // CORS
 app.use(cors());
