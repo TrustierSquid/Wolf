@@ -7,7 +7,7 @@ services:
     environment:
       DB_URI: ""
       DB_NAME: ""
-      PORT: 3000
+      # PORT: 3000
     ports:
-      - "${PORT}:3000"
+      - "3000:3000"
     
