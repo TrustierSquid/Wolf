@@ -1,21 +1,21 @@
 // ligher BG
 
 $uiBG: #2b2b2b;
-$cardBG: #222;
 $postBG: #111111e8;
 $cardInteractionSection: #181818;
 $cardBorder: #2E2E2E;
 $moodleBG: #181818;
 
+$cardBG: #3c3c3c89;
 // darker BG
-$subBackground: #121010;
+$subBackground: #181818;
 
 // navbarBG
-$navBG: #510917;
+$navBG: #471620;
 
 $primary: #d43737;
 $darkenPrimary: #532C2C;
-$inputField: #1B1B1B;
+$inputField: #343434;
 $buttonHover: #7A0B31;
 
 // fonts
@@ -70,7 +70,8 @@ $fs-paragraph: 1rem;
    width: 100%;
    pointer-events: none;
    opacity: 0;
-   // z-index: 3;
+   z-index: 2;
+   transition: 250ms;
 }
 
 body {
@@ -365,7 +366,6 @@ TOPICS COMPONENT
 
 
 #topicsContainer {
-   background: #161616;
    background: none;
    min-height: 600px;
    max-width: 100%;
@@ -376,12 +376,12 @@ TOPICS COMPONENT
    main {
       // header
       display: flex;
+      justify-content: start;
       flex-direction: column;
-      background: rgb(59,1,36);
-      background: linear-gradient(135deg, rgba(59,1,36,1) 0%, rgba(203,0,57,1) 100%);
-      border-radius: 2rem;
+      background: $subBackground;
+      border-radius: 1rem;
       width: 60%;
-      padding: 3rem;
+      padding: 2rem;
 
       #pageHeader {
          // font-weight: lighter;
@@ -397,6 +397,31 @@ TOPICS COMPONENT
 
       }
 
+      #pageNavigation {
+         display: flex;
+         justify-content: space-between;
+         align-items: center;
+         padding: 1rem;
+
+         #createCommunityBtn {
+            background: teal;
+            color: white;
+            border: none;
+            padding: 0.5rem;
+            border-radius: 0.5rem;
+            font-family: $ff-heading;
+            font-size: 1rem;
+            transition: 150ms;
+
+            &:hover {
+               background-color: #00a1b6;
+               cursor: pointer;
+            }
+         }
+
+      }
+
+
       #topicSelect {
          // justify-content: center;
          // align-items: center;
@@ -404,47 +429,63 @@ TOPICS COMPONENT
 
          #communityGridContainer {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 1rem;
 
             .topicSelectionBtn {
-               padding: 1.5rem;
-               height: 300px;
+               padding: 1rem;
                border-radius: 1rem;
                font-family: $ff-heading;
                border: none;
-               background: $cardBG;
                color: white;
-               // padding: 1rem;
-               text-wrap: wrap;
-               transition: 150ms;
-               font-size: clamp(0.6rem, 1rem, 1.8rem);
                display: flex;
-               flex-direction: column;
+               text-wrap: wrap;
                justify-content: space-between;
-               box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-
+               transition: 150ms;
+               background-color: $cardBG;
+               font-size: clamp(0.6rem, 1rem, 1.8rem);
 
                .topicHeader {
                   display: flex;
                   justify-content: space-between;
+                  align-items: center;
 
                   .communityTitle {
                      display: flex;
                      align-items: center;
-                     gap: 0.3rem;
-                     margin-bottom: 1rem;
+                     gap: 1rem;
 
                      img {
-                        height: 45px;
-                        width: 45px;
+                        height: 60px;
+                        width: 60px;
                         object-fit: cover;
                         border-radius: 50%;
                      }
 
-                     h3 {
+                     #showOwner {
+                        display: flex;
+                        flex-direction: column;
+                        gap: 1rem;
+
+                        .communityCardTitle {
+                           display: flex;
+                           flex-direction: column;
+                           h4 {
+                              font-family: $ff-heading;
+
+                           }
+
+                           font-family: $ff-body;
+
+                        }
+
+                        p {
+                        }
+
 
                      }
+
+
                   }
 
 
@@ -457,30 +498,36 @@ TOPICS COMPONENT
                .communityJoinBtn {
                   cursor: pointer;
                   padding: 0.5rem;
-                  width: 75px;
-                  align-self: end;
-                  background-color: $primary;
-                  border: none;
+                  height: 40px;
+                  width: 100px;
+                  align-self: center;
+                  background: none;
+                  border: 1px solid teal;
                   border-radius: 0.5rem;
-                  color: white;
+                  color: turquoise;
                   transition: 150ms;
+                  font-size: 1rem;
 
                   &:hover {
-                     background-color: $buttonHover;
+                     background-color: teal;
+                     color: white;
                   }
+               }
+
+               // conditional rendering styles for the join buttons
+               .notJoined {
+                  background: none;
+                  color: white;
+                  border: 1px solid teal;
+               }
+
+               .joined {
+                  background-color: teal;
+                  color: white;
                }
 
             }
 
-            .topicSelectionBtn:nth-child(even) {
-               background: $cardInteractionSection;
-               border: none;
-            }
-
-            .topicSelectionBtn:nth-child(odd) {
-               background-color: $cardInteractionSection;
-               border: none;
-            }
          }
 
 
@@ -776,20 +823,20 @@ DEFAULT PAGE
 // side nav bar
 
 .sideNav {
-   height: 500px;
-   top: 10%;
-   width: 500px;
+   max-height: 500px;
+   top: 10.5%;
+   width: 400px;
    color: white;
-   background: rgb(59,1,36);
-   background: linear-gradient(158deg, rgba(59,1,36,1) 0%, rgba(203,0,57,1) 80%, rgba(203,0,0,1) 100%);
-   border-radius: 2rem;
+   background: rgb(212,55,55);
+   background: linear-gradient(338deg, rgba(212,55,55,1) 0%, rgba(122,11,49,1) 50%);
+   border-radius: 1rem;
    border: none;
    padding: 1.5rem;
    display: flex;
    flex-direction: column;
    font-family: $ff-body;
    position: sticky;
-   z-index: 0;
+   z-index: 1;
 
    #subTitle {
       font-family: $ff-body;
@@ -802,7 +849,7 @@ DEFAULT PAGE
       // font-size: 1.3rem;
 
       #sidebarUsername {
-         background-color: $postBG;
+         background: none;
          padding: 1rem;
          border-radius: 1rem;
          width: 100%;
@@ -810,7 +857,6 @@ DEFAULT PAGE
          display: flex;
          gap: 1rem;
          align-items: center;
-         box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 
          #sideBarProfileImage {
             height: 100px;
@@ -835,17 +881,16 @@ DEFAULT PAGE
             display: flex;
             flex-direction: column;
             align-items: start;
-            background-color: $postBG;
+            background: none;
             padding: 1rem;
             width: 100%;
             border-radius: 1rem;
-            box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
             cursor: pointer;
             transition: 150ms;
             // font-weight: 100;
 
             &:hover {
-               background-color: $cardBorder;
+               background-color: $cardBG;
             }
          }
 
@@ -882,8 +927,7 @@ DEFAULT PAGE
          font-family: $ff-body;
 
          &:hover {
-            transform: translateY(-3px);
-            background-color: $primary;
+            background-color: $cardBG;
          }
 
          &:focus {
@@ -915,25 +959,24 @@ DEFAULT PAGE
 main {
    display: flex;
    justify-content: center;
-   gap: 2rem;
+   gap: 1rem;
    padding: 2rem;
 
    #content {
       // height: 90vh;
-      width: 55%;
+      width: 45%;
       padding: 2rem;
       display: flex;
       flex-direction: column;
-      // background-color: rgba(34, 17, 17, 0.251);
-      background: rgb(122,11,49);
-      background: linear-gradient(180deg, rgba(122,11,49,1) 0%, rgba(46,0,28,1) 100%);
+      // background: $subBackground;
       border-radius: 1rem;
 
 
       #newPostBtn {
          width: 100%;
          color: white;
-         background-color: #111;
+         background: rgb(212,55,55);
+         background: linear-gradient(94deg, rgba(212,55,55,1) 0%, rgba(122,11,49,1) 100%);
          border-radius: 1rem;
          padding: 1rem;
          cursor: pointer;
@@ -943,11 +986,12 @@ main {
          box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 
          &:hover {
-            background-color: $cardBorder;
+            background-color: $buttonHover;
          }
       }
       // container for the new post Btn on the feed UI
       #newPost {
+
          // Btn for making new posts
          #newPostBtnMobile {
             display: none;
@@ -977,24 +1021,24 @@ main {
          // the moodle for making new posts
          #createPostElement {
             color: white;
-            gap: 2.5rem;
+            gap: 2rem;
             width: 50%;
+            height: 650px;
             margin-left: 1rem;
             position: fixed;
-            background-color: $moodleBG;
             padding: 3rem;
-            top: 50%;
+            top: 55%;
             right: 50%;
             transform: translate(50%,-50%);
             border-radius: 1rem;
-            border: 1px solid $cardBorder;
+            background-color: $moodleBG;
+            border: 1px solid $darkenPrimary;
             opacity: 0;
             pointer-events: none;
             transition: 250ms;
             display: flex;
             flex-direction: column;
-            z-index: 12;
-            border: 1px solid $darkenPrimary;
+            z-index: 4;
 
             #createNewPostHeader {
               color: white;
@@ -1146,7 +1190,7 @@ main {
          display: flex;
          margin-top: 1rem;
          flex-direction: column;
-         gap: 1rem;
+         // gap: 1rem;
 
          // each individual post
          .userPost {
@@ -1154,9 +1198,9 @@ main {
             max-width: 100%;
             display: flex;
             flex-direction: column;
-            background-color: $postBG;
-            border-radius: 1rem;
-            box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+            // background-color: $cardBG;
+            // border-radius: 1rem;
+            border-bottom: 1px solid $primary;
 
             .mainPost {
                flex-direction: column;
@@ -1185,29 +1229,41 @@ main {
                      gap: 1rem;
                      padding: 0.1rem;
 
-                     .poster {
-                        font-family: $ff-body;
+                     .postUserInformation {
                         display: flex;
-                        flex-direction: column;
-                        align-items: left;
-                        font-size: 1rem;
-                        cursor: pointer;
+                        align-items: center;
+                        gap: 0.5rem;
 
-                        #feedProfilePic {
+                        .postProfilePic {
                            height: 50px;
-                           width: 50px;
-                           object-fit: cover;
+                           border-radius: 50%;
                         }
 
-                        p {
+                        .poster {
+                           font-family: $ff-body;
+                           display: flex;
+                           flex-direction: column;
+                           align-items: left;
                            font-size: 1rem;
-                        }
+                           cursor: pointer;
 
-                        &:hover {
-                           text-decoration: underline;
-                        }
+                           #feedProfilePic {
+                              height: 50px;
+                              width: 50px;
+                              object-fit: cover;
+                           }
 
+                           p {
+                              font-size: 1rem;
+                           }
+
+                           &:hover {
+                              text-decoration: underline;
+                           }
+
+                        }
                      }
+
 
                      .postData {
                         font-family: $ff-heading;
@@ -1236,9 +1292,10 @@ main {
                }
 
                #postIMG {
-                  height: 300px;
+                  height: 600px;
                   object-fit: contain;
-                  background-color: #222;
+                  background-color: #333;
+                  padding: 1rem;
                }
 
                .postBody {
@@ -1640,10 +1697,9 @@ main {
       gap: 1rem;
       color: white;
       padding: 2rem;
-      border-radius: 1.5rem;
-      // background-color: $onHover;
-      background: rgb(122,11,49);
-      background: linear-gradient(180deg, rgba(122,11,49,1) 0%, rgba(25,0,41,1) 100%);
+      border-radius: 1rem;
+      background-color: $cardBG;
+
 
 
       .profHeaders {
@@ -1973,7 +2029,6 @@ main {
 
 
          #postMoodle1, #postMoodle2 {
-            height: 100%;
             width: 100%;
             background-color: #111;
             border: 1px solid $buttonHover;
@@ -2072,6 +2127,7 @@ main {
          }
 
          #postMoodle2 {
+            height: 100%;
             padding: 1.5rem;
             display: flex;
             flex-direction: column;
@@ -2412,6 +2468,153 @@ main {
    }
 }
 
+
+
+
+#createCommunityMoodle {
+   position: absolute;
+   top: 15%;
+   left: 20%;
+   background-color: $moodleBG;
+   border: 1px solid $darkenPrimary;
+   width: 60%;
+   max-height: 900px;
+   border-radius: 1rem;
+   padding: 2rem;
+   z-index: 2;
+   color: white;
+   display: none;
+   // display: flex;
+   flex-direction: column;
+   gap: 1rem;
+
+   label {
+      font-family: $ff-heading;
+      font-size: $fs-paragraph;
+   }
+
+   #communityMoodleNav {
+      font-family: $ff-heading;
+      display: flex;
+      justify-content: space-between;
+
+      #exitCommunityMoodle {
+         color: white;
+         width: 50px;
+         height: 50px;
+         border-radius: 50%;
+         background-color: #333;
+         padding: 1rem;
+         border: none;
+         cursor: pointer;
+         &:hover {
+            background-color: #444;
+         }
+
+      }
+   }
+
+   p {
+      font-family: $ff-body;
+   }
+
+   #givePicture {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      border-radius: 1rem;
+      // width: 300px;
+      background: rgb(51,51,51);
+      background: linear-gradient(146deg, rgba(51,51,51,1) 0%, rgba(34,34,34,1) 100%);
+      padding: 1rem;
+
+      img {
+         height: 100px;
+         width: 100px;
+         object-fit: cover;
+         border-radius: 50%;
+      }
+
+   }
+
+   #giveName {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      // background-color: #333333;
+      padding: 1rem;
+      border-radius: 1rem;
+
+
+
+      input {
+         background-color: $inputField;
+         color: white;
+         border: none;
+         padding: 0.5rem;
+         border-radius: 0.5rem;
+         font-size: $fs-paragraph;
+
+      }
+   }
+
+   #giveDescription {
+      display: flex;
+      flex-direction: column;
+      // background-color: #333;
+      padding: 1rem;
+      border-radius: 1rem;
+      gap: 0.5rem;
+
+      input {
+         background-color: $inputField;
+         color: white;
+         border: none;
+         padding: 0.5rem;
+         border-radius: 0.5rem;
+         font-size: $fs-paragraph;
+
+      }
+
+
+   }
+
+   #giveBtnContainer {
+      display: flex;
+      justify-content: start;
+      align-items: center;
+      gap: 1rem;
+
+      p {
+         font-family: $ff-body;
+      }
+   }
+
+
+   #initCommunity {
+      padding: 0.5rem;
+      width: 150px;
+      align-self: end;
+      background-color: teal;
+      color: white;
+      font-size: $fs-paragraph;
+      border: none;
+      border-radius: 0.5rem;
+      transition: 150ms;
+      cursor: pointer;
+
+      &:hover {
+         background-color: rgba(0, 128, 128, 0.52);
+      }
+   }
+
+}
+
+
+
+
+
+
 @media (max-width: 1050px) {
    #contentContainer {
       padding: 0rem;
@@ -2446,6 +2649,9 @@ main {
 
 
 }
+
+
+
 
 
 

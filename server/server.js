@@ -5,6 +5,7 @@ import path from "path";
 import { fileURLToPath } from "url";
 import cors from "cors";
 import cookieParser from "cookie-parser";
+import sharp from "sharp";
 
 // IMPORTING ROUTES
 import signinRoutes from "./routes/signin.js";
@@ -96,24 +97,68 @@ const storage = multer.memoryStorage(); // Store files in memory
 const upload = multer({ storage: storage });
 
 
+// For optimizing images when they are uploaded
+async function imageOptimize(imageBuffer, isImageForPosts){
+  const optimizedImageBuffer = await sharp(imageBuffer)
+    .resize({width: 300, height: 300, fit: 'cover'})
+    .toFormat('jpeg', {quality: 40})
+    .toBuffer()
+
+  const optimizedImageBufferForPosts = await sharp(imageBuffer)
+    .resize({width: 700, height: 600, fit: 'contain'})
+    .toFormat('jpeg', {quality: 50})
+    .toBuffer()
+
+
+
+  if (isImageForPosts === 'profile') {
+    // Return image optimized for profile pictures
+    return optimizedImageBuffer
+  } else {
+    // Return image optimized for posts
+    return optimizedImageBufferForPosts
+  }
+
+}
+
+//  For the main feed
 // Sends the current list of posts in the mainFeed
 app.get("/update", async (req, res) => {
-
   const database = await connectMongo();
   const mainFeedCollection = database.collection("mainFeed");
 
+  // grabbing all posts on the home feed
   const posts = await mainFeedCollection.find({}).toArray();
 
-  const responsePost = posts.map(post => ({
-    _id: post._id,
-    poster: post.poster,
-    subject: post.subject,
-    body: post.body,
-    likes: post.likes,
-    postCreationDate: post.postCreationDate,
-    comments: post.comments,
-    image: post.image ? `data:${post.image.contentType};base64,${post.image.data.toString('base64')}` : null
-  }))
+  // helper function for grabbing profile information as needed as we need this for accessing the users profile pic
+  const helperForProfilePic = async (poster)=> {
+    // Searching for the posters profilei information
+    const searchedUser = await database.collection('Users').findOne({user: poster})
+
+    if (!searchedUser) {
+      throw new Error(`User with poster ${poster} not found`);
+    }
+
+    return searchedUser.profilePic ? `data:${searchedUser.profilePic.contentType};base64,${searchedUser.profilePic.data.toString('base64')}` : 'src/assets/defaultUser.jpg'
+  }
+
+  // Process posts with asynchronous handling for profile pictures
+  const responsePost = await Promise.all(
+    posts.map(async (post) => {
+      const posterProfilePic = await helperForProfilePic(post.poster)
+      return {
+        _id: post._id,
+        poster: post.poster,
+        posterProfilePic: posterProfilePic,
+        subject: post.subject,
+        body: post.body,
+        likes: post.likes,
+        postCreationDate: post.postCreationDate,
+        comments: post.comments,
+        image: post.image ? `data:${post.image.contentType};base64,${post.image.data.toString('base64')}` : null
+      }
+    })
+  )
 
   // res.json({ reversedPosts: posts.reverse() });
   res.json({ reversedPosts: responsePost.reverse() });
@@ -126,7 +171,6 @@ app.post("/newPost", upload.single('image'), async (req, res) => {
   const { whoPosted, postSubject, postBody} = req.body;
   const imageFile = req.file
 
-  console.log(req.file)
 
 
   // if no feed is selected, post will default to mainFeed
@@ -137,8 +181,6 @@ app.post("/newPost", upload.single('image'), async (req, res) => {
     let database = await connectMongo();
     const users = database.collection("Users");
     const mainFeed = database.collection("mainFeed");
-
-
 
 
     // Fetching the poster of the new post
@@ -165,9 +207,10 @@ app.post("/newPost", upload.single('image'), async (req, res) => {
       comments: [],
     };
 
+    // If an image exists inside this post attempt
     if (imageFile) {
       newPostData.image = {
-        data: imageFile.buffer,
+        data: await imageOptimize(imageFile.buffer, 'post'),
         contentType: imageFile.mimetype,
         filename: imageFile.originalname,
       }
@@ -177,13 +220,11 @@ app.post("/newPost", upload.single('image'), async (req, res) => {
 
 
     res.status(201).json({ message: 'Post created successfully', id: newPost.insertedId});
-    console.log({ message: 'Post created successfully', id: newPost.insertedId})
     // Adding the post to the database will lead to a call to action on the frontend
     // The frontend will load this collection in the database to show the user feed
 
 
   } else {
-
 
     // Updating the poster's post count
     let database = await connectMongo();
@@ -214,7 +255,7 @@ app.post("/newPost", upload.single('image'), async (req, res) => {
 
     if (imageFile) {
       newPostData.image = {
-        data: imageFile.buffer,
+        data: await imageOptimize(imageFile.buffer, 'post'),
         contentType: imageFile.mimetype,
         filename: imageFile.originalname,
       }
@@ -223,42 +264,42 @@ app.post("/newPost", upload.single('image'), async (req, res) => {
     const newPost = await selectedFeed.insertOne(newPostData)
 
     res.status(201).json({ message: 'Post created successfully', id: newPost.insertedId});
-    console.log({ message: 'Post created successfully', id: newPost.insertedId})
-
 
   }
 });
 
+// User uploads profile picture
 app.post("/uploadProfilePicture/:loggedInUser", upload.single('image'), async (req, res)=> {
-  const imageFile = req.file
-  const {loggedInUser} = req.params
+  try {
+    const imageFile = req.file
+    const {loggedInUser} = req.params
 
-  let database = await connectMongo();
-  const users = database.collection("Users");
-
-  const profilePic = {
-      data: imageFile.buffer,
-      contentType: imageFile.mimetype,
+    const profilePic = {
+      data: await imageOptimize(imageFile.buffer, 'profile'),
+      contentType: 'image/jpeg',
       filename: imageFile.originalname,
     }
 
+    let database = await connectMongo();
+    const users = database.collection("Users");
 
-  let foundUser = await users.updateOne(
-    {UID: loggedInUser},
-    {$set: {profilePic}}
-  )
+    let foundUser = await users.updateOne(
+      {UID: loggedInUser},
+      {$set: {profilePic}}
+    )
 
+    // res.status(201).json({ message: 'Post created successfully', id: imageToPost.insertedId});
+    console.log({ message: `${loggedInUser} Changed profile picture!`})
 
-  // res.status(201).json({ message: 'Post created successfully', id: imageToPost.insertedId});
-  // console.log({ message: 'Post created successfully', id: imageToPost.insertedId})
+  } catch {
+    console.log('Could not update profile picture!')
+  }
 
 })
 
-
-
-
 let latestLikeCounter = null;
 
+// adding a like to a post
 app.post("/addLike", requireAuth, async (req, res) => {
   const { postID, loggedInUser } = req.body;
   const { feed } = req.query;
@@ -324,7 +365,7 @@ app.post("/addLike", requireAuth, async (req, res) => {
 });
 
 
-
+// Gather the number of likes a post has
 app.post("/postLikeCounter", async (req, res) => {
   const { postID } = req.body;
 
@@ -481,6 +522,7 @@ app.get('/topicsAdd', async (req, res)=> {
     )
 
     res.sendStatus(200)
+    console.log(`${loggedInUser} has joined the ${topicToAdd} community!`)
 
   } else {
     await users.updateOne(
@@ -498,29 +540,37 @@ app.get('/topicsAdd', async (req, res)=> {
 
 })
 
+// remove user from community
 app.put('/removeCommunity/:community/:UID/:username', async (req, res)=> {
-  const { community, UID, username } = req.params
+  try {
+    const { community, UID, username } = req.params
 
-  const database = await connectMongo()
-  const usersCollection = database.collection('Users')
+    const database = await connectMongo()
+    const usersCollection = database.collection('Users')
 
-  const dynamicCollection = database.collection(community + 'Info')
+    const dynamicCollection = database.collection(community + 'Info')
 
 
-  await usersCollection.updateOne(
-    {UID: UID},
-    {$pull: {'topics': community}}
-  )
+    await usersCollection.updateOne(
+      {UID: UID},
+      {$pull: {'topics': community}}
+    )
 
-  await dynamicCollection.updateOne(
-    {communityName: community},
-    {$pull: {members: username}}
-  )
+    await dynamicCollection.updateOne(
+      {communityName: community},
+      {$pull: {members: username}}
+    )
 
-  res.json({success: 200})
+    console.log(`${username} has left ${community}`)
+
+    res.json({success: 200})
+  } catch {
+    console.log(`Could not pull user from ${community}`)
+  }
 
 })
 
+// Updating user bio
 app.post('/updateBio/:UID', async (req, res)=> {
   const { UID } = req.params
   const { newBio } = req.body
@@ -539,7 +589,7 @@ app.post('/updateBio/:UID', async (req, res)=> {
 
 })
 
-
+// Adding a comment to a post
 app.post('/addPostComment', async (req, res)=> {
   const {postID} = req.query
   const {feed} = req.query
@@ -567,6 +617,7 @@ app.post('/addPostComment', async (req, res)=> {
 })
 
 
+// For searching for a user by username
 app.get('/dynamic/:username', async (req, res)=> {
   const {username} = req.params
 
@@ -579,10 +630,12 @@ app.get('/dynamic/:username', async (req, res)=> {
 
   res.json({
     dynamicUID: searchedUser.UID,
+    dynamicProfilePic: searchedUser.profilePic ? `data:${searchedUser.profilePic.contentType};base64,${searchedUser.profilePic.data.toString('base64')}` : null
   })
 
 })
 
+// For searching for a user by UID
 app.get('/dynamicUID/:UID', async (req, res)=> {
   const {UID} = req.params
 
@@ -597,7 +650,8 @@ app.get('/dynamicUID/:UID', async (req, res)=> {
     dynamicUID: searchedUser.UID,
     dynamicFollowing: searchedUser.following,
     dynamicFollowers: searchedUser.followers,
-    dynamicUsername: searchedUser.user
+    dynamicUsername: searchedUser.user,
+
   })
 
 })

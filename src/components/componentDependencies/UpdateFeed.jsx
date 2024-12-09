@@ -12,8 +12,8 @@ export default function UpdateFeed(props) {
     const urlParams = new URLSearchParams(queryString);
     const userSearched = urlParams.get("topicFeed");
 
-    // if there is no query string fetching for a different feed, then the main feed will be returned
     if (!queryString) {
+      // Updating the home feed
       const response = await fetch(`/update`, {
         method: "GET",
         headers: {
@@ -28,16 +28,8 @@ export default function UpdateFeed(props) {
       const allPosts = await response.json();
       setAllPosts(allPosts.reversedPosts);
 
-      /* localStorage.setItem('cachedPosts', JSON.stringify(allPosts.reversedPosts))
-
-      const cachedPosts = localStorage.getItem('cachedPosts');
-      if (cachedPosts) {
-        setAllPosts(JSON.parse(cachedPosts));
-      } else {
-        fetchPosts();
-      } */
-
     } else {
+      // Updating custom community feeds
       const response = await fetch(`/loadTopicFeed?topicFeed=${userSearched}`, {
         method: "GET",
         headers: {
@@ -93,53 +85,18 @@ export default function UpdateFeed(props) {
       }
 
       let imageData = await response.json()
-      setProfilePictureFeed(imageData.profilePic)
+
+
+      return 'src/assets/defaultUser.jpg'
 
     } catch (error) {
       console.error('Error fetching profile picture:', error);
-      setProfilePictureFeed(null); // Set to null or a default image if desired
     }
 
 
 
   }
 
-  // Checks to see if certain users are admin or special
-  function checkAdmin(poster) {
-    switch (poster) {
-      case "Samuel":
-        // fetchProfilePicture(poster)
-        return (
-          <>
-            <h2 className="poster" onClick={() => navigateToProfile(poster)}>
-              {/* <img id="feedProfilePic" src={profilePictureFeed} alt="" /> */}
-              {poster}{" "}
-              <p style={{ color: "turquoise" }}>Developer</p>
-            </h2>
-          </>
-        );
-      case "DemoUser":
-        return (
-          <>
-            <h2 className="poster" onClick={() => navigateToProfile(poster)}>
-              {poster}{" "}
-              <span style={{ color: "#73ff00" }}>
-                Recruiter <i className="fa-solid fa-clipboard"></i>
-              </span>
-            </h2>
-          </>
-        );
-      case poster:
-        return (
-          <>
-            <h2 className="poster" onClick={() => navigateToProfile(poster)}>
-              {poster}{" "}
-              <p style={{ color: "grey" }}>User</p>
-            </h2>
-          </>
-        );
-    }
-  }
 
   const likeBtn = useRef([]);
 
@@ -387,7 +344,14 @@ export default function UpdateFeed(props) {
                           {/* flex container */}
                           <section className="userAction">
                             {/* checking for whos posting */}
-                            {checkAdmin(post.poster)}
+                            {/* {checkAdmin(post.poster)} */}
+                            <div className="postUserInformation">
+                              <img className='postProfilePic' src={post.posterProfilePic}/>
+                              <h2 className="poster" style={{color: 'turquoise'}} onClick={() => navigateToProfile(post.poster)}>
+                                {/* <img id="feedProfilePic" src={profilePictureFeed} alt="" /> */}
+                                {post.poster}
+                              </h2>
+                            </div>
                             {showPostDate(post.postCreationDate)}
                           </section>
                           <p className="postCaption">

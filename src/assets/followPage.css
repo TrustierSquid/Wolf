@@ -4,9 +4,8 @@
 #followPageContainer #displayFollowingContainer {
   font-family: "roboto", sans-serif;
   width: 60%;
-  background: rgb(59, 1, 36);
-  background: linear-gradient(146deg, rgb(59, 1, 36) 0%, rgb(203, 0, 57) 30%, rgb(203, 0, 0) 100%);
-  border-radius: 2rem;
+  background-color: #181818;
+  border-radius: 1rem;
   padding: 2rem;
   display: flex;
   flex-direction: column;
@@ -15,8 +14,7 @@
 #followPageContainer #displayFollowingContainer .followee {
   padding: 1rem;
   border-radius: 1rem;
-  background-color: rgba(17, 17, 17, 0.9098039216);
-  box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+  background-color: rgba(60, 60, 60, 0.537254902);
   transition: 100ms;
   display: flex;
   align-items: center;

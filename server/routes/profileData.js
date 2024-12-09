@@ -71,20 +71,24 @@ router.get("/", async (req, res) => {
 
 // for getting profile images for feeds
 router.get('/getProfileImage/:poster', async (req, res)=> {
-  const {poster} = req.params
-  const database = await connectMongo();
-  const usersCollection = database.collection("Users");
+  try {
+    const {poster} = req.params
+    const database = await connectMongo();
+    const usersCollection = database.collection("Users");
 
-  const user = await usersCollection.findOne({user: poster})
+    const user = await usersCollection.findOne({user: poster})
 
-  if (!user) {
-    return res.status(404).json({ message: 'User not found' });
-  }
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
 
 
-  if (!user.profilePic) {
-    // user.profilePic = 'src/assets/defaultUser.jpg'
-    return
+    if (!user.profilePic) {
+      // user.profilePic = 'src/assets/defaultUser.jpg'
+      return
+    }
+  } catch {
+    console.log(`Could not fetch profile picture for ${poster}`)
   }
 
   res.json({

@@ -46,6 +46,7 @@ export default function Home(){
    const [followingCount, setFollowingCount] = useState([])
    const [loggedInUID, setLoggedInUID] = useState(null)
    const [profilePicture, setProfilePicture] = useState(null)
+   const [totalMembers, setTotalMembers] = useState(null)
 
    const queryString = window.location.search;
    const urlParams = new URLSearchParams(queryString);
@@ -117,6 +118,17 @@ export default function Home(){
       }
 
       fetchTopicData()
+   }, [])
+
+   useEffect(()=> {
+      async function retrieveCommunityInformation(){
+         const response = await fetch('/retrieveCommunityInformation')
+         const data = await response.json()
+
+         setTotalMembers(data)
+
+
+      }
    }, [])
 
    const [communityStatePost, setCommunityStatePost] = useState('Home')
@@ -357,9 +369,6 @@ export default function Home(){
                {/* New post button for desktop with a message with it */}
                <span id="newPostBtn" ref={newPostBtn} onClick={()=> appearEffect()}>Express yourself.</span>
                <div id="newPost">
-
-
-
                   {/* Floating prompt for creating a new post */}
                   <form enctype="multipart/form-data" ref={createPostElement} id="createPostElement" >
                      <h2 id="createNewPostHeader">What's on your mind? <span onClick={()=> dissappearEffect()}><i className="fa-solid fa-x"></i></span></h2>
@@ -378,13 +387,8 @@ export default function Home(){
                         <form>
                            <select value={userSearched?.split('Feed')[0]}>
                               <option value={'Home'} onClick={()=> postToCommunity('Home')}>Home</option>
-                              {userData.map((community, index) => {
-                                 return (
-                                    <>
-                                       <option value={community} onClick={()=> postToCommunity(community)}>{community}</option>
-                                    </>
-                                 )
-                              })}
+
+                                    {/* <option value={community} onClick={()=> postToCommunity(communityHasUser.name)}>{communityHasUser.name}</option> */}
                            </select>
                         </form>
                      </div>

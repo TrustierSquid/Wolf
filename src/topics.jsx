@@ -29,7 +29,6 @@ function App() {
 
     const homeData = await response.json();
     // setting the user info needed as glob vars
-    console.log(homeData)
     setLoggedInUID(homeData.UID);
     setUserTopicArray(homeData.topicArr)
 
@@ -60,7 +59,7 @@ function App() {
 
   return (
     <React.StrictMode>
-      <Topics loggedInUID={loggedInUID} userTopics={userTopicArray} username={username} sidebarProps={sidebarProps}/>
+      <Topics loggedInUID={loggedInUID} userTopics={userTopicArray} username={username} sidebarProps={sidebarProps} loggedInUser={username}/>
     </React.StrictMode>
   );
 }

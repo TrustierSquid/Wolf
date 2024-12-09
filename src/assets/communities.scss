@@ -1,19 +1,19 @@
 $uiBG: #2b2b2b;
-$cardBG: #222;
+$cardBG: #3c3c3c89;
 $cardInteractionSection: #181818;
 $postBG: #111111e8;
 $cardBorder: #2E2E2E;
 $moodleBG: #181818;
 
 // darker BG
-$subBackground: #121010;
+$subBackground: #181818;
 
 // navbarBG
 $navBG: #510917;
 
 $primary: #d43737;
 $darkenPrimary: #532C2C;
-$inputField: #1B1B1B;
+$inputField: #343434;
 $buttonHover: #7A0B31;
 
 // fonts
@@ -39,32 +39,321 @@ $lightBG: #5e5d5d25;
 
 
 #contentContainer {
+   justify-content: center;
+   gap: 1rem;
+
+   .exitCommunityMoodle {
+      width: 50px;
+      height: 50px;
+      border: none;
+      background-color: #333;
+      border-radius: 50%;
+      color: white;
+      cursor: pointer;
+
+      &:hover {
+         background-color: #444;
+      }
+   }
+
+   .errorMessage {
+      font-family: $ff-body;
+      text-align: center;
+      color: red;
+   }
+
+   #modifyCommunityMoodle {
+      background-color: $moodleBG;
+      border: 1px solid $darkenPrimary;
+      border-radius: 1rem;
+      position: fixed;
+      width: 80%;
+      height: 600px;
+      z-index: 2;
+      color: white;
+      padding: 2rem;
+      display: flex;
+      opacity: 0;
+      flex-direction: column;
+      overflow: hidden;
+      pointer-events: none;
+      transition: 250ms;
+
+      #moodleTitleBar {
+         font-family: $ff-heading;
+         display: flex;
+         justify-content: space-between;
+         align-items: center;
+         width: 100%;
+
+         h2 {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+         }
+
+         img {
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+            border-radius: 50%;
+         }
+
+
+
+      }
+
+      #showOwner {
+         font-family: $ff-body;
+         color: grey;
+      }
+
+      #modifyFieldCardContainer {
+         background-color: $cardInteractionSection;
+         max-height: 90%;
+         width: 100%;
+         border-radius: 1rem;
+         padding: 2rem;
+         display: flex;
+         gap: 5rem;
+
+         #modifyInformation {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            width: 50%;
+
+            .changeCommunityImage {
+               display: flex;
+               align-items: center;
+               gap: 3rem;
+               img {
+                  height: 75px;
+                  width: 75px;
+                  object-fit: cover;
+                  border-radius: 50%;
+               }
+
+               input {
+                  cursor: pointer;
+               }
+            }
+
+            .modifyCard {
+               display: flex;
+               flex-direction: column;
+               gap: 0.5rem;
+
+               label {
+                  font-family: $ff-heading;
+               }
+
+               input {
+                  font-family: $ff-body;
+                  height: 40px;
+                  background-color: $inputField;
+                  border: none;
+                  border-radius: 0.5rem;
+                  color: white;
+                  padding: 0.5rem;
+
+               }
+
+
+
+            }
+
+            #saveChangesBtn {
+               height: 40px;
+               color: white;
+               background-color: teal;
+               border: none;
+               border-radius: 0.5rem;
+               cursor: pointer;
+               transition: 50ms;
+
+               &:hover {
+                  background-color: rgb(1, 66, 66);
+               }
+            }
+
+            #deleteCommunityBtn {
+               height: 40px;
+               color: red;
+               background: none;
+               border: 1px solid crimson;
+               border-radius: 0.5rem;
+               cursor: pointer;
+               transition: 50ms;
+
+               &:hover {
+                  color: white;
+                  background-color: crimson;
+               }
+            }
+
+
+
+         }
+
+         #seeMembers {
+            width: 50%;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+
+            #membersCardTitle {
+               font-family: $ff-heading;
+               display: flex;
+               justify-content: space-between;
+            }
+
+            #membersMap {
+               list-style-type: none;
+               display: flex;
+               flex-direction: column;
+               gap: 0.5rem;
+               font-family: $ff-body;
+               overflow: auto;
+
+               .memberCard {
+                  background-color: $cardBG;
+                  padding: 1rem;
+                  border-radius: 1rem;
+                  display: flex;
+                  align-items: center;
+                  justify-content: space-between;
+
+                  .memberActionBtns {
+                     // width: 30%;
+                     display: flex;
+                     gap: 0.3rem;
+
+                     button {
+                        cursor: pointer;
+                        background: none;
+                        padding: 0.5rem;
+                        border: none;
+                        border-radius: 0.5rem;
+                     }
+
+                     .viewProfileBtn {
+                        color: turquoise;
+                        border: 1px solid turquoise;
+                        transition: 150ms;
+                        &:hover {
+                           background-color: teal;
+                           color: white;
+                        }
+                     }
+
+                     .removeBtn {
+                        color: crimson;
+                        border: 1px solid crimson;
+                        transition: 150ms;
+                        &:hover {
+                           background-color: crimson;
+                           color: white;
+                        }
+                     }
+
+
+                  }
+
+               }
+            }
+         }
+
+
+
+      }
+
+   }
+
+   #confirmMoodle {
+      // height: 400px;
+      width: 500px;
+      top: 30%;
+      background-color: $cardInteractionSection;
+      position: absolute;
+      border: 1px solid $darkenPrimary;
+      z-index: 2;
+      border-radius: 1rem;
+      color: white;
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: start;
+      gap: 3rem;
+      opacity: 0;
+      pointer-events: none;
+      transition: 250ms;
+
+      .confirmMoodleTitle {
+         // text-align: center;
+         line-height: 1.5rem;
+         font-family: $ff-heading;
+      }
+
+      #deleteInputField {
+         height: 40px;
+         background-color: $inputField;
+         border: none;
+         border-radius: 0.5rem;
+         padding: 0.5rem;
+         color: white;
+      }
+
+      #deleteButton {
+         height: 40px;
+         background-color: crimson;
+         color: white;
+         border: none;
+         border-radius: 0.5rem;
+         transition: 150ms;
+         cursor: pointer;
+
+         &:hover {
+            background-color: $buttonHover;
+         }
+      }
+   }
 
    #communityContainer {
-      background: rgb(122,11,49);
-      background: linear-gradient(180deg, rgba(122,11,49,1) 0%, rgba(46,0,28,1) 100%);
-      width: 55%;
-      border-radius: 1.5rem;
+      // background: rgb(122,11,49);
+      background: $subBackground;
+      width: 50%;
+      border-radius: 1rem;
       display: flex;
       flex-direction: column;
       justify-content: start;
       padding: 2rem;
-      margin: 1rem;
       color: white;
       font-family: $ff-heading;
+      min-height: 600px;
 
       #titleDiv {
-         /* h4 {
-            color: grey;
-         } */
+         display: flex;
+         align-items: center;
+         justify-content: space-between;
+         color: turquoise;
+         h1 {
+            color: white;
+         }
 
+         a {
+            cursor: pointer;
+            &:hover {
+               color: rgb(155, 255, 245);
+               text-decoration: underline;
+            }
+         }
       }
 
       ul {
          list-style-type: none;
          font-family: $ff-body;
          border-radius: 1.5rem;
-         padding: 1rem;
          display: flex;
          flex-direction: column;
          gap: 0.5rem;
@@ -78,75 +367,90 @@ $lightBG: #5e5d5d25;
          }
 
          li {
-            padding: 0.5rem;
-            padding-left: 2rem;
-            padding-right: 2rem;
+            padding: 1rem;
             transition: 150ms;
             display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 4rem;
-            background-color: $postBG;
+            flex-direction: column;
+            background-color: $cardBG;
             border-radius: 1rem;
-            box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+            gap: 1rem;
 
-
-            .communityInformation {
+            .topHalf {
                display: flex;
-               gap: 0.5rem;
-               align-items: center;
+               justify-content: space-between;
+               width: 100%;
 
-               img {
-                  width: 40px;
+               .communityInformation {
+                  display: flex;
+                  gap: 0.5rem;
+                  align-items: center;
+
+                  img {
+                     width: 40px;
+                     height: 40px;
+                     object-fit: cover;
+                     border-radius: 50%;
+                  }
+
                }
 
+               .interactionBtns {
+                  display: flex;
+                  gap: 1rem;
+
+                  button {
+                     padding: 0.5rem;
+                     background: none;
+                     color: white;
+                     cursor: pointer;
+                     color: crimson;
+                     border-radius: 0.5rem;
+                     // border: 1px solid rgba(128, 128, 128, 0.242);
+                     transition: 150ms;
+
+
+
+                  }
+
+                  .viewCommunityPostsBtn {
+                     color: turquoise;
+                     border: 1px solid turquoise;
+                     text-wrap: nowrap;
+
+                     &:hover {
+                        color: white;
+                        background-color: t;
+                     }
+                  }
+
+                  .leaveCommunityBtn {
+                     color: crimson;
+                     border: 1px solid crimson;
+                     text-wrap: nowrap;
+
+                     &:hover {
+                        color: white;
+                        background-color: crimson;
+                     }
+                  }
+
+                  .communitySettingsBtn {
+                     border: none;
+                     font-size: 1.5rem;
+                     padding: 0;
+                     &:hover {
+                        color: salmon;
+                     }
+                  }
+
+
+
+               }
             }
 
-            .interactionBtns {
-               display: flex;
-               gap: 1rem;
-
-               button {
-                  padding: 0.5rem;
-                  background: none;
-                  color: white;
-                  cursor: pointer;
-                  color: crimson;
-                  border-radius: 0.5rem;
-                  // border: 1px solid rgba(128, 128, 128, 0.242);
-                  transition: 150ms;
-
-
-
-               }
-
-               .viewCommunityPostsBtn {
-                  color: turquoise;
-                  border: 1px solid teal;
-                  text-wrap: nowrap;
-
-                  &:hover {
-                     color: white;
-                     background-color: teal;
-                     border: none;
-                  }
-               }
-
-               .leaveCommunityBtn {
-                  color: crimson;
-                  border: 1px solid crimson;
-                  text-wrap: nowrap;
-
-                  &:hover {
-                     color: white;
-                     background-color: crimson;
-                     border: none;
-                  }
-               }
-
-
-
+            .botHalf {
             }
+
 
 
          }

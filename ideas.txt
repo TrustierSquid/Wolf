@@ -65,3 +65,14 @@ CURRENT CHANGES
 
 
 custom grid for the first
+
+
+
+
+COMMUNITY CREATION
+
+- Community Control panel
+   - create moodle to create community (picture, name, description)
+   - ability to remove users
+   - see whos in the community
+   - community gets a feed for posts

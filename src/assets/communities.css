@@ -1,26 +1,266 @@
+#contentContainer {
+  justify-content: center;
+  gap: 1rem;
+}
+#contentContainer .exitCommunityMoodle {
+  width: 50px;
+  height: 50px;
+  border: none;
+  background-color: #333;
+  border-radius: 50%;
+  color: white;
+  cursor: pointer;
+}
+#contentContainer .exitCommunityMoodle:hover {
+  background-color: #444;
+}
+#contentContainer .errorMessage {
+  font-family: "roboto", sans-serif;
+  text-align: center;
+  color: red;
+}
+#contentContainer #modifyCommunityMoodle {
+  background-color: #181818;
+  border: 1px solid #532C2C;
+  border-radius: 1rem;
+  position: fixed;
+  width: 80%;
+  height: 600px;
+  z-index: 2;
+  color: white;
+  padding: 2rem;
+  display: flex;
+  opacity: 0;
+  flex-direction: column;
+  overflow: hidden;
+  pointer-events: none;
+  transition: 250ms;
+}
+#contentContainer #modifyCommunityMoodle #moodleTitleBar {
+  font-family: "Nunito", sans-serif;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+#contentContainer #modifyCommunityMoodle #moodleTitleBar h2 {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+#contentContainer #modifyCommunityMoodle #moodleTitleBar img {
+  width: 50px;
+  height: 50px;
+  -o-object-fit: cover;
+     object-fit: cover;
+  border-radius: 50%;
+}
+#contentContainer #modifyCommunityMoodle #showOwner {
+  font-family: "roboto", sans-serif;
+  color: grey;
+}
+#contentContainer #modifyCommunityMoodle #modifyFieldCardContainer {
+  background-color: #181818;
+  max-height: 90%;
+  width: 100%;
+  border-radius: 1rem;
+  padding: 2rem;
+  display: flex;
+  gap: 5rem;
+}
+#contentContainer #modifyCommunityMoodle #modifyFieldCardContainer #modifyInformation {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 50%;
+}
+#contentContainer #modifyCommunityMoodle #modifyFieldCardContainer #modifyInformation .changeCommunityImage {
+  display: flex;
+  align-items: center;
+  gap: 3rem;
+}
+#contentContainer #modifyCommunityMoodle #modifyFieldCardContainer #modifyInformation .changeCommunityImage img {
+  height: 75px;
+  width: 75px;
+  -o-object-fit: cover;
+     object-fit: cover;
+  border-radius: 50%;
+}
+#contentContainer #modifyCommunityMoodle #modifyFieldCardContainer #modifyInformation .changeCommunityImage input {
+  cursor: pointer;
+}
+#contentContainer #modifyCommunityMoodle #modifyFieldCardContainer #modifyInformation .modifyCard {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+#contentContainer #modifyCommunityMoodle #modifyFieldCardContainer #modifyInformation .modifyCard label {
+  font-family: "Nunito", sans-serif;
+}
+#contentContainer #modifyCommunityMoodle #modifyFieldCardContainer #modifyInformation .modifyCard input {
+  font-family: "roboto", sans-serif;
+  height: 40px;
+  background-color: #343434;
+  border: none;
+  border-radius: 0.5rem;
+  color: white;
+  padding: 0.5rem;
+}
+#contentContainer #modifyCommunityMoodle #modifyFieldCardContainer #modifyInformation #saveChangesBtn {
+  height: 40px;
+  color: white;
+  background-color: teal;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: 50ms;
+}
+#contentContainer #modifyCommunityMoodle #modifyFieldCardContainer #modifyInformation #saveChangesBtn:hover {
+  background-color: rgb(1, 66, 66);
+}
+#contentContainer #modifyCommunityMoodle #modifyFieldCardContainer #modifyInformation #deleteCommunityBtn {
+  height: 40px;
+  color: red;
+  background: none;
+  border: 1px solid crimson;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: 50ms;
+}
+#contentContainer #modifyCommunityMoodle #modifyFieldCardContainer #modifyInformation #deleteCommunityBtn:hover {
+  color: white;
+  background-color: crimson;
+}
+#contentContainer #modifyCommunityMoodle #modifyFieldCardContainer #seeMembers {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+#contentContainer #modifyCommunityMoodle #modifyFieldCardContainer #seeMembers #membersCardTitle {
+  font-family: "Nunito", sans-serif;
+  display: flex;
+  justify-content: space-between;
+}
+#contentContainer #modifyCommunityMoodle #modifyFieldCardContainer #seeMembers #membersMap {
+  list-style-type: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  font-family: "roboto", sans-serif;
+  overflow: auto;
+}
+#contentContainer #modifyCommunityMoodle #modifyFieldCardContainer #seeMembers #membersMap .memberCard {
+  background-color: rgba(60, 60, 60, 0.537254902);
+  padding: 1rem;
+  border-radius: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+#contentContainer #modifyCommunityMoodle #modifyFieldCardContainer #seeMembers #membersMap .memberCard .memberActionBtns {
+  display: flex;
+  gap: 0.3rem;
+}
+#contentContainer #modifyCommunityMoodle #modifyFieldCardContainer #seeMembers #membersMap .memberCard .memberActionBtns button {
+  cursor: pointer;
+  background: none;
+  padding: 0.5rem;
+  border: none;
+  border-radius: 0.5rem;
+}
+#contentContainer #modifyCommunityMoodle #modifyFieldCardContainer #seeMembers #membersMap .memberCard .memberActionBtns .viewProfileBtn {
+  color: turquoise;
+  border: 1px solid turquoise;
+  transition: 150ms;
+}
+#contentContainer #modifyCommunityMoodle #modifyFieldCardContainer #seeMembers #membersMap .memberCard .memberActionBtns .viewProfileBtn:hover {
+  background-color: teal;
+  color: white;
+}
+#contentContainer #modifyCommunityMoodle #modifyFieldCardContainer #seeMembers #membersMap .memberCard .memberActionBtns .removeBtn {
+  color: crimson;
+  border: 1px solid crimson;
+  transition: 150ms;
+}
+#contentContainer #modifyCommunityMoodle #modifyFieldCardContainer #seeMembers #membersMap .memberCard .memberActionBtns .removeBtn:hover {
+  background-color: crimson;
+  color: white;
+}
+#contentContainer #confirmMoodle {
+  width: 500px;
+  top: 30%;
+  background-color: #181818;
+  position: absolute;
+  border: 1px solid #532C2C;
+  z-index: 2;
+  border-radius: 1rem;
+  color: white;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  gap: 3rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: 250ms;
+}
+#contentContainer #confirmMoodle .confirmMoodleTitle {
+  line-height: 1.5rem;
+  font-family: "Nunito", sans-serif;
+}
+#contentContainer #confirmMoodle #deleteInputField {
+  height: 40px;
+  background-color: #343434;
+  border: none;
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+  color: white;
+}
+#contentContainer #confirmMoodle #deleteButton {
+  height: 40px;
+  background-color: crimson;
+  color: white;
+  border: none;
+  border-radius: 0.5rem;
+  transition: 150ms;
+  cursor: pointer;
+}
+#contentContainer #confirmMoodle #deleteButton:hover {
+  background-color: #7A0B31;
+}
 #contentContainer #communityContainer {
-  background: rgb(122, 11, 49);
-  background: linear-gradient(180deg, rgb(122, 11, 49) 0%, rgb(46, 0, 28) 100%);
-  width: 55%;
-  border-radius: 1.5rem;
+  background: #181818;
+  width: 50%;
+  border-radius: 1rem;
   display: flex;
   flex-direction: column;
   justify-content: start;
   padding: 2rem;
-  margin: 1rem;
   color: white;
   font-family: "Nunito", sans-serif;
+  min-height: 600px;
 }
 #contentContainer #communityContainer #titleDiv {
-  /* h4 {
-     color: grey;
-  } */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: turquoise;
+}
+#contentContainer #communityContainer #titleDiv h1 {
+  color: white;
+}
+#contentContainer #communityContainer #titleDiv a {
+  cursor: pointer;
+}
+#contentContainer #communityContainer #titleDiv a:hover {
+  color: rgb(155, 255, 245);
+  text-decoration: underline;
 }
 #contentContainer #communityContainer ul {
   list-style-type: none;
   font-family: "roboto", sans-serif;
   border-radius: 1.5rem;
-  padding: 1rem;
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
@@ -31,31 +271,36 @@
   border-radius: 1rem;
 }
 #contentContainer #communityContainer ul li {
-  padding: 0.5rem;
-  padding-left: 2rem;
-  padding-right: 2rem;
+  padding: 1rem;
   transition: 150ms;
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 4rem;
-  background-color: rgba(17, 17, 17, 0.9098039216);
+  flex-direction: column;
+  background-color: rgba(60, 60, 60, 0.537254902);
   border-radius: 1rem;
-  box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+  gap: 1rem;
 }
-#contentContainer #communityContainer ul li .communityInformation {
+#contentContainer #communityContainer ul li .topHalf {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+#contentContainer #communityContainer ul li .topHalf .communityInformation {
   display: flex;
   gap: 0.5rem;
   align-items: center;
 }
-#contentContainer #communityContainer ul li .communityInformation img {
+#contentContainer #communityContainer ul li .topHalf .communityInformation img {
   width: 40px;
+  height: 40px;
+  -o-object-fit: cover;
+     object-fit: cover;
+  border-radius: 50%;
 }
-#contentContainer #communityContainer ul li .interactionBtns {
+#contentContainer #communityContainer ul li .topHalf .interactionBtns {
   display: flex;
   gap: 1rem;
 }
-#contentContainer #communityContainer ul li .interactionBtns button {
+#contentContainer #communityContainer ul li .topHalf .interactionBtns button {
   padding: 0.5rem;
   background: none;
   color: white;
@@ -64,27 +309,32 @@
   border-radius: 0.5rem;
   transition: 150ms;
 }
-#contentContainer #communityContainer ul li .interactionBtns .viewCommunityPostsBtn {
+#contentContainer #communityContainer ul li .topHalf .interactionBtns .viewCommunityPostsBtn {
   color: turquoise;
-  border: 1px solid teal;
+  border: 1px solid turquoise;
   text-wrap: nowrap;
 }
-#contentContainer #communityContainer ul li .interactionBtns .viewCommunityPostsBtn:hover {
+#contentContainer #communityContainer ul li .topHalf .interactionBtns .viewCommunityPostsBtn:hover {
   color: white;
-  background-color: teal;
-  border: none;
+  background-color: t;
 }
-#contentContainer #communityContainer ul li .interactionBtns .leaveCommunityBtn {
+#contentContainer #communityContainer ul li .topHalf .interactionBtns .leaveCommunityBtn {
   color: crimson;
   border: 1px solid crimson;
   text-wrap: nowrap;
 }
-#contentContainer #communityContainer ul li .interactionBtns .leaveCommunityBtn:hover {
+#contentContainer #communityContainer ul li .topHalf .interactionBtns .leaveCommunityBtn:hover {
   color: white;
   background-color: crimson;
-  border: none;
 }
-
+#contentContainer #communityContainer ul li .topHalf .interactionBtns .communitySettingsBtn {
+  border: none;
+  font-size: 1.5rem;
+  padding: 0;
+}
+#contentContainer #communityContainer ul li .topHalf .interactionBtns .communitySettingsBtn:hover {
+  color: salmon;
+}
 @media (max-width: 1050px) {
   #contentContainer #communityContainer {
     left: 0%;

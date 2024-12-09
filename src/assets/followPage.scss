@@ -1,12 +1,12 @@
 $uiBG: #2b2b2b;
 $postBG: #111111e8;
-$cardBG: #222;
+$cardBG: #3c3c3c89;
 $cardInteractionSection: #181818;
 $cardBorder: #2E2E2E;
 $moodleBG: #181818;
 
 // darker BG
-$subBackground: #121010;
+$subBackground: #181818;
 
 // navbarBG
 $navBG: #510917;
@@ -43,9 +43,8 @@ $lightBG: #5e5d5d25;
    #displayFollowingContainer {
       font-family: $ff-body;
       width: 60%;
-      background: rgb(59,1,36);
-      background: linear-gradient(146deg, rgba(59,1,36,1) 0%, rgba(203,0,57,1) 30%, rgba(203,0,0,1) 100%);
-      border-radius: 2rem;
+      background-color: $subBackground;
+      border-radius: 1rem;
       padding: 2rem;
       display: flex;
       flex-direction: column;
@@ -54,8 +53,7 @@ $lightBG: #5e5d5d25;
       .followee {
          padding: 1rem;
          border-radius: 1rem;
-         background-color: $postBG;
-         box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+         background-color: $cardBG;
          transition: 100ms;
          display: flex;
          align-items: center;

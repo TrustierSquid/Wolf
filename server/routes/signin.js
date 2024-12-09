@@ -98,7 +98,7 @@ router.post("/login", async (req, res) => {
           secure: false,
         });
 
-        console.log(`${username} is now logged in. Welcome!`);
+        console.log(`${username} has logged in. Welcome!`);
 
 
 
