@@ -797,26 +797,18 @@ export default function Profile(props){
                      <h3>Posts </h3>
                      <form>
                         {/* The dropdown selection menu that displays topics that the user is currently apart of  */}
-                        {(userProfileData.topics?.length > 0) ? (
-                           <select className="topicDisplaySelection" onChange={(e)=> getUserProfilePosts(e.target.value)}>
-                              <option onClick={()=> getUserProfilePosts("mainFeed")} value='mainFeed'>Home Feed</option>
-                              {/* {
-                                 communities.filter((community)=> community.members)
-                              } */}
-
-                              {userProfileData.topics.map((topic, index) => (
-                                 <option key={index} onClick={()=> getUserProfilePosts(topic + "Feed")} value={`${topic}Feed`}>{topic} Feed</option>
-                              ))}
-
-                           </select>
-                        ) : (
-                           <select>
-                              <option onClick={()=> getUserProfilePosts("mainFeed")} value='mainFeed'>Home Feed</option>
-                           </select>
-                        )
-                     }
-
-
+                        <select className="topicDisplaySelection" onChange={(e)=> getUserProfilePosts(e.target.value)}>
+                           <option onClick={()=> getUserProfilePosts("mainFeed")} value='mainFeed'>Home Feed</option>
+                           {
+                              communities?.filter((community) => Object.values(community.members).some(member => member.member === username)).map((community)=> {
+                                 return (
+                                    <>
+                                       <option value={`${community.name}Feed`} onClick={()=> getUserProfilePosts(community.name + "Feed")}>{community.name} Feed</option>
+                                    </>
+                                 )
+                              })
+                           }
+                        </select>
 
                      </form>
                   </section>
