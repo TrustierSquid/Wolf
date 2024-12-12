@@ -112,9 +112,21 @@ export default function Profile(props){
 
    }
 
+   // Getting all communities and their information
+   async function getCommunities(){
+      let response = await fetch('/community/retrieveCommunityInformation', {
+         method: 'POST'
+      })
+
+      let data = await response.json()
+      setCommunities(data)
+
+   }
+
    useEffect(()=> {
       if (!userSearched) return
       getUserProfilePosts()
+      getCommunities()
    }, [userSearched])
 
 
@@ -124,18 +136,14 @@ export default function Profile(props){
 // and comparing it to the uuid of the logged in user
 
 
-
-
-
-
-
    const [displayFollowing, setDisplayFollowing] = useState(false)
 
+   // helper function
    const displayFollow = (bool)=> {
       setDisplayFollowing(bool)
    }
 
-
+   const [communities, setCommunities] = useState(null)
 
 
 
@@ -275,6 +283,8 @@ export default function Profile(props){
 
   }
 
+  console.log(profilePostData)
+
   /*
      * hashed querystring that contains the username that the backend will search for
      * once found, it will display the respective profile page
@@ -329,6 +339,7 @@ export default function Profile(props){
    const [dynamicProfileFeed, setDynamicProfileFeed] = useState(null)
    const [profilePostLikes, setProfilePostLikes] = useState(null)
    const [postImage, setPostImage] = useState(null)
+   const [posterProfilePic, setPosterProfilePic] = useState(null)
 
 
    const moodleContainerRef = useRef()
@@ -337,7 +348,7 @@ export default function Profile(props){
    const overlay = useRef()
    const feedback = useRef()
 
-   const showProfilePostDetails = (postID, poster, creationDate, subject, body, likesLength, commentsLength, comments, likes, image) => {
+   const showProfilePostDetails = (postID, poster, creationDate, subject, body, likesLength, commentsLength, comments, likes, image, posterProfilePic) => {
       setPostPoster(poster)
       setPostCreationDateState(creationDate)
       setPostSubjectState(subject)
@@ -348,6 +359,7 @@ export default function Profile(props){
       setProfilePostID(postID)
       setProfilePostLikes(likes)
       setPostImage(image)
+      setPosterProfilePic(posterProfilePic)
 
 
       moodleContainerRef.current.style.display = 'flex'
@@ -586,15 +598,16 @@ export default function Profile(props){
       }
    }
 
+   console.log(postComments)
 
    return (
       <>
          <Navbar />
+         <SideNavBar {...sidebarProps}/>
          <span ref={overlay} id="overlayProfile" onClick={()=> backOut()}></span>
          <div id="contentContainer">
-            <SideNavBar {...sidebarProps}/>
             <main id="mainProfile">
-               {/* <h2 className="profHeaders">Profile Overview</h2> */}
+               <h2 className="profHeaders">Profile </h2>
                <div className="profileAnalytics">
                   {/* Checks for the type of user is being displayed */}
                   {checkUserType()}
@@ -657,16 +670,12 @@ export default function Profile(props){
                <article id="moodleContainer" ref={moodleContainerRef}>
                   <span id="postMoodle1">
                      <div id="moodleTitle">
-                        <h4>Post From:</h4>
-                        <h1>{postPoster}<button id="backBtn" onClick={()=> backOut()}><i class="fa-solid fa-x"></i></button></h1>
-                        {
-                           (postPoster === 'Samuel') ? (
-                              <p style={{color: 'turquoise'}}>Developer</p>
-                           ) : (
-                              <p>User</p>
-                           )
-                        }
-                        <p>{showPostDate(postCreationDateState)}</p>
+                        <section>
+                           <img src={posterProfilePic} alt="" />
+                           <h1>{postPoster}</h1>
+                           <p>{showPostDate(postCreationDateState)}</p>
+                        </section>
+                        <button id="backBtn" onClick={()=> backOut()}><i class="fa-solid fa-x"></i></button>
                      </div>
 
                      <div id="moodleContent">
@@ -703,16 +712,11 @@ export default function Profile(props){
                                           <>
                                              <div className="commentContainer">
                                                 <div className="commentTitle">
-                                                   <span>{`${comment.from}`} <p>{showPostDate(comment.timePosted)}</p></span>
-                                                   <p>
-                                                      {
-                                                         (comment.from === 'Samuel') ? (
-                                                            <p style={{color: 'turquoise'}}>Developer</p>
-                                                         ) : (
-                                                            <p style={{color: 'grey'}}>User</p>
-                                                         )
-                                                      }
-                                                   </p>
+                                                   <span>
+                                                      <img src={comment.commenterProfilePicImg ? comment.commenterProfilePicImg : 'src/assets/defaultUser.jpg'} alt="" />
+                                                      <h4>{`${comment.from}`} </h4>
+                                                      <p>{showPostDate(comment.timePosted)}</p>
+                                                   </span>
                                                 </div>
                                                 <p>{comment.comment}</p>
                                              </div>
@@ -755,16 +759,12 @@ export default function Profile(props){
                                        <>
                                           <div className="commentContainer">
                                              <div className="commentTitle">
-                                                <span>{`${comment.from}`} <p>{showPostDate(comment.timePosted)}</p></span>
-                                                <p>
-                                                   {
-                                                      (comment.from === 'Samuel') ? (
-                                                         <p style={{color: 'turquoise'}}>Developer</p>
-                                                      ) : (
-                                                         <p style={{color: 'grey'}}>User</p>
-                                                      )
-                                                   }
-                                                </p>
+                                                <span>
+                                                   <img src={comment.commenterProfilePicImg ? comment.commenterProfilePicImg : 'src/assets/defaultUser.jpg'} alt="" />
+                                                   <h4>{`${comment.from}`}</h4>
+                                                   <p>{showPostDate(comment.timePosted)}</p>
+                                                </span>
+
                                              </div>
                                              <p>{comment.comment}</p>
                                           </div>
@@ -800,6 +800,10 @@ export default function Profile(props){
                         {(userProfileData.topics?.length > 0) ? (
                            <select className="topicDisplaySelection" onChange={(e)=> getUserProfilePosts(e.target.value)}>
                               <option onClick={()=> getUserProfilePosts("mainFeed")} value='mainFeed'>Home Feed</option>
+                              {/* {
+                                 communities.filter((community)=> community.members)
+                              } */}
+
                               {userProfileData.topics.map((topic, index) => (
                                  <option key={index} onClick={()=> getUserProfilePosts(topic + "Feed")} value={`${topic}Feed`}>{topic} Feed</option>
                               ))}
@@ -817,8 +821,8 @@ export default function Profile(props){
                      </form>
                   </section>
                   {/* CONDITIONAL RENDERING */}
-                  {/* Showing profile post data for each post the current user has made on the corresponding community feed */}
 
+                  {/* Showing profile post data for each post the current user has made on the corresponding community feed */}
                   {
                      (profilePostData) ? (
                         <>
@@ -827,21 +831,10 @@ export default function Profile(props){
                                  return (
                                     <>
                                        <article key={index} className="existingPost" onClick={
-                                          ()=> showProfilePostDetails(post._id, dynamicUsername, post.postCreationDate, post.subject, post.body, post.likes.length, post.comments.length, post.comments, post.likes, post.image)}>
+                                          ()=> showProfilePostDetails(post._id, dynamicUsername, post.postCreationDate, post.subject, post.body, post.likes.length, post.comments.length, post.comments, post.likes, post.image, post.posterProfilePic)}>
                                           <div className="existingPostTitle">
-                                             {dynamicUsername}
-                                             {/* If the profile post user is the developer or anyone else then display accordingly */}
-                                             {
-                                                (dynamicUsername === 'Samuel') ? (
-                                                   <>
-                                                      <span className="developerStatus">Developer</span>
-                                                   </>
-                                                ) : (
-                                                   <>
-                                                      <span className='userStatus'>User</span>
-                                                   </>
-                                                )
-                                             }
+                                             <img className="posterProfileImg" src={post.posterProfilePic ? post.posterProfilePic : 'src/assets/defaultUser.jpg'} alt="" />
+                                             <h3>{dynamicUsername}</h3>
                                              <p style={{color: 'grey'}}>{showPostDate(post.postCreationDate)}</p>
                                           </div>
                                           <h2 className="profilePostSubject">
@@ -852,7 +845,7 @@ export default function Profile(props){
                                              </span>
                                           </h2>
                                           {post.image ? (
-                                          <img src={post.image} alt='Postimage' />
+                                          <img className="postImg" src={post.image} alt='Postimage' />
                                           ) : (
                                           <div style={{display: 'none'}}></div> // Optional: add a placeholder or leave it empty
                                           )}

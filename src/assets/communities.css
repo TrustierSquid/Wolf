@@ -64,7 +64,7 @@
   max-height: 90%;
   width: 100%;
   border-radius: 1rem;
-  padding: 2rem;
+  margin-top: 2rem;
   display: flex;
   gap: 5rem;
 }
@@ -158,6 +158,15 @@
   align-items: center;
   justify-content: space-between;
 }
+#contentContainer #modifyCommunityMoodle #modifyFieldCardContainer #seeMembers #membersMap .memberCard h4 {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+#contentContainer #modifyCommunityMoodle #modifyFieldCardContainer #seeMembers #membersMap .memberCard h4 .memberImg {
+  height: 40px;
+  border-radius: 50%;
+}
 #contentContainer #modifyCommunityMoodle #modifyFieldCardContainer #seeMembers #membersMap .memberCard .memberActionBtns {
   display: flex;
   gap: 0.3rem;
@@ -191,7 +200,7 @@
   width: 500px;
   top: 30%;
   background-color: #181818;
-  position: absolute;
+  position: fixed;
   border: 1px solid #532C2C;
   z-index: 2;
   border-radius: 1rem;
@@ -230,7 +239,6 @@
   background-color: #7A0B31;
 }
 #contentContainer #communityContainer {
-  background: #181818;
   width: 50%;
   border-radius: 1rem;
   display: flex;
@@ -246,6 +254,7 @@
   align-items: center;
   justify-content: space-between;
   color: turquoise;
+  margin-bottom: 1rem;
 }
 #contentContainer #communityContainer #titleDiv h1 {
   color: white;
@@ -290,8 +299,8 @@
   align-items: center;
 }
 #contentContainer #communityContainer ul li .topHalf .communityInformation img {
-  width: 40px;
-  height: 40px;
+  width: 50px;
+  height: 50px;
   -o-object-fit: cover;
      object-fit: cover;
   border-radius: 50%;
@@ -311,12 +320,12 @@
 }
 #contentContainer #communityContainer ul li .topHalf .interactionBtns .viewCommunityPostsBtn {
   color: turquoise;
-  border: 1px solid turquoise;
+  border: 1px solid teal;
   text-wrap: nowrap;
 }
 #contentContainer #communityContainer ul li .topHalf .interactionBtns .viewCommunityPostsBtn:hover {
   color: white;
-  background-color: t;
+  background-color: teal;
 }
 #contentContainer #communityContainer ul li .topHalf .interactionBtns .leaveCommunityBtn {
   color: crimson;

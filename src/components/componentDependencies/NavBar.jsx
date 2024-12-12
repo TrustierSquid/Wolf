@@ -24,6 +24,8 @@ export default function Navbar(props) {
   const mobileNavMenu = useRef(null)
   const [isMobileNavMenuOpen, setIsMobileNavMenuOpen] = useState(true)
   const [loggedInProfilePic, setLoggedInProfilePic] = useState(null)
+  const [notificationList, setNotificationList] = useState(null)
+  const notificationMenuRef = useRef(null)
 
   // GETTING USER INFORMATION AND DISPLYING IT ON THE HOME PAGE SPECIFIC TO THE USER LOGGED IN
   useEffect(() => {
@@ -48,6 +50,7 @@ export default function Navbar(props) {
       setUsername(homeData.userName);
       setUserTopicList(homeData.topicArr || [])
       setLoggedInProfilePic(homeData.profilePic)
+      setNotificationList(homeData.notificationList)
 
     }
 
@@ -82,6 +85,63 @@ export default function Navbar(props) {
     }
   }
 
+  const currentDate = new Date();
+
+  // Configuration for posts's creation data
+  function showPostDate(postCreationDate) {
+    // Get the difference in milliseconds
+    const startDate = new Date(postCreationDate);
+    const timeDifference = currentDate - startDate;
+    // console.log(postCreationDate)
+
+    // Covert the difference from milliseconds to day and hours
+    const millisecondsInOneDay = 24 * 60 * 60 * 1000;
+    const millisecondsInOneHour = 60 * 60 * 1000;
+    const millisecondsInOneMinute = 60 * 1000;
+
+    // Calculate days and hours
+    const daysPassed = Math.floor(timeDifference / millisecondsInOneDay);
+    const hoursPassed = Math.floor(
+      (timeDifference % millisecondsInOneDay) / millisecondsInOneHour
+    );
+    const minutesPassed = Math.floor(
+      (timeDifference % millisecondsInOneHour) / millisecondsInOneMinute
+    );
+
+    // Calculate months using the date object
+    const monthsPassed =
+      currentDate.getMonth() -
+      startDate.getMonth() +
+      12 * (currentDate.getFullYear() - startDate.getFullYear());
+
+    // Display time passed
+    if (monthsPassed >= 1) {
+      return <h4 className="postData">{`${monthsPassed}Mth ago`}</h4>;
+    }
+
+    if (daysPassed >= 1) {
+      return <h4 className="postData">{`${daysPassed}d ago`}</h4>;
+    }
+
+    if (hoursPassed > 0) {
+      return <h4 className="postData">{`${hoursPassed}hr ago`}</h4>;
+    }
+
+    if (minutesPassed > 0) {
+      return <h4 className="postData">{`${minutesPassed}m ago`}</h4>;
+    }
+
+    return <h4 className="postData">Just now</h4>;
+  }
+
+  async function clearNotifications() {
+    let response = await fetch(`/clearNotifications/${username}`, {
+      method: 'PUT'
+    })
+    let data = await response.json()
+
+    setNotificationList(!notificationList)
+  }
 
 
   function openMobileNavMenu(navBtn){
@@ -103,6 +163,16 @@ export default function Navbar(props) {
       mobileNavMenu.current.style.opacity = '0'
       mobileNavMenu.current.pointerEvents = 'none'
 
+    }
+  }
+
+  function openNotifications(action) {
+    if (action === 'open') {
+      notificationMenuRef.current.style.opacity = '1'
+       notificationMenuRef.current.style.pointerEvents = 'all'
+    }
+    if (action === 'close') {
+      notificationMenuRef.current.style.opacity = '0'; notificationMenuRef.current.style.pointerEvents = 'none'
     }
   }
 
@@ -136,7 +206,6 @@ export default function Navbar(props) {
             <img id="logo" src={logo} alt="" />
             <h1>WOLF</h1>
           </div>
-          <button onClick={()=> navigateBackToHome()}><i className="fa-solid fa-house"></i></button>
           {/* Button becomes disabled after visting any other page that isnt of the home sub domain */}
           {window.location.pathname === '/home' ? (
               <>
@@ -165,9 +234,46 @@ export default function Navbar(props) {
 
         <div id="profileContainer">
           {/* In place for a profile picture */}
-
+          <button id="notificationBtn" onClick={()=> openNotifications('open')}><i className="fa-solid fa-bell"></i></button>
           <img id='dropdownBtn' onClick={()=> navigateProfile()} src={loggedInProfilePic ? loggedInProfilePic : 'src/assets/defaultUser.jpg'} alt="" />
         </div>
+
+        <span id="notificationDropdown" ref={notificationMenuRef}>
+          <div id="clearNotifications">
+            <h3>Notifications </h3>
+            <button onClick={()=> openNotifications('close')}><i class="fa-solid fa-x"></i></button>
+          </div>
+          <button id="clearBtn" onClick={()=> clearNotifications()}>Clear Notifications</button>
+          <br />
+            {
+              notificationList ? (
+
+                notificationList?.length > 0 ? (
+                  notificationList?.map((notification) => {
+                    return (
+                      <>
+                        <li className="notification">
+                          <img src={notification.initiatorProfilePic ? notification.initiatorProfilePic : 'src/assets/defaultUser.jpg'} alt="" />{notification.title}
+                          <p>{showPostDate(notification.date)}</p>
+                        </li>
+                      </>
+                    )
+                  })
+
+                ) : (
+                  <div className="noPostsMessage">
+                    <h3>No Notifications</h3>
+                  </div>
+                )
+
+              ) : (
+                <div className="noPostsMessage">
+                  <div className=" loader "></div>
+                </div>
+              )
+
+            }
+        </span>
 
         {/* Mobile Navs */}
         <button ref={mobileNavBtn} id="mobileNavBtn" onClick={(self)=> openMobileNavMenu(self)}>

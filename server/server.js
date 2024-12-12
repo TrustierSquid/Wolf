@@ -421,6 +421,9 @@ app.post("/addFollowingUser", async (req, res) => {
     UID: loggedInUser
   })
 
+  // Profile pic of the current user initiaing the follow or unfollow
+  let currentUserProfilePic = findLoggedInUser.profilePic
+
   // grabbing the names out of both documents
   findFollowee = findFollowee.user,
   findLoggedInUser = findLoggedInUser.user
@@ -439,8 +442,17 @@ app.post("/addFollowingUser", async (req, res) => {
     followers: { $in: [findLoggedInUser] },
   });
 
+  // This is the notification that gets sent to the followee
+  let followNotif = {
+    title: `${findLoggedInUser} is now following you.`,
+    initiatorProfilePic: currentUserProfilePic ? `data:${currentUserProfilePic.contentType};base64,${currentUserProfilePic.data.toString('base64')}` : null,
+    date: new Date()
+  }
+
+
 
   if (duplicateUserFollowing || duplicateUserFollower) {
+    // Unfollowing
     try {
       // updating current users following list
       await users.updateOne(
@@ -458,18 +470,27 @@ app.post("/addFollowingUser", async (req, res) => {
       console.log("Unable to complete the follow transaction");
     }
   } else {
+    // Following
     try {
+
       // updating current users following list
       await users.updateOne(
         { user: findLoggedInUser },
         { $addToSet: { following: findFollowee } }
       );
 
+
       // updating followee list
       await users.updateOne(
         { user: findFollowee },
-        { $addToSet: { followers: findLoggedInUser } }
+        { $push: { followers: findLoggedInUser } }
       );
+
+      // Sending notification to followee
+      await users.updateOne(
+        {user: findFollowee},
+        {$addToSet: {notifications: followNotif}}
+      )
 
       res.sendStatus(200)
     } catch {
@@ -481,59 +502,59 @@ app.post("/addFollowingUser", async (req, res) => {
 
 app.get('/topicsAdd', async (req, res)=> {
   const {topicToAdd} = req.query
+
+  // loggedIn User by user name
   const {username} = req.query
 
-  // by UID
+  // LoggedIn user by id
   const {loggedInUser} = req.query
 
 
   const database = await connectMongo()
   const users = database.collection('Users')
 
+  let loggedInUserDocument = await users.findOne(
+    {user: username}
+  )
+
   let dynamicCollection = database.collection(topicToAdd + 'Info')
 
 
   // checking to see if it exists in the topics array
-  let findTopic = await users.findOne(
-    {UID: loggedInUser,
-    topics: {$in: [topicToAdd]} }
-  )
+
   // making sure the loggedInUser is not counted as a member
   let findMember = await dynamicCollection.findOne(
     {communityName: topicToAdd,
-    members: {$in: [username]}}
+    members: {$elemMatch: {member: username}}}
   )
 
+  // memberObject staging
+  let member = {
+    member: username,
+    memberProfilePic: loggedInUserDocument.profilePic ? `data:${loggedInUserDocument.profilePic.contentType};base64,${loggedInUserDocument.profilePic.data.toString('base64')}` : null,
+  }
 
 
-  if (!findTopic && !findMember) {
+  if (!findMember) {
     // if both are false then the user gets added
-
-    // adding the topic to the loggedIn user's document
-    await users.updateOne(
-      {UID: loggedInUser},
-      {$addToSet: {topics: topicToAdd}}
-    )
-
     // add the loggedin user to the member
     await dynamicCollection.updateOne(
       {communityName: topicToAdd},
-      {$push: {members: username}}
+      {$push: {members: member}}
     )
 
     res.sendStatus(200)
     console.log(`${loggedInUser} has joined the ${topicToAdd} community!`)
 
   } else {
-    await users.updateOne(
-      {UID: loggedInUser},
-      {$pull: {topics: topicToAdd}}
-    )
+    //  if findmember is true it means it found an existing member with the same name and will pull the name
 
     await dynamicCollection.updateOne(
       {communityName: topicToAdd},
-      {$pull: {members: username}}
+      {$pull: {members: {member: username}}}
     )
+
+    console.log(`${loggedInUser} has left the ${topicToAdd} community!`)
 
     res.sendStatus(200)
   }
@@ -550,15 +571,10 @@ app.put('/removeCommunity/:community/:UID/:username', async (req, res)=> {
 
     const dynamicCollection = database.collection(community + 'Info')
 
-
-    await usersCollection.updateOne(
-      {UID: UID},
-      {$pull: {'topics': community}}
-    )
-
+    // Removing the member from the community
     await dynamicCollection.updateOne(
       {communityName: community},
-      {$pull: {members: username}}
+      {$pull: {members: {member: username}}}
     )
 
     console.log(`${username} has left ${community}`)
@@ -599,10 +615,14 @@ app.post('/addPostComment', async (req, res)=> {
 
   const database = await connectMongo()
   const collection = database.collection(feed)
+  const users = database.collection('Users')
+
+  let commenterProfilePic = await users.findOne({user: commentFrom})
 
   // the comment to push to the database
   let newComment = {
     from: commentFrom,
+    commenterProfilePicImg: commenterProfilePic.profilePic ?  `data:${commenterProfilePic.profilePic.contentType};base64,${commenterProfilePic.profilePic.data.toString('base64')}` : null,
     comment: comment,
     timePosted: new Date()
   }
@@ -624,14 +644,58 @@ app.get('/dynamic/:username', async (req, res)=> {
   const database = await connectMongo()
   const usersCollection = database.collection('Users')
 
-
   let searchedUser = await usersCollection.findOne({user: username})
-
 
   res.json({
     dynamicUID: searchedUser.UID,
+    dynamicUser: searchedUser.user,
     dynamicProfilePic: searchedUser.profilePic ? `data:${searchedUser.profilePic.contentType};base64,${searchedUser.profilePic.data.toString('base64')}` : null
   })
+
+
+})
+
+app.get('/dynamicFollowers/:userSearching', async(req, res)=> {
+
+  // The user we are checking the followers and following profile pics
+  const {userSearching} = req.params
+
+  const database = await connectMongo()
+  const usersCollection = database.collection('Users')
+
+  let searchedUser = await usersCollection.findOne({UID: userSearching})
+
+  let informationStagingFollowing = await Promise.all(
+    // For following catagory
+    searchedUser.following.map(async (follower) => {
+      let searchFollower = await usersCollection.findOne({user: follower})
+
+       return {
+        searchedFollowerUsername: searchFollower.user,
+        searchedFollowerProfilePic: searchFollower.profilePic ? `data:${searchFollower.profilePic.contentType};base64,${searchFollower.profilePic.data.toString('base64')}` : null
+      }
+
+    })
+
+  )
+
+  let informationStagingFollowers = await Promise.all(
+    // For following catagory
+    searchedUser.followers.map(async (follower) => {
+      let searchFollower = await usersCollection.findOne({user: follower})
+
+       return {
+        searchedFollowerUsername: searchFollower.user,
+        searchedFollowerProfilePic: searchFollower.profilePic ? `data:${searchFollower.profilePic.contentType};base64,${searchFollower.profilePic.data.toString('base64')}` : null
+      }
+
+    })
+
+  )
+
+
+  res.json({following: informationStagingFollowing, followers: informationStagingFollowers})
+
 
 })
 
@@ -656,7 +720,21 @@ app.get('/dynamicUID/:UID', async (req, res)=> {
 
 })
 
+app.put('/clearNotifications/:loggedInUser', async (req, res)=> {
+  const {loggedInUser} = req.params
+  const database = await connectMongo()
+  const usersCollection = database.collection('Users')
 
+  // Clearing notifications for the loggedIn user
+
+
+  // Find the user that initiated the clear
+  await usersCollection.updateOne(
+    {user: loggedInUser},
+    {$set: {notifications: []}}
+  )
+
+})
 
 
 

@@ -20,8 +20,9 @@ router.get("/", async (req, res) => {
    * Finding the user in the db based off of the query string
    */
 
-  // finds the user based of their uid
+  // finds the user based off their uid
   const userData = await usersCollection.findOne({ UID: user });
+
 
   if (!userData) {
     // Handle the case where no user is found
@@ -50,6 +51,7 @@ router.get("/", async (req, res) => {
   const userPostModified = userPosts.map(post => ({
     _id: post._id,
     poster: post.poster,
+    posterProfilePic: userData.profilePic ? `data:${userData.profilePic.contentType};base64,${userData.profilePic.data.toString('base64')}` : null,
     subject: post.subject,
     body: post.body,
     likes: post.likes,

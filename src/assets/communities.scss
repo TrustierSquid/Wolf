@@ -113,7 +113,8 @@ $lightBG: #5e5d5d25;
          max-height: 90%;
          width: 100%;
          border-radius: 1rem;
-         padding: 2rem;
+         // padding: 2rem;
+         margin-top: 2rem;
          display: flex;
          gap: 5rem;
 
@@ -224,6 +225,17 @@ $lightBG: #5e5d5d25;
                   align-items: center;
                   justify-content: space-between;
 
+                  h4 {
+                     display: flex;
+                     align-items: center;
+                     gap: 0.5rem;
+
+                     .memberImg {
+                        height: 40px;
+                        border-radius: 50%;
+                     }
+                  }
+
                   .memberActionBtns {
                      // width: 30%;
                      display: flex;
@@ -275,7 +287,7 @@ $lightBG: #5e5d5d25;
       width: 500px;
       top: 30%;
       background-color: $cardInteractionSection;
-      position: absolute;
+      position: fixed;
       border: 1px solid $darkenPrimary;
       z-index: 2;
       border-radius: 1rem;
@@ -321,7 +333,6 @@ $lightBG: #5e5d5d25;
 
    #communityContainer {
       // background: rgb(122,11,49);
-      background: $subBackground;
       width: 50%;
       border-radius: 1rem;
       display: flex;
@@ -337,6 +348,7 @@ $lightBG: #5e5d5d25;
          align-items: center;
          justify-content: space-between;
          color: turquoise;
+         margin-bottom: 1rem;
          h1 {
             color: white;
          }
@@ -386,8 +398,8 @@ $lightBG: #5e5d5d25;
                   align-items: center;
 
                   img {
-                     width: 40px;
-                     height: 40px;
+                     width: 50px;
+                     height: 50px;
                      object-fit: cover;
                      border-radius: 50%;
                   }
@@ -414,12 +426,12 @@ $lightBG: #5e5d5d25;
 
                   .viewCommunityPostsBtn {
                      color: turquoise;
-                     border: 1px solid turquoise;
+                     border: 1px solid teal;
                      text-wrap: nowrap;
 
                      &:hover {
                         color: white;
-                        background-color: t;
+                        background-color: teal;
                      }
                   }
 

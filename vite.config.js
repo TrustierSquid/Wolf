@@ -210,6 +210,25 @@ export default defineConfig({
         secure: false,
         ws: true,
       },
+      '/dynamicFollowers': {
+        target: 'http://localhost:3000',
+        changeOrigin: true,
+        secure: false,
+        ws: true,
+      },
+      '/retrieveCommunityInformation': {
+        target: 'http://localhost:3000',
+        changeOrigin: true,
+        secure: false,
+        ws: true,
+      },
+      '/clearNotifications': {
+        target: 'http://localhost:3000',
+        changeOrigin: true,
+        secure: false,
+        ws: true,
+      },
+
 
 
 

@@ -1,17 +1,20 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import Navbar from "./NavBar";
 import SideNavBar from "./SideNavbar";
 
 export default function FollowingPageComponent(props) {
 
+   // Crucial for looking up followers based on the queryString
    const queryString = window.location.search;
    const urlParams = new URLSearchParams(queryString);
    const userSearched = urlParams.get("following") ? urlParams.get('following') : urlParams.get('followers');
+
    const [dynamicUID, setDynamicUID] = useState(null)
-   const [dynamicFollowing, setDynamicFollowing] = useState(null)
+   const [dynamicFollowingData, setDynamicFollowingData] = useState(null)
    const [dynamicFollowers, setDynamicFollowers] = useState(null)
    const [dynamicUsername, setDynamicUsername] = useState(null)
    const [dynamicProfilePic, setDynamicProfilePic] = useState(null)
+   const unfollowBtnRef = useRef(null)
 
    async function getDynamicProfile(user){
       let response = await fetch(`/dynamic/${user}`, {
@@ -29,7 +32,12 @@ export default function FollowingPageComponent(props) {
    }
 
    async function getDynamicUID(user){
-      console.log(userSearched)
+      /*
+         for getting the followee UID.
+         When the follow page is loaded depending on who is searched, this will look up the following list -
+         for the searched user
+       */
+
       let response = await fetch(`/dynamicUID/${userSearched}`, {
          method: 'GET',
          headers: {
@@ -39,16 +47,37 @@ export default function FollowingPageComponent(props) {
 
       let data = await response.json()
       setDynamicUID(data.dynamicUID)
-      setDynamicFollowers(data.dynamicFollowers)
-      setDynamicFollowing(data.dynamicFollowing)
+      // setDynamicFollowers(data.dynamicFollowers)
+      // setDynamicFollowing(data.dynamicFollowingData)
       setDynamicUsername(data.dynamicUsername)
 
 
    }
 
+   async function getFollowerInformation(){
+      // for the following page
+      try {
+         let response = await fetch(`/dynamicFollowers/${userSearched}`, {
+            method: 'GET',
+            headers: {
+               'Content-Type': 'application/json'
+            }
+         })
 
+         let data = await response.json()
+         setDynamicFollowingData(data)
+
+      } catch {
+         console.log("Can't load photos")
+      }
+
+   }
+
+
+   // Unfollowing a user
    async function unFollowUser(followee){
       // for getting the followee UID
+      // Searching by username
       let responseDynamic = await fetch(`/dynamic/${followee}`, {
          method: 'GET',
          headers: {
@@ -68,18 +97,22 @@ export default function FollowingPageComponent(props) {
       })
 
       props.updateUserData()
+      unfollowBtnRef.current.innerHTML = '<i class="fa-solid fa-check"></i>'
+      unfollowBtnRef.current.style.pointerEvents = 'none'
    }
 
    useEffect(()=> {
       getDynamicUID()
+      getFollowerInformation()
    }, [])
+
 
 
    return (
       <>
          <Navbar/>
+         <SideNavBar {...props.sidebarItems}/>
          <main id="followPageContainer">
-            <SideNavBar {...props.sidebarItems}/>
             <section id="displayFollowingContainer">
                {(queryString.includes('following')) ? (
                   <>
@@ -91,21 +124,31 @@ export default function FollowingPageComponent(props) {
                   </>
                )}
                {(queryString.includes('following')) ? (
-                  (dynamicFollowing) ? (
+                  (dynamicFollowingData) ? (
                      <>
                         {
-                           (dynamicFollowing?.length > 0) ? (
-                              dynamicFollowing.map((followee, key)=> {
+                           (dynamicFollowingData?.following.length > 0) ? (
+                              dynamicFollowingData?.following.map((followee, key)=> {
                                  return (
                                     <>
                                        <div className="followee" key={followee} >
-                                          <h4 onClick={()=> {getDynamicProfile(followee)}}>{followee}</h4>
-                                          <button id="unfollowBtn" onClick={()=> unFollowUser(followee)}>Unfollow</button>
+                                          <h4 onClick={()=> {getDynamicProfile(followee.searchedFollowerUsername)}}>
+                                             <img className='followerProfilePic' src={followee.searchedFollowerProfilePic ? followee.searchedFollowerProfilePic : 'src/assets/defaultUser.jpg' }></img>
+                                             {followee.searchedFollowerUsername}</h4>
+
+                                             {/* Fixes duplicate unfollow buttons on the loggedin user */}
+                                             {followee.searchedFollowerUsername === props.username ? (
+                                                   <span></span>
+                                                ) : (
+                                                   <button id="unfollowBtn" onClick={()=> unFollowUser(followee.searchedFollowerUsername)} ref={unfollowBtnRef}>Unfollow</button>
+                                                )
+                                             }
                                        </div>
                                     </>
                                  )
                               }
                            )
+                           // if the user isnt following anyone
                            ) : (
                               <div className="noPostsMessage">
                                  { (dynamicUsername === props.username) ? (
@@ -118,6 +161,7 @@ export default function FollowingPageComponent(props) {
                            )
                         }
                      </>
+                     // Loader
                   ) : (
                      <div className="noPostsMessage">
                         <div className=' loader '>
@@ -128,14 +172,17 @@ export default function FollowingPageComponent(props) {
                   ) : (
                      <>
                         {
-                           (dynamicFollowers) ? (
+                           // For followers
+                           (dynamicFollowingData) ? (
                               <>
-                                 {(dynamicFollowers?.length > 0) ? (
-                                    dynamicFollowers?.map((follower, key)=> {
+                                 {(dynamicFollowingData?.followers.length > 0) ? (
+                                    dynamicFollowingData?.followers.map((follower, key)=> {
                                        return (
                                           <>
                                              <div className="followee" key={follower} >
-                                                <h4 onClick={()=> {getDynamicProfile(follower)}}>{follower}</h4>
+                                                <h4 onClick={()=> {getDynamicProfile(follower.searchedFollowerUsername)}}>
+                                                   <img className='followerProfilePic' src={follower.searchedFollowerProfilePic ? follower.searchedFollowerProfilePic : 'src/assets/defaultUser.jpg'} alt="" />
+                                                   {follower.searchedFollowerUsername}</h4>
                                              </div>
                                           </>
                                        )

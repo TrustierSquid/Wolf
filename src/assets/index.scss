@@ -87,6 +87,7 @@ body {
    text-align: center;
    margin-top: 2rem;
    display: flex;
+   font-size: $fs-paragraph;
    flex-direction: column;
    justify-content: center;
    align-items: center;
@@ -378,9 +379,8 @@ TOPICS COMPONENT
       display: flex;
       justify-content: start;
       flex-direction: column;
-      background: $subBackground;
       border-radius: 1rem;
-      width: 60%;
+      width: 45%;
       padding: 2rem;
 
       #pageHeader {
@@ -610,7 +610,7 @@ DEFAULT PAGE
    justify-content: space-between;
    align-items: center;
    position: sticky;
-   background-color: $subBackground;
+   background: #0A0A0A;
    z-index: 11;
 
 
@@ -678,7 +678,19 @@ DEFAULT PAGE
 
    #profileContainer {
       display: flex;
+      gap: 1rem;
       align-items: center;
+
+      #notificationBtn {
+         font-size: $fs-h2;
+         background: none;
+         color: $primary;
+         border: none;
+         cursor: pointer;
+         &:hover {
+            color: $buttonHover;
+         }
+      }
 
       // Where the username will be shown
       #dropdownBtn {
@@ -699,6 +711,83 @@ DEFAULT PAGE
 
 
    }
+
+   #notificationDropdown {
+      height: 500px;
+      width: 500px;
+      position: absolute;
+      background-color: $cardInteractionSection;
+      top: 110%;
+      right: 1%;
+      border-radius: 1rem;
+      padding: 1rem;
+      color: white;
+      font-family: $ff-body;
+      overflow: auto;
+      transition: 150ms;
+      opacity: 0;
+      pointer-events: none;
+
+
+      #clearNotifications {
+         display: flex;
+         justify-content: space-between;
+         align-items: center;
+         gap: 1rem;
+
+         button {
+            padding: 0.5rem;
+            font-size: 1rem;
+            background: none;
+            color: white;
+            border: none;
+            background-color: $cardBG;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+
+            &:hover {
+               background-color: $cardBorder;
+            }
+         }
+
+      }
+
+      #clearBtn {
+         padding: 0.5rem;
+         color: white;
+         background-color: $primary;
+         border: none;
+         border-radius: 0.5rem;
+         cursor: pointer;
+         transition: 150ms;
+
+         &:hover {
+            background-color: $buttonHover;
+         }
+      }
+
+      .notification {
+         display: flex;
+         align-items: center;
+         gap: 1rem;
+         padding: 0.5rem;
+         border-bottom: 1px solid $cardBG;
+
+         img {
+            height: 40px;
+            border-radius: 50%;
+         }
+      }
+
+
+
+
+   }
+
+
+
 
    #mobileNavBtn {
       display: none;
@@ -823,20 +912,21 @@ DEFAULT PAGE
 // side nav bar
 
 .sideNav {
-   max-height: 500px;
-   top: 10.5%;
-   width: 400px;
+   // top: 9.5%;
+   top: 0%;
+   height: 100vh;
+   position: fixed;
+   width: 300px;
    color: white;
-   background: rgb(212,55,55);
-   background: linear-gradient(338deg, rgba(212,55,55,1) 0%, rgba(122,11,49,1) 50%);
-   border-radius: 1rem;
-   border: none;
+   background: #0A0A0A;
+   border-right: 1px solid $buttonHover;
    padding: 1.5rem;
+   padding-top: 4rem;
    display: flex;
    flex-direction: column;
    font-family: $ff-body;
-   position: sticky;
    z-index: 1;
+   overflow: auto;
 
    #subTitle {
       font-family: $ff-body;
@@ -857,67 +947,45 @@ DEFAULT PAGE
          display: flex;
          gap: 1rem;
          align-items: center;
-
-         #sideBarProfileImage {
-            height: 100px;
-            width: 100px;
-            object-fit: cover;
-            border-radius: 50%;
-         }
+         justify-content: center;
+         text-align: center;
 
          #nameAndInfo {
-            display: flex;
-            flex-direction: column;
-         }
-      }
-
-
-      #followingCountContainer {
-         display: flex;
-         gap: 0.5rem;
-         width: 100%;
-
-         .followingContainerItem {
-            display: flex;
-            flex-direction: column;
-            align-items: start;
-            background: none;
-            padding: 1rem;
-            width: 100%;
-            border-radius: 1rem;
-            cursor: pointer;
-            transition: 150ms;
-            // font-weight: 100;
-
-            &:hover {
-               background-color: $cardBG;
+            #sideBarProfileImage {
+               height: 100px;
+               width: 100px;
+               object-fit: cover;
+               border-radius: 50%;
             }
-         }
 
-         .followingContainerItem:nth-of-type(2) {
-            align-items: start;
-         }
 
+         }
       }
+
+
+
 
    }
+
 
 
    .topicSelectionElement {
       // font-family: 'roboto';
       display: flex;
       flex-direction: column;
-      gap: 1rem;
+      gap: 0.5rem;
       padding: 0.5rem;
+
 
 
       button {
          display: flex;
+         align-items: center;
          justify-content: start;
-         gap: 1rem;
+         gap: 0.5rem;
          background: none;
          border: none;
-         padding: 1rem;
+         padding: 0.8rem;
          text-wrap: nowrap;
          font-size: 1rem;
          color: white;
@@ -926,6 +994,13 @@ DEFAULT PAGE
          transition: 150ms;
          font-family: $ff-body;
 
+         img {
+            height: 30px;
+            width: 30px;
+            border-radius: 50%;
+         }
+
+
          &:hover {
             background-color: $cardBG;
          }
@@ -933,7 +1008,10 @@ DEFAULT PAGE
          &:focus {
             background-color: $primary;
          }
+
       }
+
+
 
       #selectedTopicsBtns {
          display: flex;
@@ -951,21 +1029,114 @@ DEFAULT PAGE
 
    }
 
+   #notificationDropdown {
+      background-color: red;
+      height: 0px;
+      transition: 250ms;
+   }
+
 
 }
 
+
+
 // Feed styles for the Home page
+
+#suggestedNav {
+   max-height: 700px;
+   // max-height: ;
+   width: 350px;
+   color: white;
+   position: fixed;
+   top: 10.5%;
+   right: 4%;
+   padding: 1rem;
+   overflow: auto;
+
+   h3 {
+      color: grey;
+      font-family: $ff-body;
+   }
+
+   div {
+      padding: 0.5rem;
+      font-family: $ff-body;
+
+      section {
+         display: flex;
+         align-items: center;
+         gap: 0.5rem;
+         color: white;
+
+         img {
+            height: 40px;
+            width: 40px;
+            object-fit: cover;
+            border-radius: 50%;
+         }
+
+         .memberNames {
+            color: white;
+         }
+
+         button {
+            background: none;
+            border: none;
+            color: turquoise;
+            cursor: pointer;
+            &:hover {
+               color: teal;
+            }
+         }
+
+         a {
+            text-decoration: none;
+         }
+
+      }
+
+
+   }
+
+   #suggestedNavMembers {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      font-family: $ff-body;
+      overflow: auto;
+
+      img {
+         height: 40px;
+         border-radius: 50%;
+      }
+
+      .memberNames {
+         color: white;
+      }
+
+
+
+   }
+
+}
+
+@media (max-width: 1300px) {
+   #suggestedNav {
+      display: none;
+   }
+}
+
 
 main {
    display: flex;
    justify-content: center;
-   gap: 1rem;
-   padding: 2rem;
+   // padding: 2rem;
+
 
    #content {
       // height: 90vh;
       width: 45%;
-      padding: 2rem;
+      padding: 1rem;
       display: flex;
       flex-direction: column;
       // background: $subBackground;
@@ -1200,7 +1371,7 @@ main {
             flex-direction: column;
             // background-color: $cardBG;
             // border-radius: 1rem;
-            border-bottom: 1px solid $primary;
+            border-bottom: 1px solid $uiBG;
 
             .mainPost {
                flex-direction: column;
@@ -1224,9 +1395,9 @@ main {
                   .userAction {
                      display: flex;
                      flex-wrap: wrap;
-                     justify-content: space-between;
+                     justify-content: start;
                      align-items: center;
-                     gap: 1rem;
+                     gap: 0.3rem;
                      padding: 0.1rem;
 
                      .postUserInformation {
@@ -1235,7 +1406,7 @@ main {
                         gap: 0.5rem;
 
                         .postProfilePic {
-                           height: 50px;
+                           height: 30px;
                            border-radius: 50%;
                         }
 
@@ -1267,7 +1438,7 @@ main {
 
                      .postData {
                         font-family: $ff-heading;
-                        color: lightgrey;
+                        color: rgb(145, 145, 145);
                      }
 
                   }
@@ -1375,8 +1546,8 @@ main {
                   .likeBtn, .commentBtn {
                      font-size: 1.2rem;
                      cursor: pointer;
-                     padding: 1rem;
-                     border-radius: 2rem;
+                     padding: 0.5rem;
+                     border-radius: 1rem;
                      font-family: $ff-body;
                      transition: 150ms;
                      background-color: #3e3e3eaa;
@@ -1435,6 +1606,8 @@ main {
    z-index: 8;
    overflow: scroll;
 
+
+
    #topDiv {
       display: flex;
       align-items: center;
@@ -1451,6 +1624,17 @@ main {
             cursor: pointer;
             &:hover {
                text-decoration: underline;
+            }
+         }
+
+         section {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+
+            .commentPosterProfilePic {
+               height: 40px;
+               border-radius: 50%;
             }
          }
       }
@@ -1569,30 +1753,42 @@ main {
 
       .comment {
          background-color: #111111e8;
-         border: 1px solid $cardBorder;
+         // border: 1px solid $cardBorder;
          padding: 1rem;
          border-radius: 0.5rem;
          word-wrap: break-word;
 
-         h3 {
+         section {
             display: flex;
-            justify-content: start;
             align-items: center;
             gap: 0.5rem;
-            margin-bottom: 0.5rem;
-            color: white;
-            cursor: pointer;
 
-            &:hover {
-               text-decoration: underline;
+            h3 {
+               display: flex;
+               justify-content: start;
+               align-items: center;
+               gap: 0.5rem;
+               margin-bottom: 0.5rem;
+               color: white;
+               cursor: pointer;
+
+               &:hover {
+                  text-decoration: underline;
+               }
+
             }
-
-            span {
+            .commentTime {
                color: rgb(101, 101, 101);
                font-size: $fs-paragraph;
+            }
 
+            .commenterProfilePicImg {
+               height: 40px;
+               border-radius: 50%;
             }
          }
+
+
 
       }
    }
@@ -1690,6 +1886,7 @@ main {
    justify-content: center;
    padding: 2rem;
    gap: 2rem;
+
    #mainProfile {
       width: 55%;
       display: flex;
@@ -1698,7 +1895,7 @@ main {
       color: white;
       padding: 2rem;
       border-radius: 1rem;
-      background-color: $cardBG;
+      // background-color: $cardBG;
 
 
 
@@ -2028,6 +2225,8 @@ main {
          z-index: 11;
 
 
+
+
          #postMoodle1, #postMoodle2 {
             width: 100%;
             background-color: #111;
@@ -2047,32 +2246,45 @@ main {
 
             #moodleTitle {
                font-family: $ff-heading;
+               display: flex;
+               justify-content: space-between;
+
+               section {
+                  display: flex;
+                  align-items: center;
+                  gap: 0.5rem;
+
+                  img {
+                     height: 40px;
+                     border-radius: 50%;
+                  }
+
+                  h1 {
+                     display: flex;
+                     justify-content: space-between;
+                  }
+               }
+
                h4 {
                   color: grey;
                }
 
-               h1 {
-                  display: flex;
-                  justify-content: space-between;
 
-                  #backBtn {
-                     width: 40px;
-                     height: 40px;
-                     cursor: pointer;
-                     background: none;
-                     color: white;
-                     border: none;
-                     background-color: #333;
-                     border-radius: 3rem;
-                     &:hover {
-                        background-color: #444;
-                     }
+               #backBtn {
+                  width: 40px;
+                  height: 40px;
+                  cursor: pointer;
+                  background: none;
+                  color: white;
+                  border: none;
+                  background-color: #333;
+                  border-radius: 3rem;
+                  &:hover {
+                     background-color: #444;
                   }
                }
-
-
-
             }
+
 
             #moodleContent {
                display: flex;
@@ -2161,8 +2373,18 @@ main {
                   // border-bottom: 1px dotted grey;
 
                   .commentTitle {
+                     span {
+                        img {
+                           height: 40px;
+                           border-radius: 50%;
+                        }
+
+                        p {
+                        }
+                     }
 
                   }
+
 
 
                   span {
@@ -2267,7 +2489,15 @@ main {
                   // border-bottom: 1px dotted grey;
 
                   .commentTitle {
+                     span {
+                        img {
+                           height: 40px;
+                           border-radius: 50%;
+                        }
 
+                        p {
+                        }
+                     }
                   }
 
 
@@ -2401,21 +2631,19 @@ main {
 
             .existingPostTitle {
                display: flex;
-               flex-direction: column;
+               align-items: center;
+               gap: 0.5rem;
+               // flex-direction: column;
 
-
-               .developerStatus {
-                  color: turquoise;
-                  font-family: $ff-heading;
+               .posterProfileImg {
+                  height: 50px;
+                  border-radius: 50%;
                }
 
-               .userStatus {
-
-               }
 
             }
 
-            img {
+            .postImg {
                margin-bottom: 1rem;
                height: 300px;
                object-fit: contain;
@@ -2614,7 +2842,6 @@ main {
 
 
 
-
 @media (max-width: 1050px) {
    #contentContainer {
       padding: 0rem;
@@ -2687,6 +2914,7 @@ HOME COMPONENT MEDIA QUERIES
       // username in the nav bar along with the icon
       #profileContainer {
          display: none;
+
       }
 
       #mobileNavBtn  {
@@ -2860,16 +3088,7 @@ HOME COMPONENT MEDIA QUERIES
                   box-shadow: none;
 
 
-                  .postDetails {
-                     display: flex;
-                     gap: 1rem;
-                     font-family: $ff-heading;
 
-                     span {
-                        padding: 0.5rem;
-                        color: white;
-                     }
-                  }
 
                   // container for liking and commenting on a post.
                   .postLC {

@@ -77,7 +77,6 @@ export default function Topics(props) {
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({currentlyJoinedTopics: props.userTopics})
     })
 
     const memberData = await response.json()
@@ -185,6 +184,7 @@ export default function Topics(props) {
   return (
     <>
       <Navbar/>
+      <SideNavBar {...props.sidebarProps}/>
       <span ref={darkBG} id="darkBG" onClick={()=> openMoodle('closeMoodle')}></span>
       <article ref={communityMoodle} id="createCommunityMoodle">
         <nav id="communityMoodleNav">
@@ -223,9 +223,9 @@ export default function Topics(props) {
       </article>
 
 
+
       <main id="topicsContainer">
 
-        <SideNavBar {...props.sidebarProps}/>
         {/* <p id="pageSubHeader">Browse and participate in these communities</p> */}
 
         <main>
@@ -242,7 +242,8 @@ export default function Topics(props) {
                 (totalMembers) ? (
                   <>
                     {totalMembers?.sort((a, b)=> a.name > b.name).map((topic, key)=> {
-                      const isJoined = topic.members.includes(props.username)
+                      const isJoined = topic.members.find((member) => member.member === props.username)
+
 
                       return (
                         <>

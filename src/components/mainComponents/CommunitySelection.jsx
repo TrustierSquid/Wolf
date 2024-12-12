@@ -85,7 +85,7 @@ export default function CommunitySelection(props){
    const [modifyCommunityName, setModifyCommunityName] = useState(null)
    const [modifyCommunityMembers, setModifyCommunityMembers] = useState([])
    const [modifyCommunityDescription, setModifyCommunityDescription] = useState(null)
-   const [modifyCommunityImage, setModidyCommunityImage] = useState({})
+   const [modifyCommunityImage, setModifyCommunityImage] = useState({})
 
 
    const [communityOwner, setCommunityOwner] = useState(null)
@@ -112,9 +112,11 @@ export default function CommunitySelection(props){
       setModifyCommunityName(communityName)
       setModifyCommunityMembers(members)
       setModifyCommunityDescription(description)
-      setModidyCommunityImage(communityImage)
+      setModifyCommunityImage(communityImage)
       setCommunityOwner(owner)
    }
+
+   console.log(modifyCommunityMembers)
 
    // Changing community information
    async function savingNewCommunityInformation(){
@@ -244,7 +246,7 @@ export default function CommunitySelection(props){
             ))
          ) : (
             <div className="noPostsMessage">
-               <h3>You do not own any communities. <a href="/topics" style={{color: 'crimson'}}>Create one!</a>  </h3>
+               <h3>You do not own any dens. <a href="/topics" style={{color: 'crimson'}}>Create one!</a>  </h3>
             </div>
          )
 
@@ -252,7 +254,9 @@ export default function CommunitySelection(props){
          // Tracker to see if the user has joined any communities at all
          let isJoinedCommunities = false
          const renderedCommunities = totalMembers?.map((community, key)=> {
-            const isMember = community.members.includes(props.username)
+            const isMember = community.members.find((member)=> member.member === props.username)
+
+            console.log(isMember)
 
             if (isMember) {
                isJoinedCommunities = true
@@ -293,7 +297,8 @@ export default function CommunitySelection(props){
 
          return isJoinedCommunities ? renderedCommunities : (
             <div className="noPostsMessage">
-               <h3>You have not Joined any <a href="/topics" style={{color: 'crimson'}}>communities!</a>  </h3>
+               <h3>You have not Joined any dens!</h3>
+               <a href="/topics" style={{color: 'crimson'}}>Join a den!</a>
             </div>
          )
 
@@ -307,7 +312,7 @@ export default function CommunitySelection(props){
    return (
       <>
          <Navbar/>
-
+         <SideNavBar {...props.sidebarItems}/>
          <div id="contentContainer">
             <span ref={darkBG} id="darkBG" onClick={()=> modifyMoodleHelper('closeMoodle')}></span>
 
@@ -354,35 +359,39 @@ export default function CommunitySelection(props){
                      </div>
                      <ul id="membersMap">
                         {
-                           modifyCommunityMembers.map((member)=> {
-                              return (
-                                 <>
-                                    <li className="memberCard">
-                                       {
-                                          member === props.username ? (
-                                             <h4>{member} (owner)</h4>
-                                          ) : (
-                                             <h4>{member}</h4>
-                                          )
-                                       }
-                                       <div className="memberActionBtns">
-                                          <button className="viewProfileBtn" onClick={()=> {
-                                             goToProfile
-                                          }}>View Profile</button>
-
+                           modifyCommunityMembers.length > 0 ? (
+                              modifyCommunityMembers.map((memberField)=> {
+                                 return (
+                                    <>
+                                       <li className="memberCard">
                                           {
-                                             member === props.username ? (
-                                                null
+                                             memberField.member === props.username ? (
+                                                <h4>
+                                                   <img className='memberImg' src={memberField.memberProfilePic ? memberField.memberProfilePic : 'src/assets/defaultUser.jpg' } alt="" />
+                                                   {memberField.member} (owner)
+                                                </h4>
                                              ) : (
-                                                <button className='removeBtn'>Remove</button>
+                                                <h4>
+                                                   <img className='memberImg' src={memberField.memberProfilePic ? memberField.memberProfilePic : 'src/assets/defaultUser.jpg' } alt="" />
+                                                   {memberField.member}
+                                                </h4>
                                              )
                                           }
-                                       </div>
+                                          <div className="memberActionBtns">
+                                             <button className="viewProfileBtn" onClick={()=> {
+                                                goToProfile
+                                             }}>View Profile</button>
+                                          </div>
 
-                                    </li>
-                                 </>
-                              )
-                           })
+                                       </li>
+                                    </>
+                                 )
+                              })
+                           ) : (
+                              <div className="noPostsMessage">
+                                 <h3>No members</h3>
+                              </div>
+                           )
                         }
                      </ul>
                   </section>
@@ -400,15 +409,15 @@ export default function CommunitySelection(props){
                <p className='errorMessage' ref={confirmErrorMessage}>{errorMessage}</p>
             </div>
 
-            <SideNavBar {...props.sidebarItems}/>
+
             <main id="communityContainer">
                <div id="titleDiv">
-                  <h1>My Communities </h1>
+                  <h1>My Dens </h1>
                   {/* On click, Show the communities that the user has created */}
                   <a onClick={()=> setShowCreatedCommunities(prevState => !prevState)}>
 
                      {
-                        showCreatedCommunities ? 'Show all communities ' : 'Show my created comunities '
+                        showCreatedCommunities ? 'Show all dens ' : 'Show my created dens '
                      }
 
                      <i class="fa-solid fa-sort"></i>

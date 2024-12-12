@@ -1,15 +1,20 @@
 #followPageContainer {
+  display: flex;
+  justify-content: center;
   color: white;
 }
 #followPageContainer #displayFollowingContainer {
   font-family: "roboto", sans-serif;
-  width: 60%;
-  background-color: #181818;
+  width: 45%;
   border-radius: 1rem;
   padding: 2rem;
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+}
+#followPageContainer #displayFollowingContainer .followerProfilePic {
+  height: 40px;
+  border-radius: 50%;
 }
 #followPageContainer #displayFollowingContainer .followee {
   padding: 1rem;
@@ -21,8 +26,10 @@
   justify-content: space-between;
 }
 #followPageContainer #displayFollowingContainer .followee h4 {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
   cursor: pointer;
-  border-bottom: 1px solid white;
 }
 #followPageContainer #displayFollowingContainer .followee h4:hover {
   color: #d43737;

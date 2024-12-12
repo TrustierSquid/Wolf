@@ -207,7 +207,8 @@ router.get("/homeFeed", requireAuth, async (req, res) => {
     followerCount: loggedInUser.followers,
     followingCount: loggedInUser.following,
     UID: loggedInUser.UID,
-    profilePic: loggedInUser.profilePic ? `data:${loggedInUser.profilePic.contentType};base64,${loggedInUser.profilePic.data.toString('base64')}` : null
+    profilePic: loggedInUser.profilePic ? `data:${loggedInUser.profilePic.contentType};base64,${loggedInUser.profilePic.data.toString('base64')}` : null,
+    notificationList: loggedInUser.notifications
   });
 
 });

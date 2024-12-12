@@ -30,6 +30,7 @@ body {
   text-align: center;
   margin-top: 2rem;
   display: flex;
+  font-size: 1rem;
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -248,9 +249,8 @@ TOPICS COMPONENT
   display: flex;
   justify-content: start;
   flex-direction: column;
-  background: #181818;
   border-radius: 1rem;
-  width: 60%;
+  width: 45%;
   padding: 2rem;
 }
 #topicsContainer main #pageHeader {
@@ -405,7 +405,7 @@ DEFAULT PAGE
   justify-content: space-between;
   align-items: center;
   position: sticky;
-  background-color: #181818;
+  background: #0A0A0A;
   z-index: 11;
 }
 #nav #logoContainer {
@@ -458,7 +458,18 @@ DEFAULT PAGE
 }
 #nav #profileContainer {
   display: flex;
+  gap: 1rem;
   align-items: center;
+}
+#nav #profileContainer #notificationBtn {
+  font-size: 2rem;
+  background: none;
+  color: #d43737;
+  border: none;
+  cursor: pointer;
+}
+#nav #profileContainer #notificationBtn:hover {
+  color: #7A0B31;
 }
 #nav #profileContainer #dropdownBtn {
   font-family: "Nunito", sans-serif;
@@ -474,6 +485,66 @@ DEFAULT PAGE
 }
 #nav #profileContainer #dropdownBtn:hover {
   color: #d43737;
+}
+#nav #notificationDropdown {
+  height: 500px;
+  width: 500px;
+  position: absolute;
+  background-color: #181818;
+  top: 110%;
+  right: 1%;
+  border-radius: 1rem;
+  padding: 1rem;
+  color: white;
+  font-family: "roboto", sans-serif;
+  overflow: auto;
+  transition: 150ms;
+  opacity: 0;
+  pointer-events: none;
+}
+#nav #notificationDropdown #clearNotifications {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+#nav #notificationDropdown #clearNotifications button {
+  padding: 0.5rem;
+  font-size: 1rem;
+  background: none;
+  color: white;
+  border: none;
+  background-color: rgba(60, 60, 60, 0.537254902);
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+}
+#nav #notificationDropdown #clearNotifications button:hover {
+  background-color: #2E2E2E;
+}
+#nav #notificationDropdown #clearBtn {
+  padding: 0.5rem;
+  color: white;
+  background-color: #d43737;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: 150ms;
+}
+#nav #notificationDropdown #clearBtn:hover {
+  background-color: #7A0B31;
+}
+#nav #notificationDropdown .notification {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.5rem;
+  border-bottom: 1px solid rgba(60, 60, 60, 0.537254902);
+}
+#nav #notificationDropdown .notification img {
+  height: 40px;
+  border-radius: 50%;
 }
 #nav #mobileNavBtn {
   display: none;
@@ -567,20 +638,20 @@ DEFAULT PAGE
   }
 }
 .sideNav {
-  max-height: 500px;
-  top: 10.5%;
-  width: 400px;
+  top: 0%;
+  height: 100vh;
+  position: fixed;
+  width: 300px;
   color: white;
-  background: rgb(212, 55, 55);
-  background: linear-gradient(338deg, rgb(212, 55, 55) 0%, rgb(122, 11, 49) 50%);
-  border-radius: 1rem;
-  border: none;
+  background: #0A0A0A;
+  border-right: 1px solid #7A0B31;
   padding: 1.5rem;
+  padding-top: 4rem;
   display: flex;
   flex-direction: column;
   font-family: "roboto", sans-serif;
-  position: sticky;
   z-index: 1;
+  overflow: auto;
 }
 .sideNav #subTitle {
   font-family: "roboto", sans-serif;
@@ -600,53 +671,30 @@ DEFAULT PAGE
   display: flex;
   gap: 1rem;
   align-items: center;
+  justify-content: center;
+  text-align: center;
 }
-.sideNav #subTitle #sidebarUsername #sideBarProfileImage {
+.sideNav #subTitle #sidebarUsername #nameAndInfo #sideBarProfileImage {
   height: 100px;
   width: 100px;
   -o-object-fit: cover;
      object-fit: cover;
   border-radius: 50%;
 }
-.sideNav #subTitle #sidebarUsername #nameAndInfo {
-  display: flex;
-  flex-direction: column;
-}
-.sideNav #subTitle #followingCountContainer {
-  display: flex;
-  gap: 0.5rem;
-  width: 100%;
-}
-.sideNav #subTitle #followingCountContainer .followingContainerItem {
-  display: flex;
-  flex-direction: column;
-  align-items: start;
-  background: none;
-  padding: 1rem;
-  width: 100%;
-  border-radius: 1rem;
-  cursor: pointer;
-  transition: 150ms;
-}
-.sideNav #subTitle #followingCountContainer .followingContainerItem:hover {
-  background-color: rgba(60, 60, 60, 0.537254902);
-}
-.sideNav #subTitle #followingCountContainer .followingContainerItem:nth-of-type(2) {
-  align-items: start;
-}
 .sideNav .topicSelectionElement {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 0.5rem;
   padding: 0.5rem;
 }
 .sideNav .topicSelectionElement button {
   display: flex;
+  align-items: center;
   justify-content: start;
-  gap: 1rem;
+  gap: 0.5rem;
   background: none;
   border: none;
-  padding: 1rem;
+  padding: 0.8rem;
   text-wrap: nowrap;
   font-size: 1rem;
   color: white;
@@ -654,6 +702,11 @@ DEFAULT PAGE
   cursor: pointer;
   transition: 150ms;
   font-family: "roboto", sans-serif;
+}
+.sideNav .topicSelectionElement button img {
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
 }
 .sideNav .topicSelectionElement button:hover {
   background-color: rgba(60, 60, 60, 0.537254902);
@@ -671,16 +724,85 @@ DEFAULT PAGE
   flex-direction: column;
   gap: 1rem;
 }
+.sideNav #notificationDropdown {
+  background-color: red;
+  height: 0px;
+  transition: 250ms;
+}
 
+#suggestedNav {
+  max-height: 700px;
+  width: 350px;
+  color: white;
+  position: fixed;
+  top: 10.5%;
+  right: 4%;
+  padding: 1rem;
+  overflow: auto;
+}
+#suggestedNav h3 {
+  color: grey;
+  font-family: "roboto", sans-serif;
+}
+#suggestedNav div {
+  padding: 0.5rem;
+  font-family: "roboto", sans-serif;
+}
+#suggestedNav div section {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: white;
+}
+#suggestedNav div section img {
+  height: 40px;
+  width: 40px;
+  -o-object-fit: cover;
+     object-fit: cover;
+  border-radius: 50%;
+}
+#suggestedNav div section .memberNames {
+  color: white;
+}
+#suggestedNav div section button {
+  background: none;
+  border: none;
+  color: turquoise;
+  cursor: pointer;
+}
+#suggestedNav div section button:hover {
+  color: teal;
+}
+#suggestedNav div section a {
+  text-decoration: none;
+}
+#suggestedNav #suggestedNavMembers {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  font-family: "roboto", sans-serif;
+  overflow: auto;
+}
+#suggestedNav #suggestedNavMembers img {
+  height: 40px;
+  border-radius: 50%;
+}
+#suggestedNav #suggestedNavMembers .memberNames {
+  color: white;
+}
+
+@media (max-width: 1300px) {
+  #suggestedNav {
+    display: none;
+  }
+}
 main {
   display: flex;
   justify-content: center;
-  gap: 1rem;
-  padding: 2rem;
 }
 main #content {
   width: 45%;
-  padding: 2rem;
+  padding: 1rem;
   display: flex;
   flex-direction: column;
   border-radius: 1rem;
@@ -862,7 +984,7 @@ main #content .userContent .userPost {
   max-width: 100%;
   display: flex;
   flex-direction: column;
-  border-bottom: 1px solid #d43737;
+  border-bottom: 1px solid #2b2b2b;
 }
 main #content .userContent .userPost .mainPost {
   flex-direction: column;
@@ -883,9 +1005,9 @@ main #content .userContent .userPost .mainPost .postAnalytics {
 main #content .userContent .userPost .mainPost .postAnalytics .userAction {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: start;
   align-items: center;
-  gap: 1rem;
+  gap: 0.3rem;
   padding: 0.1rem;
 }
 main #content .userContent .userPost .mainPost .postAnalytics .userAction .postUserInformation {
@@ -894,7 +1016,7 @@ main #content .userContent .userPost .mainPost .postAnalytics .userAction .postU
   gap: 0.5rem;
 }
 main #content .userContent .userPost .mainPost .postAnalytics .userAction .postUserInformation .postProfilePic {
-  height: 50px;
+  height: 30px;
   border-radius: 50%;
 }
 main #content .userContent .userPost .mainPost .postAnalytics .userAction .postUserInformation .poster {
@@ -919,7 +1041,7 @@ main #content .userContent .userPost .mainPost .postAnalytics .userAction .postU
 }
 main #content .userContent .userPost .mainPost .postAnalytics .userAction .postData {
   font-family: "Nunito", sans-serif;
-  color: lightgrey;
+  color: rgb(145, 145, 145);
 }
 main #content .userContent .userPost .mainPost .postAnalytics .postCaption {
   font-size: 1.4rem;
@@ -1000,8 +1122,8 @@ main #content .userContent .userPost .postInteractionSection .postLC {
 main #content .userContent .userPost .postInteractionSection .postLC .likeBtn, main #content .userContent .userPost .postInteractionSection .postLC .commentBtn {
   font-size: 1.2rem;
   cursor: pointer;
-  padding: 1rem;
-  border-radius: 2rem;
+  padding: 0.5rem;
+  border-radius: 1rem;
   font-family: "roboto", sans-serif;
   transition: 150ms;
   background-color: rgba(62, 62, 62, 0.6666666667);
@@ -1052,6 +1174,15 @@ main #content .userContent .userPost .postInteractionSection .postLC .commentBtn
 }
 #commentInterface #topDiv #fromWho h3:hover {
   text-decoration: underline;
+}
+#commentInterface #topDiv #fromWho section {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+#commentInterface #topDiv #fromWho section .commentPosterProfilePic {
+  height: 40px;
+  border-radius: 50%;
 }
 #commentInterface #topDiv #exitCommentBtn {
   width: 60px;
@@ -1144,12 +1275,16 @@ main #content .userContent .userPost .postInteractionSection .postLC .commentBtn
 }
 #commentInterface .commentContainer .comment {
   background-color: rgba(17, 17, 17, 0.9098039216);
-  border: 1px solid #2E2E2E;
   padding: 1rem;
   border-radius: 0.5rem;
   word-wrap: break-word;
 }
-#commentInterface .commentContainer .comment h3 {
+#commentInterface .commentContainer .comment section {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+#commentInterface .commentContainer .comment section h3 {
   display: flex;
   justify-content: start;
   align-items: center;
@@ -1158,12 +1293,16 @@ main #content .userContent .userPost .postInteractionSection .postLC .commentBtn
   color: white;
   cursor: pointer;
 }
-#commentInterface .commentContainer .comment h3:hover {
+#commentInterface .commentContainer .comment section h3:hover {
   text-decoration: underline;
 }
-#commentInterface .commentContainer .comment h3 span {
+#commentInterface .commentContainer .comment section .commentTime {
   color: rgb(101, 101, 101);
   font-size: 1rem;
+}
+#commentInterface .commentContainer .comment section .commenterProfilePicImg {
+  height: 40px;
+  border-radius: 50%;
 }
 
 @media (max-width: 1050px) {
@@ -1236,7 +1375,6 @@ main #content .userContent .userPost .postInteractionSection .postLC .commentBtn
   color: white;
   padding: 2rem;
   border-radius: 1rem;
-  background-color: rgba(60, 60, 60, 0.537254902);
 }
 #contentContainer #mainProfile .profHeaders {
   font-family: "Nunito", sans-serif;
@@ -1507,15 +1645,26 @@ main #content .userContent .userPost .postInteractionSection .postLC .commentBtn
 }
 #contentContainer #mainProfile #moodleContainer #postMoodle1 #moodleTitle {
   font-family: "Nunito", sans-serif;
+  display: flex;
+  justify-content: space-between;
+}
+#contentContainer #mainProfile #moodleContainer #postMoodle1 #moodleTitle section {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+#contentContainer #mainProfile #moodleContainer #postMoodle1 #moodleTitle section img {
+  height: 40px;
+  border-radius: 50%;
+}
+#contentContainer #mainProfile #moodleContainer #postMoodle1 #moodleTitle section h1 {
+  display: flex;
+  justify-content: space-between;
 }
 #contentContainer #mainProfile #moodleContainer #postMoodle1 #moodleTitle h4 {
   color: grey;
 }
-#contentContainer #mainProfile #moodleContainer #postMoodle1 #moodleTitle h1 {
-  display: flex;
-  justify-content: space-between;
-}
-#contentContainer #mainProfile #moodleContainer #postMoodle1 #moodleTitle h1 #backBtn {
+#contentContainer #mainProfile #moodleContainer #postMoodle1 #moodleTitle #backBtn {
   width: 40px;
   height: 40px;
   cursor: pointer;
@@ -1525,7 +1674,7 @@ main #content .userContent .userPost .postInteractionSection .postLC .commentBtn
   background-color: #333;
   border-radius: 3rem;
 }
-#contentContainer #mainProfile #moodleContainer #postMoodle1 #moodleTitle h1 #backBtn:hover {
+#contentContainer #mainProfile #moodleContainer #postMoodle1 #moodleTitle #backBtn:hover {
   background-color: #444;
 }
 #contentContainer #mainProfile #moodleContainer #postMoodle1 #moodleContent {
@@ -1595,6 +1744,10 @@ main #content .userContent .userPost .postInteractionSection .postLC .commentBtn
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+}
+#contentContainer #mainProfile #moodleContainer #postMoodle2 #commentSection .commentContainer .commentTitle span img {
+  height: 40px;
+  border-radius: 50%;
 }
 #contentContainer #mainProfile #moodleContainer #postMoodle2 #commentSection .commentContainer span {
   display: flex;
@@ -1668,6 +1821,10 @@ main #content .userContent .userPost .postInteractionSection .postLC .commentBtn
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+}
+#contentContainer #mainProfile #moodleContainer #mobilePostMoodle #commentSection .commentContainer .commentTitle span img {
+  height: 40px;
+  border-radius: 50%;
 }
 #contentContainer #mainProfile #moodleContainer #mobilePostMoodle #commentSection .commentContainer span {
   display: flex;
@@ -1768,13 +1925,14 @@ main #content .userContent .userPost .postInteractionSection .postLC .commentBtn
 }
 #contentContainer #mainProfile .totalPosts .existingPost .existingPostTitle {
   display: flex;
-  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
 }
-#contentContainer #mainProfile .totalPosts .existingPost .existingPostTitle .developerStatus {
-  color: turquoise;
-  font-family: "Nunito", sans-serif;
+#contentContainer #mainProfile .totalPosts .existingPost .existingPostTitle .posterProfileImg {
+  height: 50px;
+  border-radius: 50%;
 }
-#contentContainer #mainProfile .totalPosts .existingPost img {
+#contentContainer #mainProfile .totalPosts .existingPost .postImg {
   margin-bottom: 1rem;
   height: 300px;
   -o-object-fit: contain;
@@ -2074,15 +2232,6 @@ HOME COMPONENT MEDIA QUERIES
     border: none;
     border-bottom: 1px solid #2E2E2E;
     box-shadow: none;
-  }
-  main #content .userContent .userPost .postInteractionSection .postDetails {
-    display: flex;
-    gap: 1rem;
-    font-family: "Nunito", sans-serif;
-  }
-  main #content .userContent .userPost .postInteractionSection .postDetails span {
-    padding: 0.5rem;
-    color: white;
   }
   main #content .userContent .userPost .postInteractionSection .postLC {
     display: flex;
