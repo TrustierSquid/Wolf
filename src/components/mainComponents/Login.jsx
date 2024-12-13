@@ -180,10 +180,19 @@ export default function Login() {
             </div>
           </form>
           <section id="optionalDecision">
-            <p>{signinCheck ? "Have an Account?" : "Don't have an account?"}</p>
-            <a href={signinCheck ? "/" : "/?signUp=true"} id="signUpLink">
-              {signinCheck ? "Login" : "Sign Up"}
-            </a>
+            <div>
+              <p>{signinCheck ? "Have an Account? " : "Don't have an account? "}
+                <a href={signinCheck ? "/" : "/?signUp=true"} id="signUpLink">
+                  {signinCheck ? "Login" : "Sign Up"}
+                </a>
+              </p>
+
+            </div>
+            <div>
+              <p>For recruiters - <br />
+                username: jobrecruiter <br />
+                pass: job1234</p>
+            </div>
           </section>
           <div id="extraInfo">
             {/* error message */}

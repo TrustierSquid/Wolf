@@ -164,7 +164,6 @@ export default function Topics(props) {
     }
   }
 
-
   return (
     <>
       <Navbar />

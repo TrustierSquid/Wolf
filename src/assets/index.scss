@@ -196,21 +196,26 @@ body {
     #optionalDecision {
       display: flex;
       justify-content: end;
+      flex-direction: column;
       width: 100%;
       align-items: center;
       gap: 1rem;
       text-wrap: nowrap;
 
-      #signUpLink {
-        color: magenta;
-        font-size: 1.2rem;
-        text-decoration: none;
-        align-self: end;
+      div {
+        #signUpLink {
+          color: magenta;
+          font-size: 1.2rem;
+          text-decoration: none;
+          align-self: end;
 
-        &:hover {
-          text-decoration: underline;
+          &:hover {
+            text-decoration: underline;
+          }
         }
+
       }
+
     }
 
     // input fields
@@ -319,8 +324,8 @@ body {
     #loginContainer {
       background: none;
       border: none;
-      width: 95%;
-      padding: 1.5rem;
+      width: 100%;
+      // padding: 1.5rem;
       gap: 3rem;
 
       #optionalDecision {
@@ -671,6 +676,23 @@ DEFAULT PAGE
     color: $primary;
     border: none;
     cursor: pointer;
+  }
+
+  #whatCommunityUserIsIn {
+
+
+    #communityNavTitle {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+
+      img {
+        height: 40px;
+        width: 40px;
+        border-radius: 50%;
+        border: 1px solid $primary;
+      }
+    }
   }
 
   #profileContainer {
@@ -1034,6 +1056,19 @@ DEFAULT PAGE
   h3 {
     color: grey;
     font-family: $ff-body;
+  }
+
+  #suggestJoinBtn {
+    background-color: teal;
+    color: white;
+    border: none;
+    padding: 0.5rem;
+    font-size: 1rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    &:hover {
+      background-color: #00a1b6;
+    }
   }
 
   div {
@@ -2753,7 +2788,6 @@ HOME COMPONENT MEDIA QUERIES
 
     span {
       h3 {
-        border-left: 1px solid grey;
         padding: 0.5rem;
         font-size: medium;
       }

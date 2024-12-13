@@ -620,6 +620,30 @@ export default function Profile(props) {
     }
   }
 
+  const followBtnPair = useRef();
+
+  function showFollowBtns() {
+    if (userSearched === props.loggedInUID) {
+      return <span></span>;
+    } else {
+      return (
+        <>
+          <button id="followBtn" ref={followBtn} onClick={() => followSystem()}>
+            Follow{" "}
+          </button>
+          {/*Initialy disabled*/}{" "}
+          <button
+            id="unfollowBtn"
+            ref={unfollowBtn}
+            onClick={() => followSystem()}
+          >
+            UnFollow
+          </button>
+        </>
+      );
+    }
+  }
+
   return (
     <>
       <Navbar />
@@ -633,33 +657,9 @@ export default function Profile(props) {
             {checkUserType()}
 
             {/*  FOLLOW SYSTEM */}
-            <section id="followBtnPair">
-              {
-                // checking to see if the user is on the same profile as the loggedIn user
-                userSearched === props.loggedInUID ? (
-                  <>
-                    <span></span>
-                  </>
-                ) : (
-                  <>
-                    <button
-                      id="followBtn"
-                      ref={followBtn}
-                      onClick={() => followSystem()}
-                    >
-                      Follow{" "}
-                    </button>
-                    {/*Initialy disabled*/}{" "}
-                    <button
-                      id="unfollowBtn"
-                      ref={unfollowBtn}
-                      onClick={() => followSystem()}
-                    >
-                      UnFollow
-                    </button>
-                  </>
-                )
-              }
+
+            <section id="followBtnPair" ref={followBtnPair}>
+              {showFollowBtns()}
             </section>
 
             {/* BIO SYSTEM */}

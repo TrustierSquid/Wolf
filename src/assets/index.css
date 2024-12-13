@@ -129,18 +129,19 @@ body {
 #loginFlex #loginContainer #optionalDecision {
   display: flex;
   justify-content: end;
+  flex-direction: column;
   width: 100%;
   align-items: center;
   gap: 1rem;
   text-wrap: nowrap;
 }
-#loginFlex #loginContainer #optionalDecision #signUpLink {
+#loginFlex #loginContainer #optionalDecision div #signUpLink {
   color: magenta;
   font-size: 1.2rem;
   text-decoration: none;
   align-self: end;
 }
-#loginFlex #loginContainer #optionalDecision #signUpLink:hover {
+#loginFlex #loginContainer #optionalDecision div #signUpLink:hover {
   text-decoration: underline;
 }
 #loginFlex #loginContainer #inputField {
@@ -225,8 +226,7 @@ body {
   #loginFlex #loginContainer {
     background: none;
     border: none;
-    width: 95%;
-    padding: 1.5rem;
+    width: 100%;
     gap: 3rem;
   }
   #loginFlex #loginContainer #optionalDecision {
@@ -496,6 +496,17 @@ DEFAULT PAGE
   color: #d43737;
   border: none;
   cursor: pointer;
+}
+#nav #whatCommunityUserIsIn #communityNavTitle {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+#nav #whatCommunityUserIsIn #communityNavTitle img {
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  border: 1px solid #d43737;
 }
 #nav #profileContainer {
   display: flex;
@@ -804,6 +815,18 @@ DEFAULT PAGE
 #suggestedNav h3 {
   color: grey;
   font-family: "roboto", sans-serif;
+}
+#suggestedNav #suggestJoinBtn {
+  background-color: teal;
+  color: white;
+  border: none;
+  padding: 0.5rem;
+  font-size: 1rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+}
+#suggestedNav #suggestJoinBtn:hover {
+  background-color: #00a1b6;
 }
 #suggestedNav div {
   padding: 0.5rem;
@@ -2210,7 +2233,6 @@ HOME COMPONENT MEDIA QUERIES
     display: none;
   }
   #nav span h3 {
-    border-left: 1px solid grey;
     padding: 0.5rem;
     font-size: medium;
   }

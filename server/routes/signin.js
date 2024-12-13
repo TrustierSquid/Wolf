@@ -144,7 +144,7 @@ router.post("/add", async (req, res) => {
           posts: 0,
           topics: [],
           created: new Date(),
-          profilePicture: "",
+          notifications: []
         });
 
         const newUser = await users.findOne({ user: username });

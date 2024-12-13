@@ -207,6 +207,7 @@ export default function Home() {
     getUserData();
     fetchTopicData();
     retrieveCommunityInformation();
+    removeTitle();
   }, []);
 
   // Mobile nav bar functionality
@@ -217,6 +218,14 @@ export default function Home() {
   // Returns the a new post about the app details
   function displayAbout() {
     return <AboutPost appVersion={currentVersion} />;
+  }
+
+  // removeTitle when on home page
+  let whatsNewTitle = useRef(null);
+  function removeTitle() {
+    if (userSearched) {
+      whatsNewTitle.current.style.display = "none";
+    }
   }
 
   const newPostBtnMobile = useRef(null);
@@ -294,7 +303,9 @@ export default function Home() {
         <span ref={darkBG} id="darkBG"></span>
         <section id="content">
           {/* New post button for desktop with a message with it */}
-          <h1 id="whatsNew">What's New</h1>
+          <h1 id="whatsNew" ref={whatsNewTitle}>
+            What's New
+          </h1>
           <span id="newPostBtn" ref={newPostBtn} onClick={() => appearEffect()}>
             Express yourself.
           </span>
