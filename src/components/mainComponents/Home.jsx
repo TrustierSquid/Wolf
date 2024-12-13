@@ -74,6 +74,7 @@ export default function Home() {
   const darkBG = useRef(null);
   const newPostBtn = useRef(null);
   const selectRef = useRef(null)
+  const [communityImagePreview, setCommunityImagePreview] = useState(null)
 
   // GETTING USER INFORMATION AND DISPLYING IT ON THE HOME PAGE SPECIFIC TO THE USER LOGGED IN
   async function getUserData() {
@@ -149,7 +150,6 @@ export default function Home() {
     setCommunityStatePost(communityToPostTo);
   };
 
-  console.log(communityStatePost)
 
   //  Creating a new post
   async function createNewPost(community) {
@@ -159,7 +159,7 @@ export default function Home() {
     // handling to see if either input field is empty
     if (!subject || !body) {
       errorMessageElement.current.style.color = "crimson";
-      setErrorMessage("Please Enter a subject and body");
+      setErrorMessage("Please enter a subject and body");
       return;
     }
 
@@ -304,6 +304,7 @@ export default function Home() {
         <span ref={darkBG} id="darkBG"></span>
         <section id="content">
           {/* New post button for desktop with a message with it */}
+          <h1 id="whatsNew">What's New</h1>
           <span id="newPostBtn" ref={newPostBtn} onClick={() => appearEffect()}>
             Express yourself.
           </span>
@@ -320,31 +321,8 @@ export default function Home() {
                   <i className="fa-solid fa-x"></i>
                 </span>
               </h2>
-              <div id="formSubject">
-                <input
-                  maxLength={40}
-                  required
-                  placeholder="What's it about?"
-                  onsubmit="return false"
-                  ref={subjectPostElement}
-                ></input>
-                <br />
-              </div>
-              <div id="formBody">
-                <input
-                  required
-                  placeholder="Tell us more.."
-                  onsubmit="return false"
-                  ref={bodyPostElement}
-                  type="text"
-                ></input>
-              </div>
-              <div id="upload">
-                Upload a picture
-                <input accept="image/*" ref={imageRef} type="file" />
-              </div>
               <div id="selectCommunity">
-                <h2>Community:</h2>
+                <h2>Which Den?</h2>
                 <form>
                   <select ref={selectRef}>
 
@@ -380,6 +358,39 @@ export default function Home() {
                   </select>
                 </form>
               </div>
+              <div id="formSubject">
+                <input
+                  maxLength={40}
+                  required
+                  placeholder="What's it about?"
+                  onsubmit="return false"
+                  ref={subjectPostElement}
+                ></input>
+                <br />
+              </div>
+              <div id="formBody">
+                <textarea
+                  required
+                  placeholder="Tell us more.."
+                  onsubmit="return false"
+                  ref={bodyPostElement}
+                  type="text"
+                ></textarea>
+              </div>
+              <div id="upload">
+                Upload a picture
+                <img src={communityImagePreview ? communityImagePreview : null} alt="No image selected" />
+                <input accept="image/*" ref={imageRef} type="file" onChange={()=> {
+                  // Processing the uploaded photo and getting a preview of what it looks like before the Post is created
+                  const file = imageRef.current.files[0]
+                  if (file) {
+                    const reader = new FileReader()
+                    reader.onloadend = () => setCommunityImagePreview(reader.result)
+                    reader.readAsDataURL(file)
+                  }
+                }} />
+              </div>
+
 
               <h4 id="feedbackMessage" ref={errorMessageElement}>
                 {errorMessage}

@@ -67,7 +67,7 @@ $lightBG: #5e5d5d25;
       border: 1px solid $darkenPrimary;
       border-radius: 1rem;
       position: fixed;
-      width: 80%;
+      width: 70%;
       height: 600px;
       z-index: 2;
       color: white;
@@ -331,6 +331,31 @@ $lightBG: #5e5d5d25;
       }
    }
 
+   @media (max-width: 1050px) {
+      #modifyCommunityMoodle {
+         margin: 0;
+         top: 0%;
+         height: 99%;
+         width: 99%;
+         z-index: 4;
+
+         #moodleTitleBar {
+            // flex-direction: column;
+         }
+
+         #modifyFieldCardContainer {
+            flex-direction: column;
+            #modifyInformation {
+               width: 100%;
+            }
+
+            #seeMembers {
+               width: 100%;
+            }
+         }
+      }
+   }
+
    #communityContainer {
       // background: rgb(122,11,49);
       width: 50%;
@@ -428,6 +453,7 @@ $lightBG: #5e5d5d25;
                      color: turquoise;
                      border: 1px solid teal;
                      text-wrap: nowrap;
+                     font-size: 1rem;
 
                      &:hover {
                         color: white;
@@ -448,10 +474,12 @@ $lightBG: #5e5d5d25;
 
                   .communitySettingsBtn {
                      border: none;
-                     font-size: 1.5rem;
-                     padding: 0;
+                     font-size: 1rem;
+                     color: orange;
+                     border: 1px solid $sc-error;
                      &:hover {
-                        color: salmon;
+                        color: white;
+                        background-color: $sc-error;
                      }
                   }
 
@@ -481,9 +509,13 @@ $lightBG: #5e5d5d25;
          width: 100%;
          background: none;
          padding: 0.5rem;
+         margin: 1rem;
+         margin-top: 2rem;
+
 
          #titleDiv {
             text-align: center;
+            flex-direction: column;
          }
 
          ul {
@@ -491,6 +523,23 @@ $lightBG: #5e5d5d25;
             gap: 1rem;
 
             li {
+               justify-content: center;
+               align-items: center;
+
+               .topHalf {
+                  flex-direction: column;
+                  justify-content: center;
+                  align-items: left;
+                  gap: 1rem;
+
+                  .interactionBtns {
+                     width: 100%;
+                     button {
+                        width: 50%;
+                     }
+                  }
+               }
+
                flex-direction: column;
                align-items: start;
                gap: 1rem;

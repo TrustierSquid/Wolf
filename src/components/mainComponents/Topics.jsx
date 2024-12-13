@@ -216,6 +216,7 @@ export default function Topics(props) {
           <input required maxLength={100} placeholder='ex. Converse about the latest trends in gaming...' type="text" ref={communityDescription}/>
         </form>
 
+        <br />
         <div id="giveBtnContainer">
           <button id="initCommunity" onClick={()=> createCommunity()}>Create</button>
           <p className='errorMessage' ref={errorMessageRef}>{errorMessage}</p>

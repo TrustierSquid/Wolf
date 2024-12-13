@@ -134,6 +134,24 @@ export default function Navbar(props) {
     return <h4 className="postData">Just now</h4>;
   }
 
+
+  const [allCommunities, setAllCommunities] = useState(null)
+  const [allClear, setAllClear] = useState('')
+
+   async function getCommunityInformation() {
+      let response = await fetch('/community/retrieveCommunityInformation', {
+         method: "POST",
+         headers: {
+            "Content-Type": "application/json",
+          },
+      })
+
+      let data = await response.json()
+
+      setAllCommunities(data)
+      // console.log(data)
+   }
+
   async function clearNotifications() {
     let response = await fetch(`/clearNotifications/${username}`, {
       method: 'PUT'
@@ -141,6 +159,8 @@ export default function Navbar(props) {
     let data = await response.json()
 
     setNotificationList(!notificationList)
+    setAllClear("Cleared!")
+
   }
 
 
@@ -197,20 +217,25 @@ export default function Navbar(props) {
   }
 
 
+  useEffect(()=> {
+    getCommunityInformation()
+  }, [])
+
   return (
     <>
       <nav id="nav">
         {/* For Desktop */}
         <div id="logoContainer">
           <div id="titleAndLogo">
-            <img id="logo" src={logo} alt="" />
+            <img id="logo" src={logo} alt="" onClick={()=> window.location.href = '/home'}/>
             <h1>WOLF</h1>
           </div>
           {/* Button becomes disabled after visting any other page that isnt of the home sub domain */}
           {window.location.pathname === '/home' ? (
               <>
-                <button onClick={()=> props.appearEffect()}><i className="fa-solid fa-square-plus"></i> Post</button>
-                <h3>
+                <button onClick={()=> props.appearEffect()}><i className="fa-solid fa-plus"></i> <i class="fa-solid fa-comment"></i></button>
+                <button id="notificationBtn" onClick={()=> openNotifications('open')}><i className="fa-solid fa-bell"></i></button>
+                <span>
                   {
                     (whatCommunity === null) ? (
                       <>
@@ -222,10 +247,11 @@ export default function Navbar(props) {
                       </>
                     )
                   }
-                  </h3>
+                  </span>
               </>
             ) : (
               <>
+                <button id="notificationBtn" onClick={()=> openNotifications('open')}><i className="fa-solid fa-bell"></i></button>
                 <button style={{display: 'none'}}></button>
               </>
             )}
@@ -234,19 +260,18 @@ export default function Navbar(props) {
 
         <div id="profileContainer">
           {/* In place for a profile picture */}
-          <button id="notificationBtn" onClick={()=> openNotifications('open')}><i className="fa-solid fa-bell"></i></button>
           <img id='dropdownBtn' onClick={()=> navigateProfile()} src={loggedInProfilePic ? loggedInProfilePic : 'src/assets/defaultUser.jpg'} alt="" />
         </div>
+
 
         <span id="notificationDropdown" ref={notificationMenuRef}>
           <div id="clearNotifications">
             <h3>Notifications </h3>
             <button onClick={()=> openNotifications('close')}><i class="fa-solid fa-x"></i></button>
           </div>
-          <button id="clearBtn" onClick={()=> clearNotifications()}>Clear Notifications</button>
-          <br />
+          {/* <button id="clearBtn" onClick={()=> clearNotifications()}>Clear Notifications</button> */}
             {
-              notificationList ? (
+              (notificationList) ? (
 
                 notificationList?.length > 0 ? (
                   notificationList?.map((notification) => {
@@ -279,6 +304,7 @@ export default function Navbar(props) {
         <button ref={mobileNavBtn} id="mobileNavBtn" onClick={(self)=> openMobileNavMenu(self)}>
           <i className="fa-solid fa-bars"></i>
         </button>
+
       </nav>
 
       <section id="mobileNavMenu" ref={mobileNavMenu} >
@@ -292,28 +318,37 @@ export default function Navbar(props) {
         </div>
 
         {/* <hr /> */}
-        <h4 className="mobileNavMainBtns" onClick={()=> navigateLogOut()}>Log Out <i className="fa-solid fa-right-from-bracket"></i></h4>
-        <h4 className="mobileNavMainBtns" onClick={()=> navigateBackToHome()}>Home Feed <i className="fa-solid fa-house"></i></h4>
-        <h4 className="mobileNavMainBtns" onClick={()=> navigateToTopics()}>Join a Topic <i class="fa-solid fa-user-plus"></i></h4>
-        <h4 className="mobileNavMainBtns" onClick={()=> window.location.href = '/communities'} >My Communities <i className="fa-solid fa-users"></i></h4>
+        <h4 className="mobileNavMainBtns" onClick={()=> navigateBackToHome()}><i className="fa-solid fa-house"></i>Home</h4>
+        <h4 className="mobileNavMainBtns" onClick={()=> navigateBackToHome()}><i className="fa-solid fa-user"></i>Profile</h4>
+        <h4 className="mobileNavMainBtns" onClick={()=> navigateToTopics()}> <i class="fa-solid fa-user-plus"></i>Join a Den </h4>
+        <h4 className="mobileNavMainBtns" onClick={()=> window.location.href = '/communities'} > <i className="fa-solid fa-users"></i>My Dens </h4>
+        <h4 className="mobileNavMainBtns" onClick={()=> navigateLogOut()}><i className="fa-solid fa-right-from-bracket"></i>Log Out </h4>
         {/* Displays the communities that the user has joined */}
-        {/* {userTopicList?.length > 0 ? (
-          userTopicList.map((topic, key)=> {
-            return (
-              <>
-                <h4 className="mobileNavTopicBtns"
-                 key={key}
-                 onClick={()=> navigateToFeed(topic + 'Feed')}
-                 >  {topic} Feed <i className="fa-solid fa-arrow-right"></i></h4>
-              </>
+        <h3 id="recentlyJoinedDenMobileTitle">Recently Joined Dens</h3>
+        <div id="mobileRecentCommunities">
+          {
+            allCommunities ? (
+                allCommunities?.filter(community => Object.values(community.members).some(member => member.member === username)).slice(0, 3).length > 0 ? (
+                  allCommunities?.filter(community => Object.values(community.members).some(member => member.member === username)).slice(0, 3).map((community) => {
+                      return (
+                        <>
+                            <button className="recentlyJoinedDens" onClick={()=> window.location.href = `/home?topicFeed=${community.name + 'Feed'}`}><img src={community.image ? community.image : 'src/assets/wolfLogo.png'} alt="" />{community.name}</button>
+                        </>
+                      )
+                  })
+                ) : (
+                  <div className="noPostsMessage">
+                      <h3>No dens</h3>
+                  </div>
+                )
+            ) : (
+                <div className="noPostsMessage">
+                  <div className=" loader "></div>
+                </div>
             )
-          })
-        ) : (
-          <div className="noTopicsMessage">
-            <h3>No Topics Available</h3>
-            <p>Start joining topics to see them here.</p>
-          </div>
-        )} */}
+
+          }
+        </div>
       </section>
 
 

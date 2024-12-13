@@ -170,7 +170,6 @@ export default function Profile(props){
     // Get the difference in milliseconds
     const startDate = new Date(postCreationDate);
     const timeDifference = currentDate - startDate;
-    // console.log(postCreationDate)
 
     // Covert the difference from milliseconds to day and hours
     const millisecondsInOneDay = 24 * 60 * 60 * 1000;
@@ -283,7 +282,6 @@ export default function Profile(props){
 
   }
 
-  console.log(profilePostData)
 
   /*
      * hashed querystring that contains the username that the backend will search for
@@ -459,7 +457,7 @@ export default function Profile(props){
    }
 
    const imageRef = useRef()
-   const [updateMessage, setUpdateMessage] = useState(null)
+   const [updateMessage, setUpdateMessage] = useState('')
 
   async function changeProfilePicture(){
       let imageFile = imageRef.current.files[0]
@@ -471,6 +469,9 @@ export default function Profile(props){
          body: formData
       })
 
+      window.location.reload()
+
+      setUpdateMessage("Profile Picture Changed!")
       // await getUserProfilePosts()
 
 
@@ -494,13 +495,18 @@ export default function Profile(props){
                                  (userSearched === loggedInUID) ? (
                                     <div id="changeOverlay">
                                        <p>Change Picture</p>
-                                       <input ref={imageRef} accept="image/*" type="file" onChange={()=> {changeProfilePicture(), setUpdateMessage('Changed Profile Picture!')}}/>
+                                       <input ref={imageRef} accept="image/*" type="file" onChange={
+                                          ()=> {
+                                             changeProfilePicture(); ;
+
+                                          }}/>
+                                       <p id="updateMessage">{updateMessage}dfsdfsfds</p>
                                     </div>
                                  ) : (
                                     <span></span>
                                  )
                               }
-                              <p id="updateMessage">{updateMessage}</p>
+
                         </div>
                      </section>
 
@@ -598,7 +604,6 @@ export default function Profile(props){
       }
    }
 
-   console.log(postComments)
 
    return (
       <>

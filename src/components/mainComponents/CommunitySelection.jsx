@@ -116,7 +116,6 @@ export default function CommunitySelection(props){
       setCommunityOwner(owner)
    }
 
-   console.log(modifyCommunityMembers)
 
    // Changing community information
    async function savingNewCommunityInformation(){
@@ -124,7 +123,6 @@ export default function CommunitySelection(props){
       setErrorMessage('')
 
       if (!newCommunityName.current.value && !newCommunityDescription.current.value && !changePictureRef.current.files[0]) {
-         console.log('There is nothing there')
          setErrorMessage(`You must modify ${modifyCommunityName} in order to save.`)
          return
       }
@@ -230,7 +228,8 @@ export default function CommunitySelection(props){
                         <button className="viewCommunityPostsBtn" onClick={()=> window.location.href = `/home?topicFeed=${community.name + 'Feed'}`}>View Content</button>
                         <button className="communitySettingsBtn"
                         ref={(el) => (leaveCommunityBtn.current[key] = el)}
-                         onClick={()=> {modifyCreatedCommunity(community.name, community.members, community.communityDescription, community.image, community.owner), modifyMoodleHelper('openMoodle')}}><i class="fa-solid fa-gear"></i></button>
+                         onClick={()=> {modifyCreatedCommunity(community.name, community.members, community.communityDescription, community.image, community.owner), modifyMoodleHelper('openMoodle')}}>
+                           <i class="fa-solid fa-gear"></i> Settings</button>
                      </section>
                   </section>
 
@@ -256,7 +255,6 @@ export default function CommunitySelection(props){
          const renderedCommunities = totalMembers?.map((community, key)=> {
             const isMember = community.members.find((member)=> member.member === props.username)
 
-            console.log(isMember)
 
             if (isMember) {
                isJoinedCommunities = true
@@ -318,7 +316,7 @@ export default function CommunitySelection(props){
 
             <div ref={modifyCommunityMoodleRef} id="modifyCommunityMoodle">
                <section id="moodleTitleBar">
-                  <h2>Modify Community |<img src={modifyCommunityImage ? modifyCommunityImage : 'src/assets/wolfLogo.png' } alt="" /> {modifyCommunityName}</h2>
+                  <h2><img src={modifyCommunityImage ? modifyCommunityImage : 'src/assets/wolfLogo.png' } alt="" /> {modifyCommunityName}</h2>
                   <button className="exitCommunityMoodle" onClick={()=> modifyMoodleHelper('closeMoodle')}><i className="fa-solid fa-x"></i></button>
                </section>
                <h3 id="showOwner">Owner: {communityOwner}</h3>
@@ -371,10 +369,12 @@ export default function CommunitySelection(props){
                                                    {memberField.member} (owner)
                                                 </h4>
                                              ) : (
-                                                <h4>
-                                                   <img className='memberImg' src={memberField.memberProfilePic ? memberField.memberProfilePic : 'src/assets/defaultUser.jpg' } alt="" />
-                                                   {memberField.member}
-                                                </h4>
+                                                <>
+                                                   <h4>
+                                                      <img className='memberImg' src={memberField.memberProfilePic ? memberField.memberProfilePic : 'src/assets/defaultUser.jpg' } alt="" />
+                                                      {memberField.member}
+                                                   </h4>
+                                                </>
                                              )
                                           }
                                           <div className="memberActionBtns">

@@ -100,8 +100,8 @@ const upload = multer({ storage: storage });
 // For optimizing images when they are uploaded
 async function imageOptimize(imageBuffer, isImageForPosts){
   const optimizedImageBuffer = await sharp(imageBuffer)
-    .resize({width: 300, height: 300, fit: 'cover'})
-    .toFormat('jpeg', {quality: 40})
+    .resize({width: 75, height: 75, fit: 'cover'})
+    .toFormat('jpeg', {quality: 90})
     .toBuffer()
 
   const optimizedImageBufferForPosts = await sharp(imageBuffer)

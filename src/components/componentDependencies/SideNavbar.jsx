@@ -111,7 +111,7 @@ const SideNavBar = forwardRef(({
                <button onClick={()=> window.location.href = '/home'}><i class="fa-solid fa-house"></i> Home</button>
                <button onClick={()=> window.location.href = `/profile?user=${loggedInUID}`}><i class="fa-solid fa-user"></i>Profile</button>
                <button onClick={()=> window.location.href = '/communities'}><i className="fa-solid fa-border-all"></i> My Dens </button>
-               <button onClick={()=> window.location.href = '/topics'}><i className="fa-solid fa-plus"></i> Join a Wolf's Den</button>
+               <button onClick={()=> window.location.href = '/topics'}><i className="fa-solid fa-plus"></i> Join a Den</button>
                <button onClick={()=> window.location.href = '/'}><i className="fa-solid fa-right-from-bracket"></i>Logout</button>
                <p style={{color: 'grey'}}>Recently Joined Dens</p>
                {

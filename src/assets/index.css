@@ -13,7 +13,7 @@
   width: 100%;
   pointer-events: none;
   opacity: 0;
-  z-index: 2;
+  z-index: 0;
   transition: 250ms;
 }
 
@@ -73,25 +73,45 @@ body {
    LOGIN PAGE
 
  */
-#loginContainer {
+#loginFlex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+#loginFlex #imgContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 60%;
+  color: white;
+  gap: 0.5rem;
+  font-family: "comfortaa";
+  padding: 3rem;
+  line-height: 1.5;
+  text-align: center;
+}
+#loginFlex #imgContainer #wolfGIF {
+  -o-object-fit: cover;
+     object-fit: cover;
+  height: 100%;
+  width: 10%;
+}
+#loginFlex #loginContainer {
   font-family: comfortaa;
   background: #161616;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-around;
-  border: 2px solid #2E2E2E;
   padding: 2.5rem;
   gap: 1rem;
+  right: 1px;
   width: 40%;
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  border-radius: 2rem;
+  height: 100vh;
   color: white;
 }
-#loginContainer #title {
+#loginFlex #loginContainer #title {
   display: flex;
   align-items: center;
   gap: 1rem;
@@ -101,12 +121,12 @@ body {
 
   } */
 }
-#loginContainer #title .titleSection:nth-of-type(1) {
+#loginFlex #loginContainer #title .titleSection:nth-of-type(1) {
   display: flex;
   align-items: center;
   gap: 0.5rem;
 }
-#loginContainer #optionalDecision {
+#loginFlex #loginContainer #optionalDecision {
   display: flex;
   justify-content: end;
   width: 100%;
@@ -114,38 +134,38 @@ body {
   gap: 1rem;
   text-wrap: nowrap;
 }
-#loginContainer #optionalDecision #signUpLink {
+#loginFlex #loginContainer #optionalDecision #signUpLink {
   color: magenta;
   font-size: 1.2rem;
   text-decoration: none;
   align-self: end;
 }
-#loginContainer #optionalDecision #signUpLink:hover {
+#loginFlex #loginContainer #optionalDecision #signUpLink:hover {
   text-decoration: underline;
 }
-#loginContainer #inputField {
+#loginFlex #loginContainer #inputField {
   width: 100%;
   padding: 1rem;
 }
-#loginContainer #inputField p {
+#loginFlex #loginContainer #inputField p {
   margin: 0 auto;
   width: 350px;
   max-width: 100%;
   text-wrap: wrap;
   font-size: 0.9rem;
 }
-#loginContainer #inputField div {
+#loginFlex #loginContainer #inputField div {
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
   padding-top: 2rem;
 }
-#loginContainer #inputField div h3 {
+#loginFlex #loginContainer #inputField div h3 {
   font-family: "roboto", sans-serif;
   color: white;
   margin-bottom: 1.5rem;
 }
-#loginContainer #inputField div input {
+#loginFlex #loginContainer #inputField div input {
   background: none;
   width: 100%;
   height: 70px;
@@ -156,31 +176,31 @@ body {
   padding: 1rem;
   color: white;
 }
-#loginContainer #inputField div input:focus {
+#loginFlex #loginContainer #inputField div input:focus {
   outline: none;
 }
-#loginContainer #extraInfo {
+#loginFlex #loginContainer #extraInfo {
   display: flex;
   gap: 2rem;
 }
-#loginContainer #extraInfo a {
+#loginFlex #loginContainer #extraInfo a {
   color: #d43737;
   font-family: "roboto", sans-serif;
 }
-#loginContainer #extraInfo p {
+#loginFlex #loginContainer #extraInfo p {
   font-family: "roboto", sans-serif;
 }
-#loginContainer #extraInfo span {
+#loginFlex #loginContainer #extraInfo span {
   text-wrap: nowrap;
   color: rgb(245, 122, 122);
 }
-#loginContainer #loginBtns {
+#loginFlex #loginContainer #loginBtns {
   display: flex;
   justify-content: end;
   gap: 2rem;
   width: 100%;
 }
-#loginContainer #loginBtns button {
+#loginFlex #loginContainer #loginBtns button {
   background-color: #d43737;
   border: none;
   padding: 0.8rem;
@@ -193,42 +213,45 @@ body {
   font-weight: 900;
   width: 40%;
 }
-#loginContainer #loginBtns button:hover {
+#loginFlex #loginContainer #loginBtns button:hover {
   background-color: #7A0B31;
   transform: translateY(-5px);
 }
 
 @media (max-width: 1050px) {
-  #loginContainer {
+  #loginFlex #imgContainer {
+    display: none;
+  }
+  #loginFlex #loginContainer {
     background: none;
     border: none;
     width: 95%;
     padding: 1.5rem;
     gap: 3rem;
   }
-  #loginContainer #optionalDecision {
+  #loginFlex #loginContainer #optionalDecision {
     justify-content: center;
     /* #signUpLink {
 
     } */
   }
-  #loginContainer #title .titleSection:nth-of-type(1) img {
+  #loginFlex #loginContainer #title .titleSection:nth-of-type(1) img {
     height: 50px;
   }
-  #loginContainer #title .titleSection:nth-of-type(1) h1 {
+  #loginFlex #loginContainer #title .titleSection:nth-of-type(1) h1 {
     font-size: 1rem;
   }
-  #loginContainer #title .titleSection:nth-of-type(2) h2 {
+  #loginFlex #loginContainer #title .titleSection:nth-of-type(2) h2 {
     font-size: 1rem;
   }
-  #loginContainer #loginBtns button {
+  #loginFlex #loginContainer #loginBtns button {
     width: 100%;
     font-size: 1rem;
   }
-  #loginContainer #inputField {
+  #loginFlex #loginContainer #inputField {
     padding: 0;
   }
-  #loginContainer #inputField div h3 {
+  #loginFlex #loginContainer #inputField div h3 {
     font-size: 1rem;
   }
 }
@@ -372,9 +395,16 @@ TOPICS COMPONENT
     background: none;
     border-radius: 0rem;
   }
-  #topicsContainer main #pageHeader, #topicsContainer main #pageSubHeader {
+  #topicsContainer main #pageNavigation {
+    flex-direction: column;
+    gap: 2rem;
+  }
+  #topicsContainer main #pageNavigation #pageHeader {
     text-align: center;
     align-self: center;
+  }
+  #topicsContainer main #pageNavigation button {
+    width: 100%;
   }
   #topicsContainer main #topicSelect {
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -383,11 +413,15 @@ TOPICS COMPONENT
     gap: 1rem;
   }
   #topicsContainer main #topicSelect #communityGridContainer .topicSelectionBtn {
+    flex-direction: column;
     height: 250px;
     line-height: 1.5;
     box-shadow: none;
     border-radius: 0;
-    border-bottom: 1px solid white;
+    background: none;
+  }
+  #topicsContainer main #topicSelect #communityGridContainer .topicSelectionBtn .communityJoinBtn {
+    width: 100%;
   }
 }
 /*
@@ -456,20 +490,17 @@ DEFAULT PAGE
   color: white;
   font-family: "Nunito", sans-serif;
 }
-#nav #profileContainer {
-  display: flex;
-  gap: 1rem;
-  align-items: center;
-}
-#nav #profileContainer #notificationBtn {
+#nav #notificationBtn {
   font-size: 2rem;
   background: none;
   color: #d43737;
   border: none;
   cursor: pointer;
 }
-#nav #profileContainer #notificationBtn:hover {
-  color: #7A0B31;
+#nav #profileContainer {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
 }
 #nav #profileContainer #dropdownBtn {
   font-family: "Nunito", sans-serif;
@@ -488,11 +519,11 @@ DEFAULT PAGE
 }
 #nav #notificationDropdown {
   height: 500px;
-  width: 500px;
+  min-width: 350px;
   position: absolute;
   background-color: #181818;
   top: 110%;
-  right: 1%;
+  left: 1%;
   border-radius: 1rem;
   padding: 1rem;
   color: white;
@@ -540,7 +571,7 @@ DEFAULT PAGE
   align-items: center;
   gap: 1rem;
   padding: 0.5rem;
-  border-bottom: 1px solid rgba(60, 60, 60, 0.537254902);
+  margin-top: 1rem;
 }
 #nav #notificationDropdown .notification img {
   height: 40px;
@@ -605,7 +636,8 @@ DEFAULT PAGE
   border-radius: 1rem;
   cursor: pointer;
   display: flex;
-  justify-content: space-between;
+  justify-content: left;
+  gap: 0.5rem;
 }
 #mobileNavMenu .mobileNavMainBtns:hover {
   background-color: #2E2E2E;
@@ -621,6 +653,35 @@ DEFAULT PAGE
 }
 #mobileNavMenu .mobileNavTopicBtns:hover {
   background-color: rgba(30, 0, 0, 0.9725490196);
+}
+
+#mobileRecentCommunities {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+#mobileRecentCommunities button {
+  background: none;
+  color: white;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  border: none;
+  padding: 0.5rem;
+  border-radius: 1rem;
+  cursor: pointer;
+}
+#mobileRecentCommunities button img {
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+}
+#mobileRecentCommunities button:hover {
+  background-color: #2E2E2E;
+}
+
+#recentlyJoinedDenMobileTitle {
+  color: grey;
 }
 
 @keyframes shake {
@@ -807,6 +868,11 @@ main #content {
   flex-direction: column;
   border-radius: 1rem;
 }
+main #content #whatsNew {
+  font-family: "Nunito", sans-serif;
+  color: white;
+  font-size: 3rem;
+}
 main #content #newPostBtn {
   width: 100%;
   color: white;
@@ -843,11 +909,11 @@ main #content #newPost #createPostElement {
   color: white;
   gap: 2rem;
   width: 50%;
-  height: 650px;
+  height: 750px;
   margin-left: 1rem;
   position: fixed;
   padding: 3rem;
-  top: 55%;
+  top: 51%;
   right: 50%;
   transform: translate(50%, -50%);
   border-radius: 1rem;
@@ -858,7 +924,7 @@ main #content #newPost #createPostElement {
   transition: 250ms;
   display: flex;
   flex-direction: column;
-  z-index: 4;
+  z-index: 13;
 }
 main #content #newPost #createPostElement #createNewPostHeader {
   color: white;
@@ -893,7 +959,7 @@ main #content #newPost #createPostElement #formBody {
 main #content #newPost #createPostElement #formBody label {
   font-family: "Nunito", sans-serif;
 }
-main #content #newPost #createPostElement #formBody input {
+main #content #newPost #createPostElement #formBody textarea {
   width: 100%;
   height: 60px;
   max-width: 100%;
@@ -905,7 +971,7 @@ main #content #newPost #createPostElement #formBody input {
   border: 1px solid #2E2E2E;
   color: white;
 }
-main #content #newPost #createPostElement #formBody input:focus {
+main #content #newPost #createPostElement #formBody textarea:focus {
   outline: none;
 }
 main #content #newPost #createPostElement #formSubject {
@@ -934,6 +1000,11 @@ main #content #newPost #createPostElement #upload {
   gap: 1rem;
   border-radius: 1rem;
   font-family: "Nunito", sans-serif;
+}
+main #content #newPost #createPostElement #upload img {
+  height: 75px;
+  width: 75px;
+  border: none;
 }
 main #content #newPost #createPostElement button {
   padding: 1rem;
@@ -1056,11 +1127,9 @@ main #content .userContent .userPost .mainPost .postAnalytics .postCaption i {
   color: #d43737;
 }
 main #content .userContent .userPost .mainPost #postIMG {
-  height: 600px;
+  max-width: 100%;
   -o-object-fit: contain;
      object-fit: contain;
-  background-color: #333;
-  padding: 1rem;
 }
 main #content .userContent .userPost .mainPost .postBody {
   font-size: 1.2rem;
@@ -2030,7 +2099,6 @@ main #content .userContent .userPost .postInteractionSection .postLC .commentBtn
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-  padding: 1rem;
   border-radius: 1rem;
 }
 #createCommunityMoodle #giveName input {
@@ -2044,7 +2112,6 @@ main #content .userContent .userPost .postInteractionSection .postLC .commentBtn
 #createCommunityMoodle #giveDescription {
   display: flex;
   flex-direction: column;
-  padding: 1rem;
   border-radius: 1rem;
   gap: 0.5rem;
 }
@@ -2101,6 +2168,20 @@ main #content .userContent .userPost .postInteractionSection .postLC .commentBtn
     font-size: 1rem;
     gap: 0.5rem;
   }
+  #createCommunityMoodle {
+    left: 0;
+    width: 99%;
+  }
+  #createCommunityMoodle #givePicture img {
+    height: 40px;
+    width: 40px;
+  }
+  #createCommunityMoodle #giveBtnContainer {
+    flex-direction: column;
+  }
+  #createCommunityMoodle #giveBtnContainer #initCommunity {
+    width: 100%;
+  }
 }
 /*
 
@@ -2115,12 +2196,18 @@ HOME COMPONENT MEDIA QUERIES
     background-color: #181818;
   }
   #nav #logoContainer {
-    height: 40px;
+    height: 30px;
+    width: 30px;
     justify-content: left;
     gap: 0.5rem;
   }
   #nav #logoContainer h1 {
     display: none;
+  }
+  #nav span h3 {
+    border-left: 1px solid grey;
+    padding: 0.5rem;
+    font-size: medium;
   }
   #nav #profileContainer {
     display: none;
@@ -2159,6 +2246,9 @@ HOME COMPONENT MEDIA QUERIES
   main #content #newPostBtn {
     display: none;
   }
+  main #content #whatsNew {
+    display: none;
+  }
   main #content #newPost {
     position: fixed;
     bottom: 2.5rem;
@@ -2188,6 +2278,8 @@ HOME COMPONENT MEDIA QUERIES
     width: 95%;
     padding: 2rem;
     gap: 1.5rem;
+    height: 650px;
+    z-index: 14;
     /* #feedbackMessage {
 
     } */
@@ -2205,7 +2297,6 @@ HOME COMPONENT MEDIA QUERIES
     gap: 0rem;
   }
   main #content .userContent .userPost {
-    gap: 0;
     background-color: #000;
     border-radius: 0rem;
   }
@@ -2217,7 +2308,6 @@ HOME COMPONENT MEDIA QUERIES
   }
   main #content .userContent .userPost .mainPost {
     border: none;
-    border-top: 0.5px solid #2E2E2E;
     border-radius: 0rem;
     gap: 1.5rem;
     background: none;
