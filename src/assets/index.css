@@ -306,8 +306,8 @@ TOPICS COMPONENT
   cursor: pointer;
 }
 #topicsContainer main #topicSelect #communityGridContainer {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+  display: flex;
+  flex-direction: column;
   gap: 1rem;
 }
 #topicsContainer main #topicSelect #communityGridContainer .topicSelectionBtn {
