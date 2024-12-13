@@ -4,7 +4,7 @@ import logo from "/src/assets/wolfLogo.png";
 export default function Login() {
   const username = useRef(null);
   const password = useRef(null);
-  const [loginErrorMessage, setLoginErrorMessage] = useState('')
+  const [loginErrorMessage, setLoginErrorMessage] = useState("");
 
   const famousQuotes = [
     "Imagination is more important than knowledge. For knowledge is limited, whereas imagination embraces the entire world. - Albert Einstein",
@@ -26,16 +26,16 @@ export default function Login() {
     "I can't change the direction of the wind, but I can adjust my sails to always reach my destination. - Jimmy Dean",
     "The best way to predict your future is to create it. - Abraham Lincoln",
     "You miss 100% of the shots you don't take. - Wayne Gretzky",
-    "Believe you can and you're halfway there. - Theodore Roosevelt"
+    "Believe you can and you're halfway there. - Theodore Roosevelt",
   ];
 
   // random value
-  let randomQuote = famousQuotes[Math.floor(Math.random() * famousQuotes.length)]
-
+  let randomQuote =
+    famousQuotes[Math.floor(Math.random() * famousQuotes.length)];
 
   async function signIn() {
     if (username.current.value === "" || password.current.value === "") {
-      setLoginErrorMessage("Enter a username and password.")
+      setLoginErrorMessage("Enter a username and password.");
     } else {
       const response = await fetch(`/users/login`, {
         method: "POST",
@@ -56,19 +56,18 @@ export default function Login() {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
 
-
-      password.current.value = ''
-      username.current.value = ''
+      password.current.value = "";
+      username.current.value = "";
 
       if (response.redirected) {
-        window.location.href = '/home';
+        window.location.href = "/home";
       } else {
-        setLoginErrorMessage("Invalid username or password.")
-        password.current.value = ''
-        username.current.value = ''
-        return response.json()
+        setLoginErrorMessage("Invalid username or password.");
+        password.current.value = "";
+        username.current.value = "";
+        return response.json();
       }
-     // waiting on success message from server
+      // waiting on success message from server
       // if (successMessage.success == true) window.location.href = "home.html";
     }
   }
@@ -79,9 +78,8 @@ export default function Login() {
       password.current.value === "" ||
       password.current.value.length <= 5
     ) {
-      setLoginErrorMessage('Enter a username and password.')
+      setLoginErrorMessage("Enter a username and password.");
     } else {
-
       // sending form data over to backend
       const response = await fetch(`/users/add`, {
         method: "POST",
@@ -104,49 +102,43 @@ export default function Login() {
 
       password.current.value = "";
       username.current.value = "";
-      setLoginErrorMessage("That username is already registered.")
+      setLoginErrorMessage("That username is already registered.");
 
       if (response.redirected) {
         // window.location.href = response.url;
-        window.location.href = '/home';
-
+        window.location.href = "/home";
       } else {
         password.current.value = "";
         username.current.value = "";
-        console.log("not redirected")
-        return response.json()
+        console.log("not redirected");
+        return response.json();
       }
-
-
     }
-
   }
 
   const queryString = window.location.search;
   const urlParams = new URLSearchParams(queryString);
   const signinCheck = urlParams.get("signUp");
 
-  function determineSignUp(){
+  function determineSignUp() {
     // if on signUp version
     if (signinCheck) {
       return (
         <button className="signUpBtn" onClick={() => createUser()}>
           Sign Up <i className="fa-solid fa-user-plus"></i>
         </button>
-      )
+      );
     } else {
       return (
         <button className="signUpBtn" onClick={() => signIn()}>
           Log In <i className="fa-solid fa-right-to-bracket"></i>
         </button>
-      )
+      );
     }
-
   }
 
   // jobrecruiter
   // job1234
-
 
   // "/src/img/wolfLogo.png"
   return (
@@ -163,31 +155,41 @@ export default function Login() {
               <h1>WOLF</h1>
             </div>
             <div className="titleSection">
-              <h2>{signinCheck ? 'Sign up' : 'Login'}</h2>
+              <h2>{signinCheck ? "Sign up" : "Login"}</h2>
             </div>
           </section>
           <form id="inputField">
             {/* for people demoing the app */}
             <div>
               <h3>USERNAME</h3>
-              <input required ref={username} type="text" placeholder="Enter your username"/>
+              <input
+                required
+                ref={username}
+                type="text"
+                placeholder="Enter your username"
+              />
             </div>
             <div>
               <h3>PASSWORD</h3>
-              <input required ref={password} type="password" placeholder="Enter your password"/>
+              <input
+                required
+                ref={password}
+                type="password"
+                placeholder="Enter your password"
+              />
             </div>
           </form>
           <section id="optionalDecision">
-            <p>{signinCheck ? 'Have an Account?' : "Don't have an account?"}</p>
-            <a href={signinCheck ? '/' : "/?signUp=true"} id="signUpLink">{signinCheck ? "Login" : "Sign Up"}</a>
+            <p>{signinCheck ? "Have an Account?" : "Don't have an account?"}</p>
+            <a href={signinCheck ? "/" : "/?signUp=true"} id="signUpLink">
+              {signinCheck ? "Login" : "Sign Up"}
+            </a>
           </section>
           <div id="extraInfo">
             {/* error message */}
             <span>{loginErrorMessage}</span>
           </div>
-          <div id="loginBtns">
-            {determineSignUp()}
-          </div>
+          <div id="loginBtns">{determineSignUp()}</div>
         </main>
       </div>
     </>

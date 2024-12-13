@@ -21,7 +21,7 @@
 }
 #contentContainer #modifyCommunityMoodle {
   background-color: #181818;
-  border: 1px solid #532C2C;
+  border: 1px solid #532c2c;
   border-radius: 1rem;
   position: fixed;
   width: 70%;
@@ -201,7 +201,7 @@
   top: 30%;
   background-color: #181818;
   position: fixed;
-  border: 1px solid #532C2C;
+  border: 1px solid #532c2c;
   z-index: 2;
   border-radius: 1rem;
   color: white;
@@ -236,7 +236,7 @@
   cursor: pointer;
 }
 #contentContainer #confirmMoodle #deleteButton:hover {
-  background-color: #7A0B31;
+  background-color: #7a0b31;
 }
 @media (max-width: 1050px) {
   #contentContainer #modifyCommunityMoodle {
@@ -359,11 +359,11 @@
   border: none;
   font-size: 1rem;
   color: orange;
-  border: 1px solid #F96E36;
+  border: 1px solid #f96e36;
 }
 #contentContainer #communityContainer ul li .topHalf .interactionBtns .communitySettingsBtn:hover {
   color: white;
-  background-color: #F96E36;
+  background-color: #f96e36;
 }
 @media (max-width: 1050px) {
   #contentContainer #communityContainer {

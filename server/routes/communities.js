@@ -206,10 +206,16 @@ router.post(
       communityName: communityName,
       communityDescription: communityDescription,
       // The first member of a new community will always be the owner
-      members: [{
-        member: ownerName,
-        memberProfilePic: findOwner.profilePic ? `data:${findOwner.profilePic.contentType};base64,${findOwner.profilePic.data.toString('base64')}` : null,
-      }],
+      members: [
+        {
+          member: ownerName,
+          memberProfilePic: findOwner.profilePic
+            ? `data:${
+                findOwner.profilePic.contentType
+              };base64,${findOwner.profilePic.data.toString("base64")}`
+            : null,
+        },
+      ],
       creationDate: `${creationMonth}/${creationDay}/${creationYear}`,
       owner: ownerName,
       posts: 0,

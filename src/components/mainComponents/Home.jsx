@@ -73,8 +73,8 @@ export default function Home() {
   const createPostElement = useRef(null);
   const darkBG = useRef(null);
   const newPostBtn = useRef(null);
-  const selectRef = useRef(null)
-  const [communityImagePreview, setCommunityImagePreview] = useState(null)
+  const selectRef = useRef(null);
+  const [communityImagePreview, setCommunityImagePreview] = useState(null);
 
   // GETTING USER INFORMATION AND DISPLYING IT ON THE HOME PAGE SPECIFIC TO THE USER LOGGED IN
   async function getUserData() {
@@ -150,7 +150,6 @@ export default function Home() {
     setCommunityStatePost(communityToPostTo);
   };
 
-
   //  Creating a new post
   async function createNewPost(community) {
     let subject = subjectPostElement.current.value;
@@ -187,14 +186,12 @@ export default function Home() {
     // Message to confirm that the post has been to the respective feed
     errorMessageElement.current.style.color = "lime";
     setErrorMessage(`Posted to ${community}`);
-    if (community === 'Home') {
+    if (community === "Home") {
       setTimeout(() => {
         window.location.href = `/home`;
         errorMessageElement.current.style.color = "lime";
         bodyPostElement.current.value = "";
         subjectPostElement.current.value = "";
-
-
       }, 900);
     } else {
       setTimeout(() => {
@@ -202,11 +199,8 @@ export default function Home() {
         bodyPostElement.current.value = "";
         subjectPostElement.current.value = "";
         window.location.href = `/home?topicFeed=${community + "Feed"}`;
-
-
       }, 900);
     }
-
   }
 
   useEffect(() => {
@@ -214,8 +208,6 @@ export default function Home() {
     fetchTopicData();
     retrieveCommunityInformation();
   }, []);
-
-
 
   // Mobile nav bar functionality
   function mobileNavFunction() {
@@ -270,7 +262,7 @@ export default function Home() {
   }
 
   // side bar refs
-  const sidebarRefs = { sideNav};
+  const sidebarRefs = { sideNav };
 
   // Navbar functionality
   const navbarProps = {
@@ -299,8 +291,6 @@ export default function Home() {
 
       <SideNavBar {...sidebarProps} ref={sidebarRefs} />
       <main>
-
-
         <span ref={darkBG} id="darkBG"></span>
         <section id="content">
           {/* New post button for desktop with a message with it */}
@@ -325,31 +315,26 @@ export default function Home() {
                 <h2>Which Den?</h2>
                 <form>
                   <select ref={selectRef}>
+                    {userSearched ? (
+                      <option value={userSearched.split("Feed")[0]}>
+                        {userSearched.split("Feed")[0]}
+                      </option>
+                    ) : (
+                      <span></span>
+                    )}
 
-                    {
-                      userSearched ? (
-                        <option
-                          value={userSearched.split('Feed')[0]}
-                        >
-                          {userSearched.split('Feed')[0]}
-                        </option>
-                      ) : (
-                        <span></span>
+                    <option value={"Home"}>Home</option>
+
+                    {totalMembers
+                      ?.filter((community) =>
+                        Object.values(community.members).some(
+                          (member) => member.member === username
+                        )
                       )
-                    }
-
-                    <option
-                      value={"Home"}
-                    >
-                      Home
-                    </option>
-
-                    {totalMembers?.filter((community) => Object.values(community.members).some(member => member.member === username)).map((community) => {
+                      .map((community) => {
                         return (
                           <>
-                            <option
-                              value={community.name}
-                            >
+                            <option value={community.name}>
                               {community.name}
                             </option>
                           </>
@@ -379,23 +364,34 @@ export default function Home() {
               </div>
               <div id="upload">
                 Upload a picture
-                <img src={communityImagePreview ? communityImagePreview : null} alt="No image selected" />
-                <input accept="image/*" ref={imageRef} type="file" onChange={()=> {
-                  // Processing the uploaded photo and getting a preview of what it looks like before the Post is created
-                  const file = imageRef.current.files[0]
-                  if (file) {
-                    const reader = new FileReader()
-                    reader.onloadend = () => setCommunityImagePreview(reader.result)
-                    reader.readAsDataURL(file)
-                  }
-                }} />
+                <img
+                  src={communityImagePreview ? communityImagePreview : null}
+                  alt="No image selected"
+                />
+                <input
+                  accept="image/*"
+                  ref={imageRef}
+                  type="file"
+                  onChange={() => {
+                    // Processing the uploaded photo and getting a preview of what it looks like before the Post is created
+                    const file = imageRef.current.files[0];
+                    if (file) {
+                      const reader = new FileReader();
+                      reader.onloadend = () =>
+                        setCommunityImagePreview(reader.result);
+                      reader.readAsDataURL(file);
+                    }
+                  }}
+                />
               </div>
-
 
               <h4 id="feedbackMessage" ref={errorMessageElement}>
                 {errorMessage}
               </h4>
-              <button type="button" onClick={() => createNewPost(selectRef.current.value)}>
+              <button
+                type="button"
+                onClick={() => createNewPost(selectRef.current.value)}
+              >
                 Post
               </button>
             </form>
@@ -415,7 +411,7 @@ export default function Home() {
             {/*  Updating the feed with the newest posts*/}
           </article>
         </section>
-        <Suggested/>
+        <Suggested />
       </main>
     </>
   );

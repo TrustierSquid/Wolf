@@ -151,7 +151,7 @@ export default function UpdateFeed(props) {
   const commentValue = useRef(null);
   const [postComments, setPostComments] = useState([]);
   const [postImage, setPostImage] = useState(null);
-  const [posterProfilePicState, setPosterProfilePicState] = useState(null)
+  const [posterProfilePicState, setPosterProfilePicState] = useState(null);
 
   // Getting the information for the post selected when the interface appears.
   async function commentInterfaceAppear(
@@ -176,8 +176,7 @@ export default function UpdateFeed(props) {
     setPostComments(postComments.reverse());
     setCommentsCount(postComments.length);
     setPostImage(image);
-    setPosterProfilePicState(posterProfilePic)
-
+    setPosterProfilePicState(posterProfilePic);
 
     setErrorMessage("");
 
@@ -194,7 +193,6 @@ export default function UpdateFeed(props) {
     commentInterface.current.style.opacity = "0";
     commentInterface.current.style.pointerEvents = "none";
   }
-
 
   // for processing comments for posts
   async function addComment(comment, postID) {
@@ -349,7 +347,10 @@ export default function UpdateFeed(props) {
                           onClick={() => addLike(post._id, key)}
                         >
                           <i className="fa-solid fa-heart"></i>
-                          <span style={{ color: "white" }}> {post.likes.length}</span>
+                          <span style={{ color: "white" }}>
+                            {" "}
+                            {post.likes.length}
+                          </span>
                         </span>
                         <span
                           className="commentBtn"
@@ -370,11 +371,12 @@ export default function UpdateFeed(props) {
                           }}
                         >
                           <i className="fa-solid fa-comments"></i>{" "}
-                          <span style={{ color: "white" }}> {post.comments.length}</span>
+                          <span style={{ color: "white" }}>
+                            {" "}
+                            {post.comments.length}
+                          </span>
                         </span>
                       </div>
-
-
                     </nav>
                   </div>
                 </>
@@ -397,7 +399,15 @@ export default function UpdateFeed(props) {
         <h3 id="topDiv">
           <div id="fromWho">
             <section>
-              <img className='commentPosterProfilePic' src={posterProfilePicState ? posterProfilePicState : 'src/assets/defaultUser.jpg'} alt="" />
+              <img
+                className="commentPosterProfilePic"
+                src={
+                  posterProfilePicState
+                    ? posterProfilePicState
+                    : "src/assets/defaultUser.jpg"
+                }
+                alt=""
+              />
               <h3 onClick={() => navigateToProfile(poster)}>{poster}</h3>
             </section>
           </div>
@@ -449,19 +459,33 @@ export default function UpdateFeed(props) {
           <br />
           <h4 style={{ color: "lime" }}>{errorMessage}</h4>
         </section>
-        <h2>{postComments.length > 1 ? `${postComments.length} Comments` : `${postComments.length} Comment`} </h2>
+        <h2>
+          {postComments.length > 1
+            ? `${postComments.length} Comments`
+            : `${postComments.length} Comment`}{" "}
+        </h2>
         <article className="commentContainer">
           {postComments?.length > 0 ? (
             postComments?.map((comment) => {
-              console.log(comment)
+              console.log(comment);
               return (
                 <>
                   <div className="comment">
                     <section>
-                      <img className="commenterProfilePicImg" src={comment.commenterProfilePicImg ? comment.commenterProfilePicImg : 'src/assets/defaultUser.jpg'} alt="" />
+                      <img
+                        className="commenterProfilePicImg"
+                        src={
+                          comment.commenterProfilePicImg
+                            ? comment.commenterProfilePicImg
+                            : "src/assets/defaultUser.jpg"
+                        }
+                        alt=""
+                      />
                       <h3 onClick={() => navigateToProfile(comment.from)}>
                         {comment.from}
-                        <span className="commentTime">{showPostDate(comment.timePosted)}</span>
+                        <span className="commentTime">
+                          {showPostDate(comment.timePosted)}
+                        </span>
                       </h3>
                     </section>
                     <br />

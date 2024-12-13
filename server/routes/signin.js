@@ -4,7 +4,7 @@ import express from "express";
 import dotenv from "dotenv";
 dotenv.config();
 import bcrypt from "bcrypt";
-import crypto from 'crypto'
+import crypto from "crypto";
 
 // for file redirections
 import path from "path";
@@ -37,7 +37,6 @@ router.use(cookieParser());
 // init db connection
 let database = null;
 
-
 // with this middleware you are shipping each req object with a database prop
 router.use(async (req, res, next) => {
   if (!database) {
@@ -58,9 +57,6 @@ const createToken = (userId) => {
     expiresIn: maxAge,
   });
 };
-
-
-
 
 /*
 
@@ -100,10 +96,7 @@ router.post("/login", async (req, res) => {
 
         console.log(`${username} has logged in. Welcome!`);
 
-
-
         res.redirect(`/home`);
-
       } else {
         // sending error message that is to be displayed on login page
         res.json({ err: "Password is incorrect" });
@@ -125,7 +118,7 @@ router.post("/add", async (req, res) => {
   const { username, password } = req.body;
 
   try {
-    const UID = crypto.randomBytes(16).toString('hex')
+    const UID = crypto.randomBytes(16).toString("hex");
     const users = await req.db.collection("Users");
 
     // checking to find if the user is already registered
@@ -182,10 +175,7 @@ router.post("/add", async (req, res) => {
   }
 });
 
-
 /*TOPICS PAGE*/
-
-
 
 // HOME FEED PAGE
 // when the user accesses their home page
@@ -200,17 +190,19 @@ router.get("/homeFeed", requireAuth, async (req, res) => {
 
   let userSelectedTopics = loggedInUser.topics;
 
-
   res.json({
     topicArr: userSelectedTopics,
     userName: loggedInUser.user,
     followerCount: loggedInUser.followers,
     followingCount: loggedInUser.following,
     UID: loggedInUser.UID,
-    profilePic: loggedInUser.profilePic ? `data:${loggedInUser.profilePic.contentType};base64,${loggedInUser.profilePic.data.toString('base64')}` : null,
-    notificationList: loggedInUser.notifications
+    profilePic: loggedInUser.profilePic
+      ? `data:${
+          loggedInUser.profilePic.contentType
+        };base64,${loggedInUser.profilePic.data.toString("base64")}`
+      : null,
+    notificationList: loggedInUser.notifications,
   });
-
 });
 
 export default router;

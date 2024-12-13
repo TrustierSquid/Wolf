@@ -11,21 +11,20 @@ import sharp from "sharp";
 import signinRoutes from "./routes/signin.js";
 import profileRoutes from "./routes/profileData.js";
 import topicFeedRoutes from "./routes/topicFeed.js";
-import handleImages from './routes/imageHandling.js'
-import handleCommunity from './routes/communities.js'
+import handleCommunity from "./routes/communities.js";
 
 // To check if the user has a token for accessing certain routes
 import requireAuth from "./middleware/authMiddleware.js";
 
 // MONGODB
 import { MongoClient, ServerApiVersion, ObjectId, GridFSBucket } from "mongodb";
-import multer from 'multer';
-import { Readable } from 'stream';
+import multer from "multer";
+import { Readable } from "stream";
 
-import GridFsStorage from 'multer-gridfs-storage';
+import GridFsStorage from "multer-gridfs-storage";
 /* import pkg from 'multer-gridfs-storage'
 const { GridFsStorage } = pkg */
-import crypto from 'crypto'
+import crypto from "crypto";
 
 // list of topics for the user to choose from
 import topics from "./json/topics.json" assert { type: "json" };
@@ -48,19 +47,17 @@ app.use(cors());
 // MIDDLEWARE
 app.use(cookieParser());
 app.use(express.json());
-app.use(express.static(path.join(__dirname,  "./dist")));
+app.use(express.static(path.join(__dirname, "./dist")));
 
 app.use("/users", signinRoutes);
 app.use("/profileData", profileRoutes);
 app.use("/loadTopicFeed", topicFeedRoutes);
-app.use('/handleImage', handleImages)
-app.use('/community', handleCommunity)
+app.use("/community", handleCommunity);
 // app.use('/userInteraction', likesRoutes)
 
 // Creating new mongoClient instance
 const uri = process.env.DB_URI;
 const currentDate = new Date();
-
 
 // database configuration
 let database = null;
@@ -82,7 +79,7 @@ async function connectMongo() {
     await client.connect();
     // let databaseAd = client.db('admin');
     database = client.db(process.env.DB_NAME);
-    let imagesCollection = database.collection('images')
+    let imagesCollection = database.collection("images");
 
     console.log(`Connected to ${database.databaseName}`);
     return database;
@@ -96,29 +93,25 @@ connectMongo();
 const storage = multer.memoryStorage(); // Store files in memory
 const upload = multer({ storage: storage });
 
-
 // For optimizing images when they are uploaded
-async function imageOptimize(imageBuffer, isImageForPosts){
+async function imageOptimize(imageBuffer, isImageForPosts) {
   const optimizedImageBuffer = await sharp(imageBuffer)
-    .resize({width: 75, height: 75, fit: 'cover'})
-    .toFormat('jpeg', {quality: 90})
-    .toBuffer()
+    .resize({ width: 75, height: 75, fit: "cover" })
+    .toFormat("jpeg", { quality: 90 })
+    .toBuffer();
 
   const optimizedImageBufferForPosts = await sharp(imageBuffer)
-    .resize({width: 700, height: 600, fit: 'contain'})
-    .toFormat('jpeg', {quality: 50})
-    .toBuffer()
+    .resize({ width: 700, height: 600, fit: "contain" })
+    .toFormat("jpeg", { quality: 50 })
+    .toBuffer();
 
-
-
-  if (isImageForPosts === 'profile') {
+  if (isImageForPosts === "profile") {
     // Return image optimized for profile pictures
-    return optimizedImageBuffer
+    return optimizedImageBuffer;
   } else {
     // Return image optimized for posts
-    return optimizedImageBufferForPosts
+    return optimizedImageBufferForPosts;
   }
-
 }
 
 //  For the main feed
@@ -131,21 +124,27 @@ app.get("/update", async (req, res) => {
   const posts = await mainFeedCollection.find({}).toArray();
 
   // helper function for grabbing profile information as needed as we need this for accessing the users profile pic
-  const helperForProfilePic = async (poster)=> {
+  const helperForProfilePic = async (poster) => {
     // Searching for the posters profilei information
-    const searchedUser = await database.collection('Users').findOne({user: poster})
+    const searchedUser = await database
+      .collection("Users")
+      .findOne({ user: poster });
 
     if (!searchedUser) {
       throw new Error(`User with poster ${poster} not found`);
     }
 
-    return searchedUser.profilePic ? `data:${searchedUser.profilePic.contentType};base64,${searchedUser.profilePic.data.toString('base64')}` : 'src/assets/defaultUser.jpg'
-  }
+    return searchedUser.profilePic
+      ? `data:${
+          searchedUser.profilePic.contentType
+        };base64,${searchedUser.profilePic.data.toString("base64")}`
+      : "src/assets/defaultUser.jpg";
+  };
 
   // Process posts with asynchronous handling for profile pictures
   const responsePost = await Promise.all(
     posts.map(async (post) => {
-      const posterProfilePic = await helperForProfilePic(post.poster)
+      const posterProfilePic = await helperForProfilePic(post.poster);
       return {
         _id: post._id,
         poster: post.poster,
@@ -155,23 +154,24 @@ app.get("/update", async (req, res) => {
         likes: post.likes,
         postCreationDate: post.postCreationDate,
         comments: post.comments,
-        image: post.image ? `data:${post.image.contentType};base64,${post.image.data.toString('base64')}` : null
-      }
+        image: post.image
+          ? `data:${post.image.contentType};base64,${post.image.data.toString(
+              "base64"
+            )}`
+          : null,
+      };
     })
-  )
+  );
 
   // res.json({ reversedPosts: posts.reverse() });
   res.json({ reversedPosts: responsePost.reverse() });
 });
 
-
 // WHEN THE USER CREATES A NEW POST
-app.post("/newPost", upload.single('image'), async (req, res) => {
+app.post("/newPost", upload.single("image"), async (req, res) => {
   const { feed } = req.query;
-  const { whoPosted, postSubject, postBody} = req.body;
-  const imageFile = req.file
-
-
+  const { whoPosted, postSubject, postBody } = req.body;
+  const imageFile = req.file;
 
   // if no feed is selected, post will default to mainFeed
   if (feed === "Home") {
@@ -181,7 +181,6 @@ app.post("/newPost", upload.single('image'), async (req, res) => {
     let database = await connectMongo();
     const users = database.collection("Users");
     const mainFeed = database.collection("mainFeed");
-
 
     // Fetching the poster of the new post
     const filter = { user: whoPosted };
@@ -210,27 +209,24 @@ app.post("/newPost", upload.single('image'), async (req, res) => {
     // If an image exists inside this post attempt
     if (imageFile) {
       newPostData.image = {
-        data: await imageOptimize(imageFile.buffer, 'post'),
+        data: await imageOptimize(imageFile.buffer, "post"),
         contentType: imageFile.mimetype,
         filename: imageFile.originalname,
-      }
+      };
     }
 
-    const newPost = await mainFeed.insertOne(newPostData)
+    const newPost = await mainFeed.insertOne(newPostData);
 
-
-    res.status(201).json({ message: 'Post created successfully', id: newPost.insertedId});
+    res
+      .status(201)
+      .json({ message: "Post created successfully", id: newPost.insertedId });
     // Adding the post to the database will lead to a call to action on the frontend
     // The frontend will load this collection in the database to show the user feed
-
-
   } else {
-
     // Updating the poster's post count
     let database = await connectMongo();
     const users = database.collection("Users");
-    const selectedFeed = database.collection(feed + 'Feed');
-
+    const selectedFeed = database.collection(feed + "Feed");
 
     // poster
     const filter = { user: whoPosted };
@@ -241,7 +237,6 @@ app.post("/newPost", upload.single('image'), async (req, res) => {
     };
 
     const updatePosts = await users.updateOne(filter, updateDoc);
-
 
     // adding the post to the DB to the respective feed
     const newPostData = {
@@ -255,47 +250,50 @@ app.post("/newPost", upload.single('image'), async (req, res) => {
 
     if (imageFile) {
       newPostData.image = {
-        data: await imageOptimize(imageFile.buffer, 'post'),
+        data: await imageOptimize(imageFile.buffer, "post"),
         contentType: imageFile.mimetype,
         filename: imageFile.originalname,
-      }
+      };
     }
 
-    const newPost = await selectedFeed.insertOne(newPostData)
+    const newPost = await selectedFeed.insertOne(newPostData);
 
-    res.status(201).json({ message: 'Post created successfully', id: newPost.insertedId});
-
+    res
+      .status(201)
+      .json({ message: "Post created successfully", id: newPost.insertedId });
   }
 });
 
 // User uploads profile picture
-app.post("/uploadProfilePicture/:loggedInUser", upload.single('image'), async (req, res)=> {
-  try {
-    const imageFile = req.file
-    const {loggedInUser} = req.params
+app.post(
+  "/uploadProfilePicture/:loggedInUser",
+  upload.single("image"),
+  async (req, res) => {
+    try {
+      const imageFile = req.file;
+      const { loggedInUser } = req.params;
 
-    const profilePic = {
-      data: await imageOptimize(imageFile.buffer, 'profile'),
-      contentType: 'image/jpeg',
-      filename: imageFile.originalname,
+      const profilePic = {
+        data: await imageOptimize(imageFile.buffer, "profile"),
+        contentType: "image/jpeg",
+        filename: imageFile.originalname,
+      };
+
+      let database = await connectMongo();
+      const users = database.collection("Users");
+
+      let foundUser = await users.updateOne(
+        { UID: loggedInUser },
+        { $set: { profilePic } }
+      );
+
+      // res.status(201).json({ message: 'Post created successfully', id: imageToPost.insertedId});
+      console.log({ message: `${loggedInUser} Changed profile picture!` });
+    } catch {
+      console.log("Could not update profile picture!");
     }
-
-    let database = await connectMongo();
-    const users = database.collection("Users");
-
-    let foundUser = await users.updateOne(
-      {UID: loggedInUser},
-      {$set: {profilePic}}
-    )
-
-    // res.status(201).json({ message: 'Post created successfully', id: imageToPost.insertedId});
-    console.log({ message: `${loggedInUser} Changed profile picture!`})
-
-  } catch {
-    console.log('Could not update profile picture!')
   }
-
-})
+);
 
 let latestLikeCounter = null;
 
@@ -324,7 +322,6 @@ app.post("/addLike", requireAuth, async (req, res) => {
         { $pull: { likes: loggedInUser } }
       );
 
-
       res.json({ latestLikeCounter });
     } else {
       await posts.updateOne(
@@ -351,7 +348,6 @@ app.post("/addLike", requireAuth, async (req, res) => {
         { $pull: { likes: loggedInUser } }
       );
 
-
       res.json({ latestLikeCounter });
     } else {
       await posts.updateOne(
@@ -363,7 +359,6 @@ app.post("/addLike", requireAuth, async (req, res) => {
     }
   }
 });
-
 
 // Gather the number of likes a post has
 app.post("/postLikeCounter", async (req, res) => {
@@ -378,8 +373,6 @@ app.post("/postLikeCounter", async (req, res) => {
 
   res.json(postLikes);
 });
-
-
 
 // checking who the logged in user is following
 app.get("/checkUser/following", requireAuth, async (req, res) => {
@@ -400,8 +393,6 @@ app.get("/checkUser/following", requireAuth, async (req, res) => {
   }
 });
 
-
-
 // Handling user following
 // add a followee to the logged in users following list
 app.post("/addFollowingUser", async (req, res) => {
@@ -413,29 +404,26 @@ app.post("/addFollowingUser", async (req, res) => {
 
   // getting the followw document
   let findFollowee = await users.findOne({
-    UID: followee
-  })
+    UID: followee,
+  });
 
   // getting the logged in user document
   let findLoggedInUser = await users.findOne({
-    UID: loggedInUser
-  })
+    UID: loggedInUser,
+  });
 
   // Profile pic of the current user initiaing the follow or unfollow
-  let currentUserProfilePic = findLoggedInUser.profilePic
+  let currentUserProfilePic = findLoggedInUser.profilePic;
 
   // grabbing the names out of both documents
-  findFollowee = findFollowee.user,
-  findLoggedInUser = findLoggedInUser.user
-
-
+  (findFollowee = findFollowee.user),
+    (findLoggedInUser = findLoggedInUser.user);
 
   // checks to see if a user is already a follower of a user
   const duplicateUserFollowing = await users.findOne({
     user: findLoggedInUser,
     following: { $in: [findFollowee] },
   });
-
 
   const duplicateUserFollower = await users.findOne({
     user: findFollowee,
@@ -445,11 +433,13 @@ app.post("/addFollowingUser", async (req, res) => {
   // This is the notification that gets sent to the followee
   let followNotif = {
     title: `${findLoggedInUser} is now following you.`,
-    initiatorProfilePic: currentUserProfilePic ? `data:${currentUserProfilePic.contentType};base64,${currentUserProfilePic.data.toString('base64')}` : null,
-    date: new Date()
-  }
-
-
+    initiatorProfilePic: currentUserProfilePic
+      ? `data:${
+          currentUserProfilePic.contentType
+        };base64,${currentUserProfilePic.data.toString("base64")}`
+      : null,
+    date: new Date(),
+  };
 
   if (duplicateUserFollowing || duplicateUserFollower) {
     // Unfollowing
@@ -465,20 +455,18 @@ app.post("/addFollowingUser", async (req, res) => {
         { user: findFollowee },
         { $pull: { followers: findLoggedInUser } }
       );
-      res.sendStatus(200)
+      res.sendStatus(200);
     } catch {
       console.log("Unable to complete the follow transaction");
     }
   } else {
     // Following
     try {
-
       // updating current users following list
       await users.updateOne(
         { user: findLoggedInUser },
         { $addToSet: { following: findFollowee } }
       );
-
 
       // updating followee list
       await users.updateOne(
@@ -488,258 +476,243 @@ app.post("/addFollowingUser", async (req, res) => {
 
       // Sending notification to followee
       await users.updateOne(
-        {user: findFollowee},
-        {$addToSet: {notifications: followNotif}}
-      )
+        { user: findFollowee },
+        { $addToSet: { notifications: followNotif } }
+      );
 
-      res.sendStatus(200)
+      res.sendStatus(200);
     } catch {
       console.log("Unable to complete the follow transaction");
     }
   }
 });
 
-
-app.get('/topicsAdd', async (req, res)=> {
-  const {topicToAdd} = req.query
+app.get("/topicsAdd", async (req, res) => {
+  const { topicToAdd } = req.query;
 
   // loggedIn User by user name
-  const {username} = req.query
+  const { username } = req.query;
 
   // LoggedIn user by id
-  const {loggedInUser} = req.query
+  const { loggedInUser } = req.query;
 
+  const database = await connectMongo();
+  const users = database.collection("Users");
 
-  const database = await connectMongo()
-  const users = database.collection('Users')
+  let loggedInUserDocument = await users.findOne({ user: username });
 
-  let loggedInUserDocument = await users.findOne(
-    {user: username}
-  )
-
-  let dynamicCollection = database.collection(topicToAdd + 'Info')
-
+  let dynamicCollection = database.collection(topicToAdd + "Info");
 
   // checking to see if it exists in the topics array
 
   // making sure the loggedInUser is not counted as a member
-  let findMember = await dynamicCollection.findOne(
-    {communityName: topicToAdd,
-    members: {$elemMatch: {member: username}}}
-  )
+  let findMember = await dynamicCollection.findOne({
+    communityName: topicToAdd,
+    members: { $elemMatch: { member: username } },
+  });
 
   // memberObject staging
   let member = {
     member: username,
-    memberProfilePic: loggedInUserDocument.profilePic ? `data:${loggedInUserDocument.profilePic.contentType};base64,${loggedInUserDocument.profilePic.data.toString('base64')}` : null,
-  }
-
+    memberProfilePic: loggedInUserDocument.profilePic
+      ? `data:${
+          loggedInUserDocument.profilePic.contentType
+        };base64,${loggedInUserDocument.profilePic.data.toString("base64")}`
+      : null,
+  };
 
   if (!findMember) {
     // if both are false then the user gets added
     // add the loggedin user to the member
     await dynamicCollection.updateOne(
-      {communityName: topicToAdd},
-      {$push: {members: member}}
-    )
+      { communityName: topicToAdd },
+      { $push: { members: member } }
+    );
 
-    res.sendStatus(200)
-    console.log(`${loggedInUser} has joined the ${topicToAdd} community!`)
-
+    res.sendStatus(200);
+    console.log(`${loggedInUser} has joined the ${topicToAdd} community!`);
   } else {
     //  if findmember is true it means it found an existing member with the same name and will pull the name
 
     await dynamicCollection.updateOne(
-      {communityName: topicToAdd},
-      {$pull: {members: {member: username}}}
-    )
+      { communityName: topicToAdd },
+      { $pull: { members: { member: username } } }
+    );
 
-    console.log(`${loggedInUser} has left the ${topicToAdd} community!`)
+    console.log(`${loggedInUser} has left the ${topicToAdd} community!`);
 
-    res.sendStatus(200)
+    res.sendStatus(200);
   }
-
-})
+});
 
 // remove user from community
-app.put('/removeCommunity/:community/:UID/:username', async (req, res)=> {
+app.put("/removeCommunity/:community/:UID/:username", async (req, res) => {
   try {
-    const { community, UID, username } = req.params
+    const { community, UID, username } = req.params;
 
-    const database = await connectMongo()
-    const usersCollection = database.collection('Users')
+    const database = await connectMongo();
+    const usersCollection = database.collection("Users");
 
-    const dynamicCollection = database.collection(community + 'Info')
+    const dynamicCollection = database.collection(community + "Info");
 
     // Removing the member from the community
     await dynamicCollection.updateOne(
-      {communityName: community},
-      {$pull: {members: {member: username}}}
-    )
+      { communityName: community },
+      { $pull: { members: { member: username } } }
+    );
 
-    console.log(`${username} has left ${community}`)
+    console.log(`${username} has left ${community}`);
 
-    res.json({success: 200})
+    res.json({ success: 200 });
   } catch {
-    console.log(`Could not pull user from ${community}`)
+    console.log(`Could not pull user from ${community}`);
   }
-
-})
+});
 
 // Updating user bio
-app.post('/updateBio/:UID', async (req, res)=> {
-  const { UID } = req.params
-  const { newBio } = req.body
+app.post("/updateBio/:UID", async (req, res) => {
+  const { UID } = req.params;
+  const { newBio } = req.body;
 
   // connect to DB
-  const database = await connectMongo()
-  const usersCollection = database.collection('Users')
+  const database = await connectMongo();
+  const usersCollection = database.collection("Users");
 
-  await usersCollection.updateOne(
-    {UID: UID},
-    {$set: {userBio: newBio}}
-  )
+  await usersCollection.updateOne({ UID: UID }, { $set: { userBio: newBio } });
 
-  res.sendStatus(200)
-
-
-})
+  res.sendStatus(200);
+});
 
 // Adding a comment to a post
-app.post('/addPostComment', async (req, res)=> {
-  const {postID} = req.query
-  const {feed} = req.query
-  const {commentFrom} = req.query
-  const {comment} = req.body
+app.post("/addPostComment", async (req, res) => {
+  const { postID } = req.query;
+  const { feed } = req.query;
+  const { commentFrom } = req.query;
+  const { comment } = req.body;
 
+  const database = await connectMongo();
+  const collection = database.collection(feed);
+  const users = database.collection("Users");
 
-  const database = await connectMongo()
-  const collection = database.collection(feed)
-  const users = database.collection('Users')
-
-  let commenterProfilePic = await users.findOne({user: commentFrom})
+  let commenterProfilePic = await users.findOne({ user: commentFrom });
 
   // the comment to push to the database
   let newComment = {
     from: commentFrom,
-    commenterProfilePicImg: commenterProfilePic.profilePic ?  `data:${commenterProfilePic.profilePic.contentType};base64,${commenterProfilePic.profilePic.data.toString('base64')}` : null,
+    commenterProfilePicImg: commenterProfilePic.profilePic
+      ? `data:${
+          commenterProfilePic.profilePic.contentType
+        };base64,${commenterProfilePic.profilePic.data.toString("base64")}`
+      : null,
     comment: comment,
-    timePosted: new Date()
-  }
+    timePosted: new Date(),
+  };
 
   const result = await collection.updateOne(
-    {_id: new ObjectId(postID)},
-    {$push: {comments: newComment}}
-  )
+    { _id: new ObjectId(postID) },
+    { $push: { comments: newComment } }
+  );
 
-  res.sendStatus(200)
-
-})
-
+  res.sendStatus(200);
+});
 
 // For searching for a user by username
-app.get('/dynamic/:username', async (req, res)=> {
-  const {username} = req.params
+app.get("/dynamic/:username", async (req, res) => {
+  const { username } = req.params;
 
-  const database = await connectMongo()
-  const usersCollection = database.collection('Users')
+  const database = await connectMongo();
+  const usersCollection = database.collection("Users");
 
-  let searchedUser = await usersCollection.findOne({user: username})
+  let searchedUser = await usersCollection.findOne({ user: username });
 
   res.json({
     dynamicUID: searchedUser.UID,
     dynamicUser: searchedUser.user,
-    dynamicProfilePic: searchedUser.profilePic ? `data:${searchedUser.profilePic.contentType};base64,${searchedUser.profilePic.data.toString('base64')}` : null
-  })
+    dynamicProfilePic: searchedUser.profilePic
+      ? `data:${
+          searchedUser.profilePic.contentType
+        };base64,${searchedUser.profilePic.data.toString("base64")}`
+      : null,
+  });
+});
 
-
-})
-
-app.get('/dynamicFollowers/:userSearching', async(req, res)=> {
-
+app.get("/dynamicFollowers/:userSearching", async (req, res) => {
   // The user we are checking the followers and following profile pics
-  const {userSearching} = req.params
+  const { userSearching } = req.params;
 
-  const database = await connectMongo()
-  const usersCollection = database.collection('Users')
+  const database = await connectMongo();
+  const usersCollection = database.collection("Users");
 
-  let searchedUser = await usersCollection.findOne({UID: userSearching})
+  let searchedUser = await usersCollection.findOne({ UID: userSearching });
 
   let informationStagingFollowing = await Promise.all(
     // For following catagory
     searchedUser.following.map(async (follower) => {
-      let searchFollower = await usersCollection.findOne({user: follower})
+      let searchFollower = await usersCollection.findOne({ user: follower });
 
-       return {
+      return {
         searchedFollowerUsername: searchFollower.user,
-        searchedFollowerProfilePic: searchFollower.profilePic ? `data:${searchFollower.profilePic.contentType};base64,${searchFollower.profilePic.data.toString('base64')}` : null
-      }
-
+        searchedFollowerProfilePic: searchFollower.profilePic
+          ? `data:${
+              searchFollower.profilePic.contentType
+            };base64,${searchFollower.profilePic.data.toString("base64")}`
+          : null,
+      };
     })
-
-  )
+  );
 
   let informationStagingFollowers = await Promise.all(
     // For following catagory
     searchedUser.followers.map(async (follower) => {
-      let searchFollower = await usersCollection.findOne({user: follower})
+      let searchFollower = await usersCollection.findOne({ user: follower });
 
-       return {
+      return {
         searchedFollowerUsername: searchFollower.user,
-        searchedFollowerProfilePic: searchFollower.profilePic ? `data:${searchFollower.profilePic.contentType};base64,${searchFollower.profilePic.data.toString('base64')}` : null
-      }
-
+        searchedFollowerProfilePic: searchFollower.profilePic
+          ? `data:${
+              searchFollower.profilePic.contentType
+            };base64,${searchFollower.profilePic.data.toString("base64")}`
+          : null,
+      };
     })
+  );
 
-  )
-
-
-  res.json({following: informationStagingFollowing, followers: informationStagingFollowers})
-
-
-})
+  res.json({
+    following: informationStagingFollowing,
+    followers: informationStagingFollowers,
+  });
+});
 
 // For searching for a user by UID
-app.get('/dynamicUID/:UID', async (req, res)=> {
-  const {UID} = req.params
+app.get("/dynamicUID/:UID", async (req, res) => {
+  const { UID } = req.params;
 
-  const database = await connectMongo()
-  const usersCollection = database.collection('Users')
+  const database = await connectMongo();
+  const usersCollection = database.collection("Users");
 
-
-  let searchedUser = await usersCollection.findOne({UID: UID})
-
+  let searchedUser = await usersCollection.findOne({ UID: UID });
 
   res.json({
     dynamicUID: searchedUser.UID,
     dynamicFollowing: searchedUser.following,
     dynamicFollowers: searchedUser.followers,
     dynamicUsername: searchedUser.user,
+  });
+});
 
-  })
-
-})
-
-app.put('/clearNotifications/:loggedInUser', async (req, res)=> {
-  const {loggedInUser} = req.params
-  const database = await connectMongo()
-  const usersCollection = database.collection('Users')
+app.put("/clearNotifications/:loggedInUser", async (req, res) => {
+  const { loggedInUser } = req.params;
+  const database = await connectMongo();
+  const usersCollection = database.collection("Users");
 
   // Clearing notifications for the loggedIn user
 
-
   // Find the user that initiated the clear
   await usersCollection.updateOne(
-    {user: loggedInUser},
-    {$set: {notifications: []}}
-  )
-
-})
-
-
-
-
-
+    { user: loggedInUser },
+    { $set: { notifications: [] } }
+  );
+});
 
 // if the user enters any file extension they will be redirected to login again
 // for prod
@@ -776,7 +749,6 @@ app.get("/", (req, res) => {
 app.get("/api/topics", (req, res) => {
   res.json(topics);
 });
-
 
 /* HOME FEED PAGE */
 
@@ -815,7 +787,6 @@ app.get("/wolfTopics", (req, res) => {
 app.post("/profile", (req, res) => {
   const { username } = req.body;
 });
-
 
 app.listen(port, () => {
   console.clear();

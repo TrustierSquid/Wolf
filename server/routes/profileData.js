@@ -23,10 +23,9 @@ router.get("/", async (req, res) => {
   // finds the user based off their uid
   const userData = await usersCollection.findOne({ UID: user });
 
-
   if (!userData) {
     // Handle the case where no user is found
-    return res.status(404).json({ message: 'User not found' });
+    return res.status(404).json({ message: "User not found" });
   }
 
   const userDataModified = {
@@ -39,26 +38,38 @@ router.get("/", async (req, res) => {
     topics: userData.topics,
     created: userData.created,
     userBio: userData.userBio,
-    profilePic: userData.profilePic ? `data:${userData.profilePic.contentType};base64,${userData.profilePic.data.toString('base64')}` : null
-  }
-
-
+    profilePic: userData.profilePic
+      ? `data:${
+          userData.profilePic.contentType
+        };base64,${userData.profilePic.data.toString("base64")}`
+      : null,
+  };
 
   // finds the posts of the selected user
-  const userPosts = await feedCollection.find({ poster: userData.user }).toArray();
+  const userPosts = await feedCollection
+    .find({ poster: userData.user })
+    .toArray();
 
   // modifyed so that if there are images they are included in the response
-  const userPostModified = userPosts.map(post => ({
+  const userPostModified = userPosts.map((post) => ({
     _id: post._id,
     poster: post.poster,
-    posterProfilePic: userData.profilePic ? `data:${userData.profilePic.contentType};base64,${userData.profilePic.data.toString('base64')}` : null,
+    posterProfilePic: userData.profilePic
+      ? `data:${
+          userData.profilePic.contentType
+        };base64,${userData.profilePic.data.toString("base64")}`
+      : null,
     subject: post.subject,
     body: post.body,
     likes: post.likes,
     postCreationDate: post.postCreationDate,
     comments: post.comments,
-    image: post.image ? `data:${post.image.contentType};base64,${post.image.data.toString('base64')}` : null
-  }))
+    image: post.image
+      ? `data:${post.image.contentType};base64,${post.image.data.toString(
+          "base64"
+        )}`
+      : null,
+  }));
 
   // res.json({ reversedPosts: posts.reverse() });
   res.json({
@@ -68,38 +79,37 @@ router.get("/", async (req, res) => {
     // profile data based on the query string
     userData: userDataModified,
   });
-
 });
 
 // for getting profile images for feeds
-router.get('/getProfileImage/:poster', async (req, res)=> {
+router.get("/getProfileImage/:poster", async (req, res) => {
   try {
-    const {poster} = req.params
+    const { poster } = req.params;
     const database = await connectMongo();
     const usersCollection = database.collection("Users");
 
-    const user = await usersCollection.findOne({user: poster})
+    const user = await usersCollection.findOne({ user: poster });
 
     if (!user) {
-      return res.status(404).json({ message: 'User not found' });
+      return res.status(404).json({ message: "User not found" });
     }
-
 
     if (!user.profilePic) {
       // user.profilePic = 'src/assets/defaultUser.jpg'
-      return
+      return;
     }
   } catch {
-    console.log(`Could not fetch profile picture for ${poster}`)
+    console.log(`Could not fetch profile picture for ${poster}`);
   }
 
   res.json({
-    profilePic: user.profilePic ? `data:${user.profilePic.contentType};base64,${user.profilePic.data.toString('base64')}` : null
-  })
-
-
-})
-
+    profilePic: user.profilePic
+      ? `data:${
+          user.profilePic.contentType
+        };base64,${user.profilePic.data.toString("base64")}`
+      : null,
+  });
+});
 
 /*
   This is for when the user travels to a users profile
@@ -115,7 +125,6 @@ router.get("/getID", async (req, res) => {
   const foundUser = await users.findOne({ user: poster });
 
   res.json({ userUID: foundUser.UID });
-
 });
 
 export default router;

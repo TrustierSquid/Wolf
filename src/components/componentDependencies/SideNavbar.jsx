@@ -21,7 +21,6 @@ const SideNavBar = forwardRef(({
 
       let data = await response.json()
       setAllCommunities(data)
-      // console.log(data)
    }
 
    const [loggedInUID, setLoggedInUID] = useState(null)

@@ -43,7 +43,6 @@ export default function Navbar(props) {
       }
 
       const homeData = await response.json();
-      // console.log(homeData.followingCount.length)
       // setting the user info needed as glob vars
 
       setLoggedInUID(homeData.UID);
@@ -92,7 +91,6 @@ export default function Navbar(props) {
     // Get the difference in milliseconds
     const startDate = new Date(postCreationDate);
     const timeDifference = currentDate - startDate;
-    // console.log(postCreationDate)
 
     // Covert the difference from milliseconds to day and hours
     const millisecondsInOneDay = 24 * 60 * 60 * 1000;
@@ -149,7 +147,6 @@ export default function Navbar(props) {
       let data = await response.json()
 
       setAllCommunities(data)
-      // console.log(data)
    }
 
   async function clearNotifications() {
