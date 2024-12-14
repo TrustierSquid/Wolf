@@ -1,6 +1,6 @@
 import { forwardRef, useRef, useState, useEffect } from "react";
 import logo from "/src/assets/wolfLogo.png";
-import defaultProfilePic from '/src/assets/defaultUser.jpg';
+import defaultProfilePic from '/src/assets/defaultUser.png';
 
 export default function Navbar(props) {
   const queryString = window.location.search;

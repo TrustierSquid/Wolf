@@ -1,5 +1,5 @@
 import { forwardRef, useEffect, useRef, useState} from "react"
-import defaultProfilePic from '/src/assets/defaultUser.jpg';
+import defaultProfilePic from '/src/assets/defaultUser.png';
 
 const SideNavBar = forwardRef(({
    // loggedIn topics

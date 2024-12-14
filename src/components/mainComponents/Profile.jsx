@@ -2,7 +2,7 @@ import { forwardRef, useRef, useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import Navbar from "../componentDependencies/NavBar";
 import SideNavBar from "../componentDependencies/SideNavbar";
-import defaultProfilePic from '/src/assets/defaultUser.jpg';
+import defaultProfilePic from '/src/assets/defaultUser.png';
 
 export default function Profile(props) {
   const [followerCount, setFollowerCount] = useState([]);

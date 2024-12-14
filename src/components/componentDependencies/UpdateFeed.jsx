@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from "react";
 import logo from "/src/assets/wolfLogo.png";
-import defaultProfilePic from '/src/assets/defaultUser.jpg';
+import defaultProfilePic from '/src/assets/defaultUser.png';
 
 export default function UpdateFeed(props) {
   const [allPosts, setAllPosts] = useState(null);

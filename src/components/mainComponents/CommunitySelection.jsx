@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import Navbar from "../componentDependencies/NavBar";
 import SideNavBar from "../componentDependencies/SideNavbar";
 import logo from "/src/assets/wolfLogo.png";
-import defaultProfilePic from '/src/assets/defaultUser.jpg';
+import defaultProfilePic from '/src/assets/defaultUser.png';
 
 export default function CommunitySelection(props) {
   // The loggedIn users ID
