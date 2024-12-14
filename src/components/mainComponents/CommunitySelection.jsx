@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import Navbar from "../componentDependencies/NavBar";
 import SideNavBar from "../componentDependencies/SideNavbar";
 import logo from "/src/assets/wolfLogo.png";
+import defaultProfilePic from '/src/assets/defaultUser.jpg';
 
 export default function CommunitySelection(props) {
   // The loggedIn users ID
@@ -502,7 +503,7 @@ export default function CommunitySelection(props) {
                                 src={
                                   memberField.memberProfilePic
                                     ? memberField.memberProfilePic
-                                    : "src/assets/defaultUser.jpg"
+                                    : defaultProfilePic
                                 }
                                 alt=""
                               />
@@ -516,7 +517,7 @@ export default function CommunitySelection(props) {
                                   src={
                                     memberField.memberProfilePic
                                       ? memberField.memberProfilePic
-                                      : "src/assets/defaultUser.jpg"
+                                      : defaultProfilePic
                                   }
                                   alt=""
                                 />

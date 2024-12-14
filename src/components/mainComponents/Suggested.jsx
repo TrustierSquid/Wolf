@@ -1,5 +1,6 @@
 import { memo } from "react";
 import { useState, useEffect, useRef } from "react";
+import defaultProfilePic from '/src/assets/defaultUser.jpg';
 
 export default function Suggested() {
   const queryString = window.location.search;
@@ -180,7 +181,7 @@ export default function Suggested() {
                                     src={
                                       value.memberProfilePic
                                         ? value.memberProfilePic
-                                        : "src/assets/defaultUser.jpg"
+                                        : defaultProfilePic
                                     }
                                     alt=""
                                   />

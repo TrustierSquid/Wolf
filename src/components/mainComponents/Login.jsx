@@ -145,7 +145,7 @@ export default function Login() {
     <>
       <div id="loginFlex">
         <section id="imgContainer">
-          <img id="wolfGIF" src={"src/assets/wolfLogo.png"} alt="" />
+          <img id="wolfGIF" src={logo} alt="" />
           {randomQuote}
         </section>
         <main id="loginContainer">

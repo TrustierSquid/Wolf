@@ -1,4 +1,5 @@
 import { forwardRef, useEffect, useRef, useState} from "react"
+import defaultProfilePic from '/src/assets/defaultUser.jpg';
 
 const SideNavBar = forwardRef(({
    // loggedIn topics
@@ -100,7 +101,7 @@ const SideNavBar = forwardRef(({
             <section id="subTitle">
                <h3 id="sidebarUsername">
                   <div id="nameAndInfo">
-                  <img id="sideBarProfileImage" src={profileImage ? profileImage : 'src/assets/defaultUser.jpg'} alt="" />
+                  <img id="sideBarProfileImage" src={profileImage ? profileImage : defaultProfilePic} alt="" />
                      <h3>{username}</h3>
                   </div>
                </h3>

@@ -2,6 +2,7 @@ import { forwardRef, useRef, useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import Navbar from "../componentDependencies/NavBar";
 import SideNavBar from "../componentDependencies/SideNavbar";
+import defaultProfilePic from '/src/assets/defaultUser.jpg';
 
 export default function Profile(props) {
   const [followerCount, setFollowerCount] = useState([]);
@@ -469,7 +470,7 @@ export default function Profile(props) {
                   src={
                     dynamicProfilePic
                       ? dynamicProfilePic
-                      : "src/assets/defaultUser.jpg"
+                      : defaultProfilePic
                   }
                   alt=""
                   id="profilePicture"
@@ -548,7 +549,7 @@ export default function Profile(props) {
                   src={
                     dynamicProfilePic
                       ? dynamicProfilePic
-                      : "src/assets/defaultUser.jpg"
+                      : defaultProfilePic
                   }
                   alt=""
                   id="profilePicture"
@@ -776,7 +777,7 @@ export default function Profile(props) {
                                       src={
                                         comment.commenterProfilePicImg
                                           ? comment.commenterProfilePicImg
-                                          : "src/assets/defaultUser.jpg"
+                                          : defaultProfilePic
                                       }
                                       alt=""
                                     />
@@ -838,7 +839,7 @@ export default function Profile(props) {
                                     src={
                                       comment.commenterProfilePicImg
                                         ? comment.commenterProfilePicImg
-                                        : "src/assets/defaultUser.jpg"
+                                        : defaultProfilePic
                                     }
                                     alt=""
                                   />
@@ -951,7 +952,7 @@ export default function Profile(props) {
                               src={
                                 post.posterProfilePic
                                   ? post.posterProfilePic
-                                  : "src/assets/defaultUser.jpg"
+                                  : defaultProfilePic
                               }
                               alt=""
                             />

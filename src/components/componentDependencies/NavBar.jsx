@@ -1,5 +1,6 @@
 import { forwardRef, useRef, useState, useEffect } from "react";
 import logo from "/src/assets/wolfLogo.png";
+import defaultProfilePic from '/src/assets/defaultUser.jpg';
 
 export default function Navbar(props) {
   const queryString = window.location.search;
@@ -288,7 +289,7 @@ export default function Navbar(props) {
             src={
               loggedInProfilePic
                 ? loggedInProfilePic
-                : "src/assets/defaultUser.jpg"
+                : defaultProfilePic
             }
             alt=""
           />
@@ -312,7 +313,7 @@ export default function Navbar(props) {
                         src={
                           notification.initiatorProfilePic
                             ? notification.initiatorProfilePic
-                            : "src/assets/defaultUser.jpg"
+                            : defaultProfilePic
                         }
                         alt=""
                       />
@@ -353,7 +354,7 @@ export default function Navbar(props) {
             src={
               loggedInProfilePic
                 ? loggedInProfilePic
-                : "src/assets/defaultUser.jpg"
+                : defaultProfilePic
             }
             alt=""
           />

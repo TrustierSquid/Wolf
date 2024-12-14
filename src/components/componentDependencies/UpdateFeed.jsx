@@ -1,4 +1,6 @@
 import { useEffect, useState, useRef } from "react";
+import logo from "/src/assets/wolfLogo.png";
+import defaultProfilePic from '/src/assets/defaultUser.jpg';
 
 export default function UpdateFeed(props) {
   const [allPosts, setAllPosts] = useState(null);
@@ -315,7 +317,7 @@ export default function UpdateFeed(props) {
                           <div className="postUserInformation">
                             <img
                               className="postProfilePic"
-                              src={post.posterProfilePic}
+                              src={post.posterProfilePic || defaultProfilePic}
                             />
                             <h2
                               className="poster"
@@ -404,7 +406,7 @@ export default function UpdateFeed(props) {
                 src={
                   posterProfilePicState
                     ? posterProfilePicState
-                    : "src/assets/defaultUser.jpg"
+                    : defaultProfilePic
                 }
                 alt=""
               />
@@ -477,7 +479,7 @@ export default function UpdateFeed(props) {
                         src={
                           comment.commenterProfilePicImg
                             ? comment.commenterProfilePicImg
-                            : "src/assets/defaultUser.jpg"
+                            : defaultProfilePic
                         }
                         alt=""
                       />

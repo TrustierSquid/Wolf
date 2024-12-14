@@ -227,7 +227,8 @@ body {
     background: none;
     border: none;
     width: 100%;
-    gap: 3rem;
+    justify-content: center;
+    gap: 2rem;
   }
   #loginFlex #loginContainer #optionalDecision {
     justify-content: center;
@@ -307,7 +308,7 @@ TOPICS COMPONENT
 }
 #topicsContainer main #topicSelect #communityGridContainer {
   display: flex;
-  flex-direction: column;
+  flex-direction: columnv;
   gap: 1rem;
 }
 #topicsContainer main #topicSelect #communityGridContainer .topicSelectionBtn {
@@ -1084,7 +1085,7 @@ main #content .userContent .userPost .mainPost {
   flex-direction: column;
   max-height: 100%;
   gap: 0.5rem;
-  padding: 1.5rem;
+  padding: 1rem;
   border-radius: 1rem;
   color: white;
   transition: 250ms;
@@ -1196,6 +1197,7 @@ main #content .userContent .userPost .postInteractionSection {
   align-items: center;
   justify-content: space-between;
   padding: 1rem;
+  padding-top: 0rem;
 }
 main #content .userContent .userPost .postInteractionSection .postDetails {
   display: flex;
@@ -2338,6 +2340,7 @@ HOME COMPONENT MEDIA QUERIES
     border-radius: 0rem;
     gap: 1.5rem;
     background: none;
+    padding-bottom: 0rem;
   }
   main #content .userContent .userPost .mainPost .postBody {
     font-size: 1rem;
@@ -2345,7 +2348,6 @@ HOME COMPONENT MEDIA QUERIES
   }
   main #content .userContent .userPost .postInteractionSection {
     border-radius: 0;
-    padding: 1rem;
     border: none;
     border-bottom: 1px solid #2e2e2e;
     box-shadow: none;

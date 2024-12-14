@@ -1,6 +1,7 @@
 import { useEffect, useState, useRef } from "react";
 import Navbar from "./NavBar";
 import SideNavBar from "./SideNavbar";
+import defaultProfilePic from '/src/assets/defaultUser.jpg';
 
 export default function FollowingPageComponent(props) {
 
@@ -133,7 +134,7 @@ export default function FollowingPageComponent(props) {
                                     <>
                                        <div className="followee" key={followee} >
                                           <h4 onClick={()=> {getDynamicProfile(followee.searchedFollowerUsername)}}>
-                                             <img className='followerProfilePic' src={followee.searchedFollowerProfilePic ? followee.searchedFollowerProfilePic : 'src/assets/defaultUser.jpg' }></img>
+                                             <img className='followerProfilePic' src={followee.searchedFollowerProfilePic ? followee.searchedFollowerProfilePic : defaultProfilePic }></img>
                                              {followee.searchedFollowerUsername}</h4>
 
                                              {/* Fixes duplicate unfollow buttons on the loggedin user */}
@@ -181,7 +182,7 @@ export default function FollowingPageComponent(props) {
                                           <>
                                              <div className="followee" key={follower} >
                                                 <h4 onClick={()=> {getDynamicProfile(follower.searchedFollowerUsername)}}>
-                                                   <img className='followerProfilePic' src={follower.searchedFollowerProfilePic ? follower.searchedFollowerProfilePic : 'src/assets/defaultUser.jpg'} alt="" />
+                                                   <img className='followerProfilePic' src={follower.searchedFollowerProfilePic ? follower.searchedFollowerProfilePic : defaultProfilePic} alt="" />
                                                    {follower.searchedFollowerUsername}</h4>
                                              </div>
                                           </>

@@ -326,7 +326,8 @@ body {
       border: none;
       width: 100%;
       // padding: 1.5rem;
-      gap: 3rem;
+      justify-content: center;
+      gap: 2rem;
 
       #optionalDecision {
         justify-content: center;
@@ -444,7 +445,7 @@ TOPICS COMPONENT
         // display: grid;
         // grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
         display: flex;
-        flex-direction: column;
+        flex-direction: columnv;
         gap: 1rem;
 
         .topicSelectionBtn {
@@ -1386,7 +1387,7 @@ main {
           flex-direction: column;
           max-height: 100%;
           gap: 0.5rem;
-          padding: 1.5rem;
+          padding: 1rem;
           border-radius: 1rem;
           color: white;
           transition: 250ms;
@@ -1519,6 +1520,7 @@ main {
           align-items: center;
           justify-content: space-between;
           padding: 1rem;
+          padding-top: 0rem;
 
           .postDetails {
             display: flex;
@@ -2947,6 +2949,7 @@ HOME COMPONENT MEDIA QUERIES
             border-radius: 0rem;
             gap: 1.5rem;
             background: none;
+            padding-bottom: 0rem;
 
             .postBody {
               font-size: $fs-paragraph;
@@ -2957,7 +2960,6 @@ HOME COMPONENT MEDIA QUERIES
           .postInteractionSection {
             border-radius: 0;
 
-            padding: 1rem;
             border: none;
             border-bottom: 1px solid $cardBorder;
             box-shadow: none;
