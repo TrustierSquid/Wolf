@@ -2147,7 +2147,7 @@ main {
 
     #moodleContainer {
       position: fixed;
-      top: 10%;
+      top: 16%;
       left: 10%;
       width: 80%;
       height: 600px;
@@ -2161,7 +2161,8 @@ main {
 
       #postMoodle1,
       #postMoodle2 {
-        width: 100%;
+        width: 50%;
+        height: 100%;
         background-color: #111;
         border: 1px solid $buttonHover;
         border-radius: 1rem;
@@ -2232,6 +2233,7 @@ main {
             word-wrap: break-word;
             line-height: 1.5;
             overflow: auto;
+            height: 140px;
           }
 
           img {
@@ -3080,6 +3082,7 @@ HOME COMPONENT MEDIA QUERIES
           border-radius: 0rem;
           border: none;
           overflow: scroll;
+          width: 100%;
           background-color: $cardBorder;
         }
 
@@ -3105,6 +3108,7 @@ HOME COMPONENT MEDIA QUERIES
 
             p {
               overflow: auto;
+              // height: 400px;
             }
           }
         }

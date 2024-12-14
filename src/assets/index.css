@@ -1715,7 +1715,7 @@ main #content .userContent .userPost .postInteractionSection .postLC .commentBtn
 }
 #contentContainer #mainProfile #moodleContainer {
   position: fixed;
-  top: 10%;
+  top: 16%;
   left: 10%;
   width: 80%;
   height: 600px;
@@ -1729,7 +1729,8 @@ main #content .userContent .userPost .postInteractionSection .postLC .commentBtn
 }
 #contentContainer #mainProfile #moodleContainer #postMoodle1,
 #contentContainer #mainProfile #moodleContainer #postMoodle2 {
-  width: 100%;
+  width: 50%;
+  height: 100%;
   background-color: #111;
   border: 1px solid #7a0b31;
   border-radius: 1rem;
@@ -1790,6 +1791,7 @@ main #content .userContent .userPost .postInteractionSection .postLC .commentBtn
   word-wrap: break-word;
   line-height: 1.5;
   overflow: auto;
+  height: 140px;
 }
 #contentContainer #mainProfile #moodleContainer #postMoodle1 #moodleContent img {
   height: 200px;
@@ -2431,6 +2433,7 @@ HOME COMPONENT MEDIA QUERIES
     border-radius: 0rem;
     border: none;
     overflow: scroll;
+    width: 100%;
     background-color: #2e2e2e;
   }
   #contentContainer #mainProfile #moodleContainer #postMoodle1 {
