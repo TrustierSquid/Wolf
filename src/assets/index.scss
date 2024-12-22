@@ -394,7 +394,6 @@ TOPICS COMPONENT
 
   main {
     // header
-    display: flex;
     justify-content: start;
     flex-direction: column;
     border-radius: 1rem;
@@ -445,7 +444,7 @@ TOPICS COMPONENT
         // display: grid;
         // grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
         display: flex;
-        flex-direction: columnv;
+        flex-direction: column;
         gap: 1rem;
 
         .topicSelectionBtn {

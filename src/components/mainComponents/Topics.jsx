@@ -175,13 +175,13 @@ export default function Topics(props) {
       ></span>
       <article ref={communityMoodle} id="createCommunityMoodle">
         <nav id="communityMoodleNav">
-          <h2>Create a Community</h2>
+          <h2>Create a Den</h2>
           <button id="exitCommunityMoodle" onClick={() => openMoodle("close")}>
             <i className="fa-solid fa-x"></i>
           </button>
         </nav>
 
-        <p>Community Picture:</p>
+        <p>Den Picture:</p>
         <form id="givePicture">
           <img
             src={
@@ -209,7 +209,7 @@ export default function Topics(props) {
         </form>
 
         <form id="giveName">
-          <label>Community Name:</label>
+          <label>Den Name:</label>
           <input
             required
             placeholder="ex. Gaming..."
@@ -219,7 +219,7 @@ export default function Topics(props) {
         </form>
 
         <form id="giveDescription">
-          <label>Community Description:</label>
+          <label>Den Description:</label>
           <input
             required
             maxLength={100}
@@ -248,7 +248,7 @@ export default function Topics(props) {
           <nav id="pageNavigation">
             <h1 id="pageHeader">Communities</h1>
             <button id="createCommunityBtn" onClick={() => openMoodle("open")}>
-              Create Community <i class="fa-solid fa-people-group"></i>
+              Create Den <i class="fa-solid fa-people-group"></i>
               <i className="fa-solid fa-plus"></i>
             </button>
           </nav>
