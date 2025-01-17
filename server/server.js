@@ -1,10 +1,14 @@
+// Setting up environment variables
 import dotenv from "dotenv";
 dotenv.config();
+
 import express from "express";
 import path from "path";
 import { fileURLToPath } from "url";
 import cors from "cors";
 import cookieParser from "cookie-parser";
+
+// Library for optimizing images
 import sharp from "sharp";
 
 // IMPORTING ROUTES
@@ -16,23 +20,15 @@ import handleCommunity from "./routes/communities.js";
 // To check if the user has a token for accessing certain routes
 import requireAuth from "./middleware/authMiddleware.js";
 
-// MONGODB
+// MONGODB data storing and uploading images to the DB
 import { MongoClient, ServerApiVersion, ObjectId, GridFSBucket } from "mongodb";
 import multer from "multer";
-import { Readable } from "stream";
-
-import GridFsStorage from "multer-gridfs-storage";
-/* import pkg from 'multer-gridfs-storage'
-const { GridFsStorage } = pkg */
-import crypto from "crypto";
 
 // list of topics for the user to choose from
 import topics from "./json/topics.json" assert { type: "json" };
 
 // A fact that comes with each topic
 import topicFacts from "./json/facts.json" assert { type: "json" };
-import { connect } from "http2";
-// import { connect } from "http2";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -81,7 +77,7 @@ async function connectMongo() {
     database = client.db(process.env.DB_NAME);
     let imagesCollection = database.collection("images");
 
-    console.log(`Connected to ${database.databaseName}`);
+    console.log(`Connected to ${database.databaseName} Database`);
     return database;
   } catch (err) {
     console.log("Error connecting to MongoDB!");
