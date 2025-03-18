@@ -1,8 +1,17 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, forwardRef } from "react";
 import logo from "/src/assets/wolfLogo.png";
 import defaultProfilePic from '/src/assets/defaultUser.png';
 
-export default function UpdateFeed(props) {
+
+const UpdateFeed = forwardRef(({
+  currentActiveUser,
+  selectedfeed,
+  topicDisplay,
+  bgEffect,
+  removeBGEffect,
+  image
+},props, ref) => {
+  const {darkBG} = ref || {}
   const [allPosts, setAllPosts] = useState(null);
   const currentUser = props.currentActiveUser;
   // const darkBG = useRef(null)
@@ -65,27 +74,37 @@ export default function UpdateFeed(props) {
 
   const likeBtn = useRef([]);
 
+  // Sound Effects for liking and commenting on posts
+  let likeSoundEffect = new Audio('/src/assets/audio/likeSound.mp3')
+  likeSoundEffect.volume = 0.4
+
+
   async function addLike(postID, currentPostIndex) {
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
     const userSearched = urlParams.get("topicFeed");
 
+
     if (!queryString) {
+      // If the like is being made on the users home feed
       const response = await fetch(`/addLike?feed=mainFeed`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ postID: postID, loggedInUser: currentUser }),
+        body: JSON.stringify({ postID: postID, loggedInUser: currentActiveUser }),
       });
 
       // Check if the like was successfully added (optional)
       if (response.ok) {
+
         // Immediately update the button style
         if (likeBtn.current[currentPostIndex].style.color === "red") {
           likeBtn.current[currentPostIndex].style.color = "white"; // Unlike
+          // likeSoundEffect.load()
         } else {
           likeBtn.current[currentPostIndex].style.color = "red"; // Like
+          likeSoundEffect.play()
         }
 
         await updateMainFeed();
@@ -93,12 +112,14 @@ export default function UpdateFeed(props) {
         console.error("error adding like");
       }
     } else {
+
+      // If the like is being made on another users profile page
       const response = await fetch(`/addLike?feed=${userSearched}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ postID: postID, loggedInUser: currentUser }),
+        body: JSON.stringify({ postID: postID, loggedInUser: currentActiveUser }),
       });
 
       // Check if the like was successfully added (optional)
@@ -108,6 +129,7 @@ export default function UpdateFeed(props) {
           likeBtn.current[currentPostIndex].style.color = "white"; // Unlike
         } else {
           likeBtn.current[currentPostIndex].style.color = "red"; // Like
+          likeSoundEffect.play()
         }
 
         await updateMainFeed();
@@ -121,7 +143,7 @@ export default function UpdateFeed(props) {
   // all dependent on when the feed gets updated
   function checkCurrentlyLiked() {
     allPosts?.map((post, key) => {
-      if (post.likes.includes(currentUser)) {
+      if (post.likes.includes(currentActiveUser)) {
         likeBtn.current[key].style.color = "red";
       } else {
         likeBtn.current[key].style.color = "white";
@@ -349,13 +371,16 @@ export default function UpdateFeed(props) {
                           onClick={() => addLike(post._id, key)}
                         >
                           <i className="fa-solid fa-heart"></i>
-                          <span style={{ color: "white" }}>
+                          <span >
                             {" "}
                             {post.likes.length}
                           </span>
                         </span>
                         <span
                           className="commentBtn"
+                          /* Capturing all of the post information
+                            and creating a moodle with post information
+                           */
                           onClick={() => {
                             commentInterfaceAppear(
                               post.subject,
@@ -369,7 +394,7 @@ export default function UpdateFeed(props) {
                               post.image,
                               post.posterProfilePic
                             ),
-                              props.bgEffect();
+                              bgEffect();
                           }}
                         >
                           <i className="fa-solid fa-comments"></i>{" "}
@@ -397,6 +422,8 @@ export default function UpdateFeed(props) {
         </div>
       )}
 
+    <span ref={darkBG} id="darkBG" onClick={()=> {removeEffect(), removeBGEffect();}}></span>
+
       <div id="commentInterface" ref={commentInterface}>
         <h3 id="topDiv">
           <div id="fromWho">
@@ -416,7 +443,7 @@ export default function UpdateFeed(props) {
           <span
             id="exitCommentBtn"
             onClick={() => {
-              removeEffect(), props.removeBGEffect(commentInterface);
+              removeEffect(), removeBGEffect();
             }}
           >
             <i className="fa-solid fa-x"></i>
@@ -436,9 +463,6 @@ export default function UpdateFeed(props) {
           <div id="indicators">
             <span id="commentSectionLike">
               <i className="fa-solid fa-heart"></i> {postLikesCount}
-            </span>
-            <span id="commentSectionComment">
-              <i className="fa-solid fa-comments"></i> {commentsCount}
             </span>
           </div>
         </section>
@@ -461,6 +485,7 @@ export default function UpdateFeed(props) {
           <br />
           <h4 style={{ color: "lime" }}>{errorMessage}</h4>
         </section>
+        {/* Setting the header plural */}
         <h2>
           {postComments.length > 1
             ? `${postComments.length} Comments`
@@ -469,30 +494,34 @@ export default function UpdateFeed(props) {
         <article className="commentContainer">
           {postComments?.length > 0 ? (
             postComments?.map((comment) => {
-              console.log(comment);
               return (
                 <>
+                {/* Each individual comment */}
                   <div className="comment">
-                    <section>
-                      <img
-                        className="commenterProfilePicImg"
-                        src={
-                          comment.commenterProfilePicImg
-                            ? comment.commenterProfilePicImg
-                            : defaultProfilePic
-                        }
-                        alt=""
-                      />
-                      <h3 onClick={() => navigateToProfile(comment.from)}>
-                        {comment.from}
-                        <span className="commentTime">
-                          {showPostDate(comment.timePosted)}
-                        </span>
-                      </h3>
-                    </section>
-                    <br />
 
-                    <p>{comment.comment}</p>
+                    <div className="commentInsideContainer">
+                      <section>
+                        <img
+                          className="commenterProfilePicImg"
+                          src={
+                            comment.commenterProfilePicImg
+                              ? comment.commenterProfilePicImg
+                              : defaultProfilePic
+                          }
+                          alt=""
+                        />
+                        <span className="commentFrom" onClick={() => navigateToProfile(comment.from)}>
+                          <h4>{comment.from}</h4>
+                          <span className="commentTime">
+                            {showPostDate(comment.timePosted)}
+                          </span>
+                        </span>
+                      </section>
+
+
+                      <p className="commentContent">{comment.comment}</p>
+                    </div>
+
                   </div>
                 </>
               );
@@ -507,4 +536,7 @@ export default function UpdateFeed(props) {
       </div>
     </>
   );
-}
+})
+
+
+export default UpdateFeed;

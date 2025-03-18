@@ -481,7 +481,7 @@ export default function Profile(props) {
                     className="profileUserTypeHeader"
                     style={{ color: "#00b3ff" }}
                   >
-                    Developer <i className="fa-solid fa-code"></i>
+                    Developer
                   </h6>
                   {userSearched === loggedInUID ? (
                     <div id="changeOverlay">
@@ -670,11 +670,11 @@ export default function Profile(props) {
                 {/* Bio edit shows up for the user logged in and not on other profile */}
                 {userSearched === props.loggedInUID ? (
                   <>
-                    <i
-                      className="fa-solid fa-pen-to-square"
+                    <button
+                      className="changeBioButton"
                       onClick={() => switchToEnter()}
                       ref={changeBioBtn}
-                    ></i>
+                    >Change Bio</button>
                   </>
                 ) : (
                   <>
@@ -812,7 +812,7 @@ export default function Profile(props) {
                       profilePostComment(profilePostCommentRef.current.value)
                     }
                   >
-                    Comment
+                    Send
                   </button>
                 </div>
               </span>
@@ -956,7 +956,7 @@ export default function Profile(props) {
                               }
                               alt=""
                             />
-                            <h3>{dynamicUsername}</h3>
+                            <h4>{dynamicUsername} </h4>
                             <p style={{ color: "grey" }}>
                               {showPostDate(post.postCreationDate)}
                             </p>

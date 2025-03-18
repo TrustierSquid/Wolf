@@ -263,11 +263,9 @@ export default function Home() {
 
   // for making the comments section appear and disappear
   function appearEffectComments() {
-    if (commentInterface) {
-      darkBG.current.style.opacity = "1";
-      darkBG.current.style.pointerEvents = "all";
-      document.body.style.overflow = "hidden";
-    }
+    darkBG.current.style.opacity = "1";
+    darkBG.current.style.pointerEvents = "all";
+    document.body.style.overflow = "hidden";
   }
 
   // side bar refs
@@ -418,6 +416,7 @@ export default function Home() {
               bgEffect={appearEffectComments}
               removeBGEffect={dissappearEffect}
               image={image}
+              ref={darkBG}
             />{" "}
             {/*  Updating the feed with the newest posts*/}
           </article>

@@ -1236,9 +1236,9 @@ main #content .userContent .userPost .postInteractionSection .postLC .commentBtn
   opacity: 0;
   pointer-events: none;
   position: fixed;
-  height: 70%;
-  width: 60%;
-  top: 50%;
+  height: 85%;
+  width: 50%;
+  top: 53%;
   right: 50%;
   transform: translate(50%, -50%);
   color: white;
@@ -1279,8 +1279,8 @@ main #content .userContent .userPost .postInteractionSection .postLC .commentBtn
   border-radius: 50%;
 }
 #commentInterface #topDiv #exitCommentBtn {
-  width: 60px;
-  height: 60px;
+  width: 45px;
+  height: 45px;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -1310,10 +1310,11 @@ main #content .userContent .userPost .postInteractionSection .postLC .commentBtn
   color: #d43737;
 }
 #commentInterface #commentSection img {
-  height: 300px;
-  -o-object-fit: contain;
-     object-fit: contain;
-  background-color: #222;
+  height: 600px;
+  width: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+  align-self: center;
 }
 #commentInterface #commentSection #indicators {
   margin-top: 4rem;
@@ -1366,20 +1367,23 @@ main #content .userContent .userPost .postInteractionSection .postLC .commentBtn
   margin-top: 0.5rem;
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 2.5rem;
 }
 #commentInterface .commentContainer .comment {
   background-color: rgba(17, 17, 17, 0.9098039216);
-  padding: 1rem;
   border-radius: 0.5rem;
   word-wrap: break-word;
 }
-#commentInterface .commentContainer .comment section {
+#commentInterface .commentContainer .comment .commentInsideContainer {
+  display: flex;
+  flex-direction: column;
+}
+#commentInterface .commentContainer .comment .commentInsideContainer section {
   display: flex;
   align-items: center;
   gap: 0.5rem;
 }
-#commentInterface .commentContainer .comment section h3 {
+#commentInterface .commentContainer .comment .commentInsideContainer section .commentFrom {
   display: flex;
   justify-content: start;
   align-items: center;
@@ -1388,16 +1392,19 @@ main #content .userContent .userPost .postInteractionSection .postLC .commentBtn
   color: white;
   cursor: pointer;
 }
-#commentInterface .commentContainer .comment section h3:hover {
+#commentInterface .commentContainer .comment .commentInsideContainer section .commentFrom:hover {
   text-decoration: underline;
 }
-#commentInterface .commentContainer .comment section .commentTime {
+#commentInterface .commentContainer .comment .commentInsideContainer section .commentTime {
   color: rgb(101, 101, 101);
   font-size: 1rem;
 }
-#commentInterface .commentContainer .comment section .commenterProfilePicImg {
+#commentInterface .commentContainer .comment .commentInsideContainer section .commenterProfilePicImg {
   height: 40px;
   border-radius: 50%;
+}
+#commentInterface .commentContainer .comment .commentInsideContainer .commentContent {
+  padding-left: 3rem;
 }
 
 @media (max-width: 1050px) {
@@ -1409,6 +1416,7 @@ main #content .userContent .userPost .postInteractionSection .postLC .commentBtn
     background-color: #111;
     transition: 100ms;
     padding: 1rem;
+    right: 50%;
   }
   #commentInterface #commentSection #exitBtnRow {
     font-size: 1.5rem;
@@ -1511,7 +1519,8 @@ main #content .userContent .userPost .postInteractionSection .postLC .commentBtn
 }
 #contentContainer #mainProfile .profileAnalytics:nth-of-type(1) #iconAndUsername #picContainer {
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  align-items: left;
   gap: 1rem;
 }
 #contentContainer #mainProfile .profileAnalytics:nth-of-type(1) #iconAndUsername #picContainer #profilePicture {
@@ -1525,6 +1534,11 @@ main #content .userContent .userPost .postInteractionSection .postLC .commentBtn
   justify-content: center;
   -o-object-fit: cover;
      object-fit: cover;
+}
+#contentContainer #mainProfile .profileAnalytics:nth-of-type(1) #iconAndUsername #picContainer #whoAmI {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }
 #contentContainer #mainProfile .profileAnalytics:nth-of-type(1) #iconAndUsername #picContainer #whoAmI #changeOverlay {
   background: none;
@@ -1567,6 +1581,7 @@ main #content .userContent .userPost .postInteractionSection .postLC .commentBtn
 #contentContainer #mainProfile .profileAnalytics:nth-of-type(1) #iconAndUsername #followTracking {
   display: flex;
   gap: 1rem;
+  align-self: start;
 }
 #contentContainer #mainProfile .profileAnalytics:nth-of-type(1) #iconAndUsername #followTracking section {
   display: flex;
@@ -1653,12 +1668,16 @@ main #content .userContent .userPost .postInteractionSection .postLC .commentBtn
   align-items: center;
   justify-content: space-between;
 }
-#contentContainer #mainProfile .profileAnalytics:nth-of-type(1) #bioPair #bioTitle .fa-pen-to-square {
-  color: turquoise;
-  font-size: 2rem;
+#contentContainer #mainProfile .profileAnalytics:nth-of-type(1) #bioPair #bioTitle .changeBioButton {
+  font-size: 1rem;
+  color: white;
+  background-color: teal;
+  border-radius: 0.5rem;
+  border: none;
+  padding: 0.5rem;
   cursor: pointer;
 }
-#contentContainer #mainProfile .profileAnalytics:nth-of-type(1) #bioPair #bioTitle .fa-pen-to-square:hover {
+#contentContainer #mainProfile .profileAnalytics:nth-of-type(1) #bioPair #bioTitle .changeBioButton:hover {
   color: teal;
 }
 #contentContainer #mainProfile .profileAnalytics:nth-of-type(1) #bioPair #profileBio,
@@ -1729,7 +1748,6 @@ main #content .userContent .userPost .postInteractionSection .postLC .commentBtn
 #contentContainer #mainProfile #moodleContainer #postMoodle1,
 #contentContainer #mainProfile #moodleContainer #postMoodle2 {
   width: 50%;
-  height: 100%;
   background-color: #111;
   border: 1px solid #7a0b31;
   border-radius: 1rem;
@@ -1790,7 +1808,6 @@ main #content .userContent .userPost .postInteractionSection .postLC .commentBtn
   word-wrap: break-word;
   line-height: 1.5;
   overflow: auto;
-  height: 140px;
 }
 #contentContainer #mainProfile #moodleContainer #postMoodle1 #moodleContent img {
   height: 200px;
@@ -2027,9 +2044,10 @@ main #content .userContent .userPost .postInteractionSection .postLC .commentBtn
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  padding-bottom: 1rem;
 }
 #contentContainer #mainProfile .totalPosts .existingPost .existingPostTitle .posterProfileImg {
-  height: 50px;
+  height: 30px;
   border-radius: 50%;
 }
 #contentContainer #mainProfile .totalPosts .existingPost .postImg {
@@ -2046,7 +2064,6 @@ main #content .userContent .userPost .postInteractionSection .postLC .commentBtn
   font-size: 1.2rem;
   padding: 0.5rem;
   padding-left: 0rem;
-  border-bottom: 1px dotted #2e2e2e;
 }
 #contentContainer #mainProfile .totalPosts .existingPost .profilePostSubject span {
   display: flex;

@@ -300,7 +300,7 @@ app.post("/addLike", requireAuth, async (req, res) => {
 
   const database = await connectMongo();
 
-  //  By default, will look through the posts on the mainfeed
+  // By default, will look through the posts on the mainfeed to find the searched post
   if (feed === "mainFeed") {
     const posts = database.collection("mainFeed");
 
@@ -311,7 +311,6 @@ app.post("/addLike", requireAuth, async (req, res) => {
     });
 
     // If the user is already liking a post, then they will be removed from the array
-
     if (findDuplicateUser) {
       await posts.updateOne(
         { _id: new ObjectId(postID) },
@@ -327,7 +326,9 @@ app.post("/addLike", requireAuth, async (req, res) => {
 
       res.json({ latestLikeCounter });
     }
+
   } else {
+    // Find the post through other community feeds
     const posts = database.collection(feed);
 
     // Find a duplicate user
@@ -337,7 +338,6 @@ app.post("/addLike", requireAuth, async (req, res) => {
     });
 
     // If the user is already liking a post, then they will be removed from the array
-
     if (findDuplicateUser) {
       await posts.updateOne(
         { _id: new ObjectId(postID) },

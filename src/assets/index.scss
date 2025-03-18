@@ -1574,9 +1574,9 @@ main {
   opacity: 0;
   pointer-events: none;
   position: fixed;
-  height: 70%;
-  width: 60%;
-  top: 50%;
+  height: 85%;
+  width: 50%;
+  top: 53%;
   right: 50%;
   transform: translate(50%, -50%);
   color: white;
@@ -1624,8 +1624,8 @@ main {
     }
 
     #exitCommentBtn {
-      width: 60px;
-      height: 60px;
+      width: 45px;
+      height: 45px;
       border-radius: 50%;
       display: flex;
       align-items: center;
@@ -1659,10 +1659,12 @@ main {
       }
     }
 
+    // Post Image
     img {
-      height: 300px;
-      object-fit: contain;
-      background-color: #222;
+      height: 600px;
+      width: 100%;
+      object-fit: cover;
+      align-self: center;
     }
 
     #indicators {
@@ -1726,43 +1728,57 @@ main {
     margin-top: 0.5rem;
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: 2.5rem;
 
     .comment {
       background-color: #111111e8;
       // border: 1px solid $cardBorder;
-      padding: 1rem;
       border-radius: 0.5rem;
       word-wrap: break-word;
 
-      section {
+      .commentInsideContainer {
         display: flex;
-        align-items: center;
-        gap: 0.5rem;
+        flex-direction: column;
 
-        h3 {
+        section {
           display: flex;
-          justify-content: start;
           align-items: center;
           gap: 0.5rem;
-          margin-bottom: 0.5rem;
-          color: white;
-          cursor: pointer;
 
-          &:hover {
-            text-decoration: underline;
+          .commentFrom {
+            display: flex;
+            justify-content: start;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+            color: white;
+            cursor: pointer;
+
+            &:hover {
+              text-decoration: underline;
+            }
+          }
+          .commentTime {
+            color: rgb(101, 101, 101);
+            font-size: $fs-paragraph;
+          }
+
+          .commentContent {
+            // padding-left: 2rem;
+          }
+
+          .commenterProfilePicImg {
+            height: 40px;
+            border-radius: 50%;
           }
         }
-        .commentTime {
-          color: rgb(101, 101, 101);
-          font-size: $fs-paragraph;
+
+        .commentContent {
+          padding-left: 3rem;
         }
 
-        .commenterProfilePicImg {
-          height: 40px;
-          border-radius: 50%;
-        }
       }
+
     }
   }
 }
@@ -1778,6 +1794,7 @@ main {
     background-color: #111;
     transition: 100ms;
     padding: 1rem;
+    right: 50%;
 
     #commentSection {
       #exitBtnRow {
@@ -1892,7 +1909,8 @@ main {
 
         #picContainer {
           display: flex;
-          align-items: center;
+          flex-direction: column;
+          align-items: left;
           gap: 1rem;
 
           #profilePicture {
@@ -1908,6 +1926,14 @@ main {
             object-fit: cover;
           }
           #whoAmI {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+
+            .profileUserTypeHeader {
+              // display: none;
+            }
+
             #changeOverlay {
               background: none;
               border: 1px solid teal;
@@ -1958,6 +1984,7 @@ main {
         #followTracking {
           display: flex;
           gap: 1rem;
+          align-self: start;
 
           section {
             display: flex;
@@ -2058,10 +2085,14 @@ main {
             justify-content: space-between;
           }
 
-          .fa-pen-to-square {
-            color: turquoise;
+          .changeBioButton {
             // border-bottom: 1px solid $primary;
-            font-size: 2rem;
+            font-size: 1rem;
+            color: white;
+            background-color: teal;
+            border-radius: 0.5rem;
+            border: none;
+            padding: 0.5rem;
             cursor: pointer;
             &:hover {
               color: teal;
@@ -2161,7 +2192,7 @@ main {
       #postMoodle1,
       #postMoodle2 {
         width: 50%;
-        height: 100%;
+        // height: 100%;
         background-color: #111;
         border: 1px solid $buttonHover;
         border-radius: 1rem;
@@ -2232,7 +2263,7 @@ main {
             word-wrap: break-word;
             line-height: 1.5;
             overflow: auto;
-            height: 140px;
+            // height: 140px;
           }
 
           img {
@@ -2531,10 +2562,11 @@ main {
           display: flex;
           align-items: center;
           gap: 0.5rem;
+          padding-bottom: 1rem;
           // flex-direction: column;
 
           .posterProfileImg {
-            height: 50px;
+            height: 30px;
             border-radius: 50%;
           }
         }
@@ -2553,7 +2585,7 @@ main {
           font-size: 1.2rem;
           padding: 0.5rem;
           padding-left: 0rem;
-          border-bottom: 1px dotted $cardBorder;
+          // padding-bottom: 2rem;
 
           span {
             display: flex;
