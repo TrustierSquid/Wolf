@@ -110,7 +110,7 @@ async function imageOptimize(imageBuffer, isImageForPosts) {
   }
 }
 
-//  For the main feed
+//  For updating the main feed
 // Sends the current list of posts in the mainFeed
 app.get("/update", async (req, res) => {
   const database = await connectMongo();
@@ -260,7 +260,7 @@ app.post("/newPost", upload.single("image"), async (req, res) => {
   }
 });
 
-// User uploads profile picture
+// User uploads/changes profile picture
 app.post(
   "/uploadProfilePicture/:loggedInUser",
   upload.single("image"),
@@ -312,6 +312,10 @@ app.post("/addLike", requireAuth, async (req, res) => {
     dynamicUser: foundUser.user,
     dynamicUID: foundUser.UID,
     dynamicProfilePic: foundUser.profilePic
+    ? `data:${foundUser.profilePic.contentType};base64,${foundUser.profilePic.data.toString(
+        "base64"
+      )}`
+    : null,
   }
 
   // By default, will look through the posts on the mainfeed to find the searched post
@@ -321,14 +325,17 @@ app.post("/addLike", requireAuth, async (req, res) => {
     // Find a duplicate user
     let findDuplicateUser = await posts.findOne({
       _id: new ObjectId(postID),
-      likes: { $elemMatch: { dynamicUser: loggedInUser } },
+      likes: { $elemMatch: { dynamicUser: likeBluePrint.dynamicUser } },
     });
 
     // If the user is already liking a post, then they will be removed from the array
     if (findDuplicateUser) {
       await posts.updateOne(
         { _id: new ObjectId(postID) },
-        { $pull: { likes: likeBluePrint } }
+        { $pull: { likes: {
+          dynamicUser: likeBluePrint.dynamicUser,
+          dynamicUID: likeBluePrint.dynamicUID
+        } } }
       );
 
       res.json({ latestLikeCounter });
