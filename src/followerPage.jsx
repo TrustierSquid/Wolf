@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from 'react-dom/client'
 import '/src/assets/index.css'
 import '/src/assets/followPage.css'
+import '/src/assets/tooltips.css'
 import FollowingPageComponent from "./components/componentDependencies/FollowPage";
 import { useState, useEffect } from 'react'
 

@@ -2,7 +2,6 @@ import { useEffect, useState, useRef, forwardRef } from "react";
 import logo from "/src/assets/wolfLogo.png";
 import defaultProfilePic from '/src/assets/defaultUser.png';
 
-
 const UpdateFeed = forwardRef(({
   currentActiveUser,
   selectedfeed,
@@ -259,7 +258,7 @@ const UpdateFeed = forwardRef(({
     commentInterface.current.style.pointerEvents = "none";
   }
 
-  // for processing comments for posts
+  // for processing and adding comments for posts
   async function addComment(comment, postID) {
     // Grabbing the query key and string
     const queryString = window.location.search;
@@ -449,16 +448,51 @@ const UpdateFeed = forwardRef(({
                         </span>
                       </div>
 
-                      {post.likes ? (
+                      {post.likes.length > 0 ? (
                         <>
                           {/* Grabs the first 4 users */}
                           {/*setFour(post.likes.slice(0, 4))*/}
                           <div className="showFirstFour">
+                            <p className="likedByText">
+                              Liked By
+                              <span className="showAllLikes">
+                                {
+                                  post.likes.map((like)=> {
+                                    return (
+                                      <div>
+                                        {like.dynamicUser}
+                                      </div>
+                                    )
+                                  })
+                                }
+                              </span>
 
+                            </p>
+
+
+                            {
+                              post.likes.slice(0, 4).map((like)=> {
+
+                                return (
+                                  <>
+                                    <span className="tooltip">
+                                      <img
+                                      onClick={()=> window.location.href = `/profile?user=${like.dynamicUID}`}
+                                      className="firstFourImg"
+                                      src={like.dynamicProfilePic || defaultProfilePic}
+                                      alt="dsa" />
+                                    {/* <p className="tooltiptext">{like.dynamicUser}</p> */}
+                                      <span className="tooltiptext" >
+                                        {like.dynamicUser}</span>
+                                    </span>
+                                  </>
+                                )
+                              })
+                            }
                           </div>
                         </>
                       ) : (
-                        <span></span>
+                        <span>No likes yet</span>
                       )}
 
                     </nav>

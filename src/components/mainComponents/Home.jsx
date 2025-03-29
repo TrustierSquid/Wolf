@@ -5,6 +5,7 @@ import UpdateFeed from "../componentDependencies/UpdateFeed";
 import Navbar from "../componentDependencies/NavBar";
 import SideNavBar from "../componentDependencies/SideNavbar";
 import Suggested from "./Suggested";
+
 /*
 - For getting the query string
 const queryString = window.location.search;

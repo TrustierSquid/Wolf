@@ -1233,8 +1233,13 @@ main #content .userContent .userPost .postInteractionSection .postLC .commentBtn
 main #content .userContent .userPost .postInteractionSection .showFirstFour {
   color: white;
   display: flex;
-  gap: 2rem;
+  align-items: center;
+  gap: 0.3rem;
   font-family: "roboto", sans-serif;
+}
+main #content .userContent .userPost .postInteractionSection .showFirstFour .firstFourImg {
+  height: 30px;
+  border-radius: 50%;
 }
 
 #commentInterface {

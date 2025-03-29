@@ -1567,8 +1567,15 @@ main {
           .showFirstFour {
             color: white;
             display: flex;
-            gap: 2rem;
+            align-items: center;
+            gap: 0.3rem;
             font-family: "roboto", sans-serif;
+
+            .firstFourImg {
+              height: 30px;
+              border-radius: 50%;
+            }
+
           }
         }
       }

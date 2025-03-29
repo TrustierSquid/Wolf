@@ -1,6 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import '/src/assets/index.css'
+import '/src/assets/tooltips.css'
 import Topics from './components/mainComponents/Topics'
 import { useEffect, useState } from 'react'
 
