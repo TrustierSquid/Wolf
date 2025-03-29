@@ -1545,7 +1545,6 @@ main {
               padding: 0.5rem;
               border-radius: 1rem;
               font-family: $ff-body;
-              transition: 150ms;
               background-color: #3e3e3eaa;
             }
 
@@ -1562,6 +1561,14 @@ main {
                 background-color: #444;
               }
             }
+
+          }
+
+          .showFirstFour {
+            color: white;
+            display: flex;
+            gap: 2rem;
+            font-family: "roboto", sans-serif;
           }
         }
       }
@@ -3026,6 +3033,10 @@ HOME COMPONENT MEDIA QUERIES
                 }
               }
             }
+
+
+
+
           }
         }
       }

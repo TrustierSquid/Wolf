@@ -78,7 +78,7 @@ const UpdateFeed = forwardRef(({
   let likeSoundEffect = new Audio('/src/assets/audio/likeSound.mp3')
   likeSoundEffect.volume = 0.4
 
-
+  // Post liking system
   async function addLike(postID, currentPostIndex) {
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
@@ -92,25 +92,19 @@ const UpdateFeed = forwardRef(({
         headers: {
           "Content-Type": "application/json",
         },
+
         body: JSON.stringify({ postID: postID, loggedInUser: currentActiveUser }),
       });
 
       // Check if the like was successfully added (optional)
       if (response.ok) {
-
-        // Immediately update the button style
-        if (likeBtn.current[currentPostIndex].style.color === "red") {
-          likeBtn.current[currentPostIndex].style.color = "white"; // Unlike
-          // likeSoundEffect.load()
-        } else {
-          likeBtn.current[currentPostIndex].style.color = "red"; // Like
-          likeSoundEffect.play()
-        }
-
+        likeSoundEffect.play()
+        likeBtn.current[currentPostIndex].style.color = 'red'
         await updateMainFeed();
       } else {
         console.error("error adding like");
       }
+
     } else {
 
       // If the like is being made on another users profile page
@@ -119,19 +113,13 @@ const UpdateFeed = forwardRef(({
         headers: {
           "Content-Type": "application/json",
         },
+
         body: JSON.stringify({ postID: postID, loggedInUser: currentActiveUser }),
       });
 
       // Check if the like was successfully added (optional)
       if (response.ok) {
-        // Immediately update the button style
-        if (likeBtn.current[currentPostIndex].style.color === "red") {
-          likeBtn.current[currentPostIndex].style.color = "white"; // Unlike
-        } else {
-          likeBtn.current[currentPostIndex].style.color = "red"; // Like
-          likeSoundEffect.play()
-        }
-
+        likeSoundEffect.play()
         await updateMainFeed();
       } else {
         console.error("error adding like");
@@ -143,12 +131,65 @@ const UpdateFeed = forwardRef(({
   // all dependent on when the feed gets updated
   function checkCurrentlyLiked() {
     allPosts?.map((post, key) => {
-      if (post.likes.includes(currentActiveUser)) {
+      /* This checks to find if the post.likes array contains the current user logged in.
+        If it is found then the visual heart will appear red.
+       */
+      if (post.likes.find(like => like.dynamicUser === currentActiveUser)) {
         likeBtn.current[key].style.color = "red";
       } else {
         likeBtn.current[key].style.color = "white";
       }
+
     });
+  }
+
+  const [firstFourArr, setFirstFourArr] = useState([])
+
+  let setFour = (firstFourPeople)=> {
+    getFirstFourLikes(firstFourPeople)
+  }
+
+  // Helper Function to plug in the manipulated data
+  let getFirstFourLikes = async (firstFourPeople)=> {
+    try {
+      let stagingFour = await Promise.all(
+        firstFourPeople.map(async (person)=> {
+          try {
+            // console.log(person)
+            if (!person) {
+              return
+
+            } else {
+              let response = await fetch(`/dynamic/${person}`, {
+                method: "GET",
+                headers: {
+                  "Content-Type": 'application/json'
+                }
+              })
+
+              if (!response.ok) {
+                console.warn(`Couldnt find ${person} because they might not exist`)
+                return
+              }
+
+              const data = await response.json();
+
+              return data
+            }
+
+
+          } catch {
+            console.log("Could not get the first four likes of this post")
+          }
+        })
+      )
+
+      // setFirstFourArr(stagingFour)
+      console.log(stagingFour)
+    } catch (error) {
+      console.log("Error in fetching the first four likes:", error)
+    }
+
   }
 
   // ran on component mount. Dependent on the the allPosts array
@@ -271,7 +312,7 @@ const UpdateFeed = forwardRef(({
 
   const currentDate = new Date();
 
-  // Configuration for posts's creation data
+  // Configuration for posts's time creation data
   function showPostDate(postCreationDate) {
     // Get the difference in milliseconds
     const startDate = new Date(postCreationDate);
@@ -368,6 +409,9 @@ const UpdateFeed = forwardRef(({
                         <span
                           ref={(el) => (likeBtn.current[key] = el)}
                           className="likeBtn"
+                          /* Passing in the index for each mapped post
+                            into the addLike Function.
+                           */
                           onClick={() => addLike(post._id, key)}
                         >
                           <i className="fa-solid fa-heart"></i>
@@ -404,6 +448,19 @@ const UpdateFeed = forwardRef(({
                           </span>
                         </span>
                       </div>
+
+                      {post.likes ? (
+                        <>
+                          {/* Grabs the first 4 users */}
+                          {/*setFour(post.likes.slice(0, 4))*/}
+                          <div className="showFirstFour">
+
+                          </div>
+                        </>
+                      ) : (
+                        <span></span>
+                      )}
+
                     </nav>
                   </div>
                 </>

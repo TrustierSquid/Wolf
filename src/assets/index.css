@@ -1219,7 +1219,6 @@ main #content .userContent .userPost .postInteractionSection .postLC .commentBtn
   padding: 0.5rem;
   border-radius: 1rem;
   font-family: "roboto", sans-serif;
-  transition: 150ms;
   background-color: rgba(62, 62, 62, 0.6666666667);
 }
 main #content .userContent .userPost .postInteractionSection .postLC .likeBtn:hover {
@@ -1230,6 +1229,12 @@ main #content .userContent .userPost .postInteractionSection .postLC .commentBtn
 }
 main #content .userContent .userPost .postInteractionSection .postLC .commentBtn:hover {
   background-color: #444;
+}
+main #content .userContent .userPost .postInteractionSection .showFirstFour {
+  color: white;
+  display: flex;
+  gap: 2rem;
+  font-family: "roboto", sans-serif;
 }
 
 #commentInterface {

@@ -57,7 +57,6 @@ const currentDate = new Date();
 
 // database configuration
 let database = null;
-// let gfs;
 
 const client = new MongoClient(uri, {
   serverApi: {
@@ -86,6 +85,7 @@ async function connectMongo() {
 
 connectMongo();
 
+// Image optimizing
 const storage = multer.memoryStorage(); // Store files in memory
 const upload = multer({ storage: storage });
 
@@ -163,7 +163,7 @@ app.get("/update", async (req, res) => {
   res.json({ reversedPosts: responsePost.reverse() });
 });
 
-// WHEN THE USER CREATES A NEW POST
+// For when user creates a new post
 app.post("/newPost", upload.single("image"), async (req, res) => {
   const { feed } = req.query;
   const { whoPosted, postSubject, postBody } = req.body;
@@ -300,6 +300,20 @@ app.post("/addLike", requireAuth, async (req, res) => {
 
   const database = await connectMongo();
 
+  // Looking up the user in question
+  const users = database.collection('Users')
+
+  // User is found we can now acess the user data from here
+  let foundUser = await users.findOne({
+    user: loggedInUser
+  })
+
+  let likeBluePrint = {
+    dynamicUser: foundUser.user,
+    dynamicUID: foundUser.UID,
+    dynamicProfilePic: foundUser.profilePic
+  }
+
   // By default, will look through the posts on the mainfeed to find the searched post
   if (feed === "mainFeed") {
     const posts = database.collection("mainFeed");
@@ -307,21 +321,21 @@ app.post("/addLike", requireAuth, async (req, res) => {
     // Find a duplicate user
     let findDuplicateUser = await posts.findOne({
       _id: new ObjectId(postID),
-      likes: { $in: [loggedInUser] },
+      likes: { $elemMatch: { dynamicUser: loggedInUser } },
     });
 
     // If the user is already liking a post, then they will be removed from the array
     if (findDuplicateUser) {
       await posts.updateOne(
         { _id: new ObjectId(postID) },
-        { $pull: { likes: loggedInUser } }
+        { $pull: { likes: likeBluePrint } }
       );
 
       res.json({ latestLikeCounter });
     } else {
       await posts.updateOne(
         { _id: new ObjectId(postID) },
-        { $push: { likes: loggedInUser } }
+        { $push: { likes: likeBluePrint } }
       );
 
       res.json({ latestLikeCounter });
@@ -334,21 +348,21 @@ app.post("/addLike", requireAuth, async (req, res) => {
     // Find a duplicate user
     let findDuplicateUser = await posts.findOne({
       _id: new ObjectId(postID),
-      likes: { $in: [loggedInUser] },
+      likes: { $elemMatch: { dynamicUser: loggedInUser } },
     });
 
     // If the user is already liking a post, then they will be removed from the array
     if (findDuplicateUser) {
       await posts.updateOne(
         { _id: new ObjectId(postID) },
-        { $pull: { likes: loggedInUser } }
+        { $pull: { likes: likeBluePrint } }
       );
 
       res.json({ latestLikeCounter });
     } else {
       await posts.updateOne(
         { _id: new ObjectId(postID) },
-        { $push: { likes: loggedInUser } }
+        { $push: { likes: likeBluePrint } }
       );
 
       res.json({ latestLikeCounter });
@@ -483,6 +497,7 @@ app.post("/addFollowingUser", async (req, res) => {
   }
 });
 
+// Handles when a user joins a community
 app.get("/topicsAdd", async (req, res) => {
   const { topicToAdd } = req.query;
 
@@ -541,7 +556,7 @@ app.get("/topicsAdd", async (req, res) => {
   }
 });
 
-// remove user from community
+// remove user from community (den)
 app.put("/removeCommunity/:community/:UID/:username", async (req, res) => {
   try {
     const { community, UID, username } = req.params;
@@ -632,6 +647,24 @@ app.get("/dynamic/:username", async (req, res) => {
   });
 });
 
+// For searching for a user by UID
+app.get("/dynamicUID/:UID", async (req, res) => {
+  const { UID } = req.params;
+
+  const database = await connectMongo();
+  const usersCollection = database.collection("Users");
+
+  let searchedUser = await usersCollection.findOne({ UID: UID });
+
+  res.json({
+    dynamicUID: searchedUser.UID,
+    dynamicFollowing: searchedUser.following,
+    dynamicFollowers: searchedUser.followers,
+    dynamicUsername: searchedUser.user,
+  });
+});
+
+// Searching for the searched user's followers and following list
 app.get("/dynamicFollowers/:userSearching", async (req, res) => {
   // The user we are checking the followers and following profile pics
   const { userSearching } = req.params;
@@ -679,23 +712,9 @@ app.get("/dynamicFollowers/:userSearching", async (req, res) => {
   });
 });
 
-// For searching for a user by UID
-app.get("/dynamicUID/:UID", async (req, res) => {
-  const { UID } = req.params;
 
-  const database = await connectMongo();
-  const usersCollection = database.collection("Users");
 
-  let searchedUser = await usersCollection.findOne({ UID: UID });
-
-  res.json({
-    dynamicUID: searchedUser.UID,
-    dynamicFollowing: searchedUser.following,
-    dynamicFollowers: searchedUser.followers,
-    dynamicUsername: searchedUser.user,
-  });
-});
-
+// For clearing notifications
 app.put("/clearNotifications/:loggedInUser", async (req, res) => {
   const { loggedInUser } = req.params;
   const database = await connectMongo();
