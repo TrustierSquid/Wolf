@@ -605,7 +605,11 @@ app.post("/updateBio/:UID", async (req, res) => {
 app.post("/addPostComment", async (req, res) => {
   const { postID } = req.query;
   const { feed } = req.query;
+
+  // The user commenting
   const { commentFrom } = req.query;
+
+  // The actual comment
   const { comment } = req.body;
 
   const database = await connectMongo();
@@ -613,6 +617,7 @@ app.post("/addPostComment", async (req, res) => {
   const users = database.collection("Users");
 
   let commenterProfilePic = await users.findOne({ user: commentFrom });
+  console.log(commentFrom)
 
   // the comment to push to the database
   let newComment = {

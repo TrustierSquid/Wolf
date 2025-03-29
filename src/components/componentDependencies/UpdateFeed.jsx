@@ -271,7 +271,7 @@ const UpdateFeed = forwardRef(({
     if (!queryString) {
       setTimeout(async () => {
         const response = await fetch(
-          `/addPostComment?postID=${postID}&feed=mainFeed&commentFrom=${props.currentActiveUser}`,
+          `/addPostComment?postID=${postID}&feed=mainFeed&commentFrom=${currentActiveUser}`,
           {
             method: "POST",
             headers: {
@@ -471,6 +471,7 @@ const UpdateFeed = forwardRef(({
 
 
                             {
+                              // Selects the first four likes of o post and displays them
                               post.likes.slice(0, 4).map((like)=> {
 
                                 return (
