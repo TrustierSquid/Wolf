@@ -1793,6 +1793,21 @@ main {
 
       }
 
+      .commentReplyBtn {
+        padding: 0.5rem;
+        margin: 0.5rem;
+        background: none;
+        color: turquoise;
+        border: none;
+        font-weight: bold;
+        border-radius: 0.5rem;
+        cursor: pointer;
+      }
+
+      .commentReplyBtn:hover {
+        text-decoration: underline;
+      }
+
     }
   }
 }

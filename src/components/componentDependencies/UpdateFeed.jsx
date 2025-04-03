@@ -1,6 +1,7 @@
 import { useEffect, useState, useRef, forwardRef } from "react";
 import logo from "/src/assets/wolfLogo.png";
 import defaultProfilePic from '/src/assets/defaultUser.png';
+import ShowLikes from "../moodleComponents/ShowLikes";
 
 const UpdateFeed = forwardRef(({
   currentActiveUser,
@@ -448,53 +449,7 @@ const UpdateFeed = forwardRef(({
                         </span>
                       </div>
 
-                      {post.likes.length > 0 ? (
-                        <>
-                          {/* Grabs the first 4 users */}
-                          {/*setFour(post.likes.slice(0, 4))*/}
-                          <div className="showFirstFour">
-                            <p className="likedByText">
-                              Liked By
-                              <span className="showAllLikes">
-                                {
-                                  post.likes.map((like)=> {
-                                    return (
-                                      <div>
-                                        {like.dynamicUser}
-                                      </div>
-                                    )
-                                  })
-                                }
-                              </span>
-
-                            </p>
-
-
-                            {
-                              // Selects the first four likes of o post and displays them
-                              post.likes.slice(0, 4).map((like)=> {
-
-                                return (
-                                  <>
-                                    <span className="tooltip">
-                                      <img
-                                      onClick={()=> window.location.href = `/profile?user=${like.dynamicUID}`}
-                                      className="firstFourImg"
-                                      src={like.dynamicProfilePic || defaultProfilePic}
-                                      alt="dsa" />
-                                    {/* <p className="tooltiptext">{like.dynamicUser}</p> */}
-                                      <span className="tooltiptext" >
-                                        {like.dynamicUser}</span>
-                                    </span>
-                                  </>
-                                )
-                              })
-                            }
-                          </div>
-                        </>
-                      ) : (
-                        <span>No likes yet</span>
-                      )}
+                      <ShowLikes post={post}/>
 
                     </nav>
                   </div>
@@ -612,7 +567,10 @@ const UpdateFeed = forwardRef(({
 
 
                       <p className="commentContent">{comment.comment}</p>
+
                     </div>
+
+                    <button className="commentReplyBtn">Reply</button>
 
                   </div>
                 </>

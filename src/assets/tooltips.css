@@ -38,6 +38,7 @@
    opacity: 1;
  }
 
+ /* Shows all likes that a post has */
  .showAllLikes {
    visibility: hidden;
    position: absolute;
