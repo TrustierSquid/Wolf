@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    working_dir: /app
+    env_file:
+      - server/.env # Load environment variables from .env file
+    volumes:
+      - .:/app # Mount the current directory to /app in the container
+    ports:
+      - "3000:3000"
+    command: ["npm", "start"]
