@@ -14,8 +14,6 @@ const userSearched = urlParams.get('topicFeed')
  */
 
 export default function Home() {
-  // Each topic that the user selected displayed in the sideNav as individual elements
-  const topicBtn = useRef(null);
 
   // The side navigation element
   const sideNav = useRef(null);
@@ -248,8 +246,6 @@ export default function Home() {
 
   // Clicking certain exit buttons and clicking the bg overlay will exit out of menus
   function dissappearEffect() {
-    darkBG.current.style.opacity = "0";
-    darkBG.current.style.pointerEvents = "none";
     createPostElement.current.style.opacity = "0";
     createPostElement.current.style.pointerEvents = "none";
     bodyPostElement.current.value = "";
@@ -257,9 +253,8 @@ export default function Home() {
     document.body.style.overflow = "auto";
     darkBG.current.style.opacity = "0";
     darkBG.current.style.pointerEvents = "none";
-    document.body.style.overflow = "auto";
-    /* newPostBtnMobile.current.style.opacity = '1'
-      newPostBtnMobile.current.style.pointerEvents = 'all' */
+
+
   }
 
   // for making the comments section appear and disappear

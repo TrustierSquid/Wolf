@@ -14,7 +14,6 @@ const UpdateFeed = forwardRef(({
   const {darkBG} = ref || {}
   const [allPosts, setAllPosts] = useState(null);
   const currentUser = props.currentActiveUser;
-  // const darkBG = useRef(null)
   const commentInterface = useRef(null);
 
   // Fetches for all posts created to update all feeds
@@ -143,52 +142,6 @@ const UpdateFeed = forwardRef(({
     });
   }
 
-  const [firstFourArr, setFirstFourArr] = useState([])
-
-  let setFour = (firstFourPeople)=> {
-    getFirstFourLikes(firstFourPeople)
-  }
-
-  // Helper Function to plug in the manipulated data
-  let getFirstFourLikes = async (firstFourPeople)=> {
-    try {
-      let stagingFour = await Promise.all(
-        firstFourPeople.map(async (person)=> {
-          try {
-            if (!person) {
-              return
-
-            } else {
-              let response = await fetch(`/dynamic/${person}`, {
-                method: "GET",
-                headers: {
-                  "Content-Type": 'application/json'
-                }
-              })
-
-              if (!response.ok) {
-                console.warn(`Couldnt find ${person} because they might not exist`)
-                return
-              }
-
-              const data = await response.json();
-
-              return data
-            }
-
-
-          } catch {
-            console.log("Could not get the first four likes of this post")
-          }
-        })
-      )
-
-
-    } catch (error) {
-      console.log("Error in fetching the first four likes:", error)
-    }
-
-  }
 
   // ran on component mount. Dependent on the the allPosts array
   useEffect(() => {
@@ -446,7 +399,7 @@ const UpdateFeed = forwardRef(({
                         </span>
                       </div>
 
-                      <ShowLikes post={post}/>
+                      <ShowLikes post={post} bgEffect={bgEffect} removeBGEffect={removeBGEffect}/>
 
                     </nav>
                   </div>
@@ -466,7 +419,7 @@ const UpdateFeed = forwardRef(({
         </div>
       )}
 
-    <span ref={darkBG} id="darkBG" onClick={()=> {removeEffect(), removeBGEffect();}}></span>
+    <span ref={darkBG} id="darkBG" onClick={()=> {removeBGEffect()}}></span>
 
       <div id="commentInterface" ref={commentInterface}>
         <h3 id="topDiv">

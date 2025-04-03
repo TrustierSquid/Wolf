@@ -71,7 +71,7 @@ $fs-paragraph: 1rem;
   width: 100%;
   pointer-events: none;
   opacity: 0;
-  z-index: 0;
+  z-index: 999; /* Ensure this is above other elements */
   transition: 250ms;
 }
 
@@ -1603,7 +1603,7 @@ main {
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  z-index: 8;
+  z-index: 1000;
   overflow: scroll;
 
   #topDiv {

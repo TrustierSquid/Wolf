@@ -1,0 +1,91 @@
+/* This is the bluePrint for every moodle */
+
+:root {
+   --moodleBackground: #181818;
+   --exitBtnBackground: #57575765; /* Background color for the exit button */
+}
+
+.universalMoodle {
+  opacity: 0;
+  transition: opacity 150ms ease-in-out;
+  position: fixed;
+  background-color: var(--moodleBackground);
+  width: 40%;
+  height: 70%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+   border-radius: 1rem;
+  z-index: 9999; /* Ensure it overlays other elements */
+  pointer-events: none; /* Prevent interaction with the moodle */
+  overflow: auto;
+}
+
+/* First section of the moodle contains the title of the moodle and the X button */
+.firstSection {
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+   padding: 1rem;
+   color: white;
+   font-family: "Nunito", sans-serif;
+
+}
+
+/* Second Section contains the content of the moodle */
+.secondSection {
+   padding: 1rem;
+   display: flex;
+   flex-direction: column;
+   /* gap: 0.rem; */
+}
+
+/* close Moodle BTN */
+.closeMoodleBtn {
+   width: 45px;
+   height: 45px;
+   cursor: pointer;
+   font-size: 1.5rem;
+   color: white;
+   background: none;
+   border: none;
+   margin: 1rem;
+   border-radius: 50%;
+   background-color: var(--exitBtnBackground);
+}
+
+.closeMoodleBtn:hover {
+   /* Change the background color on hover for better visibility */
+   background-color: #616161;
+   color: white; /* Ensure the text remains visible */
+}
+
+/* SHOW LIKES MOODLE SPECIFICS */
+
+.likeEntry {
+   display: flex;
+   align-items: center;
+   gap: 0.5rem;
+   padding: 0.5rem;
+}
+
+.likeEntry img {
+   height: 45px;
+   width: 45px;
+   border-radius: 50%;
+}
+
+.likeEntry:hover {
+   /* Change the background color on hover for better visibility */
+   cursor: pointer; /* Make it clickable */
+   background-color: rgba(255, 255, 255, 0.1); /* Slight highlight effect */
+   border-radius: 0.5rem; /* Maintain rounded corners */
+}
+
+.nameOfUser {
+   font-size: 1.2rem;
+   font-weight: bold;
+   cursor: pointer; /* Make it clickable */
+   color: white; /* Ensure the text is visible */
+   font-family: "roboto", sans-serif;;
+}

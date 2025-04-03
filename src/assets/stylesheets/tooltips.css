@@ -1,4 +1,5 @@
 /* For Feed tooltips */
+/* Use this stylesheet for creating tooltips on elements */
 
 :root {
    --tooltipBackground: rgb(73, 29, 29);
