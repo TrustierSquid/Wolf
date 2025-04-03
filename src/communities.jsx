@@ -1,8 +1,8 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import '/src/assets/index.css'
-import '/src/assets/communities.css'
-import '/src/assets/tooltips.css'
+import '/src/assets/stylesheets/index.css'
+import '/src/assets/stylesheets/communities.css'
+import '/src/assets/stylesheets/tooltips.css'
 import CommunitySelection from './components/mainComponents/CommunitySelection'
 import { useState, useEffect } from 'react'
 

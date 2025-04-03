@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import '/src/assets/index.css'
-import '/src/assets/tooltips.css'
+import '/src/assets/stylesheets/index.css'
+import '/src/assets/stylesheets/tooltips.css'
 import Profile from './components/mainComponents/Profile'
 import { useEffect, useState } from 'react'
 

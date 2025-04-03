@@ -155,7 +155,6 @@ const UpdateFeed = forwardRef(({
       let stagingFour = await Promise.all(
         firstFourPeople.map(async (person)=> {
           try {
-            // console.log(person)
             if (!person) {
               return
 
@@ -184,8 +183,7 @@ const UpdateFeed = forwardRef(({
         })
       )
 
-      // setFirstFourArr(stagingFour)
-      console.log(stagingFour)
+
     } catch (error) {
       console.log("Error in fetching the first four likes:", error)
     }
@@ -317,7 +315,6 @@ const UpdateFeed = forwardRef(({
     // Get the difference in milliseconds
     const startDate = new Date(postCreationDate);
     const timeDifference = currentDate - startDate;
-    // console.log(postCreationDate)
 
     // Covert the difference from milliseconds to day and hours
     const millisecondsInOneDay = 24 * 60 * 60 * 1000;
