@@ -71,9 +71,8 @@ async function connectMongo() {
   if (database) return database;
 
   try {
-    await client.connect();
-    // let databaseAd = client.db('admin');
-    database = client.db(process.env.DB_NAME);
+    await client.connect(); // Connect the client to the database
+    database = client.db(process.env.DB_NAME); // Use the database name from the environment variable
     let imagesCollection = database.collection("images");
 
     console.log(`Connected to ${database.databaseName} Database`);
