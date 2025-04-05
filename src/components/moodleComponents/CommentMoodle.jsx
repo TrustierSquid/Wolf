@@ -53,7 +53,7 @@ export default function CommentMoodle(props, ref) {
       }
 
       setErrorMessage("Added Comment!");
-      await updateMainFeed();
+      await props.updateMainFeed();
     }
   }
 
