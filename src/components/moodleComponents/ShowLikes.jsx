@@ -1,4 +1,5 @@
 import { useRef } from "react";
+import defaultProfilePic from '/src/assets/defaultUser.png';
 // Moodle for this feature will be inside this component
 
 export default function ShowLikes(props) {
@@ -87,7 +88,7 @@ export default function ShowLikes(props) {
 
         </>
       ) : (
-        <span>No likes yet</span>
+        <span></span>
       )}
     </>
   );

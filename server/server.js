@@ -805,10 +805,6 @@ app.get("/viewProf", (req, res) => {
   res.sendFile(path.join(__dirname, "../profile.html"));
 });
 
-app.get("/wolfTopics", (req, res) => {
-  res.json(topicFacts);
-});
-
 // ROUTE EXECUTES WHEN THE USER WANTS TO LOOK AT THEIR OWN PROFILE
 app.post("/profile", (req, res) => {
   const { username } = req.body;

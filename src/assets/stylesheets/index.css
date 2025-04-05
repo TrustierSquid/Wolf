@@ -6,6 +6,7 @@
 
 #darkBG {
   background-color: rgba(0, 0, 0, 0.6431372549);
+  display: none;
   position: fixed;
   top: 0;
   left: 0;
@@ -19,7 +20,7 @@
 
 body {
   background: rgb(212, 55, 55);
-  background: linear-gradient(90deg, rgb(212, 55, 55) 0%, rgb(0, 0, 0) 23%);
+  background: linear-gradient(90deg, rgb(212, 55, 55) 0%, rgb(0, 0, 0) 21%);
 }
 
 .noPostsMessage {

@@ -64,6 +64,7 @@ $fs-paragraph: 1rem;
 
 #darkBG {
   background-color: #000000a4;
+  display: none;
   position: fixed;
   top: 0;
   left: 0;
@@ -78,7 +79,7 @@ $fs-paragraph: 1rem;
 body {
   // background-color: #0b0b0bfa;
   background: rgb(212,55,55);
-  background: linear-gradient(90deg, rgba(212,55,55,1) 0%, rgba(0,0,0,1) 23%);
+  background: linear-gradient(90deg, rgba(212,55,55,1) 0%, rgba(0,0,0,1) 21%);
 }
 
 .noPostsMessage {

@@ -6,64 +6,25 @@ import Navbar from "../componentDependencies/NavBar";
 import SideNavBar from "../componentDependencies/SideNavbar";
 import Suggested from "./Suggested";
 
-/*
-- For getting the query string
-const queryString = window.location.search;
-const urlParams = new URLSearchParams(queryString)
-const userSearched = urlParams.get('topicFeed')
- */
 
 export default function Home() {
-
-  // The side navigation element
-  const sideNav = useRef(null);
-
-  // grabbing poster data for recording likes and follows
-  const posterElement = useRef(null);
-
-  /* DROPDOWN FUNCTIONALITY */
-  const profileDropdown = useRef(null);
-
-  const currentVersion = "alpha";
-
-  const [toggleDropdown, setToggleDropdown] = useState(true);
-
-  // The current user interacting with the app
-  // and checking user action based off of username
-  const [username, setUsername] = useState(null);
-
-  // the an array of the topics that the user selected
-  const [userData, setUserData] = useState([]);
-
-  // The topics and 2 facts for each of them
-  // Used for wolf bot
-  const [topicFact, setTopicFact] = useState([]);
-
-  const [followerCount, setFollowerCount] = useState([]);
-  const [followingCount, setFollowingCount] = useState([]);
-  const [loggedInUID, setLoggedInUID] = useState(null);
-  const [profilePicture, setProfilePicture] = useState(null);
-  const [totalMembers, setTotalMembers] = useState(null);
-
   const queryString = window.location.search;
   const urlParams = new URLSearchParams(queryString);
   const userSearched = urlParams.get("topicFeed");
 
-  // The default feed to post to when selecting a community to post to
-  const [communityStatePost, setCommunityStatePost] = useState("Home");
+  // The side navigation element
+  const sideNav = useRef(null);
+
+  // and checking user action based off of username
+  const [totalMembers, setTotalMembers] = useState(null);
 
   // The refs for creating posts
   const subjectPostElement = useRef(null);
   const bodyPostElement = useRef(null);
 
-  // User feedBack
+  // User feedBack when invalid input is given
   const [errorMessage, setErrorMessage] = useState("");
   const errorMessageElement = useRef(null);
-
-  const [grippedFeed, setGrippedFeed] = useState([]);
-
-  // selected topic will default to main
-  const [grippedTopic, setGrippedTopic] = useState("Main");
 
   // image upload element
   const imageRef = useRef(null);
@@ -73,9 +34,14 @@ export default function Home() {
   const darkBG = useRef(null);
   const newPostBtn = useRef(null);
   const selectRef = useRef(null);
+
+  // When uploading an image, this is the state that will hold the preview of the image before it is sent to the server
   const [communityImagePreview, setCommunityImagePreview] = useState(null);
 
-  // GETTING USER INFORMATION AND DISPLYING IT ON THE HOME PAGE SPECIFIC TO THE USER LOGGED IN
+
+  const [loggedInUserInfo, setLoggedInUserInfo] = useState([]); // array of topics the user selected
+
+  // Getting the current logged in user information from the server
   async function getUserData() {
     const response = await fetch(`/users/homeFeed`, {
       method: "GET",
@@ -91,43 +57,14 @@ export default function Home() {
     }
 
     const homeData = await response.json();
-    // console.log(homeData.followingCount.length)
-    // setting the user info needed as glob vars
-    // console.log(homeData.topicArr)
 
-    // the topics the current user selected
-    setUserData(homeData.topicArr);
+    // all data is push into state from one array
+    setLoggedInUserInfo(homeData)
 
-    // the current user logged in
-    setUsername(homeData.userName);
-
-    setLoggedInUID(homeData.UID);
-
-    //  the current users following count
-    setFollowingCount(homeData.followingCount.length);
-
-    // the current users follower count
-    setFollowerCount(homeData.followerCount.length);
-
-    // LoggedIn user profile picture
-    setProfilePicture(homeData.profilePic);
   }
 
-  async function fetchTopicData() {
-    const response = await fetch(`/wolfTopics`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
 
-    const data = await response.json();
-
-    // setting the topic description a glob var
-    setTopicFact(data);
-  }
-
-  // RETRIEVING THE DESCRIPTION THAT COMES WITH EACH TOPIC
+  // RETRIEVING THE DESCRIPTION THAT COMES WITH EACH COMMUNITY
   async function retrieveCommunityInformation() {
     const response = await fetch("/community/retrieveCommunityInformation", {
       method: "POST",
@@ -140,14 +77,6 @@ export default function Home() {
     setTotalMembers(data);
   }
 
-  // Helper function for posting to communities
-  let postToCommunity = (communityToPostTo) => {
-    /*
-         When the user selects a comunity to post to,
-         the state variable will change to the respective community
-       */
-    setCommunityStatePost(communityToPostTo);
-  };
 
   //  Creating a new post
   async function createNewPost(community) {
@@ -165,7 +94,7 @@ export default function Home() {
 
     const imageFile = imageRef.current.files[0];
     const formData = new FormData();
-    formData.append("whoPosted", username);
+    formData.append("whoPosted", loggedInUserInfo.userName);
     formData.append("postSubject", subject);
     formData.append("postBody", body);
     formData.append("image", imageFile);
@@ -203,8 +132,7 @@ export default function Home() {
   }
 
   useEffect(() => {
-    getUserData();
-    fetchTopicData();
+    getUserData()
     retrieveCommunityInformation();
     removeTitle();
   }, []);
@@ -214,12 +142,7 @@ export default function Home() {
     sideNav.current.classList.toggle("toggleNav");
   }
 
-  // Returns the a new post about the app details
-  function displayAbout() {
-    return <AboutPost appVersion={currentVersion} />;
-  }
-
-  // removeTitle when on home page
+  // The "Whats New Header gets removed when the user is viewing another feed other than the home Feed"
   let whatsNewTitle = useRef(null);
   function removeTitle() {
     if (userSearched) {
@@ -240,7 +163,6 @@ export default function Home() {
       bodyPostElement.current.value = "";
       subjectPostElement.current.value = "";
       document.body.style.overflow = "hidden";
-      // postToCommunity(userSearched.split('Feed')[0])
     }
   }
 
@@ -253,8 +175,6 @@ export default function Home() {
     document.body.style.overflow = "auto";
     darkBG.current.style.opacity = "0";
     darkBG.current.style.pointerEvents = "none";
-
-
   }
 
   // for making the comments section appear and disappear
@@ -270,20 +190,20 @@ export default function Home() {
   // Navbar functionality
   const navbarProps = {
     logo: logo,
-    username: username,
+    username: loggedInUserInfo.userName,
     mobileNavFunction: () => mobileNavFunction(),
   };
 
   // sidebar functionality
   const sidebarProps = {
-    userData: userData,
-    username: username,
-    followings: followingCount,
-    followers: followerCount,
-    UID: loggedInUID,
-    profileImage: profilePicture,
+    username: loggedInUserInfo?.userName,
+    followings: loggedInUserInfo?.followingCount,
+    followers: loggedInUserInfo?.followerCount,
+    UID: loggedInUserInfo?.UID,
+    profileImage: loggedInUserInfo?.profilePic,
     displayAbout: () => displayAbout(),
   };
+
 
   return (
     <>
@@ -333,7 +253,7 @@ export default function Home() {
                     {totalMembers
                       ?.filter((community) =>
                         Object.values(community.members).some(
-                          (member) => member.member === username
+                          (member) => member.member === loggedInUserInfo.userName
                         )
                       )
                       .map((community) => {
@@ -406,9 +326,7 @@ export default function Home() {
           <article className="userContent">
             {/* changingFeed will be the dependant topic of the user feed*/}
             <UpdateFeed
-              currentActiveUser={username}
-              selectedfeed={grippedFeed}
-              topicDisplay={grippedTopic}
+              currentActiveUser={loggedInUserInfo.userName}
               bgEffect={appearEffectComments}
               removeBGEffect={dissappearEffect}
               image={image}

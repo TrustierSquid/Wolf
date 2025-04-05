@@ -119,6 +119,7 @@ const UpdateFeed = forwardRef(({
       // Check if the like was successfully added (optional)
       if (response.ok) {
         likeSoundEffect.play()
+        likeBtn.current[currentPostIndex].style.color = 'red'
         await updateMainFeed();
       } else {
         console.error("error adding like");
@@ -326,11 +327,10 @@ const UpdateFeed = forwardRef(({
                         {/* flex container */}
                         <section className="userAction">
                           {/* checking for whos posting */}
-                          {/* {checkAdmin(post.poster)} */}
                           <div className="postUserInformation">
                             <img
                               className="postProfilePic"
-                              src={post.posterProfilePic || defaultProfilePic}
+                              src={post.posterProfilePic ? post.posterProfilePic : "/src/assets/defaultUser.png"} // Fallback to default if no profile pic is found
                             />
                             <h2
                               className="poster"

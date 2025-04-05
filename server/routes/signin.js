@@ -188,10 +188,8 @@ router.get("/homeFeed", requireAuth, async (req, res) => {
     _id: new ObjectId(req.currentUser),
   });
 
-  let userSelectedTopics = loggedInUser.topics;
 
   res.json({
-    topicArr: userSelectedTopics,
     userName: loggedInUser.user,
     followerCount: loggedInUser.followers,
     followingCount: loggedInUser.following,
