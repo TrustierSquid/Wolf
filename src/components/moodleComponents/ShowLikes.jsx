@@ -26,8 +26,9 @@ export default function ShowLikes(props) {
         <>
           {/* Grabs the first 4 users */}
           <div className="showFirstFour">
+            <br />
             <p className="likedByText" onClick={()=> openMoodle()}>
-              Liked By
+            <i style={{color: "red"}} className="fa-solid fa-heart"></i>
               <span className="showAllLikes">
                 {props.post.likes.map((like) => {
                   return <div>{like.dynamicUser}</div>;
