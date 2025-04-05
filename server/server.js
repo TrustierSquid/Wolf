@@ -133,7 +133,7 @@ app.get("/update", async (req, res) => {
       ? `data:${
           searchedUser.profilePic.contentType
         };base64,${searchedUser.profilePic.data.toString("base64")}`
-      : "src/assets/defaultUser.jpg";
+      : null;
   };
 
   // Process posts with asynchronous handling for profile pictures
