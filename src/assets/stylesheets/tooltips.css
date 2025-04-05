@@ -2,78 +2,76 @@
 /* Use this stylesheet for creating tooltips on elements */
 
 :root {
-   --tooltipBackground: rgb(73, 29, 29);
+  --tooltipBackground: rgb(73, 29, 29);
 }
 
 .tooltip {
-   position: relative;
-   display: inline-block;
-   cursor: pointer;
- }
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+}
 
- .tooltiptext {
-   visibility: hidden;
-   max-width: 200px;
-   height: 40px;
-   background-color: var(--tooltipBackground);
-   color: white;
-   text-align: center;
-   border-radius: 0.5rem;
-   padding: 1rem;
-   opacity: 0;
-   transition: opacity 0.1s ease-in-out;
-   display: flex;
-   align-items: center;
-   justify-content: center;
+.tooltiptext {
+  visibility: hidden;
+  max-width: 200px;
+  height: 40px;
+  background-color: var(--tooltipBackground);
+  color: white;
+  text-align: center;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  opacity: 0;
+  transition: opacity 0.1s ease-in-out;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
-   /* Position the tooltip */
-   position: absolute;
-   margin-top: 0.5rem;
-   margin-left: 0rem;
-   z-index: 1;
- }
+  /* Position the tooltip */
+  position: absolute;
+  margin-top: 0.5rem;
+  margin-left: 0rem;
+  z-index: 9999;
+}
 
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
 
-.tooltip:hover  .tooltiptext {
-   visibility: visible;
-   opacity: 1;
- }
+/* Shows all likes that a post has */
+.showAllLikes {
+  visibility: hidden;
+  position: absolute;
+  background-color: var(--tooltipBackground);
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  margin-top: 2rem;
+  max-width: 300px;
+}
 
- /* Shows all likes that a post has */
- .showAllLikes {
-   visibility: hidden;
-   position: absolute;
-   background-color: var(--tooltipBackground);
-   padding: 0.5rem;
-   border-radius: 0.5rem;
-   margin-top: 2rem;
-   max-width: 300px;
- }
+.likedByText:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
 
- .likedByText:hover {
-   text-decoration: underline;
-   cursor: pointer;
- }
-
- .likedByText:hover .showAllLikes{
-   visibility: visible;
- }
-
+.likedByText:hover .showAllLikes {
+  visibility: visible;
+}
 
 @media (max-width: 1050px) {
-   .tooltip{
-      display: none;
-   }
+  .tooltip {
+    display: none;
+  }
 
-   .likedByText {
-      display: none;
-   }
+  .likedByText {
+    display: none;
+  }
 
-   .tooltiptext{
-      display: none;
-   }
+  .tooltiptext {
+    display: none;
+  }
 
-   .showAllLikes {
-      display: none;
-   }
+  .showAllLikes {
+    display: none;
+  }
 }

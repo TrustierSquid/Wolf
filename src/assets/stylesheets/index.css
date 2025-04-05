@@ -19,8 +19,7 @@
 }
 
 body {
-  background: rgb(212, 55, 55);
-  background: linear-gradient(90deg, rgb(212, 55, 55) 0%, rgb(0, 0, 0) 21%);
+  background-color: rgba(7, 7, 7, 0.9803921569);
 }
 
 .noPostsMessage {
@@ -441,7 +440,7 @@ DEFAULT PAGE
   justify-content: space-between;
   align-items: center;
   position: sticky;
-  background: #0a0a0a;
+  background-color: rgba(7, 7, 7, 0.9803921569);
   z-index: 11;
 }
 #nav #logoContainer {
@@ -717,7 +716,7 @@ DEFAULT PAGE
   position: fixed;
   width: 300px;
   color: white;
-  background: #0a0a0a;
+  background-color: rgba(7, 7, 7, 0.9803921569);
   border-right: 1px solid #7a0b31;
   padding: 1.5rem;
   padding-top: 4rem;
@@ -806,12 +805,14 @@ DEFAULT PAGE
 
 #suggestedNav {
   max-height: 700px;
-  width: 350px;
+  max-width: 350px;
   color: white;
   position: fixed;
-  top: 10.5%;
+  background-color: #141414;
+  top: 15.5%;
+  border-radius: 1.5rem;
   right: 4%;
-  padding: 1rem;
+  padding: 1.5rem;
   overflow: auto;
 }
 #suggestedNav h3 {
@@ -1073,6 +1074,7 @@ main #content #newPost #createPostElement #feedbackMessage {
 main #content .userContent {
   display: flex;
   margin-top: 1rem;
+  gap: 1rem;
   flex-direction: column;
 }
 main #content .userContent .userPost {
@@ -1080,7 +1082,11 @@ main #content .userContent .userPost {
   max-width: 100%;
   display: flex;
   flex-direction: column;
-  border-bottom: 1px solid #2b2b2b;
+  background-color: #141414;
+  border-radius: 1.5rem;
+  padding: 0.5rem;
+  position: relative;
+  max-height: 100%;
 }
 main #content .userContent .userPost .mainPost {
   flex-direction: column;
@@ -1196,7 +1202,7 @@ main #content .userContent .userPost .mainPost .userTraction .likeBtn:hover {
 main #content .userContent .userPost .postInteractionSection {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  gap: 0.5rem;
   padding: 1rem;
   padding-top: 0rem;
 }
@@ -1214,34 +1220,36 @@ main #content .userContent .userPost .postInteractionSection .postLC {
   display: flex;
   gap: 1rem;
 }
-main #content .userContent .userPost .postInteractionSection .postLC .likeBtn,
-main #content .userContent .userPost .postInteractionSection .postLC .commentBtn {
-  font-size: 1.2rem;
-  cursor: pointer;
-  padding: 0.5rem;
-  border-radius: 1rem;
-  font-family: "roboto", sans-serif;
-  background-color: rgba(62, 62, 62, 0.6666666667);
-}
 main #content .userContent .userPost .postInteractionSection .postLC .likeBtn:hover {
-  background-color: #444;
-}
-main #content .userContent .userPost .postInteractionSection .postLC .commentBtn {
-  color: rgb(46, 176, 128);
-}
-main #content .userContent .userPost .postInteractionSection .postLC .commentBtn:hover {
   background-color: #444;
 }
 main #content .userContent .userPost .postInteractionSection .showFirstFour {
   color: white;
   display: flex;
   align-items: center;
+  justify-content: start;
   gap: 0.3rem;
+  width: 70%;
   font-family: "roboto", sans-serif;
 }
 main #content .userContent .userPost .postInteractionSection .showFirstFour .firstFourImg {
   height: 30px;
   border-radius: 50%;
+}
+
+.likeBtn,
+.commentBtn {
+  font-size: 1.2rem;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 1rem;
+  font-family: "roboto", sans-serif;
+  background-color: rgba(62, 62, 62, 0.6666666667);
+  justify-self: start;
+}
+
+.commentBtn:hover {
+  background-color: #444;
 }
 
 #commentInterface {

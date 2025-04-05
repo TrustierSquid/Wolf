@@ -1,6 +1,6 @@
 // ligher BG
 
-$uiBG: #2b2b2b;
+$uiBG: #141414;
 $postBG: #111111e8;
 $cardInteractionSection: #181818;
 $cardBorder: #2e2e2e;
@@ -77,9 +77,8 @@ $fs-paragraph: 1rem;
 }
 
 body {
-  // background-color: #0b0b0bfa;
-  background: rgb(212,55,55);
-  background: linear-gradient(90deg, rgba(212,55,55,1) 0%, rgba(0,0,0,1) 21%);
+  background-color: #070707fa;
+  // background-color: $uiBG;
 }
 
 .noPostsMessage {
@@ -617,7 +616,7 @@ DEFAULT PAGE
   justify-content: space-between;
   align-items: center;
   position: sticky;
-  background: #0a0a0a;
+  background-color: #070707fa;
   z-index: 11;
 
   #logoContainer {
@@ -943,7 +942,7 @@ DEFAULT PAGE
   position: fixed;
   width: 300px;
   color: white;
-  background: #0a0a0a;
+  background-color: #070707fa;
   border-right: 1px solid $buttonHover;
   padding: 1.5rem;
   padding-top: 4rem;
@@ -1050,12 +1049,14 @@ DEFAULT PAGE
 #suggestedNav {
   max-height: 700px;
   // max-height: ;
-  width: 350px;
+  max-width: 350px;
   color: white;
   position: fixed;
-  top: 10.5%;
+  background-color: #141414;
+  top: 15.5%;
+  border-radius: 1.5rem;
   right: 4%;
-  padding: 1rem;
+  padding: 1.5rem;
   overflow: auto;
 
   h3 {
@@ -1136,6 +1137,8 @@ DEFAULT PAGE
     display: none;
   }
 }
+
+
 
 main {
   display: flex;
@@ -1372,6 +1375,7 @@ main {
     .userContent {
       display: flex;
       margin-top: 1rem;
+      gap: 1rem;
       flex-direction: column;
       // gap: 1rem;
 
@@ -1381,9 +1385,13 @@ main {
         max-width: 100%;
         display: flex;
         flex-direction: column;
-        // background-color: $cardBG;
-        // border-radius: 1rem;
-        border-bottom: 1px solid $uiBG;
+        background-color: #141414;
+        border-radius: 1.5rem;
+        padding: 0.5rem;
+        // border: 1px solid $cardBorder;
+        position: relative;
+        // overflow: hidden;
+        max-height: 100%; // this will help with the overflow on the posts
 
         .mainPost {
           flex-direction: column;
@@ -1520,7 +1528,7 @@ main {
           // background-color: $cardBG;
           display: flex;
           align-items: center;
-          justify-content: space-between;
+          gap: 0.5rem;
           padding: 1rem;
           padding-top: 0rem;
 
@@ -1541,15 +1549,6 @@ main {
             display: flex;
             gap: 1rem;
 
-            .likeBtn,
-            .commentBtn {
-              font-size: 1.2rem;
-              cursor: pointer;
-              padding: 0.5rem;
-              border-radius: 1rem;
-              font-family: $ff-body;
-              background-color: #3e3e3eaa;
-            }
 
             .likeBtn {
               &:hover {
@@ -1557,13 +1556,7 @@ main {
               }
             }
 
-            .commentBtn {
-              color: rgb(46, 176, 128);
 
-              &:hover {
-                background-color: #444;
-              }
-            }
 
           }
 
@@ -1571,7 +1564,9 @@ main {
             color: white;
             display: flex;
             align-items: center;
+            justify-content: start;
             gap: 0.3rem;
+            width: 70%;
             font-family: "roboto", sans-serif;
 
             .firstFourImg {
@@ -1585,6 +1580,25 @@ main {
     }
   }
 }
+
+.likeBtn,
+.commentBtn {
+  font-size: 1.2rem;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 1rem;
+  font-family: $ff-body;
+  background-color: #3e3e3eaa;
+  justify-self: start;
+}
+
+.commentBtn {
+
+  &:hover {
+    background-color: #444;
+  }
+}
+
 
 // Interfact for making a comment
 #commentInterface {
