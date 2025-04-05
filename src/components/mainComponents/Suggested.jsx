@@ -194,7 +194,7 @@ export default function Suggested() {
                                         navigateToProfile(value.member)
                                       }
                                     >
-                                      View Profile
+                                      Profile
                                     </button>
                                   </section>
                                 </div>
