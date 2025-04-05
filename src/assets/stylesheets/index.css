@@ -29,7 +29,7 @@ body {
   border-radius: 1rem;
   font-family: "Nunito", sans-serif;
   text-align: center;
-  margin-top: 2rem;
+  margin-top: 1rem;
   display: flex;
   font-size: 1rem;
   flex-direction: column;
@@ -803,23 +803,34 @@ DEFAULT PAGE
   transition: 250ms;
 }
 
-#suggestedNav {
-  max-height: 700px;
-  max-width: 350px;
-  color: white;
+#suggestedContainer {
+  display: flex;
+  flex-direction: column;
   position: fixed;
-  background-color: #141414;
-  top: 15.5%;
-  border-radius: 1.5rem;
+  gap: 1rem;
   right: 4%;
-  padding: 1.5rem;
-  overflow: auto;
+  top: 12.5%;
 }
-#suggestedNav h3 {
+#suggestedContainer .sideHeaders {
   color: grey;
   font-family: "roboto", sans-serif;
 }
-#suggestedNav #suggestJoinBtn {
+#suggestedContainer .disableMemberTitle {
+  display: none;
+}
+#suggestedContainer #showMembersOfCommunityContainer, #suggestedContainer #suggestedCommunities {
+  max-height: 300px;
+  width: 275px;
+  color: white;
+  background-color: #141414;
+  border-radius: 1.5rem;
+  padding: 1.1rem;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+#suggestedContainer #showMembersOfCommunityContainer #suggestJoinBtn, #suggestedContainer #suggestedCommunities #suggestJoinBtn {
   background-color: teal;
   color: white;
   border: none;
@@ -828,58 +839,70 @@ DEFAULT PAGE
   border-radius: 0.5rem;
   cursor: pointer;
 }
-#suggestedNav #suggestJoinBtn:hover {
+#suggestedContainer #showMembersOfCommunityContainer #suggestJoinBtn:hover, #suggestedContainer #suggestedCommunities #suggestJoinBtn:hover {
   background-color: #00a1b6;
 }
-#suggestedNav div {
-  padding: 0.5rem;
+#suggestedContainer #showMembersOfCommunityContainer div, #suggestedContainer #suggestedCommunities div {
   font-family: "roboto", sans-serif;
 }
-#suggestedNav div section {
+#suggestedContainer #showMembersOfCommunityContainer div section, #suggestedContainer #suggestedCommunities div section {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 0.5rem;
   color: white;
 }
-#suggestedNav div section img {
+#suggestedContainer #showMembersOfCommunityContainer div section .nameAndImageContainer, #suggestedContainer #suggestedCommunities div section .nameAndImageContainer {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+#suggestedContainer #showMembersOfCommunityContainer div section .nameAndImageContainer .memberNames, #suggestedContainer #suggestedCommunities div section .nameAndImageContainer .memberNames {
+  color: white;
+}
+#suggestedContainer #showMembersOfCommunityContainer div section .nameAndImageContainer img, #suggestedContainer #suggestedCommunities div section .nameAndImageContainer img {
   height: 40px;
   width: 40px;
   -o-object-fit: cover;
      object-fit: cover;
   border-radius: 50%;
 }
-#suggestedNav div section .memberNames {
-  color: white;
-}
-#suggestedNav div section button {
+#suggestedContainer #showMembersOfCommunityContainer div section button, #suggestedContainer #suggestedCommunities div section button {
   background: none;
   border: none;
   color: turquoise;
   cursor: pointer;
 }
-#suggestedNav div section button:hover {
+#suggestedContainer #showMembersOfCommunityContainer div section button:hover, #suggestedContainer #suggestedCommunities div section button:hover {
   color: teal;
 }
-#suggestedNav div section a {
+#suggestedContainer #showMembersOfCommunityContainer div section a, #suggestedContainer #suggestedCommunities div section a {
   text-decoration: none;
 }
-#suggestedNav #suggestedNavMembers {
+#suggestedContainer #showMembersOfCommunityContainer #suggestedNavMembers, #suggestedContainer #suggestedCommunities #suggestedNavMembers {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 1rem;
   font-family: "roboto", sans-serif;
   overflow: auto;
 }
-#suggestedNav #suggestedNavMembers img {
+#suggestedContainer #showMembersOfCommunityContainer #suggestedNavMembers img, #suggestedContainer #suggestedCommunities #suggestedNavMembers img {
   height: 40px;
   border-radius: 50%;
 }
-#suggestedNav #suggestedNavMembers .memberNames {
+#suggestedContainer #showMembersOfCommunityContainer #suggestedNavMembers .memberNames, #suggestedContainer #suggestedCommunities #suggestedNavMembers .memberNames {
   color: white;
 }
-
+#suggestedContainer #showMembersOfCommunityContainer #suggestedNavMembers ul, #suggestedContainer #suggestedCommunities #suggestedNavMembers ul {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem; /* Space between each member entry */
+}
+#suggestedContainer #showMembersOfCommunityContainer {
+  background: none;
+}
 @media (max-width: 1300px) {
-  #suggestedNav {
+  #suggestedContainer {
     display: none;
   }
 }
