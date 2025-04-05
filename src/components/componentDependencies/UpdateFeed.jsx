@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef, forwardRef } from "react";
 import logo from "/src/assets/wolfLogo.png";
-import defaultProfilePic from '/src/assets/defaultUser.png';
 import ShowLikes from "../moodleComponents/ShowLikes";
+import defaultProfilePic from '/src/assets/defaultUser.png';
 
 const UpdateFeed = forwardRef(({
   currentActiveUser,
@@ -194,7 +194,6 @@ const UpdateFeed = forwardRef(({
     setCommentsCount(postComments.length);
     setPostImage(image);
     setPosterProfilePicState(posterProfilePic);
-
     setErrorMessage("");
 
     /*
@@ -310,6 +309,8 @@ const UpdateFeed = forwardRef(({
     return <p className="postData"> • Just now</p>;
   }
 
+  console.log(allPosts)
+
   return (
     <>
       {/* Mapping each post in reverse (newest first) */}
@@ -330,7 +331,7 @@ const UpdateFeed = forwardRef(({
                           <div className="postUserInformation">
                             <img
                               className="postProfilePic"
-                              src={post.posterProfilePic ? post.posterProfilePic : "/src/assets/defaultUser.png"} // Fallback to default if no profile pic is found
+                              src={post.posterProfilePic || defaultProfilePic} // Fallback to default if no profile pic is found
                             />
                             <h2
                               className="poster"
