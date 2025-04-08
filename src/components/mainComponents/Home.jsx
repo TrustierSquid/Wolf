@@ -8,6 +8,7 @@ import Suggested from "./Suggested";
 
 
 export default function Home() {
+  // Keeping track of the current query string
   const queryString = window.location.search;
   const urlParams = new URLSearchParams(queryString);
   const userSearched = urlParams.get("topicFeed");

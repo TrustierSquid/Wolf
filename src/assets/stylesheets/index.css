@@ -2330,7 +2330,7 @@ HOME COMPONENT MEDIA QUERIES
   .sideNav {
     display: none;
     transition: 350ms;
-    border-radius: 0.5rem;
+    border-radius: 1rem;
     z-index: 1;
   }
   .toggleNav {
