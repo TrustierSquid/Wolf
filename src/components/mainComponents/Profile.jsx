@@ -5,16 +5,13 @@ import SideNavBar from "../componentDependencies/SideNavbar";
 import defaultProfilePic from '/src/assets/defaultUser.png';
 
 export default function Profile(props) {
-  const [followerCount, setFollowerCount] = useState([]);
-  const [followingCount, setFollowingCount] = useState([]);
+  // Strictly holds the quick access information of the logged in user
+  const [loggedInUserBaseInformation, setLoggedInUserBaseInformation] = useState([])
 
-  // and checking user action based off of username
-  const [username, setUsername] = useState(null);
-
-  // the an array of the topics that the user selected
-  const [userData, setUserData] = useState([]);
-  const [loggedInUID, setLoggedInUID] = useState(null);
-  const [profilePicture, setProfilePicture] = useState(null);
+  // Query string tracking
+  const queryString = window.location.search;
+  const urlParams = new URLSearchParams(queryString);
+  const userSearched = urlParams.get("user");
 
   // Data for the user logged in
   useEffect(() => {
@@ -33,35 +30,21 @@ export default function Profile(props) {
       }
 
       const homeData = await response.json();
-      // setting the user info needed as glob vars
+      // setting the user info needed as one useState
+      setLoggedInUserBaseInformation(homeData)
 
-      // the topics the current user selected
-      setUserData(homeData.topicArr);
-
-      // the current user logged in
-      setUsername(homeData.userName);
-
-      //  the current users following count
-      setFollowingCount(homeData.followingCount.length);
-
-      // the current users follower count
-      setFollowerCount(homeData.followerCount.length);
-
-      setLoggedInUID(homeData.UID);
-
-      setProfilePicture(homeData.profilePic);
     }
 
     getUserData();
   }, []);
 
+
+
+  // Getting the post data from the user
   const [profilePostData, setProfilePostData] = useState(null);
   const [userProfileData, setUserProfileData] = useState([]);
 
-  const queryString = window.location.search;
-  const urlParams = new URLSearchParams(queryString);
-  const userSearched = urlParams.get("user");
-
+  // Moodle set up
   const [dynamicUsername, setDynamicUsername] = useState(null);
   const [dynamicFollowingArr, setDynamicFollowingArr] = useState(null);
   const [dynamicFollowerArr, setDynamicFollowerArr] = useState(null);
@@ -274,7 +257,7 @@ export default function Profile(props) {
 
   // Checks to see if the loggedInUser is already following the target user
   function checkFollowing() {
-    if (userProfileData?.followers?.includes(username)) {
+    if (userProfileData?.followers?.includes(loggedInUserBaseInformation.userName)) {
       followBtn.current.style.display = "none";
       unfollowBtn.current.style.display = "block";
     }
@@ -288,7 +271,8 @@ export default function Profile(props) {
       },
       body: JSON.stringify({
         followee: userSearched,
-        loggedInUser: props.loggedInUID,
+        // loggedInUser: props.loggedInUID,
+        loggedInUser: loggedInUserBaseInformation.UID,
       }),
     });
 
@@ -371,7 +355,7 @@ export default function Profile(props) {
     }
 
     let response = await fetch(
-      `/addPostComment?postID=${profilePostID}&feed=${dynamicProfileFeed}&commentFrom=${username}`,
+      `/addPostComment?postID=${profilePostID}&feed=${dynamicProfileFeed}&commentFrom=${loggedInUserBaseInformation.userName}`,
       {
         method: "POST",
         headers: {
@@ -408,19 +392,20 @@ export default function Profile(props) {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ postID: profilePostID, loggedInUser: username }),
+      body: JSON.stringify({ postID: profilePostID, loggedInUser: loggedInUserBaseInformation.userName }),
     });
 
     getUserProfilePosts();
   }
 
   const sidebarProps = {
-    username: username,
-    followings: followingCount,
-    followers: followerCount,
-    UID: loggedInUID,
-    profileImage: profilePicture,
+    username: loggedInUserBaseInformation.userName,
+    followings: loggedInUserBaseInformation.followingCount,
+    followers: loggedInUserBaseInformation.followerCount,
+    UID: loggedInUserBaseInformation.UID,
+    profileImage: loggedInUserBaseInformation.profilePic,
   };
+
 
   function backOut() {
     moodleContainerRef.current.style.display = "none";
@@ -446,7 +431,7 @@ export default function Profile(props) {
     const formData = new FormData();
     formData.append("image", imageFile);
 
-    let response = await fetch(`/uploadProfilePicture/${loggedInUID}`, {
+    let response = await fetch(`/uploadProfilePicture/${loggedInUserBaseInformation.UID}`, {
       method: "POST",
       body: formData,
     });
@@ -483,7 +468,7 @@ export default function Profile(props) {
                   >
                     Developer
                   </h6>
-                  {userSearched === loggedInUID ? (
+                  {userSearched === loggedInUserBaseInformation.UID ? (
                     <div id="changeOverlay">
                       <p>Change Picture</p>
                       <input
@@ -504,16 +489,16 @@ export default function Profile(props) {
               </section>
 
               <div id="followTracking">
-                {userSearched === loggedInUID ? (
+                {userSearched === loggedInUserBaseInformation.UID ? (
                   <>
                     <section
-                      onClick={() => navigateToFollowersPage(loggedInUID)}
+                      onClick={() => navigateToFollowersPage(loggedInUserBaseInformation.UID)}
                     >
                       <h3>{dynamicFollowerArr?.length}</h3>
                       <p>Followers</p>
                     </section>
                     <section
-                      onClick={() => navigateToFollowingPage(loggedInUID)}
+                      onClick={() => navigateToFollowingPage(loggedInUserBaseInformation.UID)}
                     >
                       <h3>{dynamicFollowingArr?.length}</h3>
                       <p>Following</p>
@@ -562,7 +547,7 @@ export default function Profile(props) {
                   >
                     User
                   </h6>
-                  {userSearched === loggedInUID ? (
+                  {userSearched === loggedInUserBaseInformation.UID ? (
                     <div id="changeOverlay">
                       <p>Change Picture</p>
                       <input
@@ -583,16 +568,16 @@ export default function Profile(props) {
               </section>
 
               <div id="followTracking">
-                {userSearched === loggedInUID ? (
+                {userSearched === loggedInUserBaseInformation.UID ? (
                   <>
                     <section
-                      onClick={() => navigateToFollowersPage(loggedInUID)}
+                      onClick={() => navigateToFollowersPage(loggedInUserBaseInformation.UID)}
                     >
                       <h3>{dynamicFollowerArr?.length}</h3>
                       <p>Followers</p>
                     </section>
                     <section
-                      onClick={() => navigateToFollowingPage(loggedInUID)}
+                      onClick={() => navigateToFollowingPage(loggedInUserBaseInformation.UID)}
                     >
                       <h3>{dynamicFollowingArr?.length}</h3>
                       <p>Following</p>
@@ -740,7 +725,7 @@ export default function Profile(props) {
                     profileAddLike(profilePostID, profilePostLikes)
                   }
                 >
-                  {profilePostLikes?.includes(username) ? (
+                  {profilePostLikes?.includes(loggedInUserBaseInformation.userName) ? (
                     <>
                       <i
                         ref={postCommentsLikeRef}
@@ -898,7 +883,7 @@ export default function Profile(props) {
                   {communities
                     ?.filter((community) =>
                       Object.values(community.members).some(
-                        (member) => member.member === username
+                        (member) => member.member === loggedInUserBaseInformation.userName
                       )
                     )
                     .map((community) => {
