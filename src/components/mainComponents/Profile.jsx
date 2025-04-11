@@ -442,6 +442,7 @@ export default function Profile(props) {
     // await getUserProfilePosts()
   }
 
+  // Displaying profile picture, username and follower information
   function checkUserType() {
     switch (dynamicUsername) {
       // For developers
@@ -462,12 +463,6 @@ export default function Profile(props) {
                 />
                 <div id="whoAmI">
                   <h5>{dynamicUsername}</h5>
-                  <h6
-                    className="profileUserTypeHeader"
-                    style={{ color: "#00b3ff" }}
-                  >
-                    Developer
-                  </h6>
                   {userSearched === loggedInUserBaseInformation.UID ? (
                     <div id="changeOverlay">
                       <p>Change Picture</p>
@@ -541,12 +536,6 @@ export default function Profile(props) {
                 />
                 <div id="whoAmI">
                   <h5>{dynamicUsername}</h5>
-                  <h6
-                    className="profileUserTypeHeader"
-                    style={{ color: "grey" }}
-                  >
-                    User
-                  </h6>
                   {userSearched === loggedInUserBaseInformation.UID ? (
                     <div id="changeOverlay">
                       <p>Change Picture</p>
