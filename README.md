@@ -89,3 +89,6 @@ dev-<yourname>
 - Users can see who liked a post
 - Dens (Communities) can now be created and moderated
 - A proper follow and unfollow system was implemented
+
+### 4/17/25 maintenance
+- Wolf will be down for maintenance (node migration)
