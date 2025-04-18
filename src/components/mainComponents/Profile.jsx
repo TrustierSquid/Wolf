@@ -44,14 +44,6 @@ export default function Profile(props) {
   const [profilePostData, setProfilePostData] = useState(null);
   const [userProfileData, setUserProfileData] = useState([]);
 
-  // Moodle set up
-  const [dynamicUsername, setDynamicUsername] = useState(null);
-  const [dynamicFollowingArr, setDynamicFollowingArr] = useState(null);
-  const [dynamicFollowerArr, setDynamicFollowerArr] = useState(null);
-  const [dynamicUID, setDynamicUID] = useState(null);
-  const [dynamicBio, setDynamicBio] = useState(null);
-  const [dynamicProfilePic, setDynamicProfilePic] = useState(null);
-
   /*
       Gets User information based on what user is selected from the query string
       On the main feed page, the user can be selected by clicking on a post or seeing them in the
@@ -71,22 +63,14 @@ export default function Profile(props) {
 
       // Sending back post data for the searched user
       const postData = await response.json();
-      setProfilePostData(postData.profilePostData.reverse() || []);
       // sending back the userdata for the searched user
+      setProfilePostData(postData.profilePostData.reverse() || []);
 
       // The userData that gets returned based on the UID
       // all based on whos profile the user is looking at
       setUserProfileData(postData.userData || []);
-      setDynamicProfilePic(postData.userData.profilePic);
-      setDynamicFollowerArr(postData.userData.followers);
-      setDynamicFollowingArr(postData.userData.following);
-      setDynamicProfileFeed(feedView);
 
-      // The username that the UID has in store
-      setDynamicUsername(postData.userData.user);
-
-      setDynamicUID(postData.userData.UID);
-      setDynamicBio(postData.userData.userBio);
+      // setDynamicProfileFeed(feedView);
     } catch {
       throw new Error("Couldnt fetch for profile data");
     }
@@ -112,13 +96,6 @@ export default function Profile(props) {
 
   // queryStringUser is the user looked up via query string
   // and comparing it to the uuid of the logged in user
-
-  const [displayFollowing, setDisplayFollowing] = useState(false);
-
-  // helper function
-  const displayFollow = (bool) => {
-    setDisplayFollowing(bool);
-  };
 
   const [communities, setCommunities] = useState(null);
 
@@ -207,7 +184,7 @@ export default function Profile(props) {
     // Styling changes
     bioElementDisplay.current.style.display = "none";
     bioElementEnter.current.style.display = "block";
-    bioElementEnter.current.value = dynamicBio;
+    bioElementEnter.current.value = userProfileData.userBio;
     changeBioBtn.current.style.display = "none";
     updateBioBtn.current.style.display = "block";
   };
@@ -217,12 +194,12 @@ export default function Profile(props) {
     // let bioDisplay = bioElementDisplay.current.value
 
     if (bioEnter.current.value === "") {
-      bioElementDisplay.current.value = dynamicBio;
+      bioElementDisplay.current.value = userProfileData.userBio;
       return;
     }
 
     // Server calls
-    let response = await fetch(`/updateBio/${dynamicUID}`, {
+    let response = await fetch(`/updateBio/${userProfileData.UID}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -253,7 +230,6 @@ export default function Profile(props) {
 
   const followBtn = useRef();
   const unfollowBtn = useRef();
-  const [isFollowing, setIsFollowing] = useState(false);
 
   // Checks to see if the loggedInUser is already following the target user
   function checkFollowing() {
@@ -442,7 +418,7 @@ export default function Profile(props) {
 
   // Displaying profile picture, username and follower information
   function checkUser() {
-    switch (dynamicUsername) {
+    switch (userProfileData.user) {
       // For developers
       case "Samuel":
         return (
@@ -451,8 +427,8 @@ export default function Profile(props) {
               <section id="picContainer">
                 <img
                   src={
-                    dynamicProfilePic
-                      ? dynamicProfilePic
+                    userProfileData.profilePic
+                      ? userProfileData.profilePic
                       : defaultProfilePic
                   }
                   alt=""
@@ -460,7 +436,7 @@ export default function Profile(props) {
                 />
                 <div id="whoAmI">
                   <div className="showProfileUsername">
-                    <h2>{dynamicUsername}</h2>
+                    <h2>{userProfileData.user}</h2>
                     {userSearched === loggedInUserBaseInformation.UID ? (
                       <div id="changeOverlay">
                         <p id="changePictureBtn">Change Picture</p>
@@ -485,25 +461,25 @@ export default function Profile(props) {
                         <section
                           onClick={() => navigateToFollowersPage(loggedInUserBaseInformation.UID)}
                         >
-                          <p>{dynamicFollowerArr?.length} Followers</p>
+                          <p>{userProfileData.followers?.length} Followers</p>
                         </section>
                         <section
                           onClick={() => navigateToFollowingPage(loggedInUserBaseInformation.UID)}
                         >
-                          <p>{dynamicFollowingArr?.length} Following</p>
+                          <p>{userProfileData.following?.length} Following</p>
                         </section>
                       </>
                     ) : (
                       <>
                         <section
-                          onClick={() => navigateToFollowersPage(dynamicUID)}
+                          onClick={() => navigateToFollowersPage(userProfileData.UID)}
                         >
-                          <p>{dynamicFollowerArr?.length} Followers</p>
+                          <p>{userProfileData.followers?.length} Followers</p>
                         </section>
                         <section
-                          onClick={() => navigateToFollowingPage(dynamicUID)}
+                          onClick={() => navigateToFollowingPage(userProfileData.UID)}
                         >
-                          <p>{dynamicFollowingArr?.length} Following</p>
+                          <p>{userProfileData.following?.length} Following</p>
                         </section>
                       </>
                     )}
@@ -524,15 +500,15 @@ export default function Profile(props) {
               <section id="picContainer">
                 <img
                   src={
-                    dynamicProfilePic
-                      ? dynamicProfilePic
+                    userProfileData.profilePic
+                      ? userProfileData.profilePic
                       : defaultProfilePic
                   }
                   alt=""
                   id="profilePicture"
                 />
                 <div id="whoAmI">
-                  <h5>{dynamicUsername}</h5>
+                  <h5>{userProfileData.user}</h5>
                   {userSearched === loggedInUserBaseInformation.UID ? (
                     <div id="changeOverlay">
                       <p id="changePictureBtn" >Change Picture</p>
@@ -559,28 +535,28 @@ export default function Profile(props) {
                     <section
                       onClick={() => navigateToFollowersPage(loggedInUserBaseInformation.UID)}
                     >
-                      <h3>{dynamicFollowerArr?.length}</h3>
+                      <h3>{userProfileData.followers?.length}</h3>
                       <p>Followers</p>
                     </section>
                     <section
                       onClick={() => navigateToFollowingPage(loggedInUserBaseInformation.UID)}
                     >
-                      <h3>{dynamicFollowingArr?.length}</h3>
+                      <h3>{userProfileData.following?.length}</h3>
                       <p>Following</p>
                     </section>
                   </>
                 ) : (
                   <>
                     <section
-                      onClick={() => navigateToFollowersPage(dynamicUID)}
+                      onClick={() => navigateToFollowersPage(userProfileData.UID)}
                     >
-                      <h3>{dynamicFollowerArr?.length}</h3>
+                      <h3>{userProfileData.followers?.length}</h3>
                       <p>Followers</p>
                     </section>
                     <section
-                      onClick={() => navigateToFollowingPage(dynamicUID)}
+                      onClick={() => navigateToFollowingPage(userProfileData.UID)}
                     >
-                      <h3>{dynamicFollowingArr?.length}</h3>
+                      <h3>{userProfileData.following?.length}</h3>
                       <p>Following</p>
                     </section>
                   </>
@@ -644,9 +620,9 @@ export default function Profile(props) {
                 <textarea
                   ref={bioEnter}
                   maxLength={300}
-                  placeholder={dynamicBio}
+                  placeholder={userProfileData.userBio}
                 >
-                  {dynamicBio}
+                  {userProfileData.userBio}
                 </textarea>
               </span>
 
@@ -657,7 +633,7 @@ export default function Profile(props) {
 
                 </div>
 
-                {dynamicBio}
+                {userProfileData.userBio}
               </span>
 
               <div id="bioTitle">
@@ -914,7 +890,7 @@ export default function Profile(props) {
                           onClick={() =>
                             showProfilePostDetails(
                               post._id,
-                              dynamicUsername,
+                              userProfileData.user,
                               post.postCreationDate,
                               post.subject,
                               post.body,
@@ -937,7 +913,7 @@ export default function Profile(props) {
                               }
                               alt=""
                             />
-                            <h4>{dynamicUsername} </h4>
+                            <h4>{userProfileData.user} </h4>
                             <p style={{ color: "grey" }}>
                               {showPostDate(post.postCreationDate)}
                             </p>
@@ -978,7 +954,7 @@ export default function Profile(props) {
                 ) : (
                   // if there is no posts made by the user in question in that specific comminui
                   <div className="noPostsMessage">
-                    <h3>{dynamicUsername} hasn't posted anything here yet!</h3>
+                    <h3>{userProfileData.user} hasn't posted anything here yet!</h3>
                     <p>Get them to share something! 😃</p>
                   </div>
                 )}
