@@ -438,19 +438,16 @@ export default function Profile(props) {
 
     window.location.reload();
 
-    // setUpdateMessage("Profile Picture Changed!")
-    // await getUserProfilePosts()
   }
 
   // Displaying profile picture, username and follower information
-  function checkUserType() {
+  function checkUser() {
     switch (dynamicUsername) {
       // For developers
       case "Samuel":
         return (
           <>
             <div id="iconAndUsername">
-              {/* <i className="fa-solid fa-user"></i> */}
               <section id="picContainer">
                 <img
                   src={
@@ -462,60 +459,60 @@ export default function Profile(props) {
                   id="profilePicture"
                 />
                 <div id="whoAmI">
-                  <h5>{dynamicUsername}</h5>
-                  {userSearched === loggedInUserBaseInformation.UID ? (
-                    <div id="changeOverlay">
-                      <p>Change Picture</p>
-                      <input
-                        ref={imageRef}
-                        accept="image/*"
-                        type="file"
-                        onChange={() => {
-                          changeProfilePicture();
-                          setUpdateMessage("Profile Picture Changed!");
-                        }}
-                      />
-                    </div>
-                  ) : (
-                    <span></span>
-                  )}
+                  <div className="showProfileUsername">
+                    <h2>{dynamicUsername}</h2>
+                    {userSearched === loggedInUserBaseInformation.UID ? (
+                      <div id="changeOverlay">
+                        <p id="changePictureBtn">Change Picture</p>
+                        <input
+                          ref={imageRef}
+                          accept="image/*"
+                          type="file"
+                          onChange={() => {
+                            changeProfilePicture();
+                            setUpdateMessage("Profile Picture Changed!");
+                          }}
+                        />
+                      </div>
+                    ) : (
+                      <span></span>
+                    )}
+                  </div>
+                  {/* If the query string UID matches the logged in user, change picture btn will render */}
+                  <div id="followTracking">
+                    {userSearched === loggedInUserBaseInformation.UID ? (
+                      <>
+                        <section
+                          onClick={() => navigateToFollowersPage(loggedInUserBaseInformation.UID)}
+                        >
+                          <p>{dynamicFollowerArr?.length} Followers</p>
+                        </section>
+                        <section
+                          onClick={() => navigateToFollowingPage(loggedInUserBaseInformation.UID)}
+                        >
+                          <p>{dynamicFollowingArr?.length} Following</p>
+                        </section>
+                      </>
+                    ) : (
+                      <>
+                        <section
+                          onClick={() => navigateToFollowersPage(dynamicUID)}
+                        >
+                          <p>{dynamicFollowerArr?.length} Followers</p>
+                        </section>
+                        <section
+                          onClick={() => navigateToFollowingPage(dynamicUID)}
+                        >
+                          <p>{dynamicFollowingArr?.length} Following</p>
+                        </section>
+                      </>
+                    )}
+                  </div>
+
                   <p id="updateMessage">{updateMessage}</p>
                 </div>
               </section>
 
-              <div id="followTracking">
-                {userSearched === loggedInUserBaseInformation.UID ? (
-                  <>
-                    <section
-                      onClick={() => navigateToFollowersPage(loggedInUserBaseInformation.UID)}
-                    >
-                      <h3>{dynamicFollowerArr?.length}</h3>
-                      <p>Followers</p>
-                    </section>
-                    <section
-                      onClick={() => navigateToFollowingPage(loggedInUserBaseInformation.UID)}
-                    >
-                      <h3>{dynamicFollowingArr?.length}</h3>
-                      <p>Following</p>
-                    </section>
-                  </>
-                ) : (
-                  <>
-                    <section
-                      onClick={() => navigateToFollowersPage(dynamicUID)}
-                    >
-                      <h3>{dynamicFollowerArr?.length}</h3>
-                      <p>Followers</p>
-                    </section>
-                    <section
-                      onClick={() => navigateToFollowingPage(dynamicUID)}
-                    >
-                      <h3>{dynamicFollowingArr?.length}</h3>
-                      <p>Following</p>
-                    </section>
-                  </>
-                )}
-              </div>
             </div>
           </>
         );
@@ -538,7 +535,7 @@ export default function Profile(props) {
                   <h5>{dynamicUsername}</h5>
                   {userSearched === loggedInUserBaseInformation.UID ? (
                     <div id="changeOverlay">
-                      <p>Change Picture</p>
+                      <p id="changePictureBtn" >Change Picture</p>
                       <input
                         ref={imageRef}
                         accept="image/*"
@@ -626,10 +623,10 @@ export default function Profile(props) {
       <span ref={overlay} id="overlayProfile" onClick={() => backOut()}></span>
       <div id="contentContainer">
         <main id="mainProfile">
-          <h2 className="profHeaders">Profile </h2>
+          {/* <h2 className="profHeaders">Profile </h2> */}
           <div className="profileAnalytics">
             {/* Checks for the type of user is being displayed */}
-            {checkUserType()}
+            {checkUser()}
 
             {/*  FOLLOW SYSTEM */}
 
@@ -639,8 +636,32 @@ export default function Profile(props) {
 
             {/* BIO SYSTEM */}
             <div id="bioPair">
+              <br />
+
+
+              {/* This is the version on the bio is for when the user enters a new or edited bio */}
+              <span id="userEnterBio" ref={bioElementEnter}>
+                <textarea
+                  ref={bioEnter}
+                  maxLength={300}
+                  placeholder={dynamicBio}
+                >
+                  {dynamicBio}
+                </textarea>
+              </span>
+
+              {/* This is the version on the bio is is strictly for display  */}
+              <span id="profileBio" ref={bioElementDisplay}>
+                <div>
+                  <h2 className="cardTitle" >Bio</h2>
+
+                </div>
+
+                {dynamicBio}
+              </span>
+
               <div id="bioTitle">
-                <h3>Bio</h3>
+
                 {/* Bio edit shows up for the user logged in and not on other profile */}
                 {userSearched === props.loggedInUID ? (
                   <>
@@ -663,23 +684,6 @@ export default function Profile(props) {
                   Update Bio
                 </button>
               </div>
-              <br />
-
-              {/* This is the version on the bio is for when the user enters a new or edited bio */}
-              <span id="userEnterBio" ref={bioElementEnter}>
-                <textarea
-                  ref={bioEnter}
-                  maxLength={300}
-                  placeholder={dynamicBio}
-                >
-                  {dynamicBio}
-                </textarea>
-              </span>
-
-              {/* This is the version on the bio is is strictly for display  */}
-              <span id="profileBio" ref={bioElementDisplay}>
-                {dynamicBio}
-              </span>
             </div>
           </div>
 
