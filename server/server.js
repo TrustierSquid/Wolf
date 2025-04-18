@@ -199,6 +199,7 @@ app.post("/newPost", upload.single("image"), async (req, res) => {
       likes: [],
       postCreationDate: new Date(),
       comments: [],
+      feed: 'Home'
     };
 
     // If an image exists inside this post attempt
@@ -241,6 +242,7 @@ app.post("/newPost", upload.single("image"), async (req, res) => {
       likes: [],
       postCreationDate: new Date(),
       comments: [],
+      feed: feed
     };
 
     if (imageFile) {

@@ -1696,7 +1696,7 @@ main #content .userContent .userPost .postInteractionSection .showFirstFour .fir
 }
 #contentContainer #mainProfile .profileAnalytics:nth-of-type(1) #bioPair #bioTitle {
   display: flex;
-  justify-content: space-between;
+  justify-content: right;
   align-items: center;
   width: 100%;
   gap: 1rem;
@@ -2071,7 +2071,6 @@ main #content .userContent .userPost .postInteractionSection .showFirstFour .fir
   background-color: rgba(17, 17, 17, 0.9098039216);
   padding: 1rem;
   border-radius: 1rem;
-  box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
 }
 #contentContainer #mainProfile .totalPosts .profHeaders form {
   display: flex;
@@ -2100,7 +2099,6 @@ main #content .userContent .userPost .postInteractionSection .showFirstFour .fir
   background-color: rgba(17, 17, 17, 0.9098039216);
   cursor: pointer;
   border-radius: 1rem;
-  box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
 }
 #contentContainer #mainProfile .totalPosts .existingPost .existingPostTitle {
   display: flex;

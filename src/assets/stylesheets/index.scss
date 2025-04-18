@@ -2145,7 +2145,7 @@ main {
         // cointains the bio icon
         #bioTitle {
           display: flex;
-          justify-content: space-between;
+          justify-content: right;
           align-items: center;
           width: 100%;
           gap: 1rem;
@@ -2619,8 +2619,6 @@ main {
         background-color: $postBG;
         padding: 1rem;
         border-radius: 1rem;
-        box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px,
-          rgba(0, 0, 0, 0.23) 0px 6px 6px;
 
         form {
           display: flex;
@@ -2653,9 +2651,6 @@ main {
         background-color: $postBG;
         cursor: pointer;
         border-radius: 1rem;
-        // height: 285px;
-        box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px,
-          rgba(0, 0, 0, 0.23) 0px 6px 6px;
 
         .existingPostTitle {
           display: flex;

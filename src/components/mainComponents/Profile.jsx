@@ -54,7 +54,7 @@ export default function Profile(props) {
 
   /*
       Gets User information based on what user is selected from the query string
-      On the main feed page, the user can be selected by post click or seeing them in the
+      On the main feed page, the user can be selected by clicking on a post or seeing them in the
       members moodle for a particular community
     */
   async function getUserProfilePosts(feedView = "mainFeed") {
@@ -867,12 +867,15 @@ export default function Profile(props) {
                   className="topicDisplaySelection"
                   onChange={(e) => getUserProfilePosts(e.target.value)}
                 >
+                  <option value="All Posts" onClick={()=> getUserProfilePosts('All')}>All Posts</option>
                   <option
-                    onClick={() => getUserProfilePosts("mainFeed")}
+                  // Defaults to "mainFeed"
+                    onClick={() => getUserProfilePosts()}
                     value="mainFeed"
                   >
                     Home Feed
                   </option>
+                  {/* Determines what community the logged in user is apart of */}
                   {communities
                     ?.filter((community) =>
                       Object.values(community.members).some(
