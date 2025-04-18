@@ -58,16 +58,20 @@ router.get("/", async (req, res) => {
     // container for all post the user has made
     let allUserPosts = []
 
+    // gets all posts from all collections that contains the user's name
     for (const feed of allFeeds) {
       const targetFeed = database.collection(feed.name);
       const posts = await targetFeed.find({ poster: userData.user }).toArray();
       allUserPosts.push(posts)
     }
 
+    // all posts have been added to a clean array
     const cleanedPosts = allUserPosts.filter(post => post.length > 0)
 
-    const flattenedPosts = cleanedPosts.flat(); // Flatten the array of arrays into a single array
+    // Flatten the array of arrays into a single array
+    const flattenedPosts = cleanedPosts.flat();
 
+    // blueprint for the frontend to display the data
     const userPostModified = flattenedPosts
       .map((post) => ({
       _id: post._id,
@@ -90,6 +94,7 @@ router.get("/", async (req, res) => {
       }))
       .sort((a, b) => new Date(a.postCreationDate) - new Date(b.postCreationDate));
 
+    // response
     res.json({
       // posts from the mainfeed
       profilePostData: userPostModified,
@@ -99,8 +104,9 @@ router.get("/", async (req, res) => {
     });
 
 
-  // Showing specific communities that the user has clicked on
+  // Showing other specific communities that the user has clicked on
   } else {
+
     // finds the posts of the selected user
     const userPosts = await feedCollection
       .find({ poster: userData.user })
