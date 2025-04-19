@@ -417,9 +417,12 @@ export default function Profile(props) {
   }
 
   // Displaying profile picture, username and follower information
+  /* Switch statement contains the layout of what the profile page will look like for the user
+    Based on what profile is being viewed. There is a seprate case for developers and another for
+    regular users
+   */
   function checkUser() {
     switch (userProfileData.user) {
-      // For developers
       case "Samuel":
         return (
           <>
@@ -436,10 +439,9 @@ export default function Profile(props) {
                 />
                 <div id="whoAmI">
                   <div className="showProfileUsername">
-                    <h2>{userProfileData.user}</h2>
                     {userSearched === loggedInUserBaseInformation.UID ? (
                       <div id="changeOverlay">
-                        <p id="changePictureBtn">Change Picture</p>
+                        <p id="changePictureBtn">Change Profile Picture</p>
                         <input
                           ref={imageRef}
                           accept="image/*"
@@ -453,6 +455,7 @@ export default function Profile(props) {
                     ) : (
                       <span></span>
                     )}
+                    <h2>{userProfileData.user}</h2>
                   </div>
                   {/* If the query string UID matches the logged in user, change picture btn will render */}
                   <div id="followTracking">
@@ -511,7 +514,7 @@ export default function Profile(props) {
                   <h5>{userProfileData.user}</h5>
                   {userSearched === loggedInUserBaseInformation.UID ? (
                     <div id="changeOverlay">
-                      <p id="changePictureBtn" >Change Picture</p>
+                      <p id="changePictureBtn" >Change Profile Picture</p>
                       <input
                         ref={imageRef}
                         accept="image/*"
@@ -836,7 +839,7 @@ export default function Profile(props) {
 
           <div className="totalPosts">
             <section className="profHeaders">
-              <h3>Posts </h3>
+              <h2>Posts </h2>
               <form>
                 {/* The dropdown selection menu that displays topics that the user is currently apart of  */}
                 <select

@@ -1578,7 +1578,6 @@ main #content .userContent .userPost .postInteractionSection .showFirstFour .fir
 }
 #contentContainer #mainProfile .profileAnalytics:nth-of-type(1) #iconAndUsername #picContainer #profilePicture {
   background: none;
-  border: 2px solid purple;
   border-radius: 50%;
   height: 100px;
   width: 100px;
@@ -1595,13 +1594,14 @@ main #content .userContent .userPost .postInteractionSection .showFirstFour .fir
 }
 #contentContainer #mainProfile .profileAnalytics:nth-of-type(1) #iconAndUsername #picContainer #whoAmI .showProfileUsername {
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
 }
 #contentContainer #mainProfile .profileAnalytics:nth-of-type(1) #iconAndUsername #picContainer #whoAmI #changeOverlay {
   background: none;
   border: none;
   border-radius: 0.5rem;
-  padding: 0.5rem;
+  padding-bottom: 0.5rem;
   position: relative;
   display: flex;
   align-items: center;
@@ -2068,9 +2068,7 @@ main #content .userContent .userPost .postInteractionSection .showFirstFour .fir
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: rgba(17, 17, 17, 0.9098039216);
   padding: 1rem;
-  border-radius: 1rem;
 }
 #contentContainer #mainProfile .totalPosts .profHeaders form {
   display: flex;
