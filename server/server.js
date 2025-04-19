@@ -807,10 +807,6 @@ app.get("/viewProf", (req, res) => {
   res.sendFile(path.join(__dirname, "../profile.html"));
 });
 
-// ROUTE EXECUTES WHEN THE USER WANTS TO LOOK AT THEIR OWN PROFILE
-app.post("/profile", (req, res) => {
-  const { username } = req.body;
-});
 
 app.listen(port, () => {
   console.clear();
