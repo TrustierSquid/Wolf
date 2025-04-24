@@ -5,7 +5,7 @@ import connectMongo from "../server.js";
 
 const router = express.Router();
 
-// Grabing the posts based off of what topic was clicked on
+// Grabing the posts based off of what community was selected
 // for custom feeds
 router.get("/", async (req, res) => {
   const { topicFeed } = req.query;
@@ -13,6 +13,7 @@ router.get("/", async (req, res) => {
   const database = await connectMongo();
   const feed = database.collection(topicFeed);
 
+  // Grabbing all posts from the community feed collection
   const posts = await feed.find({}).toArray();
 
   // helper function for grabbing profile information as needed as we need this for accessing the users profile pic
@@ -30,7 +31,7 @@ router.get("/", async (req, res) => {
       ? `data:${
           searchedUser.profilePic.contentType
         };base64,${searchedUser.profilePic.data.toString("base64")}`
-      : "src/assets/defaultUser.jpg";
+      : null;
   };
 
   // console.log(posts)

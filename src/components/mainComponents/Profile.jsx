@@ -5,16 +5,13 @@ import SideNavBar from "../componentDependencies/SideNavbar";
 import defaultProfilePic from '/src/assets/defaultUser.png';
 
 export default function Profile(props) {
-  const [followerCount, setFollowerCount] = useState([]);
-  const [followingCount, setFollowingCount] = useState([]);
+  // Strictly holds the quick access information of the logged in user
+  const [loggedInUserBaseInformation, setLoggedInUserBaseInformation] = useState([])
 
-  // and checking user action based off of username
-  const [username, setUsername] = useState(null);
-
-  // the an array of the topics that the user selected
-  const [userData, setUserData] = useState([]);
-  const [loggedInUID, setLoggedInUID] = useState(null);
-  const [profilePicture, setProfilePicture] = useState(null);
+  // Query string tracking
+  const queryString = window.location.search;
+  const urlParams = new URLSearchParams(queryString);
+  const userSearched = urlParams.get("user");
 
   // Data for the user logged in
   useEffect(() => {
@@ -33,45 +30,23 @@ export default function Profile(props) {
       }
 
       const homeData = await response.json();
-      // setting the user info needed as glob vars
+      // setting the user info needed as one useState
+      setLoggedInUserBaseInformation(homeData)
 
-      // the topics the current user selected
-      setUserData(homeData.topicArr);
-
-      // the current user logged in
-      setUsername(homeData.userName);
-
-      //  the current users following count
-      setFollowingCount(homeData.followingCount.length);
-
-      // the current users follower count
-      setFollowerCount(homeData.followerCount.length);
-
-      setLoggedInUID(homeData.UID);
-
-      setProfilePicture(homeData.profilePic);
     }
 
     getUserData();
   }, []);
 
+
+
+  // Getting the post data from the user
   const [profilePostData, setProfilePostData] = useState(null);
   const [userProfileData, setUserProfileData] = useState([]);
 
-  const queryString = window.location.search;
-  const urlParams = new URLSearchParams(queryString);
-  const userSearched = urlParams.get("user");
-
-  const [dynamicUsername, setDynamicUsername] = useState(null);
-  const [dynamicFollowingArr, setDynamicFollowingArr] = useState(null);
-  const [dynamicFollowerArr, setDynamicFollowerArr] = useState(null);
-  const [dynamicUID, setDynamicUID] = useState(null);
-  const [dynamicBio, setDynamicBio] = useState(null);
-  const [dynamicProfilePic, setDynamicProfilePic] = useState(null);
-
   /*
       Gets User information based on what user is selected from the query string
-      On the main feed page, the user can be selected by post click or seeing them in the
+      On the main feed page, the user can be selected by clicking on a post or seeing them in the
       members moodle for a particular community
     */
   async function getUserProfilePosts(feedView = "mainFeed") {
@@ -88,22 +63,14 @@ export default function Profile(props) {
 
       // Sending back post data for the searched user
       const postData = await response.json();
-      setProfilePostData(postData.profilePostData.reverse() || []);
       // sending back the userdata for the searched user
+      setProfilePostData(postData.profilePostData.reverse() || []);
 
       // The userData that gets returned based on the UID
       // all based on whos profile the user is looking at
       setUserProfileData(postData.userData || []);
-      setDynamicProfilePic(postData.userData.profilePic);
-      setDynamicFollowerArr(postData.userData.followers);
-      setDynamicFollowingArr(postData.userData.following);
-      setDynamicProfileFeed(feedView);
 
-      // The username that the UID has in store
-      setDynamicUsername(postData.userData.user);
-
-      setDynamicUID(postData.userData.UID);
-      setDynamicBio(postData.userData.userBio);
+      // setDynamicProfileFeed(feedView);
     } catch {
       throw new Error("Couldnt fetch for profile data");
     }
@@ -129,13 +96,6 @@ export default function Profile(props) {
 
   // queryStringUser is the user looked up via query string
   // and comparing it to the uuid of the logged in user
-
-  const [displayFollowing, setDisplayFollowing] = useState(false);
-
-  // helper function
-  const displayFollow = (bool) => {
-    setDisplayFollowing(bool);
-  };
 
   const [communities, setCommunities] = useState(null);
 
@@ -224,7 +184,7 @@ export default function Profile(props) {
     // Styling changes
     bioElementDisplay.current.style.display = "none";
     bioElementEnter.current.style.display = "block";
-    bioElementEnter.current.value = dynamicBio;
+    bioElementEnter.current.value = userProfileData.userBio;
     changeBioBtn.current.style.display = "none";
     updateBioBtn.current.style.display = "block";
   };
@@ -234,12 +194,12 @@ export default function Profile(props) {
     // let bioDisplay = bioElementDisplay.current.value
 
     if (bioEnter.current.value === "") {
-      bioElementDisplay.current.value = dynamicBio;
+      bioElementDisplay.current.value = userProfileData.userBio;
       return;
     }
 
     // Server calls
-    let response = await fetch(`/updateBio/${dynamicUID}`, {
+    let response = await fetch(`/updateBio/${userProfileData.UID}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -270,11 +230,10 @@ export default function Profile(props) {
 
   const followBtn = useRef();
   const unfollowBtn = useRef();
-  const [isFollowing, setIsFollowing] = useState(false);
 
   // Checks to see if the loggedInUser is already following the target user
   function checkFollowing() {
-    if (userProfileData?.followers?.includes(username)) {
+    if (userProfileData?.followers?.includes(loggedInUserBaseInformation.userName)) {
       followBtn.current.style.display = "none";
       unfollowBtn.current.style.display = "block";
     }
@@ -288,7 +247,8 @@ export default function Profile(props) {
       },
       body: JSON.stringify({
         followee: userSearched,
-        loggedInUser: props.loggedInUID,
+        // loggedInUser: props.loggedInUID,
+        loggedInUser: loggedInUserBaseInformation.UID,
       }),
     });
 
@@ -371,7 +331,7 @@ export default function Profile(props) {
     }
 
     let response = await fetch(
-      `/addPostComment?postID=${profilePostID}&feed=${dynamicProfileFeed}&commentFrom=${username}`,
+      `/addPostComment?postID=${profilePostID}&feed=${dynamicProfileFeed}&commentFrom=${loggedInUserBaseInformation.userName}`,
       {
         method: "POST",
         headers: {
@@ -408,19 +368,20 @@ export default function Profile(props) {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ postID: profilePostID, loggedInUser: username }),
+      body: JSON.stringify({ postID: profilePostID, loggedInUser: loggedInUserBaseInformation.userName }),
     });
 
     getUserProfilePosts();
   }
 
   const sidebarProps = {
-    username: username,
-    followings: followingCount,
-    followers: followerCount,
-    UID: loggedInUID,
-    profileImage: profilePicture,
+    username: loggedInUserBaseInformation.userName,
+    followings: loggedInUserBaseInformation.followingCount,
+    followers: loggedInUserBaseInformation.followerCount,
+    UID: loggedInUserBaseInformation.UID,
+    profileImage: loggedInUserBaseInformation.profilePic,
   };
+
 
   function backOut() {
     moodleContainerRef.current.style.display = "none";
@@ -446,96 +407,91 @@ export default function Profile(props) {
     const formData = new FormData();
     formData.append("image", imageFile);
 
-    let response = await fetch(`/uploadProfilePicture/${loggedInUID}`, {
+    let response = await fetch(`/uploadProfilePicture/${loggedInUserBaseInformation.UID}`, {
       method: "POST",
       body: formData,
     });
 
     window.location.reload();
 
-    // setUpdateMessage("Profile Picture Changed!")
-    // await getUserProfilePosts()
   }
 
-  function checkUserType() {
-    switch (dynamicUsername) {
-      // For developers
+  // Displaying profile picture, username and follower information
+  /* Switch statement contains the layout of what the profile page will look like for the user
+    Based on what profile is being viewed. There is a seprate case for developers and another for
+    regular users
+   */
+  function checkUser() {
+    switch (userProfileData.user) {
       case "Samuel":
         return (
           <>
             <div id="iconAndUsername">
-              {/* <i className="fa-solid fa-user"></i> */}
               <section id="picContainer">
                 <img
                   src={
-                    dynamicProfilePic
-                      ? dynamicProfilePic
+                    userProfileData.profilePic
+                      ? userProfileData.profilePic
                       : defaultProfilePic
                   }
                   alt=""
                   id="profilePicture"
                 />
                 <div id="whoAmI">
-                  <h5>{dynamicUsername}</h5>
-                  <h6
-                    className="profileUserTypeHeader"
-                    style={{ color: "#00b3ff" }}
-                  >
-                    Developer
-                  </h6>
-                  {userSearched === loggedInUID ? (
-                    <div id="changeOverlay">
-                      <p>Change Picture</p>
-                      <input
-                        ref={imageRef}
-                        accept="image/*"
-                        type="file"
-                        onChange={() => {
-                          changeProfilePicture();
-                          setUpdateMessage("Profile Picture Changed!");
-                        }}
-                      />
-                    </div>
-                  ) : (
-                    <span></span>
-                  )}
+                  <div className="showProfileUsername">
+                    {userSearched === loggedInUserBaseInformation.UID ? (
+                      <div id="changeOverlay">
+                        <p id="changePictureBtn">Change Profile Picture</p>
+                        <input
+                          ref={imageRef}
+                          accept="image/*"
+                          type="file"
+                          onChange={() => {
+                            changeProfilePicture();
+                            setUpdateMessage("Profile Picture Changed!");
+                          }}
+                        />
+                      </div>
+                    ) : (
+                      <span></span>
+                    )}
+                    <h2>{userProfileData.user}</h2>
+                  </div>
+                  {/* If the query string UID matches the logged in user, change picture btn will render */}
+                  <div id="followTracking">
+                    {userSearched === loggedInUserBaseInformation.UID ? (
+                      <>
+                        <section
+                          onClick={() => navigateToFollowersPage(loggedInUserBaseInformation.UID)}
+                        >
+                          <p>{userProfileData.followers?.length} Followers</p>
+                        </section>
+                        <section
+                          onClick={() => navigateToFollowingPage(loggedInUserBaseInformation.UID)}
+                        >
+                          <p>{userProfileData.following?.length} Following</p>
+                        </section>
+                      </>
+                    ) : (
+                      <>
+                        <section
+                          onClick={() => navigateToFollowersPage(userProfileData.UID)}
+                        >
+                          <p>{userProfileData.followers?.length} Followers</p>
+                        </section>
+                        <section
+                          onClick={() => navigateToFollowingPage(userProfileData.UID)}
+                        >
+                          <p>{userProfileData.following?.length} Following</p>
+                        </section>
+                      </>
+                    )}
+                  </div>
+
                   <p id="updateMessage">{updateMessage}</p>
                 </div>
               </section>
 
-              <div id="followTracking">
-                {userSearched === loggedInUID ? (
-                  <>
-                    <section
-                      onClick={() => navigateToFollowersPage(loggedInUID)}
-                    >
-                      <h3>{dynamicFollowerArr?.length}</h3>
-                      <p>Followers</p>
-                    </section>
-                    <section
-                      onClick={() => navigateToFollowingPage(loggedInUID)}
-                    >
-                      <h3>{dynamicFollowingArr?.length}</h3>
-                      <p>Following</p>
-                    </section>
-                  </>
-                ) : (
-                  <>
-                    <section
-                      onClick={() => navigateToFollowersPage(dynamicUID)}
-                    >
-                      <h3>{dynamicFollowerArr?.length}</h3>
-                      <p>Followers</p>
-                    </section>
-                    <section
-                      onClick={() => navigateToFollowingPage(dynamicUID)}
-                    >
-                      <h3>{dynamicFollowingArr?.length}</h3>
-                      <p>Following</p>
-                    </section>
-                  </>
-                )}
-              </div>
             </div>
           </>
         );
@@ -547,24 +503,18 @@ export default function Profile(props) {
               <section id="picContainer">
                 <img
                   src={
-                    dynamicProfilePic
-                      ? dynamicProfilePic
+                    userProfileData.profilePic
+                      ? userProfileData.profilePic
                       : defaultProfilePic
                   }
                   alt=""
                   id="profilePicture"
                 />
                 <div id="whoAmI">
-                  <h5>{dynamicUsername}</h5>
-                  <h6
-                    className="profileUserTypeHeader"
-                    style={{ color: "grey" }}
-                  >
-                    User
-                  </h6>
-                  {userSearched === loggedInUID ? (
+                  <h5>{userProfileData.user}</h5>
+                  {userSearched === loggedInUserBaseInformation.UID ? (
                     <div id="changeOverlay">
-                      <p>Change Picture</p>
+                      <p id="changePictureBtn" >Change Profile Picture</p>
                       <input
                         ref={imageRef}
                         accept="image/*"
@@ -583,33 +533,33 @@ export default function Profile(props) {
               </section>
 
               <div id="followTracking">
-                {userSearched === loggedInUID ? (
+                {userSearched === loggedInUserBaseInformation.UID ? (
                   <>
                     <section
-                      onClick={() => navigateToFollowersPage(loggedInUID)}
+                      onClick={() => navigateToFollowersPage(loggedInUserBaseInformation.UID)}
                     >
-                      <h3>{dynamicFollowerArr?.length}</h3>
+                      <h3>{userProfileData.followers?.length}</h3>
                       <p>Followers</p>
                     </section>
                     <section
-                      onClick={() => navigateToFollowingPage(loggedInUID)}
+                      onClick={() => navigateToFollowingPage(loggedInUserBaseInformation.UID)}
                     >
-                      <h3>{dynamicFollowingArr?.length}</h3>
+                      <h3>{userProfileData.following?.length}</h3>
                       <p>Following</p>
                     </section>
                   </>
                 ) : (
                   <>
                     <section
-                      onClick={() => navigateToFollowersPage(dynamicUID)}
+                      onClick={() => navigateToFollowersPage(userProfileData.UID)}
                     >
-                      <h3>{dynamicFollowerArr?.length}</h3>
+                      <h3>{userProfileData.followers?.length}</h3>
                       <p>Followers</p>
                     </section>
                     <section
-                      onClick={() => navigateToFollowingPage(dynamicUID)}
+                      onClick={() => navigateToFollowingPage(userProfileData.UID)}
                     >
-                      <h3>{dynamicFollowingArr?.length}</h3>
+                      <h3>{userProfileData.following?.length}</h3>
                       <p>Following</p>
                     </section>
                   </>
@@ -652,10 +602,10 @@ export default function Profile(props) {
       <span ref={overlay} id="overlayProfile" onClick={() => backOut()}></span>
       <div id="contentContainer">
         <main id="mainProfile">
-          <h2 className="profHeaders">Profile </h2>
+          {/* <h2 className="profHeaders">Profile </h2> */}
           <div className="profileAnalytics">
             {/* Checks for the type of user is being displayed */}
-            {checkUserType()}
+            {checkUser()}
 
             {/*  FOLLOW SYSTEM */}
 
@@ -665,8 +615,32 @@ export default function Profile(props) {
 
             {/* BIO SYSTEM */}
             <div id="bioPair">
+              <br />
+
+
+              {/* This is the version on the bio is for when the user enters a new or edited bio */}
+              <span id="userEnterBio" ref={bioElementEnter}>
+                <textarea
+                  ref={bioEnter}
+                  maxLength={300}
+                  placeholder={userProfileData.userBio}
+                >
+                  {userProfileData.userBio}
+                </textarea>
+              </span>
+
+              {/* This is the version on the bio is is strictly for display  */}
+              <span id="profileBio" ref={bioElementDisplay}>
+                <div>
+                  <h2 className="cardTitle" >Bio</h2>
+
+                </div>
+
+                {userProfileData.userBio}
+              </span>
+
               <div id="bioTitle">
-                <h3>Bio</h3>
+
                 {/* Bio edit shows up for the user logged in and not on other profile */}
                 {userSearched === props.loggedInUID ? (
                   <>
@@ -689,23 +663,6 @@ export default function Profile(props) {
                   Update Bio
                 </button>
               </div>
-              <br />
-
-              {/* This is the version on the bio is for when the user enters a new or edited bio */}
-              <span id="userEnterBio" ref={bioElementEnter}>
-                <textarea
-                  ref={bioEnter}
-                  maxLength={300}
-                  placeholder={dynamicBio}
-                >
-                  {dynamicBio}
-                </textarea>
-              </span>
-
-              {/* This is the version on the bio is is strictly for display  */}
-              <span id="profileBio" ref={bioElementDisplay}>
-                {dynamicBio}
-              </span>
             </div>
           </div>
 
@@ -740,7 +697,7 @@ export default function Profile(props) {
                     profileAddLike(profilePostID, profilePostLikes)
                   }
                 >
-                  {profilePostLikes?.includes(username) ? (
+                  {profilePostLikes?.includes(loggedInUserBaseInformation.userName) ? (
                     <>
                       <i
                         ref={postCommentsLikeRef}
@@ -882,23 +839,26 @@ export default function Profile(props) {
 
           <div className="totalPosts">
             <section className="profHeaders">
-              <h3>Posts </h3>
+              <h2>Posts </h2>
               <form>
                 {/* The dropdown selection menu that displays topics that the user is currently apart of  */}
                 <select
                   className="topicDisplaySelection"
                   onChange={(e) => getUserProfilePosts(e.target.value)}
                 >
+                  <option value="All Posts" onClick={()=> getUserProfilePosts('All')}>All Posts</option>
                   <option
-                    onClick={() => getUserProfilePosts("mainFeed")}
+                  // Defaults to "mainFeed"
+                    onClick={() => getUserProfilePosts()}
                     value="mainFeed"
                   >
                     Home Feed
                   </option>
+                  {/* Determines what community the logged in user is apart of */}
                   {communities
                     ?.filter((community) =>
                       Object.values(community.members).some(
-                        (member) => member.member === username
+                        (member) => member.member === loggedInUserBaseInformation.userName
                       )
                     )
                     .map((community) => {
@@ -933,7 +893,7 @@ export default function Profile(props) {
                           onClick={() =>
                             showProfilePostDetails(
                               post._id,
-                              dynamicUsername,
+                              userProfileData.user,
                               post.postCreationDate,
                               post.subject,
                               post.body,
@@ -956,7 +916,7 @@ export default function Profile(props) {
                               }
                               alt=""
                             />
-                            <h4>{dynamicUsername} </h4>
+                            <h4>{userProfileData.user} </h4>
                             <p style={{ color: "grey" }}>
                               {showPostDate(post.postCreationDate)}
                             </p>
@@ -997,7 +957,7 @@ export default function Profile(props) {
                 ) : (
                   // if there is no posts made by the user in question in that specific comminui
                   <div className="noPostsMessage">
-                    <h3>{dynamicUsername} hasn't posted anything here yet!</h3>
+                    <h3>{userProfileData.user} hasn't posted anything here yet!</h3>
                     <p>Get them to share something! 😃</p>
                   </div>
                 )}

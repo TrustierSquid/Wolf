@@ -28,6 +28,8 @@ router.get("/", async (req, res) => {
     return res.status(404).json({ message: "User not found" });
   }
 
+  // the blueprint for the user that made the posts
+  // This is just so you have access to the user information while processing posts
   const userDataModified = {
     user: userData.user,
     password: userData.password,
@@ -45,40 +47,104 @@ router.get("/", async (req, res) => {
       : null,
   };
 
-  // finds the posts of the selected user
-  const userPosts = await feedCollection
-    .find({ poster: userData.user })
-    .toArray();
+  // Showing all communities
+  if (feed === "All") {
+    // gathers all collections
+    const collections = await database.listCollections().toArray();
 
-  // modifyed so that if there are images they are included in the response
-  const userPostModified = userPosts.map((post) => ({
-    _id: post._id,
-    poster: post.poster,
-    posterProfilePic: userData.profilePic
-      ? `data:${
+    // Filters out other collections that are not post feeds
+    const allFeeds = collections.filter(collection => collection.name.includes("Feed"));
+
+    // container for all post the user has made
+    let allUserPosts = []
+
+    // gets all posts from all collections that contains the user's name
+    for (const feed of allFeeds) {
+      const targetFeed = database.collection(feed.name);
+      const posts = await targetFeed.find({ poster: userData.user }).toArray();
+      allUserPosts.push(posts)
+    }
+
+    // all posts have been added to a clean array
+    const cleanedPosts = allUserPosts.filter(post => post.length > 0)
+
+    // Flatten the array of arrays into a single array
+    const flattenedPosts = cleanedPosts.flat();
+
+    // blueprint for the frontend to display the data
+    const userPostModified = flattenedPosts
+      .map((post) => ({
+      _id: post._id,
+      poster: post.poster,
+      posterProfilePic: userData.profilePic
+        ? `data:${
           userData.profilePic.contentType
         };base64,${userData.profilePic.data.toString("base64")}`
-      : null,
-    subject: post.subject,
-    body: post.body,
-    likes: post.likes,
-    postCreationDate: post.postCreationDate,
-    comments: post.comments,
-    image: post.image
-      ? `data:${post.image.contentType};base64,${post.image.data.toString(
+        : null,
+      subject: post.subject,
+      body: post.body,
+      likes: post.likes,
+      postCreationDate: post.postCreationDate,
+      comments: post.comments,
+      image: post.image
+        ? `data:${post.image.contentType};base64,${post.image.data.toString(
           "base64"
         )}`
-      : null,
-  }));
+        : null,
+      }))
+      .sort((a, b) => new Date(a.postCreationDate) - new Date(b.postCreationDate));
 
-  // res.json({ reversedPosts: posts.reverse() });
-  res.json({
-    // posts from the mainfeed
-    profilePostData: userPostModified,
+    // response
+    res.json({
+      // posts from the mainfeed
+      profilePostData: userPostModified,
 
-    // profile data based on the query string
-    userData: userDataModified,
-  });
+      // profile data based on the query string
+      userData: userDataModified,
+    });
+
+
+  // Showing other specific communities that the user has clicked on
+  } else {
+
+    // finds the posts of the selected user
+    const userPosts = await feedCollection
+      .find({ poster: userData.user })
+      .toArray();
+
+
+    // modifyed so that if there are images they are included in the response
+    const userPostModified = userPosts.map((post) => ({
+      _id: post._id,
+      poster: post.poster,
+      posterProfilePic: userData.profilePic
+        ? `data:${
+            userData.profilePic.contentType
+          };base64,${userData.profilePic.data.toString("base64")}`
+        : null,
+      subject: post.subject,
+      body: post.body,
+      likes: post.likes,
+      postCreationDate: post.postCreationDate,
+      comments: post.comments,
+      image: post.image
+        ? `data:${post.image.contentType};base64,${post.image.data.toString(
+            "base64"
+          )}`
+        : null,
+    }));
+
+    // res.json({ reversedPosts: posts.reverse() });
+    res.json({
+      // posts from the mainfeed
+      profilePostData: userPostModified,
+
+      // profile data based on the query string
+      userData: userDataModified,
+    });
+
+  }
+
 });
 
 // for getting profile images for feeds

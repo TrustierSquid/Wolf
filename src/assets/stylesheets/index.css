@@ -6,6 +6,7 @@
 
 #darkBG {
   background-color: rgba(0, 0, 0, 0.6431372549);
+  display: none;
   position: fixed;
   top: 0;
   left: 0;
@@ -18,8 +19,7 @@
 }
 
 body {
-  background: rgb(212, 55, 55);
-  background: linear-gradient(90deg, rgb(212, 55, 55) 0%, rgb(0, 0, 0) 23%);
+  background-color: rgba(7, 7, 7, 0.9803921569);
 }
 
 .noPostsMessage {
@@ -29,7 +29,7 @@ body {
   border-radius: 1rem;
   font-family: "Nunito", sans-serif;
   text-align: center;
-  margin-top: 2rem;
+  margin-top: 1rem;
   display: flex;
   font-size: 1rem;
   flex-direction: column;
@@ -440,7 +440,7 @@ DEFAULT PAGE
   justify-content: space-between;
   align-items: center;
   position: sticky;
-  background: #0a0a0a;
+  background-color: rgba(7, 7, 7, 0.9803921569);
   z-index: 11;
 }
 #nav #logoContainer {
@@ -714,9 +714,9 @@ DEFAULT PAGE
   top: 0%;
   height: 100vh;
   position: fixed;
-  width: 300px;
+  width: 250px;
   color: white;
-  background: #0a0a0a;
+  background-color: rgba(7, 7, 7, 0.9803921569);
   border-right: 1px solid #7a0b31;
   padding: 1.5rem;
   padding-top: 4rem;
@@ -803,21 +803,34 @@ DEFAULT PAGE
   transition: 250ms;
 }
 
-#suggestedNav {
-  max-height: 700px;
-  width: 350px;
-  color: white;
+#suggestedContainer {
+  display: flex;
+  flex-direction: column;
   position: fixed;
-  top: 10.5%;
+  gap: 1rem;
   right: 4%;
-  padding: 1rem;
-  overflow: auto;
+  top: 12.5%;
 }
-#suggestedNav h3 {
+#suggestedContainer .sideHeaders {
   color: grey;
   font-family: "roboto", sans-serif;
 }
-#suggestedNav #suggestJoinBtn {
+#suggestedContainer .disableMemberTitle {
+  display: none;
+}
+#suggestedContainer #showMembersOfCommunityContainer, #suggestedContainer #suggestedCommunities {
+  max-height: 300px;
+  width: 275px;
+  color: white;
+  background-color: #141414;
+  border-radius: 1.5rem;
+  padding: 1.1rem;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+#suggestedContainer #showMembersOfCommunityContainer #suggestJoinBtn, #suggestedContainer #suggestedCommunities #suggestJoinBtn {
   background-color: teal;
   color: white;
   border: none;
@@ -826,58 +839,70 @@ DEFAULT PAGE
   border-radius: 0.5rem;
   cursor: pointer;
 }
-#suggestedNav #suggestJoinBtn:hover {
+#suggestedContainer #showMembersOfCommunityContainer #suggestJoinBtn:hover, #suggestedContainer #suggestedCommunities #suggestJoinBtn:hover {
   background-color: #00a1b6;
 }
-#suggestedNav div {
-  padding: 0.5rem;
+#suggestedContainer #showMembersOfCommunityContainer div, #suggestedContainer #suggestedCommunities div {
   font-family: "roboto", sans-serif;
 }
-#suggestedNav div section {
+#suggestedContainer #showMembersOfCommunityContainer div section, #suggestedContainer #suggestedCommunities div section {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 0.5rem;
   color: white;
 }
-#suggestedNav div section img {
+#suggestedContainer #showMembersOfCommunityContainer div section .nameAndImageContainer, #suggestedContainer #suggestedCommunities div section .nameAndImageContainer {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+#suggestedContainer #showMembersOfCommunityContainer div section .nameAndImageContainer .memberNames, #suggestedContainer #suggestedCommunities div section .nameAndImageContainer .memberNames {
+  color: white;
+}
+#suggestedContainer #showMembersOfCommunityContainer div section .nameAndImageContainer img, #suggestedContainer #suggestedCommunities div section .nameAndImageContainer img {
   height: 40px;
   width: 40px;
   -o-object-fit: cover;
      object-fit: cover;
   border-radius: 50%;
 }
-#suggestedNav div section .memberNames {
-  color: white;
-}
-#suggestedNav div section button {
+#suggestedContainer #showMembersOfCommunityContainer div section button, #suggestedContainer #suggestedCommunities div section button {
   background: none;
   border: none;
   color: turquoise;
   cursor: pointer;
 }
-#suggestedNav div section button:hover {
+#suggestedContainer #showMembersOfCommunityContainer div section button:hover, #suggestedContainer #suggestedCommunities div section button:hover {
   color: teal;
 }
-#suggestedNav div section a {
+#suggestedContainer #showMembersOfCommunityContainer div section a, #suggestedContainer #suggestedCommunities div section a {
   text-decoration: none;
 }
-#suggestedNav #suggestedNavMembers {
+#suggestedContainer #showMembersOfCommunityContainer #suggestedNavMembers, #suggestedContainer #suggestedCommunities #suggestedNavMembers {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 1rem;
   font-family: "roboto", sans-serif;
   overflow: auto;
 }
-#suggestedNav #suggestedNavMembers img {
+#suggestedContainer #showMembersOfCommunityContainer #suggestedNavMembers img, #suggestedContainer #suggestedCommunities #suggestedNavMembers img {
   height: 40px;
   border-radius: 50%;
 }
-#suggestedNav #suggestedNavMembers .memberNames {
+#suggestedContainer #showMembersOfCommunityContainer #suggestedNavMembers .memberNames, #suggestedContainer #suggestedCommunities #suggestedNavMembers .memberNames {
   color: white;
 }
-
+#suggestedContainer #showMembersOfCommunityContainer #suggestedNavMembers ul, #suggestedContainer #suggestedCommunities #suggestedNavMembers ul {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem; /* Space between each member entry */
+}
+#suggestedContainer #showMembersOfCommunityContainer {
+  background: none;
+}
 @media (max-width: 1300px) {
-  #suggestedNav {
+  #suggestedContainer {
     display: none;
   }
 }
@@ -1072,6 +1097,7 @@ main #content #newPost #createPostElement #feedbackMessage {
 main #content .userContent {
   display: flex;
   margin-top: 1rem;
+  gap: 1rem;
   flex-direction: column;
 }
 main #content .userContent .userPost {
@@ -1079,7 +1105,11 @@ main #content .userContent .userPost {
   max-width: 100%;
   display: flex;
   flex-direction: column;
-  border-bottom: 1px solid #2b2b2b;
+  background-color: #141414;
+  border-radius: 1.5rem;
+  padding: 0.5rem;
+  position: relative;
+  max-height: 100%;
 }
 main #content .userContent .userPost .mainPost {
   flex-direction: column;
@@ -1195,7 +1225,7 @@ main #content .userContent .userPost .mainPost .userTraction .likeBtn:hover {
 main #content .userContent .userPost .postInteractionSection {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  gap: 0.5rem;
   padding: 1rem;
   padding-top: 0rem;
 }
@@ -1213,34 +1243,36 @@ main #content .userContent .userPost .postInteractionSection .postLC {
   display: flex;
   gap: 1rem;
 }
-main #content .userContent .userPost .postInteractionSection .postLC .likeBtn,
-main #content .userContent .userPost .postInteractionSection .postLC .commentBtn {
-  font-size: 1.2rem;
-  cursor: pointer;
-  padding: 0.5rem;
-  border-radius: 1rem;
-  font-family: "roboto", sans-serif;
-  background-color: rgba(62, 62, 62, 0.6666666667);
-}
 main #content .userContent .userPost .postInteractionSection .postLC .likeBtn:hover {
-  background-color: #444;
-}
-main #content .userContent .userPost .postInteractionSection .postLC .commentBtn {
-  color: rgb(46, 176, 128);
-}
-main #content .userContent .userPost .postInteractionSection .postLC .commentBtn:hover {
   background-color: #444;
 }
 main #content .userContent .userPost .postInteractionSection .showFirstFour {
   color: white;
   display: flex;
   align-items: center;
+  justify-content: start;
   gap: 0.3rem;
+  width: 70%;
   font-family: "roboto", sans-serif;
 }
 main #content .userContent .userPost .postInteractionSection .showFirstFour .firstFourImg {
   height: 30px;
   border-radius: 50%;
+}
+
+.likeBtn,
+.commentBtn {
+  font-size: 1.2rem;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 1rem;
+  font-family: "roboto", sans-serif;
+  background-color: rgba(62, 62, 62, 0.6666666667);
+  justify-self: start;
+}
+
+.commentBtn:hover {
+  background-color: #444;
 }
 
 #commentInterface {
@@ -1495,7 +1527,7 @@ main #content .userContent .userPost .postInteractionSection .showFirstFour .fir
   gap: 2rem;
 }
 #contentContainer #mainProfile {
-  width: 55%;
+  width: 60%;
   display: flex;
   flex-direction: column;
   gap: 1rem;
@@ -1507,8 +1539,6 @@ main #content .userContent .userPost .postInteractionSection .showFirstFour .fir
   font-family: "Nunito", sans-serif;
 }
 #contentContainer #mainProfile .profileAnalytics:nth-of-type(1) {
-  background-color: rgba(17, 17, 17, 0.9098039216);
-  box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -1516,9 +1546,7 @@ main #content .userContent .userPost .postInteractionSection .showFirstFour .fir
   text-align: start;
   margin: 0 auto;
   gap: 0.5rem;
-  border-radius: 1rem;
   font-size: 1.5rem;
-  padding: 1rem;
   /* #profileCustomize {
         .fa-pencil {
            cursor: pointer;
@@ -1540,16 +1568,16 @@ main #content .userContent .userPost .postInteractionSection .showFirstFour .fir
   gap: 1rem;
   align-items: center;
   padding: 1rem;
+  border-radius: 1rem;
 }
 #contentContainer #mainProfile .profileAnalytics:nth-of-type(1) #iconAndUsername #picContainer {
   display: flex;
-  flex-direction: column;
-  align-items: left;
+  align-items: center;
+  width: 100%;
   gap: 1rem;
 }
 #contentContainer #mainProfile .profileAnalytics:nth-of-type(1) #iconAndUsername #picContainer #profilePicture {
   background: none;
-  border: 2px solid purple;
   border-radius: 50%;
   height: 100px;
   width: 100px;
@@ -1562,29 +1590,31 @@ main #content .userContent .userPost .postInteractionSection .showFirstFour .fir
 #contentContainer #mainProfile .profileAnalytics:nth-of-type(1) #iconAndUsername #picContainer #whoAmI {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  width: 100%;
+}
+#contentContainer #mainProfile .profileAnalytics:nth-of-type(1) #iconAndUsername #picContainer #whoAmI .showProfileUsername {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 #contentContainer #mainProfile .profileAnalytics:nth-of-type(1) #iconAndUsername #picContainer #whoAmI #changeOverlay {
   background: none;
-  border: 1px solid teal;
+  border: none;
   border-radius: 0.5rem;
-  margin-top: 1rem;
-  padding: 1rem;
+  padding-bottom: 0.5rem;
   position: relative;
   display: flex;
   align-items: center;
-  height: 50px;
-  width: 150px;
 }
-#contentContainer #mainProfile .profileAnalytics:nth-of-type(1) #iconAndUsername #picContainer #whoAmI #changeOverlay p {
+#contentContainer #mainProfile .profileAnalytics:nth-of-type(1) #iconAndUsername #picContainer #whoAmI #changeOverlay #changePictureBtn {
   font-size: 1rem;
   color: turquoise;
 }
 #contentContainer #mainProfile .profileAnalytics:nth-of-type(1) #iconAndUsername #picContainer #whoAmI #changeOverlay:hover {
-  background-color: teal;
+  text-decoration: underline;
   color: white;
 }
-#contentContainer #mainProfile .profileAnalytics:nth-of-type(1) #iconAndUsername #picContainer #whoAmI #changeOverlay:hover p {
+#contentContainer #mainProfile .profileAnalytics:nth-of-type(1) #iconAndUsername #picContainer #whoAmI #changeOverlay:hover #changePictureBtn {
   color: white;
 }
 #contentContainer #mainProfile .profileAnalytics:nth-of-type(1) #iconAndUsername #picContainer #whoAmI #changeOverlay input {
@@ -1602,24 +1632,25 @@ main #content .userContent .userPost .postInteractionSection .showFirstFour .fir
   margin-top: 1rem;
   color: turquoise;
 }
-#contentContainer #mainProfile .profileAnalytics:nth-of-type(1) #iconAndUsername #followTracking {
+#contentContainer #mainProfile .profileAnalytics:nth-of-type(1) #iconAndUsername #picContainer #whoAmI #followTracking {
   display: flex;
   gap: 1rem;
   align-self: start;
 }
-#contentContainer #mainProfile .profileAnalytics:nth-of-type(1) #iconAndUsername #followTracking section {
+#contentContainer #mainProfile .profileAnalytics:nth-of-type(1) #iconAndUsername #picContainer #whoAmI #followTracking section {
   display: flex;
-  flex-direction: column;
   align-items: center;
   border-radius: 1rem;
-  padding: 0.5rem;
   cursor: pointer;
 }
-#contentContainer #mainProfile .profileAnalytics:nth-of-type(1) #iconAndUsername #followTracking section p {
+#contentContainer #mainProfile .profileAnalytics:nth-of-type(1) #iconAndUsername #picContainer #whoAmI #followTracking section p {
   font-size: 1rem;
-  padding: 0.4rem;
 }
-#contentContainer #mainProfile .profileAnalytics:nth-of-type(1) #iconAndUsername #followTracking section h3 {
+#contentContainer #mainProfile .profileAnalytics:nth-of-type(1) #iconAndUsername #picContainer #whoAmI #followTracking section p:hover {
+  color: white;
+  text-decoration: underline;
+}
+#contentContainer #mainProfile .profileAnalytics:nth-of-type(1) #iconAndUsername #picContainer #whoAmI #followTracking section h3 {
   width: 100%;
   padding: 0.4rem;
   text-align: center;
@@ -1661,14 +1692,14 @@ main #content .userContent .userPost .postInteractionSection .showFirstFour .fir
   display: flex;
   flex-direction: column;
   width: 100%;
-  padding: 1rem;
-  gap: 0.5rem;
+  max-height: 200px;
 }
 #contentContainer #mainProfile .profileAnalytics:nth-of-type(1) #bioPair #bioTitle {
   display: flex;
-  justify-content: space-between;
+  justify-content: right;
   align-items: center;
   width: 100%;
+  gap: 1rem;
 }
 #contentContainer #mainProfile .profileAnalytics:nth-of-type(1) #bioPair #bioTitle #updateBioBtn {
   display: none;
@@ -1686,7 +1717,6 @@ main #content .userContent .userPost .postInteractionSection .showFirstFour .fir
 }
 #contentContainer #mainProfile .profileAnalytics:nth-of-type(1) #bioPair #bioTitle h3 {
   font-family: "Nunito", sans-serif;
-  border-bottom: 1px solid #d43737;
   width: 200px;
   display: flex;
   align-items: center;
@@ -1695,7 +1725,7 @@ main #content .userContent .userPost .postInteractionSection .showFirstFour .fir
 #contentContainer #mainProfile .profileAnalytics:nth-of-type(1) #bioPair #bioTitle .changeBioButton {
   font-size: 1rem;
   color: white;
-  background-color: teal;
+  background: none;
   border-radius: 0.5rem;
   border: none;
   padding: 0.5rem;
@@ -1703,10 +1733,10 @@ main #content .userContent .userPost .postInteractionSection .showFirstFour .fir
 }
 #contentContainer #mainProfile .profileAnalytics:nth-of-type(1) #bioPair #bioTitle .changeBioButton:hover {
   color: teal;
+  text-decoration: underline;
 }
 #contentContainer #mainProfile .profileAnalytics:nth-of-type(1) #bioPair #profileBio,
 #contentContainer #mainProfile .profileAnalytics:nth-of-type(1) #bioPair #userEnterBio {
-  background-color: #222;
   color: white;
   width: 100%;
   min-height: 100px;
@@ -1714,8 +1744,15 @@ main #content .userContent .userPost .postInteractionSection .showFirstFour .fir
   align-self: center;
   padding: 1rem;
   font-family: "roboto", sans-serif;
-  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   text-wrap: wrap;
+}
+#contentContainer #mainProfile .profileAnalytics:nth-of-type(1) #bioPair #profileBio {
+  display: flex;
+  gap: 0.5rem;
+  flex-direction: column;
+}
+#contentContainer #mainProfile .profileAnalytics:nth-of-type(1) #bioPair .cardTitle {
+  font-family: "Nunito", sans-serif;
 }
 #contentContainer #mainProfile .profileAnalytics:nth-of-type(1) #bioPair #userEnterBio {
   display: none;
@@ -1736,6 +1773,7 @@ main #content .userContent .userPost .postInteractionSection .showFirstFour .fir
 }
 #contentContainer #mainProfile .profileAnalytics:nth-of-type(1) #bioPair #profileBio {
   font-size: 1rem;
+  height: 300px;
   word-wrap: break-word;
 }
 #contentContainer #mainProfile .followUserBtn {
@@ -2030,10 +2068,7 @@ main #content .userContent .userPost .postInteractionSection .showFirstFour .fir
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: rgba(17, 17, 17, 0.9098039216);
   padding: 1rem;
-  border-radius: 1rem;
-  box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
 }
 #contentContainer #mainProfile .totalPosts .profHeaders form {
   display: flex;
@@ -2062,7 +2097,6 @@ main #content .userContent .userPost .postInteractionSection .showFirstFour .fir
   background-color: rgba(17, 17, 17, 0.9098039216);
   cursor: pointer;
   border-radius: 1rem;
-  box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
 }
 #contentContainer #mainProfile .totalPosts .existingPost .existingPostTitle {
   display: flex;
@@ -2298,7 +2332,7 @@ HOME COMPONENT MEDIA QUERIES
   .sideNav {
     display: none;
     transition: 350ms;
-    border-radius: 0.5rem;
+    border-radius: 1rem;
     z-index: 1;
   }
   .toggleNav {

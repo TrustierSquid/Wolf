@@ -1,7 +1,8 @@
 import { useEffect, useState, useRef, forwardRef } from "react";
 import logo from "/src/assets/wolfLogo.png";
-import defaultProfilePic from '/src/assets/defaultUser.png';
 import ShowLikes from "../moodleComponents/ShowLikes";
+import CommentMoodle from "../moodleComponents/CommentMoodle";
+import defaultProfilePic from '/src/assets/defaultUser.png';
 
 const UpdateFeed = forwardRef(({
   currentActiveUser,
@@ -14,7 +15,6 @@ const UpdateFeed = forwardRef(({
   const {darkBG} = ref || {}
   const [allPosts, setAllPosts] = useState(null);
   const currentUser = props.currentActiveUser;
-  const commentInterface = useRef(null);
 
   // Fetches for all posts created to update all feeds
   async function updateMainFeed() {
@@ -53,22 +53,6 @@ const UpdateFeed = forwardRef(({
       const allPosts = await response.json();
       setAllPosts(allPosts.reversedPosts);
     }
-  }
-
-  // poster is used to find the corresponding profile for the poster
-  async function navigateToProfile(poster) {
-    const response = await fetch(`/profileData/getID?poster=${poster}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-
-    const data = await response.json();
-    // The data returns the fetched user uid
-    window.location.href = `/profile?user=${data.userUID}`;
-    /* setTimeout(() => {
-    }, 500); */
   }
 
   const likeBtn = useRef([]);
@@ -119,6 +103,7 @@ const UpdateFeed = forwardRef(({
       // Check if the like was successfully added (optional)
       if (response.ok) {
         likeSoundEffect.play()
+        likeBtn.current[currentPostIndex].style.color = 'red'
         await updateMainFeed();
       } else {
         console.error("error adding like");
@@ -151,115 +136,9 @@ const UpdateFeed = forwardRef(({
   // ran on component mount
   useEffect(() => {
     updateMainFeed();
+
   }, []);
 
-  const [postSubject, setPostSubject] = useState(null);
-  const [postBody, setPostBody] = useState(null);
-  const [poster, setPoster] = useState(null);
-  const [postCreationDate, setPostCreationDate] = useState(null);
-  const [postID, setPostID] = useState(null);
-  const [keyOfPost, setKeyOfPost] = useState(null);
-  const [postLikesCount, setPostLikesCount] = useState(null);
-  const [commentsCount, setCommentsCount] = useState(null);
-
-  // for comments
-  const [errorMessage, setErrorMessage] = useState("");
-  const commentValue = useRef(null);
-  const [postComments, setPostComments] = useState([]);
-  const [postImage, setPostImage] = useState(null);
-  const [posterProfilePicState, setPosterProfilePicState] = useState(null);
-
-  // Getting the information for the post selected when the interface appears.
-  async function commentInterfaceAppear(
-    postSubject,
-    postBody,
-    poster,
-    creationDate,
-    postID,
-    keyOfPost,
-    postLikesCount,
-    postComments,
-    image,
-    posterProfilePic
-  ) {
-    setPostSubject(postSubject);
-    setPostBody(postBody);
-    setPoster(poster);
-    setPostCreationDate(creationDate);
-    setPostID(postID);
-    setKeyOfPost(keyOfPost);
-    setPostLikesCount(postLikesCount);
-    setPostComments(postComments.reverse());
-    setCommentsCount(postComments.length);
-    setPostImage(image);
-    setPosterProfilePicState(posterProfilePic);
-
-    setErrorMessage("");
-
-    /*
-      When invoked, the interface has these states relative to the post selected
-      The opacity is changed and the pointer events are enabled
-     */
-    commentInterface.current.style.opacity = "1";
-    commentInterface.current.style.pointerEvents = "all";
-    // props.bgEffect also gets envoked from the home component
-  }
-
-  function removeEffect() {
-    commentInterface.current.style.opacity = "0";
-    commentInterface.current.style.pointerEvents = "none";
-  }
-
-  // for processing and adding comments for posts
-  async function addComment(comment, postID) {
-    // Grabbing the query key and string
-    const queryString = window.location.search;
-    const urlParams = new URLSearchParams(queryString);
-    const userSearched = urlParams.get("topicFeed");
-
-    if (comment === "") return;
-    commentValue.current.value = "";
-    setErrorMessage("Adding Comment...");
-    if (!queryString) {
-      setTimeout(async () => {
-        const response = await fetch(
-          `/addPostComment?postID=${postID}&feed=mainFeed&commentFrom=${currentActiveUser}`,
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ comment: comment }),
-          }
-        );
-
-        if (!response.ok) {
-          throw new Error("That didnt go through");
-        }
-        await updateMainFeed();
-      }, 500);
-
-      setErrorMessage("Added Comment!");
-    } else {
-      const response = await fetch(
-        `/addPostComment?postID=${postID}&feed=${userSearched}&commentFrom=${props.currentActiveUser}`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ comment: comment }),
-        }
-      );
-
-      if (!response.ok) {
-        throw new Error("That didnt go through");
-      }
-
-      setErrorMessage("Added Comment!");
-      await updateMainFeed();
-    }
-  }
 
   const currentDate = new Date();
 
@@ -326,11 +205,10 @@ const UpdateFeed = forwardRef(({
                         {/* flex container */}
                         <section className="userAction">
                           {/* checking for whos posting */}
-                          {/* {checkAdmin(post.poster)} */}
                           <div className="postUserInformation">
                             <img
                               className="postProfilePic"
-                              src={post.posterProfilePic || defaultProfilePic}
+                              src={post.posterProfilePic || defaultProfilePic} // Fallback to default if no profile pic is found
                             />
                             <h2
                               className="poster"
@@ -370,36 +248,30 @@ const UpdateFeed = forwardRef(({
                             {post.likes.length}
                           </span>
                         </span>
-                        <span
-                          className="commentBtn"
-                          /* Capturing all of the post information
-                            and creating a moodle with post information
-                           */
-                          onClick={() => {
-                            commentInterfaceAppear(
-                              post.subject,
-                              post.body,
-                              post.poster,
-                              post.postcreationDate,
-                              post._id,
-                              key,
-                              post.likes.length,
-                              post.comments,
-                              post.image,
-                              post.posterProfilePic
-                            ),
-                              bgEffect();
-                          }}
-                        >
-                          <i className="fa-solid fa-comments"></i>{" "}
-                          <span style={{ color: "white" }}>
-                            {" "}
-                            {post.comments.length}
-                          </span>
-                        </span>
+
                       </div>
 
-                      <ShowLikes post={post} bgEffect={bgEffect} removeBGEffect={removeBGEffect}/>
+                      <CommentMoodle
+                          postSubject={post.Subject}
+                          postBody={post.body}
+                          poster={post.poster}
+                          postCreationDate={post.postCreationDate}
+                          postID={post._id}
+                          keyOfPost={key}
+                          postLikesCount={post.likes.length}
+                          postComments={post.comments}
+                          image={post.image}
+                          posterProfilePic={post.posterProfilePic}
+                          showPostDate={showPostDate}
+                          currentActiveUser={currentActiveUser}
+
+                          // for updating the feed after a comment is made
+                          updateMainFeed={updateMainFeed}
+                      />
+                      <ShowLikes
+                        post={post}
+                        bgEffect={bgEffect}
+                        removeBGEffect={removeBGEffect}/>
 
                     </nav>
                   </div>
@@ -421,119 +293,7 @@ const UpdateFeed = forwardRef(({
 
     <span ref={darkBG} id="darkBG" onClick={()=> {removeBGEffect()}}></span>
 
-      <div id="commentInterface" ref={commentInterface}>
-        <h3 id="topDiv">
-          <div id="fromWho">
-            <section>
-              <img
-                className="commentPosterProfilePic"
-                src={
-                  posterProfilePicState
-                    ? posterProfilePicState
-                    : defaultProfilePic
-                }
-                alt=""
-              />
-              <h3 onClick={() => navigateToProfile(poster)}>{poster}</h3>
-            </section>
-          </div>
-          <span
-            id="exitCommentBtn"
-            onClick={() => {
-              removeEffect(), removeBGEffect();
-            }}
-          >
-            <i className="fa-solid fa-x"></i>
-          </span>
-        </h3>
 
-        <section id="commentSection">
-          <h2 id="exitBtnRow">{postSubject}</h2>
-          {postImage ? (
-            <img src={postImage} alt="Postimage" />
-          ) : (
-            <div style={{ display: "none" }}></div> // Optional: add a placeholder or leave it empty
-          )}
-
-          <p>{postBody}</p>
-
-          <div id="indicators">
-            <span id="commentSectionLike">
-              <i className="fa-solid fa-heart"></i> {postLikesCount}
-            </span>
-          </div>
-        </section>
-
-        <section id="commentSection2">
-          <form id="commentInput">
-            <input
-              ref={commentValue}
-              required
-              type="text"
-              placeholder="Add a comment.."
-            />
-            <button
-              type="button"
-              onClick={() => addComment(commentValue.current.value, postID)}
-            >
-              Comment
-            </button>
-          </form>
-          <br />
-          <h4 style={{ color: "lime" }}>{errorMessage}</h4>
-        </section>
-        {/* Setting the header plural */}
-        <h2>
-          {postComments.length > 1
-            ? `${postComments.length} Comments`
-            : `${postComments.length} Comment`}{" "}
-        </h2>
-        <article className="commentContainer">
-          {postComments?.length > 0 ? (
-            postComments?.map((comment) => {
-              return (
-                <>
-                {/* Each individual comment */}
-                  <div className="comment">
-
-                    <div className="commentInsideContainer">
-                      <section>
-                        <img
-                          className="commenterProfilePicImg"
-                          src={
-                            comment.commenterProfilePicImg
-                              ? comment.commenterProfilePicImg
-                              : defaultProfilePic
-                          }
-                          alt=""
-                        />
-                        <span className="commentFrom" onClick={() => navigateToProfile(comment.from)}>
-                          <h4>{comment.from}</h4>
-                          <span className="commentTime">
-                            {showPostDate(comment.timePosted)}
-                          </span>
-                        </span>
-                      </section>
-
-
-                      <p className="commentContent">{comment.comment}</p>
-
-                    </div>
-
-                    <button className="commentReplyBtn">Reply</button>
-
-                  </div>
-                </>
-              );
-            })
-          ) : (
-            <div className="noPostsMessage">
-              <h3>No comments available yet!</h3>
-              <p>Be the first to leave a comment here! 🗣️</p>
-            </div>
-          )}
-        </article>
-      </div>
     </>
   );
 })

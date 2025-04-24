@@ -133,7 +133,7 @@ app.get("/update", async (req, res) => {
       ? `data:${
           searchedUser.profilePic.contentType
         };base64,${searchedUser.profilePic.data.toString("base64")}`
-      : "src/assets/defaultUser.jpg";
+      : null;
   };
 
   // Process posts with asynchronous handling for profile pictures
@@ -199,6 +199,7 @@ app.post("/newPost", upload.single("image"), async (req, res) => {
       likes: [],
       postCreationDate: new Date(),
       comments: [],
+      feed: 'Home'
     };
 
     // If an image exists inside this post attempt
@@ -241,6 +242,7 @@ app.post("/newPost", upload.single("image"), async (req, res) => {
       likes: [],
       postCreationDate: new Date(),
       comments: [],
+      feed: feed
     };
 
     if (imageFile) {
@@ -805,14 +807,6 @@ app.get("/viewProf", (req, res) => {
   res.sendFile(path.join(__dirname, "../profile.html"));
 });
 
-app.get("/wolfTopics", (req, res) => {
-  res.json(topicFacts);
-});
-
-// ROUTE EXECUTES WHEN THE USER WANTS TO LOOK AT THEIR OWN PROFILE
-app.post("/profile", (req, res) => {
-  const { username } = req.body;
-});
 
 app.listen(port, () => {
   console.clear();
