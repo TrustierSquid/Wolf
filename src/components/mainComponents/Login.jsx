@@ -188,11 +188,6 @@ export default function Login() {
               </p>
 
             </div>
-            <div>
-              <p>For recruiters - <br />
-                username: jobrecruiter <br />
-                pass: job1234</p>
-            </div>
           </section>
           <div id="extraInfo">
             {/* error message */}
