@@ -3,10 +3,13 @@ import { useLocation } from "react-router-dom";
 import Navbar from "../componentDependencies/NavBar";
 import SideNavBar from "../componentDependencies/SideNavbar";
 import defaultProfilePic from '/src/assets/defaultUser.png';
+import CommentMoodle from "../moodleComponents/CommentMoodle";
+import ShowLikes from "../moodleComponents/ShowLikes";
 
 export default function Profile(props) {
   // Strictly holds the quick access information of the logged in user
   const [loggedInUserBaseInformation, setLoggedInUserBaseInformation] = useState([])
+
 
   // Query string tracking
   const queryString = window.location.search;
@@ -38,6 +41,45 @@ export default function Profile(props) {
     getUserData();
   }, []);
 
+  // Fetches for all posts created to update all feeds
+  async function updateMainFeed() {
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const userSearched = urlParams.get("topicFeed");
+
+    if (!queryString) {
+      // Updating the home feed
+      const response = await fetch(`/update`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error(`Couldnt update the feed! ${response.status}`);
+      }
+
+      // const allPosts = await response.json();
+      // setAllPosts(allPosts.reversedPosts);
+    } else {
+      // Updating custom community feeds
+      const response = await fetch(`/loadTopicFeed?topicFeed=${userSearched}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error(`Couldnt update the feed! ${response.status}`);
+      }
+
+      // const allPosts = await response.json();
+      // setAllPosts(allPosts.reversedPosts);
+    }
+  }
+
 
 
   // Getting the post data from the user
@@ -49,9 +91,10 @@ export default function Profile(props) {
       On the main feed page, the user can be selected by clicking on a post or seeing them in the
       members moodle for a particular community
     */
-  async function getUserProfilePosts(feedView = "mainFeed") {
+  async function getUserProfilePosts(feedView = "mainFeed" /* Default is mainFeed */) {
     try {
       const response = await fetch(
+        // API args: user UID and  what community feed
         `/profileData?user=${userSearched}&feed=${feedView}`,
         {
           method: "GET",
@@ -63,7 +106,7 @@ export default function Profile(props) {
 
       // Sending back post data for the searched user
       const postData = await response.json();
-      // sending back the userdata for the searched user
+      // Sends back all of the post information for a particular feed
       setProfilePostData(postData.profilePostData.reverse() || []);
 
       // The userData that gets returned based on the UID
@@ -261,21 +304,13 @@ export default function Profile(props) {
 
   checkFollowing();
 
+  
+
   //  User clicks and it brings up 2 moodles one with the comment section and another with the content
 
   // All of the post information saved as state for each indiviual post depending on what the user clicks on
-  const [postPoster, setPostPoster] = useState(null);
-  const [postCreationDateState, setPostCreationDateState] = useState(null);
-  const [postSubjectState, setPostSubjectState] = useState(null);
-  const [postBodyState, setPostBodyState] = useState(null);
-  const [likesLength, setLikesLength] = useState(null);
-  const [commentsLength, setCommentsLength] = useState(null);
-  const [postComments, setPostComments] = useState(null);
   const [profilePostID, setProfilePostID] = useState(null);
   const [dynamicProfileFeed, setDynamicProfileFeed] = useState(null);
-  const [profilePostLikes, setProfilePostLikes] = useState(null);
-  const [postImage, setPostImage] = useState(null);
-  const [posterProfilePic, setPosterProfilePic] = useState(null);
 
   const moodleContainerRef = useRef();
   const profilePostCommentRef = useRef();
@@ -283,39 +318,6 @@ export default function Profile(props) {
   const overlay = useRef();
   const feedback = useRef();
 
-  const showProfilePostDetails = (
-    postID,
-    poster,
-    creationDate,
-    subject,
-    body,
-    likesLength,
-    commentsLength,
-    comments,
-    likes,
-    image,
-    posterProfilePic
-  ) => {
-    setPostPoster(poster);
-    setPostCreationDateState(creationDate);
-    setPostSubjectState(subject);
-    setPostBodyState(body);
-    setLikesLength(likesLength);
-    setCommentsLength(commentsLength);
-    setPostComments(comments);
-    setProfilePostID(postID);
-    setProfilePostLikes(likes);
-    setPostImage(image);
-    setPosterProfilePic(posterProfilePic);
-
-    moodleContainerRef.current.style.display = "flex";
-    moodleContainerRef.current.style.pointerEvents = "all";
-    document.body.style.overflow = "hidden";
-    overlay.current.style.display = "block";
-    overlay.current.style.pointerEvents = "all";
-
-    getUserProfilePosts();
-  };
 
   async function profilePostComment(textareaValue) {
     if (profilePostCommentRef.current.value === "") {
@@ -414,6 +416,52 @@ export default function Profile(props) {
 
     window.location.reload();
 
+  }
+
+  // Configuration for posts's time creation data
+  function showPostDate(postCreationDate) {
+    // Get the difference in milliseconds
+    const startDate = new Date(postCreationDate);
+    const timeDifference = currentDate - startDate;
+
+    // Covert the difference from milliseconds to day and hours
+    const millisecondsInOneDay = 24 * 60 * 60 * 1000;
+    const millisecondsInOneHour = 60 * 60 * 1000;
+    const millisecondsInOneMinute = 60 * 1000;
+
+    // Calculate days and hours
+    const daysPassed = Math.floor(timeDifference / millisecondsInOneDay);
+    const hoursPassed = Math.floor(
+      (timeDifference % millisecondsInOneDay) / millisecondsInOneHour
+    );
+    const minutesPassed = Math.floor(
+      (timeDifference % millisecondsInOneHour) / millisecondsInOneMinute
+    );
+
+    // Calculate months using the date object
+    const monthsPassed =
+      currentDate.getMonth() -
+      startDate.getMonth() +
+      12 * (currentDate.getFullYear() - startDate.getFullYear());
+
+    // Display time passed
+    if (monthsPassed >= 1) {
+      return <p className="postData">{`• ${monthsPassed}Mth ago`}</p>;
+    }
+
+    if (daysPassed >= 1) {
+      return <p className="postData">{` • ${daysPassed}d ago`}</p>;
+    }
+
+    if (hoursPassed > 0) {
+      return <p className="postData">{` • ${hoursPassed}hr ago`}</p>;
+    }
+
+    if (minutesPassed > 0) {
+      return <p className="postData">{` • ${minutesPassed}m ago`}</p>;
+    }
+
+    return <p className="postData"> • Just now</p>;
   }
 
   // Displaying profile picture, username and follower information
@@ -667,7 +715,7 @@ export default function Profile(props) {
           </div>
 
           {/*PROFILE POST COMMNENT SYSTEM  */}
-          <article id="moodleContainer" ref={moodleContainerRef}>
+         {/* { <article id="moodleContainer" ref={moodleContainerRef}>
             <span id="postMoodle1">
               <div id="moodleTitle">
                 <section>
@@ -775,12 +823,7 @@ export default function Profile(props) {
               </span>
             </span>
 
-            {/* For Comments */}
             <span id="postMoodle2">
-              {/* <div id="backBtnContainer">
-                        <h3>Comments</h3>
-                        <button id="backBtn" onClick={()=> backOut()}><i class="fa-solid fa-x"></i></button>
-                     </div> */}
 
               {postComments?.length > 0 ? (
                 <>
@@ -835,7 +878,7 @@ export default function Profile(props) {
                 </button>
               </div>
             </span>
-          </article>
+          </article>} */}
 
           <div className="totalPosts">
             <section className="profHeaders">
@@ -846,10 +889,10 @@ export default function Profile(props) {
                   className="topicDisplaySelection"
                   onChange={(e) => getUserProfilePosts(e.target.value)}
                 >
-                  <option value="All Posts" onClick={()=> getUserProfilePosts('All')}>All Posts</option>
+                  <option value="All Posts" onClick={()=> {getUserProfilePosts('All')}}>All Posts</option>
                   <option
                   // Defaults to "mainFeed"
-                    onClick={() => getUserProfilePosts()}
+                    onClick={() => {getUserProfilePosts()}}
                     value="mainFeed"
                   >
                     Home Feed
@@ -867,7 +910,7 @@ export default function Profile(props) {
                           <option
                             value={`${community.name}Feed`}
                             onClick={() =>
-                              getUserProfilePosts(community.name + "Feed")
+                                getUserProfilePosts(community.name + "Feed")
                             }
                           >
                             {community.name} Feed
@@ -890,21 +933,6 @@ export default function Profile(props) {
                         <article
                           key={index}
                           className="existingPost"
-                          onClick={() =>
-                            showProfilePostDetails(
-                              post._id,
-                              userProfileData.user,
-                              post.postCreationDate,
-                              post.subject,
-                              post.body,
-                              post.likes.length,
-                              post.comments.length,
-                              post.comments,
-                              post.likes,
-                              post.image,
-                              post.posterProfilePic
-                            )
-                          }
                         >
                           <div className="existingPostTitle">
                             <img
@@ -935,20 +963,49 @@ export default function Profile(props) {
                           )}
                           <p className="profilePostBody">{post.body}</p>
                           <div className="profilePostAnalytics">
-                            <h5>
-                              <i
+                              {/* <i
                                 style={{ color: "grey" }}
                                 className="fa-solid fa-heart"
-                              ></i>{" "}
-                              {post.likes.length}
-                            </h5>
-                            <h5 style={{ color: "grey" }}>
-                              <i
-                                style={{ color: "grey" }}
-                                className="fa-solid fa-comments"
-                              ></i>{" "}
-                              {post.comments.length}
-                            </h5>
+                              ></i>{" "} */}
+                              
+                                <span
+                                  className="likeBtn"
+                                  /* Passing in the index for each mapped post
+                                    into the addLike Function.
+                                  */
+                                  onClick={() => addLike(post._id, key)}
+                                >
+                                  
+                                  <i className="fa-solid fa-heart"></i>
+                                  <span >
+                                    {" "}
+                                    {post.likes.length}
+                                  </span>
+                                </span>
+                            <div style={{ color: "grey" }} className="profileCommentFlex">
+                              <CommentMoodle
+                                postSubject={post.subject}
+                                postBody={post.body}
+                                poster={post.poster}
+                                postCreationDate={post.postCreationDate}
+                                postID={post._id}
+                                keyOfPost={index}
+                                postLikesCount={post.likes.length}
+                                postComments={post.comments}
+                                image={post.image}
+                                posterProfilePic={post.posterProfilePic}
+                                showPostDate={showPostDate}
+                                currentActiveUser={loggedInUserBaseInformation.userName}
+
+                                 // for updating the feed after a comment is made
+                                // updateMainFeed={getUserProfilePosts}
+                                updateMainFeed={getUserProfilePosts}
+                                
+                              />
+                              <ShowLikes
+                                post={post}
+                                />
+                            </div>
                           </div>
                         </article>
                       </>

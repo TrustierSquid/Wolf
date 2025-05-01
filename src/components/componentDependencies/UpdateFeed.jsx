@@ -252,7 +252,7 @@ const UpdateFeed = forwardRef(({
                       </div>
 
                       <CommentMoodle
-                          postSubject={post.Subject}
+                          postSubject={post.subject}
                           postBody={post.body}
                           poster={post.poster}
                           postCreationDate={post.postCreationDate}

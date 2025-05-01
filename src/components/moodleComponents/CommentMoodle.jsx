@@ -14,8 +14,11 @@ export default function CommentMoodle(props, ref) {
     const userSearched = urlParams.get("topicFeed");
 
     if (comment === "") return;
+
+    // Resetting the text box to an emtpy string
     commentValue.current.value = "";
     setErrorMessage("Adding Comment...");
+    
     if (!queryString) {
       setTimeout(async () => {
         const response = await fetch(
@@ -70,6 +73,8 @@ export default function CommentMoodle(props, ref) {
     // The data returns the fetched user uid
     window.location.href = `/profile?user=${data.userUID}`;
   }
+
+  
 
   // Getting the information for the post selected when the interface appears.
   async function commentInterfaceAppear() {
@@ -210,7 +215,7 @@ export default function CommentMoodle(props, ref) {
                   </div>
                 </>
               );
-            })
+            }).reverse()
           ) : (
             <div className="noPostsMessage">
               <h3>No comments available yet!</h3>

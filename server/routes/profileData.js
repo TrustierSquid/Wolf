@@ -48,6 +48,7 @@ router.get("/", async (req, res) => {
   };
 
   // Showing all communities
+  // For home feed
   if (feed === "All") {
     // gathers all collections
     const collections = await database.listCollections().toArray();
@@ -105,6 +106,7 @@ router.get("/", async (req, res) => {
 
 
   // Showing other specific communities that the user has clicked on
+  // for all other communities
   } else {
 
     // finds the posts of the selected user
