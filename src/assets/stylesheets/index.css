@@ -93,8 +93,7 @@ body {
   text-align: center;
 }
 #loginFlex #imgContainer #wolfGIF {
-  -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
   height: 100%;
   width: 10%;
 }
@@ -337,8 +336,7 @@ TOPICS COMPONENT
 #topicsContainer main #topicSelect #communityGridContainer .topicSelectionBtn .topicHeader .communityTitle img {
   height: 60px;
   width: 60px;
-  -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
   border-radius: 50%;
 }
 #topicsContainer main #topicSelect #communityGridContainer .topicSelectionBtn .topicHeader .communityTitle #showOwner {
@@ -459,8 +457,7 @@ DEFAULT PAGE
 }
 #nav #logoContainer #titleAndLogo #logo {
   height: 50px;
-  -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
   cursor: pointer;
 }
 #nav #logoContainer button {
@@ -519,8 +516,7 @@ DEFAULT PAGE
   color: white;
   cursor: pointer;
   transition: 150ms;
-  -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
   border: 1px solid grey;
   width: 50px;
   height: 50px;
@@ -623,8 +619,7 @@ DEFAULT PAGE
 }
 #mobileNavMenu .mobileNavProfileSection img {
   height: 75px;
-  -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
   width: 75px;
   border-radius: 50%;
 }
@@ -750,8 +745,7 @@ DEFAULT PAGE
 .sideNav #subTitle #sidebarUsername #nameAndInfo #sideBarProfileImage {
   height: 100px;
   width: 100px;
-  -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
   border-radius: 50%;
 }
 .sideNav .topicSelectionElement {
@@ -863,8 +857,7 @@ DEFAULT PAGE
 #suggestedContainer #showMembersOfCommunityContainer div section .nameAndImageContainer img, #suggestedContainer #suggestedCommunities div section .nameAndImageContainer img {
   height: 40px;
   width: 40px;
-  -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
   border-radius: 50%;
 }
 #suggestedContainer #showMembersOfCommunityContainer div section button, #suggestedContainer #suggestedCommunities div section button {
@@ -1155,8 +1148,7 @@ main #content .userContent .userPost .mainPost .postAnalytics .userAction .postU
 main #content .userContent .userPost .mainPost .postAnalytics .userAction .postUserInformation .poster #feedProfilePic {
   height: 50px;
   width: 50px;
-  -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
 }
 main #content .userContent .userPost .mainPost .postAnalytics .userAction .postUserInformation .poster p {
   font-size: 1rem;
@@ -1182,8 +1174,7 @@ main #content .userContent .userPost .mainPost .postAnalytics .postCaption i {
 }
 main #content .userContent .userPost .mainPost #postIMG {
   max-width: 100%;
-  -o-object-fit: contain;
-     object-fit: contain;
+  object-fit: contain;
 }
 main #content .userContent .userPost .mainPost .postBody {
   font-size: 1.2rem;
@@ -1246,7 +1237,8 @@ main #content .userContent .userPost .postInteractionSection .postLC {
 main #content .userContent .userPost .postInteractionSection .postLC .likeBtn:hover {
   background-color: #444;
 }
-main #content .userContent .userPost .postInteractionSection .showFirstFour {
+
+.showFirstFour {
   color: white;
   display: flex;
   align-items: center;
@@ -1255,7 +1247,7 @@ main #content .userContent .userPost .postInteractionSection .showFirstFour {
   width: 70%;
   font-family: "roboto", sans-serif;
 }
-main #content .userContent .userPost .postInteractionSection .showFirstFour .firstFourImg {
+.showFirstFour .firstFourImg {
   height: 30px;
   border-radius: 50%;
 }
@@ -1269,6 +1261,10 @@ main #content .userContent .userPost .postInteractionSection .showFirstFour .fir
   font-family: "roboto", sans-serif;
   background-color: rgba(62, 62, 62, 0.6666666667);
   justify-self: start;
+  display: flex;
+  gap: 0.3rem;
+  align-items: center;
+  justify-content: center;
 }
 
 .commentBtn:hover {
@@ -1355,8 +1351,7 @@ main #content .userContent .userPost .postInteractionSection .showFirstFour .fir
 #commentInterface #commentSection img {
   height: 600px;
   width: 100%;
-  -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
   align-self: center;
 }
 #commentInterface #commentSection #indicators {
@@ -1584,8 +1579,7 @@ main #content .userContent .userPost .postInteractionSection .showFirstFour .fir
   display: flex;
   align-items: center;
   justify-content: center;
-  -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
 }
 #contentContainer #mainProfile .profileAnalytics:nth-of-type(1) #iconAndUsername #picContainer #whoAmI {
   display: flex;
@@ -1873,8 +1867,7 @@ main #content .userContent .userPost .postInteractionSection .showFirstFour .fir
 }
 #contentContainer #mainProfile #moodleContainer #postMoodle1 #moodleContent img {
   height: 200px;
-  -o-object-fit: contain;
-     object-fit: contain;
+  object-fit: contain;
 }
 #contentContainer #mainProfile #moodleContainer #postMoodle1 #moodleInteraction {
   display: flex;
@@ -2095,7 +2088,6 @@ main #content .userContent .userPost .postInteractionSection .showFirstFour .fir
   justify-content: space-around;
   transition: 150ms;
   background-color: rgba(17, 17, 17, 0.9098039216);
-  cursor: pointer;
   border-radius: 1rem;
 }
 #contentContainer #mainProfile .totalPosts .existingPost .existingPostTitle {
@@ -2111,8 +2103,7 @@ main #content .userContent .userPost .postInteractionSection .showFirstFour .fir
 #contentContainer #mainProfile .totalPosts .existingPost .postImg {
   margin-bottom: 1rem;
   height: 300px;
-  -o-object-fit: contain;
-     object-fit: contain;
+  object-fit: contain;
   background-color: #222;
 }
 #contentContainer #mainProfile .totalPosts .existingPost .profilePostSubject {
@@ -2139,9 +2130,8 @@ main #content .userContent .userPost .postInteractionSection .showFirstFour .fir
   font-size: 1.5rem;
   margin-top: 2rem;
 }
-#contentContainer #mainProfile .totalPosts .existingPost:hover {
-  background-color: #2e2e2e;
-  border-radius: 1rem;
+#contentContainer #mainProfile .totalPosts .existingPost .profilePostAnalytics .profileCommentFlex {
+  display: flex;
 }
 
 #createCommunityMoodle {
@@ -2197,8 +2187,7 @@ main #content .userContent .userPost .postInteractionSection .showFirstFour .fir
 #createCommunityMoodle #givePicture img {
   height: 100px;
   width: 100px;
-  -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
   border-radius: 50%;
 }
 #createCommunityMoodle #giveName {
@@ -2526,8 +2515,7 @@ HOME COMPONENT MEDIA QUERIES
   }
   #contentContainer #mainProfile #moodleContainer #postMoodle1 #moodleContent img {
     height: 200px;
-    -o-object-fit: contain;
-       object-fit: contain;
+    object-fit: contain;
   }
   #contentContainer #mainProfile #moodleContainer #postMoodle1 #moodleContent p {
     overflow: auto;

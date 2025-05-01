@@ -1600,26 +1600,30 @@ main {
 
           }
 
-          .showFirstFour {
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: start;
-            gap: 0.3rem;
-            width: 70%;
-            font-family: "roboto", sans-serif;
-
-            .firstFourImg {
-              height: 30px;
-              border-radius: 50%;
-            }
-
-          }
+          
         }
       }
     }
   }
 }
+
+.showFirstFour {
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  gap: 0.3rem;
+  width: 70%;
+  font-family: "roboto", sans-serif;
+
+  .firstFourImg {
+    height: 30px;
+    border-radius: 50%;
+  }
+
+}
+
+
 
 .likeBtn,
 .commentBtn {
@@ -1630,6 +1634,10 @@ main {
   font-family: $ff-body;
   background-color: #3e3e3eaa;
   justify-self: start;
+  display: flex;
+  gap: 0.3rem;
+  align-items: center;
+  justify-content: center;
 }
 
 .commentBtn {
@@ -2647,7 +2655,6 @@ main {
         justify-content: space-around;
         transition: 150ms;
         background-color: $postBG;
-        cursor: pointer;
         border-radius: 1rem;
 
         .existingPostTitle {
@@ -2697,12 +2704,13 @@ main {
           gap: 1rem;
           font-size: $fs-h3;
           margin-top: 2rem;
+
+          .profileCommentFlex {
+            display: flex;
+          }
         }
 
-        &:hover {
-          background-color: $cardBorder;
-          border-radius: 1rem;
-        }
+        
       }
     }
   }
