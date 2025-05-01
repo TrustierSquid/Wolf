@@ -613,12 +613,37 @@ app.post("/addPostComment", async (req, res) => {
   // The actual comment
   const { comment } = req.body;
 
+  // Connecting to mongodb
   const database = await connectMongo();
-  const collection = database.collection(feed);
-  const users = database.collection("Users");
 
+  // gathers all collections
+  const collections = await database.listCollections().toArray();
+
+  // Filters collections to only include those that represent post feeds (e.g. LegoFeed)
+  const allFeeds = collections.filter(collection => collection.name.includes("Feed"));
+
+  let targetCollectionName = null
+  let foundPost = null
+
+  // gets all posts from all collections that contains the user's name
+  for (const feed of allFeeds) {
+    const currentFeed = database.collection(feed.name);
+    const posts = await currentFeed.find({ _id: new ObjectId(postID) }).toArray();
+    // If the post is found, store the collection name and post and stop the search
+    if (posts.length > 0) {
+      targetCollectionName = feed.name
+      foundPost = posts[0]
+      break
+    }
+  }
+
+  // If no post was found in any feed collection, respond with an error
+  if (!targetCollectionName) {
+    return res.status(404).send("Post not found");
+  }
+
+  const users = database.collection("Users");
   let commenterProfilePic = await users.findOne({ user: commentFrom });
-  console.log(commentFrom)
 
   // the comment to push to the database
   let newComment = {
@@ -632,12 +657,43 @@ app.post("/addPostComment", async (req, res) => {
     timePosted: new Date(),
   };
 
-  const result = await collection.updateOne(
-    { _id: new ObjectId(postID) },
-    { $push: { comments: newComment } }
-  );
 
-  res.sendStatus(200);
+  try {
+
+    // Get the correct collection where the post resides
+    const targetCollection = database.collection(targetCollectionName);
+    
+    const result = await targetCollection.updateOne(
+      { _id: new ObjectId(postID) },
+      { $push: { comments: newComment } }
+    );
+
+    console.log(`A new comment has been made by ${commentFrom}`)
+    console.log(`to ${postID}`)
+    res.sendStatus(200);
+
+  } catch {
+     // If something goes wrong, log the error and send a failure response
+     console.error("Could not add new comment:", err);
+     res.status(500).send("Error adding comment");
+  }
+
+  // all posts have been added to a clean array
+  /* const cleanedPosts = allUserPosts.filter(post => post.length > 0)
+
+  // Flatten the array of arrays into a single array
+  const flattenedPost = cleanedPosts.flat();  
+
+  
+  const collection = database.collection(feed);
+   */
+
+
+  
+
+  
+
+  
 });
 
 // For searching for a user by username
