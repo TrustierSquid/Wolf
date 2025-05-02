@@ -1,6 +1,7 @@
 
 ### Getting started with development
 
+- Acquire .env secrets lead developers. This is the key to begin development.
 - Clone repository
 - install dependencies
 ```plaintext
