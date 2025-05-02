@@ -25,10 +25,10 @@ import { MongoClient, ServerApiVersion, ObjectId, GridFSBucket } from "mongodb";
 import multer from "multer";
 
 // list of topics for the user to choose from
-import topics from "./json/topics.json" assert { type: "json" };
+// import topics from "./json/topics.json" assert { type: "json" };
 
 // A fact that comes with each topic
-import topicFacts from "./json/facts.json" assert { type: "json" };
+// import topicFacts from "./json/facts.json" assert { type: "json" };
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -830,9 +830,9 @@ app.get("/", (req, res) => {
 /* TOPICS PAGE*/
 
 // Retrieving the list of topics that the user can choose from
-app.get("/api/topics", (req, res) => {
-  res.json(topics);
-});
+// app.get("/api/topics", (req, res) => {
+//   res.json(topics);
+// });
 
 /* HOME FEED PAGE */
 
