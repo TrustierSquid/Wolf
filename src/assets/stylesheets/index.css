@@ -1298,9 +1298,7 @@ main #content .userContent .userPost .postInteractionSection .postLC .likeBtn:ho
   align-items: center;
   justify-content: space-between;
   color: white;
-}
-#commentInterface #topDiv #fromWho h5 {
-  color: grey;
+  font-size: 1rem;
 }
 #commentInterface #topDiv #fromWho h3 {
   cursor: pointer;
@@ -1344,6 +1342,7 @@ main #content .userContent .userPost .postInteractionSection .postLC .likeBtn:ho
   display: flex;
   align-items: center;
   gap: 1rem;
+  font-size: 1.5rem;
 }
 #commentInterface #commentSection #exitBtnRow i {
   color: #d43737;
@@ -1430,6 +1429,9 @@ main #content .userContent .userPost .postInteractionSection .postLC .likeBtn:ho
   color: white;
   cursor: pointer;
 }
+#commentInterface .commentContainer .comment .commentInsideContainer section .commentFrom .commentAuthor {
+  font-size: 1rem;
+}
 #commentInterface .commentContainer .comment .commentInsideContainer section .commentFrom:hover {
   text-decoration: underline;
 }
@@ -1443,6 +1445,7 @@ main #content .userContent .userPost .postInteractionSection .postLC .likeBtn:ho
 }
 #commentInterface .commentContainer .comment .commentInsideContainer .commentContent {
   padding-left: 3rem;
+  font-size: 1rem;
 }
 #commentInterface .commentContainer .comment .commentReplyBtn {
   padding: 0.5rem;
@@ -1786,265 +1789,6 @@ main #content .userContent .userPost .postInteractionSection .postLC .likeBtn:ho
 #contentContainer #mainProfile #profileInformation {
   display: flex;
   gap: 1rem;
-}
-#contentContainer #mainProfile #moodleContainer {
-  position: fixed;
-  top: 16%;
-  left: 10%;
-  width: 80%;
-  height: 600px;
-  display: flex;
-  gap: 5rem;
-  align-items: center;
-  justify-content: center;
-  display: none;
-  pointer-events: none;
-  z-index: 11;
-}
-#contentContainer #mainProfile #moodleContainer #postMoodle1,
-#contentContainer #mainProfile #moodleContainer #postMoodle2 {
-  width: 50%;
-  background-color: #111;
-  border: 1px solid #7a0b31;
-  border-radius: 1rem;
-}
-#contentContainer #mainProfile #moodleContainer #postMoodle1 {
-  padding: 1.5rem;
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-  font-family: "roboto", sans-serif;
-  overflow: scroll;
-}
-#contentContainer #mainProfile #moodleContainer #postMoodle1 #moodleTitle {
-  font-family: "Nunito", sans-serif;
-  display: flex;
-  justify-content: space-between;
-}
-#contentContainer #mainProfile #moodleContainer #postMoodle1 #moodleTitle section {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-#contentContainer #mainProfile #moodleContainer #postMoodle1 #moodleTitle section img {
-  height: 40px;
-  border-radius: 50%;
-}
-#contentContainer #mainProfile #moodleContainer #postMoodle1 #moodleTitle section h1 {
-  display: flex;
-  justify-content: space-between;
-}
-#contentContainer #mainProfile #moodleContainer #postMoodle1 #moodleTitle h4 {
-  color: grey;
-}
-#contentContainer #mainProfile #moodleContainer #postMoodle1 #moodleTitle #backBtn {
-  width: 40px;
-  height: 40px;
-  cursor: pointer;
-  background: none;
-  color: white;
-  border: none;
-  background-color: #333;
-  border-radius: 3rem;
-}
-#contentContainer #mainProfile #moodleContainer #postMoodle1 #moodleTitle #backBtn:hover {
-  background-color: #444;
-}
-#contentContainer #mainProfile #moodleContainer #postMoodle1 #moodleContent {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-#contentContainer #mainProfile #moodleContainer #postMoodle1 #moodleContent h2 {
-  border-bottom: 1px dotted rgba(128, 128, 128, 0.341);
-  padding: 0.5rem;
-  padding-left: 0;
-}
-#contentContainer #mainProfile #moodleContainer #postMoodle1 #moodleContent p {
-  word-wrap: break-word;
-  line-height: 1.5;
-  overflow: auto;
-}
-#contentContainer #mainProfile #moodleContainer #postMoodle1 #moodleContent img {
-  height: 200px;
-  object-fit: contain;
-}
-#contentContainer #mainProfile #moodleContainer #postMoodle1 #moodleInteraction {
-  display: flex;
-  gap: 1rem;
-  align-items: center;
-  padding: 1rem;
-  padding-left: 0rem;
-  width: 100%;
-}
-#contentContainer #mainProfile #moodleContainer #postMoodle1 #moodleInteraction #profileBtnLikeBtn {
-  display: flex;
-  align-items: center;
-  gap: 0.2rem;
-  padding: 0.5rem;
-  border: none;
-  background: #333;
-  color: white;
-  cursor: pointer;
-  border-radius: 1rem;
-}
-#contentContainer #mainProfile #moodleContainer #postMoodle1 #moodleInteraction #profileBtnLikeBtn:hover {
-  background-color: #444;
-}
-#contentContainer #mainProfile #moodleContainer #postMoodle2 {
-  height: 100%;
-  padding: 1.5rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  gap: 1rem;
-  font-family: "roboto", sans-serif;
-}
-#contentContainer #mainProfile #moodleContainer #postMoodle2 #backBtnContainer {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-#contentContainer #mainProfile #moodleContainer #postMoodle2 #commentSection {
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-  overflow: scroll;
-  height: 100%;
-}
-#contentContainer #mainProfile #moodleContainer #postMoodle2 #commentSection .commentContainer {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-#contentContainer #mainProfile #moodleContainer #postMoodle2 #commentSection .commentContainer .commentTitle span img {
-  height: 40px;
-  border-radius: 50%;
-}
-#contentContainer #mainProfile #moodleContainer #postMoodle2 #commentSection .commentContainer span {
-  display: flex;
-  gap: 1rem;
-  align-items: center;
-}
-#contentContainer #mainProfile #moodleContainer #postMoodle2 #commentSection .commentContainer span p {
-  font-size: 0.9rem;
-  color: grey;
-}
-#contentContainer #mainProfile #moodleContainer #postMoodle2 #commentSection .commentContainer p {
-  word-wrap: break-word;
-  line-height: 1.5;
-}
-#contentContainer #mainProfile #moodleContainer #postMoodle2 #profileCommentInputField {
-  height: 40px;
-  display: flex;
-  gap: 0.5rem;
-}
-#contentContainer #mainProfile #moodleContainer #postMoodle2 #profileCommentInputField #postProfileComment {
-  padding: 0.5rem;
-  cursor: pointer;
-  background: none;
-  color: turquoise;
-  border: 1px solid teal;
-  border-radius: 0.5rem;
-  width: 20%;
-  transition: 150ms;
-}
-#contentContainer #mainProfile #moodleContainer #postMoodle2 #profileCommentInputField #postProfileComment:hover {
-  background-color: teal;
-  color: white;
-}
-#contentContainer #mainProfile #moodleContainer #postMoodle2 #profileCommentInputField textarea {
-  width: 80%;
-  border-radius: 0.5rem;
-  border: none;
-  background-color: #222;
-  padding: 0.5rem;
-  color: white;
-  resize: none;
-  font-family: "roboto", sans-serif;
-  font-size: 1rem;
-  min-height: 40px;
-  line-height: 1.5;
-}
-#contentContainer #mainProfile #moodleContainer #postMoodle2 #profileCommentInputField textarea:focus {
-  outline: none;
-}
-#contentContainer #mainProfile #moodleContainer #mobilePostMoodle {
-  padding: 1.5rem;
-  display: none;
-  flex-direction: column;
-  justify-content: space-between;
-  gap: 1rem;
-  font-family: "roboto", sans-serif;
-}
-#contentContainer #mainProfile #moodleContainer #mobilePostMoodle #backBtnContainer {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-#contentContainer #mainProfile #moodleContainer #mobilePostMoodle #commentSection {
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-  overflow: scroll;
-  height: 100%;
-}
-#contentContainer #mainProfile #moodleContainer #mobilePostMoodle #commentSection .commentContainer {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-#contentContainer #mainProfile #moodleContainer #mobilePostMoodle #commentSection .commentContainer .commentTitle span img {
-  height: 40px;
-  border-radius: 50%;
-}
-#contentContainer #mainProfile #moodleContainer #mobilePostMoodle #commentSection .commentContainer span {
-  display: flex;
-  gap: 1rem;
-  align-items: center;
-}
-#contentContainer #mainProfile #moodleContainer #mobilePostMoodle #commentSection .commentContainer span p {
-  font-size: 0.9rem;
-  color: grey;
-}
-#contentContainer #mainProfile #moodleContainer #mobilePostMoodle #commentSection .commentContainer p {
-  word-wrap: break-word;
-  line-height: 1.5;
-}
-#contentContainer #mainProfile #moodleContainer #mobilePostMoodle #profileCommentInputField {
-  height: 40px;
-  display: flex;
-  gap: 0.5rem;
-}
-#contentContainer #mainProfile #moodleContainer #mobilePostMoodle #profileCommentInputField #postProfileComment {
-  padding: 0.5rem;
-  cursor: pointer;
-  background: none;
-  color: turquoise;
-  border: 1px solid teal;
-  border-radius: 0.5rem;
-  width: 20%;
-  transition: 150ms;
-}
-#contentContainer #mainProfile #moodleContainer #mobilePostMoodle #profileCommentInputField #postProfileComment:hover {
-  background-color: teal;
-  color: white;
-}
-#contentContainer #mainProfile #moodleContainer #mobilePostMoodle #profileCommentInputField textarea {
-  width: 80%;
-  border-radius: 0.5rem;
-  border: none;
-  background-color: #222;
-  padding: 0.5rem;
-  color: white;
-  resize: none;
-  font-family: "roboto", sans-serif;
-  font-size: 1rem;
-  min-height: 40px;
-  line-height: 1.5;
-}
-#contentContainer #mainProfile #moodleContainer #mobilePostMoodle #profileCommentInputField textarea:focus {
-  outline: none;
 }
 #contentContainer #mainProfile .totalPosts {
   display: flex;

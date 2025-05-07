@@ -43,6 +43,7 @@ $fs-paragraph: 1rem;
   box-sizing: border-box;
 }
 
+
 @mixin buttonGradient {
   background: rgb(255, 60, 60);
   background: linear-gradient(
@@ -1676,11 +1677,9 @@ main {
     align-items: center;
     justify-content: space-between;
     color: white;
+    font-size: $fs-paragraph;
 
     #fromWho {
-      h5 {
-        color: grey;
-      }
 
       // poster
       h3 {
@@ -1732,6 +1731,7 @@ main {
       display: flex;
       align-items: center;
       gap: 1rem;
+      font-size: $fs-h3;
 
       i {
         color: $primary;
@@ -1784,6 +1784,7 @@ main {
         }
       }
 
+      // Add a new comment button
       button {
         // width: 10%;
         padding: 0.5rem;
@@ -1833,17 +1834,19 @@ main {
             color: white;
             cursor: pointer;
 
+            .commentAuthor {
+              font-size: $fs-paragraph;
+            }
+
             &:hover {
               text-decoration: underline;
             }
           }
+
+
           .commentTime {
             color: rgb(101, 101, 101);
             font-size: $fs-paragraph;
-          }
-
-          .commentContent {
-            // padding-left: 2rem;
           }
 
           .commenterProfilePicImg {
@@ -1854,6 +1857,7 @@ main {
 
         .commentContent {
           padding-left: 3rem;
+          font-size: $fs-paragraph;
         }
 
       }
@@ -2282,332 +2286,6 @@ main {
       gap: 1rem;
     }
 
-    #moodleContainer {
-      position: fixed;
-      top: 16%;
-      left: 10%;
-      width: 80%;
-      height: 600px;
-      display: flex;
-      gap: 5rem;
-      align-items: center;
-      justify-content: center;
-      display: none;
-      pointer-events: none;
-      z-index: 11;
-
-      #postMoodle1,
-      #postMoodle2 {
-        width: 50%;
-        // height: 100%;
-        background-color: #111;
-        border: 1px solid $buttonHover;
-        border-radius: 1rem;
-        // box-shadow: rgba(15, 8, 8, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
-      }
-
-      #postMoodle1 {
-        padding: 1.5rem;
-        display: flex;
-        flex-direction: column;
-        // width: 0%;
-        gap: 2rem;
-        font-family: $ff-body;
-        overflow: scroll;
-
-        #moodleTitle {
-          font-family: $ff-heading;
-          display: flex;
-          justify-content: space-between;
-
-          section {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-
-            img {
-              height: 40px;
-              border-radius: 50%;
-            }
-
-            h1 {
-              display: flex;
-              justify-content: space-between;
-            }
-          }
-
-          h4 {
-            color: grey;
-          }
-
-          #backBtn {
-            width: 40px;
-            height: 40px;
-            cursor: pointer;
-            background: none;
-            color: white;
-            border: none;
-            background-color: #333;
-            border-radius: 3rem;
-            &:hover {
-              background-color: #444;
-            }
-          }
-        }
-
-        #moodleContent {
-          display: flex;
-          flex-direction: column;
-          gap: 0.5rem;
-
-          h2 {
-            border-bottom: 1px dotted rgba(128, 128, 128, 0.341);
-            padding: 0.5rem;
-            padding-left: 0;
-          }
-
-          p {
-            word-wrap: break-word;
-            line-height: 1.5;
-            overflow: auto;
-            // height: 140px;
-          }
-
-          img {
-            height: 200px;
-            object-fit: contain;
-          }
-        }
-
-        #moodleInteraction {
-          display: flex;
-          gap: 1rem;
-          align-items: center;
-          // border: 1px solid red;
-          padding: 1rem;
-          padding-left: 0rem;
-          width: 100%;
-
-          #profileBtnLikeBtn {
-            display: flex;
-            align-items: center;
-            gap: 0.2rem;
-            padding: 0.5rem;
-            border: none;
-            background: #333;
-            color: white;
-            cursor: pointer;
-            border-radius: 1rem;
-            &:hover {
-              background-color: #444;
-            }
-          }
-        }
-      }
-
-      #postMoodle2 {
-        height: 100%;
-        padding: 1.5rem;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        gap: 1rem;
-        font-family: $ff-body;
-
-        #backBtnContainer {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-        }
-
-        #commentSection {
-          display: flex;
-          flex-direction: column;
-          gap: 2rem;
-          overflow: scroll;
-          height: 100%;
-
-          .commentContainer {
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-            // padding: 0.5rem;
-            // border-bottom: 1px dotted grey;
-
-            .commentTitle {
-              span {
-                img {
-                  height: 40px;
-                  border-radius: 50%;
-                }
-
-                p {
-                }
-              }
-            }
-
-            span {
-              display: flex;
-              gap: 1rem;
-              align-items: center;
-
-              p {
-                font-size: 0.9rem;
-                color: grey;
-              }
-            }
-
-            // comment
-            p {
-              word-wrap: break-word;
-              line-height: 1.5;
-            }
-          }
-        }
-
-        #profileCommentInputField {
-          height: 40px;
-          display: flex;
-          gap: 0.5rem;
-
-          // button
-          #postProfileComment {
-            padding: 0.5rem;
-            cursor: pointer;
-            background: none;
-            color: turquoise;
-            border: 1px solid teal;
-            border-radius: 0.5rem;
-            width: 20%;
-            transition: 150ms;
-
-            &:hover {
-              background-color: teal;
-              color: white;
-            }
-          }
-
-          textarea {
-            width: 80%;
-            border-radius: 0.5rem;
-            border: none;
-            background-color: #222;
-            padding: 0.5rem;
-            color: white;
-            resize: none;
-            font-family: $ff-body;
-            font-size: 1rem;
-            min-height: 40px;
-            line-height: 1.5;
-
-            &:focus {
-              outline: none;
-            }
-          }
-        }
-      }
-
-      #mobilePostMoodle {
-        padding: 1.5rem;
-        display: none;
-        flex-direction: column;
-        justify-content: space-between;
-        gap: 1rem;
-        font-family: $ff-body;
-
-        #backBtnContainer {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-        }
-
-        #commentSection {
-          display: flex;
-          flex-direction: column;
-          gap: 2rem;
-          overflow: scroll;
-          height: 100%;
-
-          .commentContainer {
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-            // padding: 0.5rem;
-            // border-bottom: 1px dotted grey;
-
-            .commentTitle {
-              span {
-                img {
-                  height: 40px;
-                  border-radius: 50%;
-                }
-
-                p {
-                }
-              }
-            }
-
-            span {
-              display: flex;
-              gap: 1rem;
-              align-items: center;
-
-              p {
-                font-size: 0.9rem;
-                color: grey;
-              }
-            }
-
-            // comment
-            p {
-              word-wrap: break-word;
-              line-height: 1.5;
-            }
-          }
-        }
-
-        #profileCommentInputField {
-          height: 40px;
-          display: flex;
-          gap: 0.5rem;
-
-          // button
-          #postProfileComment {
-            padding: 0.5rem;
-            cursor: pointer;
-            background: none;
-            color: turquoise;
-            border: 1px solid teal;
-            border-radius: 0.5rem;
-            width: 20%;
-            transition: 150ms;
-
-            &:hover {
-              background-color: teal;
-              color: white;
-            }
-          }
-
-          textarea {
-            width: 80%;
-            border-radius: 0.5rem;
-            border: none;
-            background-color: #222;
-            padding: 0.5rem;
-            color: white;
-            resize: none;
-            font-family: $ff-body;
-            font-size: 1rem;
-            min-height: 40px;
-            line-height: 1.5;
-
-            &:focus {
-              outline: none;
-            }
-          }
-        }
-      }
-    }
 
     .totalPosts {
       display: flex;

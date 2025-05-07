@@ -108,7 +108,7 @@ export default function CommentMoodle(props, ref) {
       </span>
 
       <div id="commentInterface" ref={commentInterface}>
-        <h3 id="topDiv">
+        <div id="topDiv">
           <div id="fromWho">
             <section>
               <img
@@ -120,7 +120,7 @@ export default function CommentMoodle(props, ref) {
                 }
                 alt=""
               />
-              <h3 onClick={() => navigateToProfile(poster)}>{props.poster}</h3>
+              <p onClick={() => navigateToProfile(poster)}>{props.poster}</p>
               <span style={{ color: "grey" }} className="commentTimePosted">
                 {props.showPostDate(props.postCreationDate)}
               </span>
@@ -134,10 +134,10 @@ export default function CommentMoodle(props, ref) {
           >
             <i className="fa-solid fa-x"></i>
           </span>
-        </h3>
+        </div>
 
         <section id="commentSection">
-          <h2 id="exitBtnRow">{props.postSubject}</h2>
+          <h3 id="exitBtnRow">{props.postSubject}</h3>
           {props.image ? (
             <img src={props.image} alt="Postimage" />
           ) : (
@@ -201,9 +201,9 @@ export default function CommentMoodle(props, ref) {
                           className="commentFrom"
                           onClick={() => navigateToProfile(comment.from)}
                         >
-                          <h4>{comment.from}</h4>
+                          <span className="commentAuthor">{comment.from}</span>
                           <span className="commentTime">
-                            {props.showPostDate(comment.timePosted)}
+                            <p>{props.showPostDate(comment.timePosted)}</p>
                           </span>
                         </span>
                       </section>
