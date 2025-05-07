@@ -10,6 +10,9 @@ export default function Profile(props) {
   // Strictly holds the quick access information of the logged in user
   const [loggedInUserBaseInformation, setLoggedInUserBaseInformation] = useState([])
 
+  // This useState tracks the feed that the profile page will show
+  const [trackedFeed, setTrackedFeed] = useState(null)
+
 
   // Query string tracking
   const queryString = window.location.search;
@@ -32,6 +35,8 @@ export default function Profile(props) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
 
+      console.log('Its workig')
+
       const homeData = await response.json();
       // setting the user info needed as one useState
       setLoggedInUserBaseInformation(homeData)
@@ -41,50 +46,12 @@ export default function Profile(props) {
     getUserData();
   }, []);
 
-  // Fetches for all posts created to update all feeds
-  async function updateMainFeed() {
-    const queryString = window.location.search;
-    const urlParams = new URLSearchParams(queryString);
-    const userSearched = urlParams.get("topicFeed");
-
-    if (!queryString) {
-      // Updating the home feed
-      const response = await fetch(`/update`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-
-      if (!response.ok) {
-        throw new Error(`Couldnt update the feed! ${response.status}`);
-      }
-
-      // const allPosts = await response.json();
-      // setAllPosts(allPosts.reversedPosts);
-    } else {
-      // Updating custom community feeds
-      const response = await fetch(`/loadTopicFeed?topicFeed=${userSearched}`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-
-      if (!response.ok) {
-        throw new Error(`Couldnt update the feed! ${response.status}`);
-      }
-
-      // const allPosts = await response.json();
-      // setAllPosts(allPosts.reversedPosts);
-    }
-  }
-
-
 
   // Getting the post data from the user
   const [profilePostData, setProfilePostData] = useState(null);
   const [userProfileData, setUserProfileData] = useState([]);
+
+  
 
   /*
       Gets User information based on what user is selected from the query string
@@ -113,7 +80,7 @@ export default function Profile(props) {
       // all based on whos profile the user is looking at
       setUserProfileData(postData.userData || []);
 
-      // setDynamicProfileFeed(feedView);
+      setTrackedFeed(feedView)
     } catch {
       throw new Error("Couldnt fetch for profile data");
     }
@@ -135,28 +102,14 @@ export default function Profile(props) {
     getCommunities();
   }, [userSearched]);
 
-  const followBtnRef = useRef(null);
 
   // queryStringUser is the user looked up via query string
   // and comparing it to the uuid of the logged in user
 
   const [communities, setCommunities] = useState(null);
 
-  // poster is used to find the corresponding profile for the poster
-  async function navigateToProfile(user) {
-    const response = await fetch(`/profileData/getID?poster=${user}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
 
-    const data = await response.json();
-
-    // The data returns the fetched user uid
-    window.location.href = `/profile?user=${data.userUID}`;
-  }
-
+  // Current day to determine how much time has passed since the user made a post
   const currentDate = new Date();
 
   // Configuration for posts's creation data
@@ -222,7 +175,7 @@ export default function Profile(props) {
   const updateBioBtn = useRef();
   const changeBioBtn = useRef();
 
-  //  Styling helper function to change the appearance
+  //  Styling helper function to change the appearance to enter in profile bio
   const switchToEnter = () => {
     // Styling changes
     bioElementDisplay.current.style.display = "none";
@@ -241,7 +194,7 @@ export default function Profile(props) {
       return;
     }
 
-    // Server calls
+    // Sending new bio to the server 
     let response = await fetch(`/updateBio/${userProfileData.UID}`, {
       method: "POST",
       headers: {
@@ -254,7 +207,7 @@ export default function Profile(props) {
       throw new Error("Could not change bio");
     }
 
-    // Styling changes
+    // Styling changes for the bio section 
     changeBioBtn.current.style.display = "block";
     updateBioBtn.current.style.display = "none";
     bioElementDisplay.current.style.display = "block";
@@ -274,7 +227,7 @@ export default function Profile(props) {
   const followBtn = useRef();
   const unfollowBtn = useRef();
 
-  // Checks to see if the loggedInUser is already following the target user
+  // Checks to see if the loggedInUser is already following the target user 
   function checkFollowing() {
     if (userProfileData?.followers?.includes(loggedInUserBaseInformation.userName)) {
       followBtn.current.style.display = "none";
@@ -282,6 +235,7 @@ export default function Profile(props) {
     }
   }
 
+  // user following system
   async function followSystem() {
     let response = await fetch("/addFollowingUser", {
       method: "POST",
@@ -306,76 +260,13 @@ export default function Profile(props) {
 
   
 
-  //  User clicks and it brings up 2 moodles one with the comment section and another with the content
 
-  // All of the post information saved as state for each indiviual post depending on what the user clicks on
-  const [profilePostID, setProfilePostID] = useState(null);
-  const [dynamicProfileFeed, setDynamicProfileFeed] = useState(null);
 
   const moodleContainerRef = useRef();
-  const profilePostCommentRef = useRef();
-  const postCommentsLikeRef = useRef();
   const overlay = useRef();
   const feedback = useRef();
 
-
-  async function profilePostComment(textareaValue) {
-    if (profilePostCommentRef.current.value === "") {
-      feedback.current.style.color = `red`;
-      feedback.current.innerHTML = `Can't leave an empty comment!`;
-
-      setTimeout(() => {
-        feedback.current.style.color = "white";
-        feedback.current.innerHTML = "";
-      }, 2500);
-
-      return;
-    }
-
-    let response = await fetch(
-      `/addPostComment?postID=${profilePostID}&feed=${dynamicProfileFeed}&commentFrom=${loggedInUserBaseInformation.userName}`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ comment: textareaValue }),
-      }
-    );
-
-    // giving feedback
-    profilePostCommentRef.current.value = "";
-    feedback.current.style.color = "lime";
-    feedback.current.innerHTML = "Posted Comment!";
-
-    setTimeout(() => {
-      feedback.current.style.color = "white";
-      feedback.current.innerHTML = "";
-    }, 2500);
-
-    // refresh post data
-    getUserProfilePosts();
-    // showProfilePostDetails(postID, postPoster, postCreationDateState, postSubjectState, postBodyState, likesLength, commentsLength, postComments)
-  }
-
-  async function profileAddLike(profilePostID, likes) {
-    if (postCommentsLikeRef.current.style.color === "white") {
-      postCommentsLikeRef.current.style.color = "red";
-    } else {
-      postCommentsLikeRef.current.style.color = "white";
-    }
-
-    let response = await fetch(`/addLike?feed=${dynamicProfileFeed}`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ postID: profilePostID, loggedInUser: loggedInUserBaseInformation.userName }),
-    });
-
-    getUserProfilePosts();
-  }
-
+  // Sidebar props for scaling. In case theres a feature that exclusively needs to be added on sidebar profile component
   const sidebarProps = {
     username: loggedInUserBaseInformation.userName,
     followings: loggedInUserBaseInformation.followingCount,
@@ -384,26 +275,20 @@ export default function Profile(props) {
     profileImage: loggedInUserBaseInformation.profilePic,
   };
 
-
-  function backOut() {
-    moodleContainerRef.current.style.display = "none";
-    moodleContainerRef.current.style.pointerEvents = "none";
-    document.body.style.overflow = "auto";
-    overlay.current.style.display = "none";
-    overlay.current.style.pointerEvents = "none";
-  }
-
+  // Navigating to following page based on loggedInUser UID
   function navigateToFollowingPage(UID) {
     window.location.href = `/followerPage?following=${UID}`;
   }
 
+  // Navigating to followers page based on loggedInUser UID
   function navigateToFollowersPage(UID) {
     window.location.href = `/followerPage?followers=${UID}`;
   }
 
+  // Changing profile picture
   const imageRef = useRef();
   const [updateMessage, setUpdateMessage] = useState("");
-
+  
   async function changeProfilePicture() {
     let imageFile = imageRef.current.files[0];
     const formData = new FormData();
@@ -469,6 +354,90 @@ export default function Profile(props) {
     Based on what profile is being viewed. There is a seprate case for developers and another for
     regular users
    */
+
+  const followBtnPair = useRef();
+
+  function showFollowBtns() {
+    if (userSearched === props.loggedInUID) {
+      return <span></span>;
+    } else {
+      return (
+        <>
+          <button id="followBtn" ref={followBtn} onClick={() => followSystem()}>
+            Follow{" "}
+          </button>
+          {/*Initialy disabled*/}{" "}
+          <button
+            id="unfollowBtn"
+            ref={unfollowBtn}
+            onClick={() => followSystem()}
+          >
+            UnFollow
+          </button>
+        </>
+      );
+    }
+  }
+
+  
+
+  // Post liking system
+  async function addLike(postID, currentPostIndex) {
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const userSearched = urlParams.get("topicFeed");
+
+    // Sound Effects for liking and commenting on posts
+    let likeSoundEffect = new Audio('/src/assets/audio/likeSound.mp3')
+    likeSoundEffect.volume = 0.4
+
+
+    if (!queryString) {
+      // If the like is being made on the users home feed
+      const response = await fetch(`/addLike?feed=mainFeed`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+
+        body: JSON.stringify({ postID: postID, loggedInUser: loggedInUserBaseInformation.userName }),
+      });
+
+      // Check if the like was successfully added (optional)
+      if (response.ok) {
+        likeSoundEffect.play()
+        // update the post data to reflect that the user has liked or unlikeed the post
+        await getUserProfilePosts(trackedFeed)
+      } else {
+        console.error("error adding like");
+      }
+
+    } else {
+
+      // If the like is being made on another users profile page
+      const response = await fetch(`/addLike?feed=${trackedFeed}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+
+        body: JSON.stringify({ postID: postID, loggedInUser: loggedInUserBaseInformation.userName }),
+      });
+
+      // Check if the like was successfully added (optional)
+      if (response.ok) {
+        likeSoundEffect.play()
+
+        // update the post data to reflect that the user has liked or unlikeed the post
+        await getUserProfilePosts(trackedFeed)
+      } else {
+        console.error("error adding like");
+      }
+    }
+  }
+    
+    
+    
   function checkUser() {
     switch (userProfileData.user) {
       case "Samuel":
@@ -619,29 +588,7 @@ export default function Profile(props) {
     }
   }
 
-  const followBtnPair = useRef();
-
-  function showFollowBtns() {
-    if (userSearched === props.loggedInUID) {
-      return <span></span>;
-    } else {
-      return (
-        <>
-          <button id="followBtn" ref={followBtn} onClick={() => followSystem()}>
-            Follow{" "}
-          </button>
-          {/*Initialy disabled*/}{" "}
-          <button
-            id="unfollowBtn"
-            ref={unfollowBtn}
-            onClick={() => followSystem()}
-          >
-            UnFollow
-          </button>
-        </>
-      );
-    }
-  }
+  
 
   return (
     <>
@@ -714,171 +661,7 @@ export default function Profile(props) {
             </div>
           </div>
 
-          {/*PROFILE POST COMMNENT SYSTEM  */}
-         {/* { <article id="moodleContainer" ref={moodleContainerRef}>
-            <span id="postMoodle1">
-              <div id="moodleTitle">
-                <section>
-                  <img src={posterProfilePic} alt="" />
-                  <h1>{postPoster}</h1>
-                  <p>{showPostDate(postCreationDateState)}</p>
-                </section>
-                <button id="backBtn" onClick={() => backOut()}>
-                  <i class="fa-solid fa-x"></i>
-                </button>
-              </div>
-
-              <div id="moodleContent">
-                <h3>{postSubjectState}</h3>
-                {postImage ? (
-                  <img src={postImage} alt="Postimage" />
-                ) : (
-                  <div style={{ display: "none" }}></div> // Optional: add a placeholder or leave it empty
-                )}
-                <p>{postBodyState}</p>
-              </div>
-
-              <div id="moodleInteraction">
-                <button
-                  id="profileBtnLikeBtn"
-                  onClick={() =>
-                    profileAddLike(profilePostID, profilePostLikes)
-                  }
-                >
-                  {profilePostLikes?.includes(loggedInUserBaseInformation.userName) ? (
-                    <>
-                      <i
-                        ref={postCommentsLikeRef}
-                        style={{ color: "red" }}
-                        className="fa-solid fa-heart"
-                      ></i>
-                    </>
-                  ) : (
-                    <i
-                      ref={postCommentsLikeRef}
-                      style={{ color: "white" }}
-                      className="fa-solid fa-heart"
-                    ></i>
-                  )}
-                  Like
-                </button>
-                <h4>
-                  <i className="fa-regular fa-heart"></i> {likesLength}
-                </h4>
-              </div>
-
-              <span id="mobilePostMoodle">
-                {postComments?.length > 0 ? (
-                  <>
-                    <div id="commentSection">
-                      {postComments
-                        ?.map((comment) => {
-                          return (
-                            <>
-                              <div className="commentContainer">
-                                <div className="commentTitle">
-                                  <span>
-                                    <img
-                                      src={
-                                        comment.commenterProfilePicImg
-                                          ? comment.commenterProfilePicImg
-                                          : defaultProfilePic
-                                      }
-                                      alt=""
-                                    />
-                                    <h4>{`${comment.from}`} </h4>
-                                    <p>{showPostDate(comment.timePosted)}</p>
-                                  </span>
-                                </div>
-                                <p>{comment.comment}</p>
-                              </div>
-                            </>
-                          );
-                        })
-                        .reverse()}
-                    </div>
-                  </>
-                ) : (
-                  <div className="noPostsMessage">
-                    <h3>No comments available yet!</h3>
-                    <p>Be the first to leave a comment here! 🗣️</p>
-                  </div>
-                )}
-
-                <h4 ref={feedback} id="feedback"></h4>
-                <div id="profileCommentInputField">
-                  <textarea
-                    ref={profilePostCommentRef}
-                    placeholder="Add a comment..."
-                  ></textarea>
-                  <button
-                    id="postProfileComment"
-                    onClick={() =>
-                      profilePostComment(profilePostCommentRef.current.value)
-                    }
-                  >
-                    Send
-                  </button>
-                </div>
-              </span>
-            </span>
-
-            <span id="postMoodle2">
-
-              {postComments?.length > 0 ? (
-                <>
-                  <div id="commentSection">
-                    {postComments
-                      ?.map((comment) => {
-                        return (
-                          <>
-                            <div className="commentContainer">
-                              <div className="commentTitle">
-                                <span>
-                                  <img
-                                    src={
-                                      comment.commenterProfilePicImg
-                                        ? comment.commenterProfilePicImg
-                                        : defaultProfilePic
-                                    }
-                                    alt=""
-                                  />
-                                  <h4>{`${comment.from}`}</h4>
-                                  <p>{showPostDate(comment.timePosted)}</p>
-                                </span>
-                              </div>
-                              <p>{comment.comment}</p>
-                            </div>
-                          </>
-                        );
-                      })
-                      .reverse()}
-                  </div>
-                </>
-              ) : (
-                <div className="noPostsMessage">
-                  <h3>No comments available yet!</h3>
-                  <p>Be the first to leave a comment here! 🗣️</p>
-                </div>
-              )}
-
-              <h4 ref={feedback} id="feedback"></h4>
-              <div id="profileCommentInputField">
-                <textarea
-                  ref={profilePostCommentRef}
-                  placeholder="Add a comment..."
-                ></textarea>
-                <button
-                  id="postProfileComment"
-                  onClick={() =>
-                    profilePostComment(profilePostCommentRef.current.value)
-                  }
-                >
-                  Comment
-                </button>
-              </div>
-            </span>
-          </article>} */}
+          
 
           <div className="totalPosts">
             <section className="profHeaders">
@@ -973,7 +756,7 @@ export default function Profile(props) {
                                   /* Passing in the index for each mapped post
                                     into the addLike Function.
                                   */
-                                  onClick={() => addLike(post._id, key)}
+                                  onClick={() => addLike(post._id, index)}
                                 >
                                   
                                   <i className="fa-solid fa-heart"></i>

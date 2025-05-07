@@ -8,7 +8,7 @@ export default function ShowLikes(props) {
 
    // Helper function to open Moodle
    function openMoodle() {
-      props.bgEffect()
+      // props.bgEffect()
       moodle.current.style.opacity = "1";
       moodle.current.style.pointerEvents = "all";
    }
@@ -60,8 +60,8 @@ export default function ShowLikes(props) {
 
          <article className="universalMoodle" ref={moodle}>
            <section className="firstSection">
-            <h2>Who Liked This Post</h2>
-            <button className="closeMoodleBtn" onClick={()=> {props.removeBGEffect(), closeMoodle();}}><i className="fa-solid fa-x"></i></button>
+            <h3>Who Liked This Post</h3>
+            <button className="closeMoodleBtn" onClick={()=> {closeMoodle();}}><i className="fa-solid fa-x"></i></button>
            </section>
 
             {/* Lists of every person that liked this post */}

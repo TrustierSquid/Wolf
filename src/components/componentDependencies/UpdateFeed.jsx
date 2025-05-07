@@ -22,6 +22,8 @@ const UpdateFeed = forwardRef(({
     const urlParams = new URLSearchParams(queryString);
     const userSearched = urlParams.get("topicFeed");
 
+    console.log("updatedfeed")
+
     if (!queryString) {
       // Updating the home feed
       const response = await fetch(`/update`, {
@@ -188,6 +190,7 @@ const UpdateFeed = forwardRef(({
     return <p className="postData"> • Just now</p>;
   }
 
+  
   return (
     <>
       {/* Mapping each post in reverse (newest first) */}
