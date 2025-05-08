@@ -481,12 +481,12 @@ export default function Profile(props) {
                         <section
                           onClick={() => navigateToFollowersPage(loggedInUserBaseInformation.UID)}
                         >
-                          <p>{userProfileData.followers?.length} Followers</p>
+                          <p><span className="followerStyle">{userProfileData.followers?.length} </span>Followers</p>
                         </section>
                         <section
                           onClick={() => navigateToFollowingPage(loggedInUserBaseInformation.UID)}
                         >
-                          <p>{userProfileData.following?.length} Following</p>
+                          <p><span className="followingStyle">{userProfileData.following?.length}</span> Following</p>
                         </section>
                       </>
                     ) : (
@@ -494,12 +494,12 @@ export default function Profile(props) {
                         <section
                           onClick={() => navigateToFollowersPage(userProfileData.UID)}
                         >
-                          <p>{userProfileData.followers?.length} Followers</p>
+                          <p><span className="followerStyle">{userProfileData.followers?.length} </span>Followers</p>
                         </section>
                         <section
                           onClick={() => navigateToFollowingPage(userProfileData.UID)}
                         >
-                          <p>{userProfileData.following?.length} Following</p>
+                          <p><span className="followingStyle">{userProfileData.following?.length}</span> Following</p>
                         </section>
                       </>
                     )}
@@ -512,79 +512,6 @@ export default function Profile(props) {
             </div>
           </>
         );
-      // For regular users
-      /* default:
-        return (
-          <>
-            <div id="iconAndUsername">
-              <section id="picContainer">
-                <img
-                  src={
-                    userProfileData.profilePic
-                      ? userProfileData.profilePic
-                      : defaultProfilePic
-                  }
-                  alt=""
-                  id="profilePicture"
-                />
-                <div id="whoAmI">
-                  <h5>{userProfileData.user}</h5>
-                  {userSearched === loggedInUserBaseInformation.UID ? (
-                    <div id="changeOverlay">
-                      <p id="changePictureBtn" >Change Profile Picture</p>
-                      <input
-                        ref={imageRef}
-                        accept="image/*"
-                        type="file"
-                        onChange={() => {
-                          changeProfilePicture();
-                          setUpdateMessage("Profile Picture Changed!");
-                        }}
-                      />
-                    </div>
-                  ) : (
-                    <span></span>
-                  )}
-                  <p id="updateMessage">{updateMessage}</p>
-                </div>
-              </section>
-
-              <div id="followTracking">
-                {userSearched === loggedInUserBaseInformation.UID ? (
-                  <>
-                    <section
-                      onClick={() => navigateToFollowersPage(loggedInUserBaseInformation.UID)}
-                    >
-                      <h3>{userProfileData.followers?.length}</h3>
-                      <p>Followers</p>
-                    </section>
-                    <section
-                      onClick={() => navigateToFollowingPage(loggedInUserBaseInformation.UID)}
-                    >
-                      <h3>{userProfileData.following?.length}</h3>
-                      <p>Following</p>
-                    </section>
-                  </>
-                ) : (
-                  <>
-                    <section
-                      onClick={() => navigateToFollowersPage(userProfileData.UID)}
-                    >
-                      <h3>{userProfileData.followers?.length}</h3>
-                      <p>Followers</p>
-                    </section>
-                    <section
-                      onClick={() => navigateToFollowingPage(userProfileData.UID)}
-                    >
-                      <h3>{userProfileData.following?.length}</h3>
-                      <p>Following</p>
-                    </section>
-                  </>
-                )}
-              </div>
-            </div>
-          </>
-        ); */
     }
   }
 

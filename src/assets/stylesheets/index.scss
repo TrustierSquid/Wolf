@@ -1505,7 +1505,6 @@ main {
               font-weight: bold;
               color: white;
               display: flex;
-              padding: 0.5rem;
               padding-left: 0rem;
               // border-bottom: 1px dotted $cardBorder;
 
@@ -1516,7 +1515,7 @@ main {
           }
 
           #postIMG {
-            max-width: 100%;
+            max-width: 100%w;
             object-fit: contain;
             // background-color: #333;
             // padding: 1rem;
@@ -2091,6 +2090,21 @@ main {
                 cursor: pointer;
 
                 p {
+
+                  .followerStyle, .followingStyle {
+                    font-size: 1.5rem;
+                    font-family: $ff-body;
+                  }
+
+                  // The number that displays followers
+                  .followerStyle {
+                    color: greenyellow;
+                  }
+                  // The number that displays following
+                  .followingStyle {
+                    color: $primary;                    
+                  }
+
                   font-size: 1rem;
 
                   &:hover {
@@ -2153,6 +2167,7 @@ main {
         flex-direction: column;
         width: 100%;
         max-height: 200px;
+        gap: 0.5rem;
 
         // cointains the bio icon
         #bioTitle {
@@ -2206,7 +2221,7 @@ main {
         #userEnterBio {
           color: white;
           width: 100%;
-          min-height: 100px;
+          max-height: 100px;
           border-radius: 1rem;
           align-self: center;
           padding: 1rem;
@@ -2220,9 +2235,6 @@ main {
           flex-direction: column;
         }
 
-        .cardTitle {
-          font-family: $ff-heading;
-        }
 
         // the field that the user can enter or edit a bio
         #userEnterBio {
@@ -2743,6 +2755,7 @@ HOME COMPONENT MEDIA QUERIES
         // each post
         .userPost {
           // gap: 0;
+          padding: 0;
           background-color: #000;
           border-radius: 0rem;
 
@@ -2758,7 +2771,7 @@ HOME COMPONENT MEDIA QUERIES
             border: none;
             // border-top: 0.5px solid $cardBorder;
             border-radius: 0rem;
-            gap: 1.5rem;
+            gap: 1rem;
             background: none;
             padding-bottom: 0rem;
 
@@ -2772,7 +2785,7 @@ HOME COMPONENT MEDIA QUERIES
             border-radius: 0;
 
             border: none;
-            border-bottom: 1px solid $cardBorder;
+            border-bottom: 3px solid $cardBorder;
             box-shadow: none;
 
             // container for liking and commenting on a post.

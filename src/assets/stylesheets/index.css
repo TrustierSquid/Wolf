@@ -1166,14 +1166,13 @@ main #content .userContent .userPost .mainPost .postAnalytics .postCaption {
   font-weight: bold;
   color: white;
   display: flex;
-  padding: 0.5rem;
   padding-left: 0rem;
 }
 main #content .userContent .userPost .mainPost .postAnalytics .postCaption i {
   color: #d43737;
 }
 main #content .userContent .userPost .mainPost #postIMG {
-  max-width: 100%;
+  max-width: 100% w;
   object-fit: contain;
 }
 main #content .userContent .userPost .mainPost .postBody {
@@ -1643,6 +1642,16 @@ main #content .userContent .userPost .postInteractionSection .postLC .likeBtn:ho
 #contentContainer #mainProfile .profileAnalytics:nth-of-type(1) #iconAndUsername #picContainer #whoAmI #followTracking section p {
   font-size: 1rem;
 }
+#contentContainer #mainProfile .profileAnalytics:nth-of-type(1) #iconAndUsername #picContainer #whoAmI #followTracking section p .followerStyle, #contentContainer #mainProfile .profileAnalytics:nth-of-type(1) #iconAndUsername #picContainer #whoAmI #followTracking section p .followingStyle {
+  font-size: 1.5rem;
+  font-family: "roboto", sans-serif;
+}
+#contentContainer #mainProfile .profileAnalytics:nth-of-type(1) #iconAndUsername #picContainer #whoAmI #followTracking section p .followerStyle {
+  color: greenyellow;
+}
+#contentContainer #mainProfile .profileAnalytics:nth-of-type(1) #iconAndUsername #picContainer #whoAmI #followTracking section p .followingStyle {
+  color: #d43737;
+}
 #contentContainer #mainProfile .profileAnalytics:nth-of-type(1) #iconAndUsername #picContainer #whoAmI #followTracking section p:hover {
   color: white;
   text-decoration: underline;
@@ -1690,6 +1699,7 @@ main #content .userContent .userPost .postInteractionSection .postLC .likeBtn:ho
   flex-direction: column;
   width: 100%;
   max-height: 200px;
+  gap: 0.5rem;
 }
 #contentContainer #mainProfile .profileAnalytics:nth-of-type(1) #bioPair #bioTitle {
   display: flex;
@@ -1736,7 +1746,7 @@ main #content .userContent .userPost .postInteractionSection .postLC .likeBtn:ho
 #contentContainer #mainProfile .profileAnalytics:nth-of-type(1) #bioPair #userEnterBio {
   color: white;
   width: 100%;
-  min-height: 100px;
+  max-height: 100px;
   border-radius: 1rem;
   align-self: center;
   padding: 1rem;
@@ -1747,9 +1757,6 @@ main #content .userContent .userPost .postInteractionSection .postLC .likeBtn:ho
   display: flex;
   gap: 0.5rem;
   flex-direction: column;
-}
-#contentContainer #mainProfile .profileAnalytics:nth-of-type(1) #bioPair .cardTitle {
-  font-family: "Nunito", sans-serif;
 }
 #contentContainer #mainProfile .profileAnalytics:nth-of-type(1) #bioPair #userEnterBio {
   display: none;
@@ -2135,6 +2142,7 @@ HOME COMPONENT MEDIA QUERIES
     gap: 0rem;
   }
   main #content .userContent .userPost {
+    padding: 0;
     background-color: #000;
     border-radius: 0rem;
   }
@@ -2147,7 +2155,7 @@ HOME COMPONENT MEDIA QUERIES
   main #content .userContent .userPost .mainPost {
     border: none;
     border-radius: 0rem;
-    gap: 1.5rem;
+    gap: 1rem;
     background: none;
     padding-bottom: 0rem;
   }
@@ -2158,7 +2166,7 @@ HOME COMPONENT MEDIA QUERIES
   main #content .userContent .userPost .postInteractionSection {
     border-radius: 0;
     border: none;
-    border-bottom: 1px solid #2e2e2e;
+    border-bottom: 3px solid #2e2e2e;
     box-shadow: none;
   }
   main #content .userContent .userPost .postInteractionSection .postLC {
