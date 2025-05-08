@@ -437,10 +437,10 @@ export default function Profile(props) {
   }
     
     
-    
-  function checkUser() {
+  // Has only a default for scalibility 
+  function checkUserType() {
     switch (userProfileData.user) {
-      case "Samuel":
+      default:
         return (
           <>
             <div id="iconAndUsername">
@@ -513,7 +513,7 @@ export default function Profile(props) {
           </>
         );
       // For regular users
-      default:
+      /* default:
         return (
           <>
             <div id="iconAndUsername">
@@ -584,7 +584,7 @@ export default function Profile(props) {
               </div>
             </div>
           </>
-        );
+        ); */
     }
   }
 
@@ -600,19 +600,11 @@ export default function Profile(props) {
           {/* <h2 className="profHeaders">Profile </h2> */}
           <div className="profileAnalytics">
             {/* Checks for the type of user is being displayed */}
-            {checkUser()}
-
-            {/*  FOLLOW SYSTEM */}
-
-            <section id="followBtnPair" ref={followBtnPair}>
-              {showFollowBtns()}
-            </section>
+            {/* Displays name and followers */}
+            {checkUserType()}
 
             {/* BIO SYSTEM */}
             <div id="bioPair">
-              <br />
-
-
               {/* This is the version on the bio is for when the user enters a new or edited bio */}
               <span id="userEnterBio" ref={bioElementEnter}>
                 <textarea
@@ -626,11 +618,6 @@ export default function Profile(props) {
 
               {/* This is the version on the bio is is strictly for display  */}
               <span id="profileBio" ref={bioElementDisplay}>
-                <div>
-                  <h2 className="cardTitle" >Bio</h2>
-
-                </div>
-
                 {userProfileData.userBio}
               </span>
 
@@ -659,6 +646,11 @@ export default function Profile(props) {
                 </button>
               </div>
             </div>
+
+            {/*  FOLLOW SYSTEM */}
+            <section id="followBtnPair" ref={followBtnPair}>
+              {showFollowBtns()}
+            </section>
           </div>
 
           
