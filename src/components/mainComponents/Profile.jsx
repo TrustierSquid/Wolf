@@ -481,12 +481,12 @@ export default function Profile(props) {
                         <section
                           onClick={() => navigateToFollowersPage(loggedInUserBaseInformation.UID)}
                         >
-                          <p><span className="followerStyle">{userProfileData.followers?.length} </span>Followers</p>
+                          <p><span className="followerStyle">{userProfileData.followers?.length} </span>FOLLOWERS</p>
                         </section>
                         <section
                           onClick={() => navigateToFollowingPage(loggedInUserBaseInformation.UID)}
                         >
-                          <p><span className="followingStyle">{userProfileData.following?.length}</span> Following</p>
+                          <p><span className="followingStyle">{userProfileData.following?.length}</span> FOLLOWING</p>
                         </section>
                       </>
                     ) : (
@@ -494,12 +494,12 @@ export default function Profile(props) {
                         <section
                           onClick={() => navigateToFollowersPage(userProfileData.UID)}
                         >
-                          <p><span className="followerStyle">{userProfileData.followers?.length} </span>Followers</p>
+                          <p><span className="followerStyle">{userProfileData.followers?.length} </span>FOLLOWERS</p>
                         </section>
                         <section
                           onClick={() => navigateToFollowingPage(userProfileData.UID)}
                         >
-                          <p><span className="followingStyle">{userProfileData.following?.length}</span> Following</p>
+                          <p><span className="followingStyle">{userProfileData.following?.length}</span> FOLLOWING</p>
                         </section>
                       </>
                     )}
