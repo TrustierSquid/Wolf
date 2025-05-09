@@ -1546,12 +1546,6 @@ main {
               background: none;
             }
 
-            .likeBtn {
-              border: 2px solid $primary;
-              &:hover {
-                background-color: $primary;
-              }
-            }
 
             @keyframes postBtnAnimation {
               0% {
@@ -1589,15 +1583,6 @@ main {
             display: flex;
             gap: 1rem;
 
-
-            .likeBtn {
-              &:hover {
-                background-color: #444;
-              }
-            }
-
-
-
           }
 
           
@@ -1630,7 +1615,7 @@ main {
   font-size: 1.2rem;
   cursor: pointer;
   padding: 0.5rem;
-  border-radius: 1rem;
+  border-radius: 2rem;
   font-family: $ff-body;
   background-color: #3e3e3eaa;
   justify-self: start;
@@ -1638,17 +1623,25 @@ main {
   gap: 0.3rem;
   align-items: center;
   justify-content: center;
+  transition: 100ms;
+  
 }
 
-.commentBtn {
-
+.commentBtn, .likeBtn {
+  
+  
   &:hover {
+    transform: scale(1.1);
     background-color: #444;
   }
 }
 
 
-// Interfact for making a comment
+
+
+
+
+// Interface for making a comment
 #commentInterface {
   opacity: 0;
   pointer-events: none;

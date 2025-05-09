@@ -1198,12 +1198,6 @@ main #content .userContent .userPost .mainPost .userTraction button {
   transition: 150ms;
   background: none;
 }
-main #content .userContent .userPost .mainPost .userTraction .likeBtn {
-  border: 2px solid #d43737;
-}
-main #content .userContent .userPost .mainPost .userTraction .likeBtn:hover {
-  background-color: #d43737;
-}
 @keyframes postBtnAnimation {
   0% {
     transform: translateY(0px);
@@ -1233,9 +1227,6 @@ main #content .userContent .userPost .postInteractionSection .postLC {
   display: flex;
   gap: 1rem;
 }
-main #content .userContent .userPost .postInteractionSection .postLC .likeBtn:hover {
-  background-color: #444;
-}
 
 .showFirstFour {
   color: white;
@@ -1256,7 +1247,7 @@ main #content .userContent .userPost .postInteractionSection .postLC .likeBtn:ho
   font-size: 1.2rem;
   cursor: pointer;
   padding: 0.5rem;
-  border-radius: 1rem;
+  border-radius: 2rem;
   font-family: "roboto", sans-serif;
   background-color: rgba(62, 62, 62, 0.6666666667);
   justify-self: start;
@@ -1264,9 +1255,11 @@ main #content .userContent .userPost .postInteractionSection .postLC .likeBtn:ho
   gap: 0.3rem;
   align-items: center;
   justify-content: center;
+  transition: 100ms;
 }
 
-.commentBtn:hover {
+.commentBtn:hover, .likeBtn:hover {
+  transform: scale(1.1);
   background-color: #444;
 }
 
