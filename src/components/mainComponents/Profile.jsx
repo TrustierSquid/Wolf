@@ -379,7 +379,7 @@ export default function Profile(props) {
     }
   }
 
-  
+  const likeBtn = useRef([]);
 
   // Post liking system
   async function addLike(postID, currentPostIndex) {
@@ -391,6 +391,8 @@ export default function Profile(props) {
     let likeSoundEffect = new Audio('/src/assets/audio/likeSound.mp3')
     likeSoundEffect.volume = 0.4
 
+    likeSoundEffect.play()
+    // likeBtn.current[currentPostIndex].style.color = 'red'
 
     if (!queryString) {
       // If the like is being made on the users home feed
@@ -405,7 +407,7 @@ export default function Profile(props) {
 
       // Check if the like was successfully added (optional)
       if (response.ok) {
-        likeSoundEffect.play()
+       
         // update the post data to reflect that the user has liked or unlikeed the post
         await getUserProfilePosts(trackedFeed)
       } else {
@@ -426,7 +428,6 @@ export default function Profile(props) {
 
       // Check if the like was successfully added (optional)
       if (response.ok) {
-        likeSoundEffect.play()
 
         // update the post data to reflect that the user has liked or unlikeed the post
         await getUserProfilePosts(trackedFeed)
@@ -435,6 +436,23 @@ export default function Profile(props) {
       }
     }
   }
+
+  // Checks and shows if a user is already liking a post or not
+  function checkCurrentlyLiked() {
+    profilePostData?.map((post, index) => {
+      if (post.likes.some(like => like.dynamicUser === loggedInUserBaseInformation.userName)) {
+        likeBtn.current[index].style.color = "red";
+      } else {
+        likeBtn.current[index].style.color = "white";
+      }
+      
+    })
+  }
+
+  // This useEffect checks if the user is already following the target user
+  useEffect(() => {
+    checkCurrentlyLiked()
+  }, [profilePostData, loggedInUserBaseInformation, getUserProfilePosts])
     
     
   // Has only a default for scalibility 
@@ -672,13 +690,14 @@ export default function Profile(props) {
                               
                                 <span
                                   className="likeBtn"
+                                  ref={(el) => (likeBtn.current[index] = el)}
                                   /* Passing in the index for each mapped post
                                     into the addLike Function.
                                   */
                                   onClick={() => addLike(post._id, index)}
                                 >
                                   
-                                  <i className="fa-solid fa-heart"></i>
+                                  <i className="fa-solid fa-heart heartIcon"></i>
                                   <span >
                                     {" "}
                                     {post.likes.length}
