@@ -90,14 +90,21 @@ const upload = multer({ storage: storage });
 
 // For optimizing images when they are uploaded
 async function imageOptimize(imageBuffer, isImageForPosts) {
+
+  const metaData = await sharp(imageBuffer).metadata();
+  const isPortrait = metaData.width < metaData.height;
+  
   const optimizedImageBuffer = await sharp(imageBuffer)
-    .resize({ width: 100, height: 100, fit: "cover" })
+    .resize({ width: 100, height: 100, fit: "cover", position: "center"})
     .toFormat("png", { compressionLevel: 6 })
     .toBuffer();
 
-  const optimizedImageBufferForPosts = await sharp(imageBuffer)
-    .resize({ width: 700, height: 600, fit: "cover" })
-    .toFormat("jpeg", { quality: 90 })
+  const optimizedImageBufferForPosts = await sharp(imageBuffer).rotate()
+
+    // .resize({ width: 700, height: 500, fit: "contain"})
+    .resize({ width: isPortrait ? 750 : 1000, height: isPortrait ? 800 : 600, fit: "contain", background: { r: 255, g: 255, b: 255, alpha: 0.1 }})
+    .toFormat("png", { quality: 100 })
+    
     .toBuffer();
 
   if (isImageForPosts === "profile") {
