@@ -476,20 +476,38 @@ export default function Profile(props) {
                   <div className="showProfileUsername">
                     {userSearched === loggedInUserBaseInformation.UID ? (
                       <div id="changeOverlay">
-                        <p id="changePictureBtn">Change Profile Picture</p>
-                        <input
-                          ref={imageRef}
-                          accept="image/*"
-                          type="file"
-                          onChange={() => {
-                            changeProfilePicture();
-                            setUpdateMessage("Profile Picture Changed!");
-                          }}
-                        />
+                        <button id="changePictureBtn">Change Proflie Picture <i class="fa-solid fa-image"></i>
+                          <input
+                            ref={imageRef}
+                            accept="image/*"
+                            type="file"
+                            id="fileInputNewProfilePic"
+                            onChange={() => {
+                              changeProfilePicture();
+                              setUpdateMessage("Profile Picture Changed!");
+                            }}
+                          />
+                        </button>
+                        {/* Bio edit shows up for the user logged in and not on other profile */}
+                        {userSearched === props.loggedInUID ? (
+                          <>
+                            <button
+                              className="changeBioButton"
+                              onClick={() => switchToEnter()}
+                              ref={changeBioBtn}
+                            >Change Bio <i class="fa-solid fa-pencil"></i></button>
+                          </>
+                        ) : (
+                          <>
+                            <span></span>
+                          </>
+                        )}
                       </div>
                     ) : (
                       <span></span>
                     )}
+
+                    
                     <h2>{userProfileData.user}</h2>
                   </div>
                   {/* If the query string UID matches the logged in user, change picture btn will render */}
@@ -568,20 +586,7 @@ export default function Profile(props) {
 
               <div id="bioTitle">
 
-                {/* Bio edit shows up for the user logged in and not on other profile */}
-                {userSearched === props.loggedInUID ? (
-                  <>
-                    <button
-                      className="changeBioButton"
-                      onClick={() => switchToEnter()}
-                      ref={changeBioBtn}
-                    >Change Bio</button>
-                  </>
-                ) : (
-                  <>
-                    <span></span>
-                  </>
-                )}
+                
                 <button
                   id="updateBioBtn"
                   ref={updateBioBtn}
@@ -590,6 +595,9 @@ export default function Profile(props) {
                   Update Bio
                 </button>
               </div>
+
+
+              
             </div>
 
             {/*  FOLLOW SYSTEM */}

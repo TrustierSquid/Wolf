@@ -13,10 +13,14 @@ $subBackground: #181818;
 // navbarBG
 $navBG: #471620;
 
+// Primary color for the app
 $primary: #d43737;
 $darkenPrimary: #532c2c;
 $inputField: #343434;
-$buttonHover: #7a0b31;
+
+// buttons
+$buttonBG: #444;
+$buttonHover: #555;
 
 // fonts
 $ff-heading: "Nunito", sans-serif;
@@ -36,6 +40,7 @@ $fs-h2: 2rem;
 $fs-h3: 1.5rem;
 
 $fs-paragraph: 1rem;
+
 
 * {
   margin: 0;
@@ -411,9 +416,6 @@ TOPICS COMPONENT
       align-self: start;
       color: white;
 
-      span {
-        color: turquoise;
-      }
     }
 
     #pageNavigation {
@@ -1629,7 +1631,6 @@ main {
 
 .commentBtn, .likeBtn {
   
-  
   &:hover {
     transform: scale(1.1);
     background-color: #444;
@@ -2021,52 +2022,51 @@ main {
               display: flex;
               flex-direction: column;
               justify-content: space-between;
-            }
+              gap: 0.5rem;
 
-            .profileUserTypeHeader {
-              // display: none;
-            }
-
-            #changeOverlay {
-              background: none;
-              border: none;
-              border-radius: 0.5rem;
-              padding-bottom: 0.5rem;
-              position: relative;
-              display: flex;
-              align-items: center;
-
-              #changePictureBtn {
-                font-size: $fs-paragraph;
-                color: turquoise;
-              }
-
-              &:hover {
-                #changePictureBtn {
+              #changeOverlay {
+                background: none;
+                border: none;
+                border-radius: 0.5rem;
+                position: relative;
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+  
+                #changePictureBtn, .changeBioButton {
+                  background-color: $buttonBG;
+                  border: none;
+                  font-family: $ff-heading;
+                  border-radius: 2rem;
+                  font-weight: bold;
+                  padding: 0.5rem;
                   color: white;
+                  cursor: pointer;
+  
+                  #fileInputNewProfilePic {                     
+                    opacity: 0;
+                    position: absolute;
+                    height: 100%;
+                    width: 20%;
+                    cursor: pointer;
+                    top: 0;
+                    left: 0;
+                  }
+
+                  &:hover {
+                    background-color: $buttonHover;
+                  }
+                  
                 }
-
-                text-decoration: underline;
-                color: white;
-              }
-
-              input {
-                // opacity: 0;
-                cursor: pointer;
-                width: 100%;
-                height: 100%;
-                border: 1px solid red;
-                opacity: 0;
-                position: absolute;
-                top: 0;
-                left: 0;
+  
               }
             }
+
 
             #updateMessage {
               font-size: 1rem;
               margin-top: 1rem;
-              color: turquoise;
+              color: lime;
             }
 
             // THe id for tracking who follows who
@@ -2168,7 +2168,6 @@ main {
           justify-content: right;
           align-items: center;
           width: 100%;
-          gap: 1rem;
 
           #updateBioBtn {
             display: none;
@@ -2194,20 +2193,7 @@ main {
             justify-content: space-between;
           }
 
-          .changeBioButton {
-            // border-bottom: 1px solid $primary;
-            font-size: 1rem;
-            color: white;
-            background: none;
-            border-radius: 0.5rem;
-            border: none;
-            padding: 0.5rem;
-            cursor: pointer;
-            &:hover {
-              color: teal;
-              text-decoration: underline;
-            }
-          }
+          
         }
 
         #profileBio,
@@ -2236,7 +2222,7 @@ main {
           padding: 0rem;
 
           textarea {
-            min-height: 100px;
+            max-height: 100px;
             width: 100%;
             border-radius: 1rem;
             padding: 1rem;
@@ -2257,18 +2243,6 @@ main {
         }
       }
 
-      /* #profileCustomize {
-            .fa-pencil {
-               cursor: pointer;
-               color: $primary;
-               background-color: $cardBG;
-               padding: 1rem;
-               border-radius: 50%;
-               &:hover {
-                  background-color: #444;
-               }
-            }
-         } */
     }
 
     .followUserBtn {

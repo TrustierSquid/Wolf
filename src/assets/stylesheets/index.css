@@ -215,7 +215,7 @@ body {
   width: 40%;
 }
 #loginFlex #loginContainer #loginBtns button:hover {
-  background-color: #7a0b31;
+  background-color: #555;
   transform: translateY(-5px);
 }
 
@@ -281,9 +281,6 @@ TOPICS COMPONENT
   font-size: 2rem;
   align-self: start;
   color: white;
-}
-#topicsContainer main #pageHeader span {
-  color: turquoise;
 }
 #topicsContainer main #pageNavigation {
   display: flex;
@@ -430,7 +427,7 @@ DEFAULT PAGE
  */
 #nav {
   top: 0;
-  border-bottom: 1px solid #7a0b31;
+  border-bottom: 1px solid #555;
   display: flex;
   padding: 0.5rem;
   padding-right: 2.5rem;
@@ -572,7 +569,7 @@ DEFAULT PAGE
   transition: 150ms;
 }
 #nav #notificationDropdown #clearBtn:hover {
-  background-color: #7a0b31;
+  background-color: #555;
 }
 #nav #notificationDropdown .notification {
   display: flex;
@@ -712,7 +709,7 @@ DEFAULT PAGE
   width: 250px;
   color: white;
   background-color: rgba(7, 7, 7, 0.9803921569);
-  border-right: 1px solid #7a0b31;
+  border-right: 1px solid #555;
   padding: 1.5rem;
   padding-top: 4rem;
   display: flex;
@@ -929,7 +926,7 @@ main #content #newPostBtn {
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 main #content #newPostBtn:hover {
-  background-color: #7a0b31;
+  background-color: #555;
 }
 main #content #newPost #newPostBtnMobile {
   display: none;
@@ -937,7 +934,7 @@ main #content #newPost #newPostBtnMobile {
   justify-content: center;
 }
 main #content #newPost #newPostBtnMobile:hover {
-  background-color: #7a0b31;
+  background-color: #555;
 }
 @keyframes levitate {
   0% {
@@ -1537,18 +1534,6 @@ main #content .userContent .userPost .postInteractionSection .postLC {
   margin: 0 auto;
   gap: 0.5rem;
   font-size: 1.5rem;
-  /* #profileCustomize {
-        .fa-pencil {
-           cursor: pointer;
-           color: $primary;
-           background-color: $cardBG;
-           padding: 1rem;
-           border-radius: 50%;
-           &:hover {
-              background-color: #444;
-           }
-        }
-     } */
 }
 #contentContainer #mainProfile .profileAnalytics:nth-of-type(1) #iconAndUsername {
   width: 100%;
@@ -1585,41 +1570,43 @@ main #content .userContent .userPost .postInteractionSection .postLC {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  gap: 0.5rem;
 }
-#contentContainer #mainProfile .profileAnalytics:nth-of-type(1) #iconAndUsername #picContainer #whoAmI #changeOverlay {
+#contentContainer #mainProfile .profileAnalytics:nth-of-type(1) #iconAndUsername #picContainer #whoAmI .showProfileUsername #changeOverlay {
   background: none;
   border: none;
   border-radius: 0.5rem;
-  padding-bottom: 0.5rem;
   position: relative;
   display: flex;
   align-items: center;
+  gap: 0.5rem;
 }
-#contentContainer #mainProfile .profileAnalytics:nth-of-type(1) #iconAndUsername #picContainer #whoAmI #changeOverlay #changePictureBtn {
-  font-size: 1rem;
-  color: turquoise;
-}
-#contentContainer #mainProfile .profileAnalytics:nth-of-type(1) #iconAndUsername #picContainer #whoAmI #changeOverlay:hover {
-  text-decoration: underline;
+#contentContainer #mainProfile .profileAnalytics:nth-of-type(1) #iconAndUsername #picContainer #whoAmI .showProfileUsername #changeOverlay #changePictureBtn, #contentContainer #mainProfile .profileAnalytics:nth-of-type(1) #iconAndUsername #picContainer #whoAmI .showProfileUsername #changeOverlay .changeBioButton {
+  background-color: #444;
+  border: none;
+  font-family: "Nunito", sans-serif;
+  border-radius: 2rem;
+  font-weight: bold;
+  padding: 0.5rem;
   color: white;
-}
-#contentContainer #mainProfile .profileAnalytics:nth-of-type(1) #iconAndUsername #picContainer #whoAmI #changeOverlay:hover #changePictureBtn {
-  color: white;
-}
-#contentContainer #mainProfile .profileAnalytics:nth-of-type(1) #iconAndUsername #picContainer #whoAmI #changeOverlay input {
   cursor: pointer;
-  width: 100%;
-  height: 100%;
-  border: 1px solid red;
+}
+#contentContainer #mainProfile .profileAnalytics:nth-of-type(1) #iconAndUsername #picContainer #whoAmI .showProfileUsername #changeOverlay #changePictureBtn #fileInputNewProfilePic, #contentContainer #mainProfile .profileAnalytics:nth-of-type(1) #iconAndUsername #picContainer #whoAmI .showProfileUsername #changeOverlay .changeBioButton #fileInputNewProfilePic {
   opacity: 0;
   position: absolute;
+  height: 100%;
+  width: 20%;
+  cursor: pointer;
   top: 0;
   left: 0;
+}
+#contentContainer #mainProfile .profileAnalytics:nth-of-type(1) #iconAndUsername #picContainer #whoAmI .showProfileUsername #changeOverlay #changePictureBtn:hover, #contentContainer #mainProfile .profileAnalytics:nth-of-type(1) #iconAndUsername #picContainer #whoAmI .showProfileUsername #changeOverlay .changeBioButton:hover {
+  background-color: #555;
 }
 #contentContainer #mainProfile .profileAnalytics:nth-of-type(1) #iconAndUsername #picContainer #whoAmI #updateMessage {
   font-size: 1rem;
   margin-top: 1rem;
-  color: turquoise;
+  color: lime;
 }
 #contentContainer #mainProfile .profileAnalytics:nth-of-type(1) #iconAndUsername #picContainer #whoAmI #followTracking {
   display: flex;
@@ -1699,7 +1686,6 @@ main #content .userContent .userPost .postInteractionSection .postLC {
   justify-content: right;
   align-items: center;
   width: 100%;
-  gap: 1rem;
 }
 #contentContainer #mainProfile .profileAnalytics:nth-of-type(1) #bioPair #bioTitle #updateBioBtn {
   display: none;
@@ -1721,19 +1707,6 @@ main #content .userContent .userPost .postInteractionSection .postLC {
   display: flex;
   align-items: center;
   justify-content: space-between;
-}
-#contentContainer #mainProfile .profileAnalytics:nth-of-type(1) #bioPair #bioTitle .changeBioButton {
-  font-size: 1rem;
-  color: white;
-  background: none;
-  border-radius: 0.5rem;
-  border: none;
-  padding: 0.5rem;
-  cursor: pointer;
-}
-#contentContainer #mainProfile .profileAnalytics:nth-of-type(1) #bioPair #bioTitle .changeBioButton:hover {
-  color: teal;
-  text-decoration: underline;
 }
 #contentContainer #mainProfile .profileAnalytics:nth-of-type(1) #bioPair #profileBio,
 #contentContainer #mainProfile .profileAnalytics:nth-of-type(1) #bioPair #userEnterBio {
@@ -1757,7 +1730,7 @@ main #content .userContent .userPost .postInteractionSection .postLC {
   padding: 0rem;
 }
 #contentContainer #mainProfile .profileAnalytics:nth-of-type(1) #bioPair #userEnterBio textarea {
-  min-height: 100px;
+  max-height: 100px;
   width: 100%;
   border-radius: 1rem;
   padding: 1rem;
