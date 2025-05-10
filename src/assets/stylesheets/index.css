@@ -1564,6 +1564,7 @@ main #content .userContent .userPost .postInteractionSection .postLC {
 #contentContainer #mainProfile .profileAnalytics:nth-of-type(1) #iconAndUsername #picContainer #whoAmI {
   display: flex;
   flex-direction: column;
+  gap: 0.5rem;
   width: 100%;
 }
 #contentContainer #mainProfile .profileAnalytics:nth-of-type(1) #iconAndUsername #picContainer #whoAmI .showProfileUsername {
@@ -1571,6 +1572,12 @@ main #content .userContent .userPost .postInteractionSection .postLC {
   flex-direction: column;
   justify-content: space-between;
   gap: 0.5rem;
+}
+#contentContainer #mainProfile .profileAnalytics:nth-of-type(1) #iconAndUsername #picContainer #whoAmI .showProfileUsername #displayUsername {
+  font-family: "Nunito", sans-serif;
+  font-size: 2rem;
+  color: white;
+  cursor: pointer;
 }
 #contentContainer #mainProfile .profileAnalytics:nth-of-type(1) #iconAndUsername #picContainer #whoAmI .showProfileUsername #changeOverlay {
   background: none;
@@ -1619,20 +1626,15 @@ main #content .userContent .userPost .postInteractionSection .postLC {
   border-radius: 1rem;
   cursor: pointer;
 }
-#contentContainer #mainProfile .profileAnalytics:nth-of-type(1) #iconAndUsername #picContainer #whoAmI #followTracking section p {
+#contentContainer #mainProfile .profileAnalytics:nth-of-type(1) #iconAndUsername #picContainer #whoAmI #followTracking section .followDisplay {
+  color: lightgrey;
   font-size: 1rem;
 }
-#contentContainer #mainProfile .profileAnalytics:nth-of-type(1) #iconAndUsername #picContainer #whoAmI #followTracking section p .followerStyle, #contentContainer #mainProfile .profileAnalytics:nth-of-type(1) #iconAndUsername #picContainer #whoAmI #followTracking section p .followingStyle {
-  font-size: 1.5rem;
+#contentContainer #mainProfile .profileAnalytics:nth-of-type(1) #iconAndUsername #picContainer #whoAmI #followTracking section .followDisplay .followerStyle, #contentContainer #mainProfile .profileAnalytics:nth-of-type(1) #iconAndUsername #picContainer #whoAmI #followTracking section .followDisplay .followingStyle {
   font-family: "roboto", sans-serif;
+  color: white;
 }
-#contentContainer #mainProfile .profileAnalytics:nth-of-type(1) #iconAndUsername #picContainer #whoAmI #followTracking section p .followerStyle {
-  color: greenyellow;
-}
-#contentContainer #mainProfile .profileAnalytics:nth-of-type(1) #iconAndUsername #picContainer #whoAmI #followTracking section p .followingStyle {
-  color: #d43737;
-}
-#contentContainer #mainProfile .profileAnalytics:nth-of-type(1) #iconAndUsername #picContainer #whoAmI #followTracking section p:hover {
+#contentContainer #mainProfile .profileAnalytics:nth-of-type(1) #iconAndUsername #picContainer #whoAmI #followTracking section .followDisplay:hover {
   color: white;
   text-decoration: underline;
 }
@@ -1686,19 +1688,36 @@ main #content .userContent .userPost .postInteractionSection .postLC {
   justify-content: right;
   align-items: center;
   width: 100%;
+  gap: 0.5rem;
 }
 #contentContainer #mainProfile .profileAnalytics:nth-of-type(1) #bioPair #bioTitle #updateBioBtn {
   display: none;
-  padding: 0.5rem;
-  background: none;
-  color: white;
+  background-color: #444;
   border: none;
-  background-color: teal;
-  border-radius: 0.5rem;
-  transition: 150ms;
+  font-family: "Nunito", sans-serif;
+  border-radius: 2rem;
+  font-weight: bold;
+  padding: 0.5rem;
+  color: white;
+  transition: 100ms;
   cursor: pointer;
 }
 #contentContainer #mainProfile .profileAnalytics:nth-of-type(1) #bioPair #bioTitle #updateBioBtn:hover {
+  background-color: rgba(1, 70, 70, 0.658);
+}
+#contentContainer #mainProfile .profileAnalytics:nth-of-type(1) #bioPair #bioTitle #cancelUpdateBioBtn {
+  display: none;
+  background-color: crimson;
+  border: none;
+  font-family: "Nunito", sans-serif;
+  border-radius: 2rem;
+  font-weight: bold;
+  padding: 0.5rem;
+  color: white;
+  transition: 100ms;
+  cursor: pointer;
+}
+#contentContainer #mainProfile .profileAnalytics:nth-of-type(1) #bioPair #bioTitle #cancelUpdateBioBtn:hover {
   background-color: rgba(1, 70, 70, 0.658);
 }
 #contentContainer #mainProfile .profileAnalytics:nth-of-type(1) #bioPair #bioTitle h3 {

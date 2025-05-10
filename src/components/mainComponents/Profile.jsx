@@ -108,56 +108,7 @@ export default function Profile(props) {
 
   const [communities, setCommunities] = useState(null);
 
-
-  // Current day to determine how much time has passed since the user made a post
-  const currentDate = new Date();
-
-  // Configuration for posts's creation data
-  function showPostDate(postCreationDate) {
-    // Get the difference in milliseconds
-    const startDate = new Date(postCreationDate);
-    const timeDifference = currentDate - startDate;
-
-    // Covert the difference from milliseconds to day and hours
-    const millisecondsInOneDay = 24 * 60 * 60 * 1000;
-    const millisecondsInOneHour = 60 * 60 * 1000;
-    const millisecondsInOneMinute = 60 * 1000;
-
-    // Calculate days and hours
-    const daysPassed = Math.floor(timeDifference / millisecondsInOneDay);
-    const hoursPassed = Math.floor(
-      (timeDifference % millisecondsInOneDay) / millisecondsInOneHour
-    );
-    const minutesPassed = Math.floor(
-      (timeDifference % millisecondsInOneHour) / millisecondsInOneMinute
-    );
-
-    // Calculate months using the date object
-    const monthsPassed =
-      currentDate.getMonth() -
-      startDate.getMonth() +
-      12 * (currentDate.getFullYear() - startDate.getFullYear());
-
-    // Display time passed
-    if (monthsPassed >= 1) {
-      return <h4 className="postData">{`${monthsPassed}Mth ago`}</h4>;
-    }
-
-    if (daysPassed >= 1) {
-      return <h4 className="postData">{`${daysPassed}d ago`}</h4>;
-    }
-
-    if (hoursPassed > 0) {
-      return <h4 className="postData">{`${hoursPassed}hr ago`}</h4>;
-    }
-
-    if (minutesPassed > 0) {
-      return <h4 className="postData">{`${minutesPassed}m ago`}</h4>;
-    }
-
-    return <h4 className="postData">Just now</h4>;
-  }
-
+  
   /*
    queryStringUser === props.loggedInUID
 
@@ -173,6 +124,7 @@ export default function Profile(props) {
 
   const bioEnter = useRef();
   const updateBioBtn = useRef();
+  const cancelUpdateBioBtn = useRef();
   const changeBioBtn = useRef();
 
   //  Styling helper function to change the appearance to enter in profile bio
@@ -183,7 +135,17 @@ export default function Profile(props) {
     bioElementEnter.current.value = userProfileData.userBio;
     changeBioBtn.current.style.display = "none";
     updateBioBtn.current.style.display = "block";
+    cancelUpdateBioBtn.current.style.display = "block";
   };
+
+  const switchBackToBioDisplay = () => {
+    // Styling changes
+    bioElementDisplay.current.style.display = "block";
+    bioElementEnter.current.style.display = "none";
+    changeBioBtn.current.style.display = "block";
+    cancelUpdateBioBtn.current.style.display = "none";
+    updateBioBtn.current.style.display = "none";
+  }
 
   async function addProfileBio() {
     // Value of the profile bio
@@ -212,6 +174,7 @@ export default function Profile(props) {
     updateBioBtn.current.style.display = "none";
     bioElementDisplay.current.style.display = "block";
     bioElementEnter.current.style.display = "none";
+    cancelUpdateBioBtn.current.style.display = "none";
 
     // Updating the values in the user data
     getUserProfilePosts();
@@ -266,6 +229,10 @@ export default function Profile(props) {
   const overlay = useRef();
   const feedback = useRef();
 
+  // Current day to determine how much time has passed since the user made a post
+  const currentDate = new Date();
+
+  
   // Sidebar props for scaling. In case theres a feature that exclusively needs to be added on sidebar profile component
   const sidebarProps = {
     username: loggedInUserBaseInformation.userName,
@@ -508,7 +475,7 @@ export default function Profile(props) {
                     )}
 
                     
-                    <h2>{userProfileData.user}</h2>
+                    <h2 id="displayUsername">{userProfileData.user}</h2>
                   </div>
                   {/* If the query string UID matches the logged in user, change picture btn will render */}
                   <div id="followTracking">
@@ -517,12 +484,12 @@ export default function Profile(props) {
                         <section
                           onClick={() => navigateToFollowersPage(loggedInUserBaseInformation.UID)}
                         >
-                          <p><span className="followerStyle">{userProfileData.followers?.length} </span>FOLLOWERS</p>
+                          <p className="followDisplay"><span className="followerStyle">{userProfileData.followers?.length} </span>Followers</p>
                         </section>
                         <section
                           onClick={() => navigateToFollowingPage(loggedInUserBaseInformation.UID)}
                         >
-                          <p><span className="followingStyle">{userProfileData.following?.length}</span> FOLLOWING</p>
+                          <p className="followDisplay"><span className="followingStyle">{userProfileData.following?.length}</span> Following</p>
                         </section>
                       </>
                     ) : (
@@ -530,12 +497,12 @@ export default function Profile(props) {
                         <section
                           onClick={() => navigateToFollowersPage(userProfileData.UID)}
                         >
-                          <p><span className="followerStyle">{userProfileData.followers?.length} </span>FOLLOWERS</p>
+                          <p className="followDisplay"><span className="followerStyle">{userProfileData.followers?.length} </span>Followers</p>
                         </section>
                         <section
                           onClick={() => navigateToFollowingPage(userProfileData.UID)}
                         >
-                          <p><span className="followingStyle">{userProfileData.following?.length}</span> FOLLOWING</p>
+                          <p className="followDisplay"><span className="followingStyle">{userProfileData.following?.length}</span> Following</p>
                         </section>
                       </>
                     )}
@@ -594,6 +561,13 @@ export default function Profile(props) {
                 >
                   Update Bio
                 </button>
+
+                <button 
+                  id="cancelUpdateBioBtn"
+                  ref={cancelUpdateBioBtn}
+                  onClick={() => switchBackToBioDisplay()}
+                  >
+                  Cancel</button>
               </div>
 
 

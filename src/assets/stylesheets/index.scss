@@ -2016,6 +2016,7 @@ main {
           #whoAmI {
             display: flex;
             flex-direction: column;
+            gap: 0.5rem;
             width: 100%;
 
             .showProfileUsername {
@@ -2023,6 +2024,13 @@ main {
               flex-direction: column;
               justify-content: space-between;
               gap: 0.5rem;
+
+              #displayUsername {
+                font-family: $ff-heading;
+                font-size: 2rem;
+                color: white;
+                cursor: pointer;
+              }
 
               #changeOverlay {
                 background: none;
@@ -2032,6 +2040,8 @@ main {
                 display: flex;
                 align-items: center;
                 gap: 0.5rem;
+
+                
   
                 #changePictureBtn, .changeBioButton {
                   background-color: $buttonBG;
@@ -2058,6 +2068,8 @@ main {
                   }
                   
                 }
+
+                
   
               }
             }
@@ -2082,20 +2094,14 @@ main {
                 // padding: 0.5rem;
                 cursor: pointer;
 
-                p {
-
+                .followDisplay {
+                  color: lightgrey;
+                  
+                  // The number that displays followers (.followerStyle)
+                  // and the number that displays following (.followingStyle)
                   .followerStyle, .followingStyle {
-                    font-size: 1.5rem;
                     font-family: $ff-body;
-                  }
-
-                  // The number that displays followers
-                  .followerStyle {
-                    color: greenyellow;
-                  }
-                  // The number that displays following
-                  .followingStyle {
-                    color: $primary;                    
+                    color: white;
                   }
 
                   font-size: 1rem;
@@ -2168,16 +2174,35 @@ main {
           justify-content: right;
           align-items: center;
           width: 100%;
+          gap: 0.5rem;
 
           #updateBioBtn {
             display: none;
-            padding: 0.5rem;
-            background: none;
-            color: white;
+            background-color: $buttonBG;
             border: none;
-            background-color: teal;
-            border-radius: 0.5rem;
-            transition: 150ms;
+            font-family: $ff-heading;
+            border-radius: 2rem;
+            font-weight: bold;
+            padding: 0.5rem;
+            color: white;
+            transition: 100ms;
+            cursor: pointer;
+
+            &:hover {
+              background-color: rgba(1, 70, 70, 0.658);
+            }
+          }
+
+          #cancelUpdateBioBtn {
+            display: none;
+            background-color: crimson;
+            border: none;
+            font-family: $ff-heading;
+            border-radius: 2rem;
+            font-weight: bold;
+            padding: 0.5rem;
+            color: white;
+            transition: 100ms;
             cursor: pointer;
 
             &:hover {
