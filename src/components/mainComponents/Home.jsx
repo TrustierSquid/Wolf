@@ -135,7 +135,7 @@ export default function Home() {
   useEffect(() => {
     getUserData()
     retrieveCommunityInformation();
-    removeTitle();
+    // removeTitle();
   }, []);
 
   // Mobile nav bar functionality
@@ -143,13 +143,13 @@ export default function Home() {
     sideNav.current.classList.toggle("toggleNav");
   }
 
-  // The "Whats New Header gets removed when the user is viewing another feed other than the home Feed"
+  /* // The "Whats New Header gets removed when the user is viewing another feed other than the home Feed"
   let whatsNewTitle = useRef(null);
   function removeTitle() {
     if (userSearched) {
       whatsNewTitle.current.style.display = "none";
     }
-  }
+  } */
 
   const newPostBtnMobile = useRef(null);
 
@@ -217,13 +217,13 @@ export default function Home() {
       <main>
         <span ref={darkBG} id="darkBG"></span>
         <section id="content">
-          {/* New post button for desktop with a message with it */}
-          <h1 id="whatsNew" ref={whatsNewTitle}>
-            What's New
-          </h1>
           <span id="newPostBtn" ref={newPostBtn} onClick={() => appearEffect()}>
             Express yourself.
           </span>
+          {/* New post button for desktop with a message with it */}
+          {/* <h1 id="whatsNew" ref={whatsNewTitle}>
+            What's New
+          </h1> */}
           <div id="newPost">
             {/* Floating prompt for creating a new post */}
             <form

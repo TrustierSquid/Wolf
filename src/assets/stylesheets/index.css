@@ -811,7 +811,7 @@ DEFAULT PAGE
 }
 #suggestedContainer #showMembersOfCommunityContainer, #suggestedContainer #suggestedCommunities {
   max-height: 300px;
-  width: 275px;
+  width: 300px;
   color: white;
   background-color: #141414;
   border-radius: 1.5rem;
@@ -833,40 +833,44 @@ DEFAULT PAGE
 #suggestedContainer #showMembersOfCommunityContainer #suggestJoinBtn:hover, #suggestedContainer #suggestedCommunities #suggestJoinBtn:hover {
   background-color: #00a1b6;
 }
-#suggestedContainer #showMembersOfCommunityContainer div, #suggestedContainer #suggestedCommunities div {
+#suggestedContainer #showMembersOfCommunityContainer #suggestedCommunityContainer, #suggestedContainer #suggestedCommunities #suggestedCommunityContainer {
   font-family: "roboto", sans-serif;
 }
-#suggestedContainer #showMembersOfCommunityContainer div section, #suggestedContainer #suggestedCommunities div section {
+#suggestedContainer #showMembersOfCommunityContainer #suggestedCommunityContainer section, #suggestedContainer #suggestedCommunities #suggestedCommunityContainer section {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 0.5rem;
   color: white;
 }
-#suggestedContainer #showMembersOfCommunityContainer div section .nameAndImageContainer, #suggestedContainer #suggestedCommunities div section .nameAndImageContainer {
+#suggestedContainer #showMembersOfCommunityContainer #suggestedCommunityContainer section .nameAndImageContainer, #suggestedContainer #suggestedCommunities #suggestedCommunityContainer section .nameAndImageContainer {
   display: flex;
   align-items: center;
   gap: 0.5rem;
 }
-#suggestedContainer #showMembersOfCommunityContainer div section .nameAndImageContainer .memberNames, #suggestedContainer #suggestedCommunities div section .nameAndImageContainer .memberNames {
+#suggestedContainer #showMembersOfCommunityContainer #suggestedCommunityContainer section .nameAndImageContainer .memberNames, #suggestedContainer #suggestedCommunities #suggestedCommunityContainer section .nameAndImageContainer .memberNames {
   color: white;
+  font-weight: bold;
 }
-#suggestedContainer #showMembersOfCommunityContainer div section .nameAndImageContainer img, #suggestedContainer #suggestedCommunities div section .nameAndImageContainer img {
+#suggestedContainer #showMembersOfCommunityContainer #suggestedCommunityContainer section .nameAndImageContainer img, #suggestedContainer #suggestedCommunities #suggestedCommunityContainer section .nameAndImageContainer img {
   height: 40px;
   width: 40px;
   object-fit: cover;
   border-radius: 50%;
 }
-#suggestedContainer #showMembersOfCommunityContainer div section button, #suggestedContainer #suggestedCommunities div section button {
-  background: none;
+#suggestedContainer #showMembersOfCommunityContainer #suggestedCommunityContainer section .visitSuggestedCommunityBtn, #suggestedContainer #suggestedCommunities #suggestedCommunityContainer section .visitSuggestedCommunityBtn {
+  background-color: #444;
+  padding-inline: 1rem;
+  border-radius: 3rem;
   border: none;
-  color: turquoise;
+  color: white;
+  font-weight: bold;
   cursor: pointer;
 }
-#suggestedContainer #showMembersOfCommunityContainer div section button:hover, #suggestedContainer #suggestedCommunities div section button:hover {
-  color: teal;
+#suggestedContainer #showMembersOfCommunityContainer #suggestedCommunityContainer section .visitSuggestedCommunityBtn:hover, #suggestedContainer #suggestedCommunities #suggestedCommunityContainer section .visitSuggestedCommunityBtn:hover {
+  background-color: #555;
 }
-#suggestedContainer #showMembersOfCommunityContainer div section a, #suggestedContainer #suggestedCommunities div section a {
+#suggestedContainer #showMembersOfCommunityContainer #suggestedCommunityContainer section a, #suggestedContainer #suggestedCommunities #suggestedCommunityContainer section a {
   text-decoration: none;
 }
 #suggestedContainer #showMembersOfCommunityContainer #suggestedNavMembers, #suggestedContainer #suggestedCommunities #suggestedNavMembers {
@@ -901,7 +905,7 @@ main {
   justify-content: center;
 }
 main #content {
-  width: 45%;
+  width: 40%;
   padding: 1rem;
   display: flex;
   flex-direction: column;
@@ -911,12 +915,12 @@ main #content #whatsNew {
   font-family: "Nunito", sans-serif;
   color: white;
   font-size: 3rem;
+  margin-top: 2rem;
 }
 main #content #newPostBtn {
   width: 100%;
   color: white;
   background: rgb(212, 55, 55);
-  background: linear-gradient(94deg, rgb(212, 55, 55) 0%, rgb(122, 11, 49) 100%);
   border-radius: 1rem;
   padding: 1rem;
   cursor: pointer;
@@ -926,7 +930,8 @@ main #content #newPostBtn {
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 main #content #newPostBtn:hover {
-  background-color: #555;
+  background-color: rgb(130, 7, 50);
+  transform: translateY(-3px);
 }
 main #content #newPost #newPostBtnMobile {
   display: none;
@@ -1171,7 +1176,10 @@ main #content .userContent .userPost .mainPost .postAnalytics .postCaption i {
 main #content .userContent .userPost .mainPost #postIMG {
   height: 100%;
   width: 100%;
-  box-shadow: 0 0 20px rgba(255, 255, 255, 0.2); /* red glow */
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.3); /* red glow */
+  margin-bottom: 0.5rem;
+  border: rgba(255, 255, 255, 0.2) 1px solid;
+  border-radius: 1rem;
 }
 main #content .userContent .userPost .mainPost .postBody {
   font-size: 1.2rem;
@@ -1515,7 +1523,7 @@ main #content .userContent .userPost .postInteractionSection .postLC {
   gap: 2rem;
 }
 #contentContainer #mainProfile {
-  width: 60%;
+  width: 55%;
   display: flex;
   flex-direction: column;
   gap: 1rem;
@@ -1838,10 +1846,13 @@ main #content .userContent .userPost .postInteractionSection .postLC {
   border-radius: 50%;
 }
 #contentContainer #mainProfile .totalPosts .existingPost .postImg {
-  margin-bottom: 1rem;
-  height: 300px;
+  height: 100%;
+  width: 100%;
   object-fit: contain;
-  background-color: #222;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.3); /* red glow */
+  margin-bottom: 1rem;
+  border: rgba(255, 255, 255, 0.2) 1px solid;
+  border-radius: 1rem;
 }
 #contentContainer #mainProfile .totalPosts .existingPost .profilePostSubject {
   display: flex;

@@ -238,7 +238,7 @@ export default function Suggested() {
                   .map((community) => {
                     return (
                       <>
-                        <div>
+                        <div id="suggestedCommunityContainer">
                           <section>
                             <div className="nameAndImageContainer">
                               <img
@@ -258,7 +258,7 @@ export default function Suggested() {
                                   community.name + "Feed"
                                 }`)
                               }
-                              style={{ color: "turquoise", cursor: "pointer" }}
+                              className="visitSuggestedCommunityBtn"
                             >
                               Visit
                             </button>
@@ -273,7 +273,7 @@ export default function Suggested() {
                   .map((community) => {
                     return (
                       <>
-                        <div>
+                        <div id="suggestedCommunityContainer">
                           <section>
                             <div className="nameAndImageContainer">
                               <img
@@ -292,7 +292,7 @@ export default function Suggested() {
                                   community.name + "Feed"
                                 }`)
                               }
-                              style={{ color: "turquoise", cursor: "pointer" }}
+                              className="visitSuggestedCommunityBtn"
                             >
                               Visit
                             </button>

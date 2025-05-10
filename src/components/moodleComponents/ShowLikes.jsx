@@ -24,7 +24,7 @@ export default function ShowLikes(props) {
     <>
       {props.post.likes.length > 0 ? (
         <>
-          {/* Grabs the first 4 users */}
+          {/* Grabs the first 4 users that have liked a post and displays them*/}
           <div className="showFirstFour">
             <br />
             <p className="likedByText" onClick={()=> openMoodle()}>
