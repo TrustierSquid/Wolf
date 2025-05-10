@@ -1,0 +1,24 @@
+/* For the like buttons */
+
+.likeBtn {
+    background-color: blue;
+}
+
+
+.likeBtn:active ~ .heartIcon {
+    animation: likeButtonAnimation 2s ease-in-out;
+}
+
+@keyframes likeButtonAnimation {
+    from {
+        background-color: crimson;
+    }
+    to {
+        background-color: blue;
+    }
+}
+
+
+
+
+

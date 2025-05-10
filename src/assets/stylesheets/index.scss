@@ -1252,10 +1252,9 @@ main {
       // the moodle for making new posts
       #createPostElement {
         color: white;
-        gap: 2rem;
-        width: 50%;
-        height: 750px;
-        margin-left: 1rem;
+        gap: 0.5rem;
+        width: 40%;
+        max-height: 750px;
         position: fixed;
         padding: 3rem;
         top: 51%;
@@ -1263,7 +1262,6 @@ main {
         transform: translate(50%, -50%);
         border-radius: 1rem;
         background-color: $moodleBG;
-        border: 1px solid $darkenPrimary;
         opacity: 0;
         pointer-events: none;
         transition: 250ms;
@@ -1315,13 +1313,14 @@ main {
             width: 100%;
             height: 60px;
             max-width: 100%;
-            padding: 0.5rem;
-            border-radius: 0.5rem;
+            padding: 1.2rem;
+            border-radius: 2rem;
             font-size: 1rem;
             font-family: $ff-heading;
             background-color: $inputField;
             border: 1px solid $cardBorder;
             color: white;
+            resize: none;
 
             &:focus {
               outline: none;
@@ -1334,10 +1333,10 @@ main {
 
           input {
             width: 100%;
-            height: 50px;
+            height: 60px;
             max-width: 100%;
-            padding: 0.5rem;
-            border-radius: 0.5rem;
+            padding: 1.2rem;
+            border-radius: 2rem;
             font-size: 1rem;
             font-family: $ff-heading;
             background-color: $inputField;
@@ -1358,19 +1357,23 @@ main {
           gap: 1rem;
           border-radius: 1rem;
           font-family: $ff-heading;
+          margin-top: 1rem;
 
           img {
-            height: 75px;
-            width: 75px;
+            max-height: 200px;
+            object-fit: contain;
             border: none;
+            right: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
           }
         }
 
         // Post button inside the newPost moodle
         button {
-          padding: 1rem;
+          padding: 0.5rem;
           color: white;
-          background-color: $primary;
+          background-color: $sc-info;
           border: none;
           border-radius: 1rem;
           width: 20%;
@@ -1381,6 +1384,7 @@ main {
           font-size: 1.2rem;
           font-family: $ff-heading;
           font-weight: bold;
+          
 
           &:hover {
             background-color: #510917;
@@ -1390,17 +1394,19 @@ main {
         #selectCommunity {
           font-family: $ff-heading;
           display: flex;
-          gap: 2rem;
+          align-items: center;
+          gap: 1rem;
 
           form {
             background-color: #111;
-
+            border-radius: 1rem;    
+            padding: 0.5rem;
+            
             select {
               background-color: #111;
+              border-radius: 1rem;    
               color: white;
               border: none;
-              padding: 0.5rem;
-              border-radius: 0.5rem;
               cursor: pointer;
             }
           }

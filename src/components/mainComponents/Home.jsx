@@ -143,13 +143,6 @@ export default function Home() {
     sideNav.current.classList.toggle("toggleNav");
   }
 
-  /* // The "Whats New Header gets removed when the user is viewing another feed other than the home Feed"
-  let whatsNewTitle = useRef(null);
-  function removeTitle() {
-    if (userSearched) {
-      whatsNewTitle.current.style.display = "none";
-    }
-  } */
 
   const newPostBtnMobile = useRef(null);
 
@@ -232,13 +225,14 @@ export default function Home() {
               id="createPostElement"
             >
               <h2 id="createNewPostHeader">
-                What's on your mind?{" "}
+                Create Post{" "}
                 <span onClick={() => dissappearEffect()}>
                   <i className="fa-solid fa-x"></i>
                 </span>
               </h2>
+
               <div id="selectCommunity">
-                <h2>Which Den?</h2>
+                <p>Select a den</p>
                 <form>
                   <select ref={selectRef}>
                     {userSearched ? (
@@ -269,11 +263,12 @@ export default function Home() {
                   </select>
                 </form>
               </div>
+              
               <div id="formSubject">
                 <input
                   maxLength={40}
                   required
-                  placeholder="What's it about?"
+                  placeholder="Title"
                   onsubmit="return false"
                   ref={subjectPostElement}
                 ></input>
@@ -282,7 +277,7 @@ export default function Home() {
               <div id="formBody">
                 <textarea
                   required
-                  placeholder="Tell us more.."
+                  placeholder="Body of the post"
                   onsubmit="return false"
                   ref={bodyPostElement}
                   type="text"
@@ -314,6 +309,7 @@ export default function Home() {
               <h4 id="feedbackMessage" ref={errorMessageElement}>
                 {errorMessage}
               </h4>
+              
               <button
                 type="button"
                 onClick={() => createNewPost(selectRef.current.value)}

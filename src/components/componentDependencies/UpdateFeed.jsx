@@ -69,6 +69,8 @@ const UpdateFeed = forwardRef(({
     const urlParams = new URLSearchParams(queryString);
     const userSearched = urlParams.get("topicFeed");
 
+    likeSoundEffect.play()
+    likeBtn.current[currentPostIndex].style.color = 'red'
 
     if (!queryString) {
       // If the like is being made on the users home feed
@@ -83,8 +85,6 @@ const UpdateFeed = forwardRef(({
 
       // Check if the like was successfully added (optional)
       if (response.ok) {
-        likeSoundEffect.play()
-        likeBtn.current[currentPostIndex].style.color = 'red'
         await updateMainFeed();
       } else {
         console.error("error adding like");
@@ -104,8 +104,6 @@ const UpdateFeed = forwardRef(({
 
       // Check if the like was successfully added (optional)
       if (response.ok) {
-        likeSoundEffect.play()
-        likeBtn.current[currentPostIndex].style.color = 'red'
         await updateMainFeed();
       } else {
         console.error("error adding like");
@@ -231,7 +229,7 @@ const UpdateFeed = forwardRef(({
                       ) : (
                         <div style={{ display: "none" }}></div> // Optional: add a placeholder or leave it empty
                       )}
-
+                      
                       <h2 className="postBody">{post.body}</h2>
                       <br />
                     </main>

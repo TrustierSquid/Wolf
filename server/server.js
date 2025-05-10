@@ -102,7 +102,7 @@ async function imageOptimize(imageBuffer, isImageForPosts) {
   const optimizedImageBufferForPosts = await sharp(imageBuffer).rotate()
 
     // .resize({ width: 700, height: 500, fit: "contain"})
-    .resize({ width: isPortrait ? 750 : 1000, height: isPortrait ? 800 : 600, fit: "contain", background: { r: 255, g: 255, b: 255, alpha: 0.1 }})
+    .resize({ width: isPortrait ? 750 : 1000, height: isPortrait ? 750 : 600, fit: "contain", background: { r: 255, g: 255, b: 255, alpha: 0.1 }})
     .toFormat("png", { quality: 100 })
     
     .toBuffer();
